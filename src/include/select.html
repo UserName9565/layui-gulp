@@ -1,0 +1,21 @@
+@@if(context.shape){
+  <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm12 layui-col-xs12">
+      <label class="layui-form-label layui-col-lg3 layui-col-md3 layui-col-sm3 layui-col-xs3">@@title：</label>
+      <div class="layui-input-inline layui-col-lg4 layui-col-md4  layui-col-sm4 layui-col-xs4 ">
+        <select name="@@name" id="" class="@@name" lay-verify="@@verify" @@if (context.ignore) { ignore="1" } @@if (!context.ignore) { ignore="3" }>
+          <option></option>
+        </select>
+      </div>
+    </div>
+}
+  @@if(!context.shape){
+
+    <div class="layui-inline layui-inline layui-col-lg4 layui-col-md4 layui-col-sm12 layui-col-xs12">
+        <label class="layui-form-label layui-col-lg4 layui-col-md4  layui-col-sm4 layui-col-xs4">@@title：</label>
+        <div class="layui-input-inline layui-col-lg5 layui-col-md5  layui-col-sm5 layui-col-xs5 ">
+          <select name="@@name" id="" class="@@name" lay-verify="@@verify" @@if (context.ignore) { ignore="1" } @@if (!context.ignore) { ignore="3" }>
+            <option></option>
+          </select>
+        </div>
+      </div>
+  }

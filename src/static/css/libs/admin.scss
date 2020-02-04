@@ -1,0 +1,489 @@
+
+$deepBlue:#0073ca;
+$blue:#44ade5;
+$deepGreen:#89c14a;
+$green:#a6db6d;
+$deepRed:#f7245b;
+$red:#ff8181;
+$deepOrange:#ff9920;
+$orange:#ffc281;
+
+$auDeepBlack:#ccc;
+$back1:#e5e5e5;
+$back2:#fff;
+.layui-layout-body .layui-body {
+	top: 96px;
+	bottom: 0
+}
+.layui-layout-admin .layui-side {
+	
+    width: 220px;
+    top: 0;
+	z-index: 1001;
+	overflow:hidden;
+	
+}
+
+.layui-side-menu .layui-side-scroll {
+	width: 240px;
+	overflow-y: scroll;
+}
+.layadmin-pagetabs,.layui-layout-admin .layui-body,.layui-layout-admin .layui-footer,.layui-layout-admin .layui-layout-left {
+	left: 220px
+}
+.layadmin-tabsbody-item,[template] {
+	display: none
+}[lay-href],[lay-tips],[layadmin-event] {
+	cursor: pointer
+}
+.layadmin-pagetabs {
+	position: fixed;
+	top: 68px;
+	right: 0;
+	z-index:999; 
+}
+
+.layadmin-pagetabs .layui-breadcrumb {
+	padding: 0 15px;
+	
+}
+
+.layadmin-pagetabs {
+	 
+	line-height: 40px;
+	// padding: 0 80px 0 40px;
+	//overflow-y:scroll;
+	left:220px;
+	background-color: #fff;
+	box-sizing: border-box;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,.1)
+}
+.layui-layout-admin .layui-body {
+    position: fixed;
+    top: 109px;
+    //bottom: 44px;
+}
+
+.layui-tab-item iframe{
+	position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    right: 0;
+    // bottom: 44px;
+}
+.homeIcon{
+	font-size:14px;
+}
+.layui-layout-admin .layui-footer{
+	z-index:1005;
+	background-color: #ccc;
+}
+.layadmin-pagetabs,.layui-layout-admin .layui-body,.layui-layout-admin .layui-footer,.layui-layout-admin .layui-header .layui-layout-right,.layui-layout-admin .layui-header .layui-nav .layui-nav-item,.layui-layout-admin .layui-layout-left,.layui-layout-admin .layui-logo,.layui-layout-admin .layui-side {
+	transition: all .3s;
+	-webkit-transition: all .3s
+}
+
+@media screen and (max-width:992px) {
+	.layui-layout-admin .layui-side {
+		transform: translate3d(-220px,0,0);
+		-webkit-transform: translate3d(-220px,0,0);
+		width: 220px
+	}
+
+	.layadmin-pagetabs,.layui-layout-admin .layui-body,.layui-layout-admin .layui-footer,.layui-layout-admin .layui-layout-left {
+		left: 0
+	}
+}
+.layadmin-side-shrink .layadmin-pagetabs,.layadmin-side-shrink .layui-layout-admin .layui-body,.layadmin-side-shrink .layui-layout-admin .layui-footer,.layadmin-side-shrink .layui-layout-admin .layui-layout-left {
+	left: 60px
+}
+.layadmin-side-spread-sm .layadmin-pagetabs,.layadmin-side-spread-sm .layui-layout-admin .layui-body,.layadmin-side-spread-sm .layui-layout-admin .layui-footer,.layadmin-side-spread-sm .layui-layout-admin .layui-layout-left {
+	left: 0;
+	transform: translate3d(220px,0,0);
+	-webkit-transform: translate3d(220px,0,0)
+}
+
+.layadmin-pagetabs .layui-tab-title li:first-child .layui-tab-close,.layadmin-tabs-select.layui-nav .layui-nav-bar,.layadmin-tabs-select.layui-nav .layui-nav-more {
+	display: none
+}
+
+
+.layadmin-pagetabs .layadmin-tabs-control {
+	position: absolute;
+	top: 0;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	cursor: pointer;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	box-sizing: border-box;
+	border-left: 1px solid #f6f6f6
+}
+
+.layadmin-pagetabs .layadmin-tabs-control:hover {
+	background-color: #f6f6f6
+}
+
+.layadmin-pagetabs .layui-icon-prev {
+	left: 0;
+	border-left: none;
+	border-right: 1px solid #f6f6f6;
+	border-bottom:1px solid $blue;
+	
+}
+ 
+.layadmin-pagetabs .layui-icon-next {
+	right: 40px;
+	border-bottom:1px solid $blue
+}
+
+.layadmin-pagetabs .layui-icon-down {
+	right: 0;
+	border-bottom:1px solid $blue
+}
+
+
+.layadmin-pagetabs {
+     
+    padding: 0 80px 0 40px;
+     
+}
+.layadmin-pagetabs .layui-tab {
+	margin: 0;
+	overflow: hidden;
+	 
+	//padding: 0 80px 0 40px;
+}
+.layadmin-pagetabs .layui-tab-title {
+	height: 40px;
+	border: none;
+	border-bottom:1px solid $blue;
+ 
+}
+
+.layadmin-pagetabs .layui-tab-title li {
+	min-width: 0;
+	line-height: 36px !important;
+	max-width: 160px;
+	text-overflow: ellipsis;
+	padding-right: 40px;
+	overflow: hidden;
+	//color:#fff;
+	//background-color: $blue !important;
+	border:1px solid #fff;
+	vertical-align: top;
+	
+	padding-bottom: 3px;
+ 
+}
+.layadmin-pagetabs .layui-tab-title li.layui-this, .layadmin-pagetabs .layui-tab-title li:hover{
+	//border-bottom:2px solid $blue;
+	border:1px solid $blue;
+	border-bottom: 1px solid #eaedf1;
+ 
+  }
+  
+.layadmin-pagetabs .layui-tab-title li:first-child {
+	padding-right: 15px
+}
+
+.layadmin-pagetabs .layui-tab-title li .layui-tab-close {
+	position: absolute;
+	right: 8px;
+	top: 50%;
+	margin: -7px 0 0;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	border-radius: 50%;
+	font-size: 12px
+}
+
+.layadmin-pagetabs .layui-tab-title li:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	border-radius: 0;
+	background-color: #292B34;
+	transition: all .3s;
+	-webkit-transition: all .3s
+}
+
+.layadmin-pagetabs .layui-tab-title li:hover:after {
+	width: 100%
+}
+
+.layadmin-pagetabs .layui-tab-title li.layui-this,.layadmin-pagetabs .layui-tab-title li:hover {
+	background-color: #fff
+}
+
+.layadmin-pagetabs .layui-tab-title li.layui-this:after {
+	width: 100%;
+	border: none;
+	height: 2px;
+	background-color: #292B34
+}
+.layadmin-tabs-select.layui-nav {
+    position: absolute;
+    /* left: 0; */
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: 0 0;
+}
+// .layadmin-tabs-select.layui-nav {
+//     position: absolute;
+// 	right: 91px;
+//     top: 21px;
+//     width: 100%;
+//     height: 100%;
+//     padding: 0;
+//     background: 0 0;
+// }
+.layadmin-tabs-select.layui-nav .layui-nav-item {
+	line-height: 40px;
+	z-index: 999;
+}
+.layadmin-tabs-select.layui-nav .layui-nav-child {
+    top: 40px;
+    left: auto;
+    right: 0;
+}
+// .layadmin-tabs-select.layui-nav .layui-nav-child {
+//     top: 19px;
+//     left: auto;
+//     right: 0;
+// }
+.layui-nav-child dd {
+    position: relative;
+}
+.layadmin-tabs-select.layui-nav .layui-nav-item>a{
+	height:40px;
+	//color: #666;
+}
+
+// .layui-nav-tree .layui-this,
+// .layui-nav-tree .layui-this>a,
+// .layui-nav-tree .layui-nav-child dd.layui-this,
+// .layui-nav-tree .layui-nav-child dd.layui-this a {
+//   background-color: $green !important;
+// }
+
+ 
+
+
+.layui-layout-admin .layui-header a,
+.layui-layout-admin .layui-header a cite {
+  color: #fff;
+}
+
+.layui-layout-admin .layui-header a:hover {
+  color: #fff;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-more {
+  border-top-color: #fbfbfb;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-mored {
+  border-color: transparent;
+  border-bottom-color: #fbfbfb;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-this:after,
+.layui-layout-admin .layui-header .layui-nav-bar {
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, .5);
+}
+
+.layadmin-pagetabs .layui-tab-title li:after {
+  display: none;
+}
+.layui-form-item .layui-inline{
+	margin-right: 0px;
+}
+
+.layui-form-item .layui-input-inline{
+	    //width: auto; 
+		margin-right: 0px;
+}
+.layui-form-label{
+	padding: 9px 0px;
+}
+.layui-nav-itemed>.layui-nav-child{
+	background-color: rgb(0, 0, 0) ;
+	// filter:alpha(opacity=30)
+}
+.layui-select-disabled .layui-disabled{
+	color:#333 !important;
+}
+.layui-table-view .layui-table th{
+	font-weight: bolder;
+}
+// .layui-table thead tr{
+// 	background-color: #c6e3ed;
+// }
+// .layui-table td, .layui-table th, .layui-table-fixed-r, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{
+// 	border-color:#96ccdd;
+// }
+///////////////////////////////////////////
+ 
+.layui-btn {
+   margin-left: 3px;
+   background-color: $blue;
+   border-radius: 6px;
+   position: relative;
+   z-index: 80;
+   text-decoration: none;
+ 
+// background:url("/static/images/btnBlue.png") top left no-repeat;
+// background-size: 100% 100%;
+//  behavior: url("/static/layui/css/pie.htc");
+  
+
+}
+
+ 
+.layui-btn-primary{
+	background-color: #fff;
+	
+	color:$blue;
+	border:1px solid $blue;
+	 
+}
+.layui-btn-danger{
+	background-color: $red;	
+ 
+	
+}
+.layui-btn-group{
+	//text-align: left !important;
+	position:relative
+  }
+  .layui-btn-group .layui-btn{
+	 //margin-right:6px !important;
+	 border-radius:8px;
+  
+  }
+ 
+.layui-input:focus, .layui-textarea:focus{
+	border-color: $blue !important;
+}
+// .layui-nav-itemed>.layui-nav-child{
+// 	background-color:$deepBlue !important;
+// 	// opacity: .8;
+// 	// filter:alpha(opacity=80);
+// }
+
+ 
+.layui-btn-xs{
+   border-radius: 4px;
+   
+}
+ 
+
+ 
+.layui-header .layui-nav .layui-nav-item{
+	
+	&:hover{
+		a{
+			
+			color:#444;
+		}
+	}
+}
+ 
+
+.webPage{
+	a{
+		color:#333 !important;
+	}
+}
+#quit{
+	//color:#333 !important;
+	border-bottom:2px solid #fff;
+	line-height: 53px;
+	&:hover{
+		background-color: #23262E !important;
+		//border-bottom:2px solid $red;
+		color:$red !important;
+		.iconfont{
+			color:$red;
+		}
+	}
+}
+//配色区
+ 
+.layui-layout-admin .layui-logo {
+	// border-bottom: 1px solid $blue;
+	margin-bottom: 2px;
+    position: fixed;
+    left: 0;
+    top: 0;
+	z-index: 1003;
+    width: 220px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+	color: #fff;
+	background-color:#393D49 !important;
+	font-size: 16px;
+	img{
+		height:38px;
+	}
+}
+// .layui-side-menu,
+// .layadmin-pagetabs .layui-tab-title li:after,
+// .layadmin-pagetabs .layui-tab-title li.layui-this:after,
+// .layui-layer-admin .layui-layer-title,
+// .layadmin-side-shrink .layui-side-menu .layui-nav>.layui-nav-item>.layui-nav-child {
+//   background-color: $blue !important;
+// }
+.layui-layout-admin .layui-header {
+  //background-color: #fff;
+}
+.layui-side-menu .layui-nav {
+	//border-top:8px solid #eaedf1;
+    width: 220px;
+    margin-top: 60px;
+	
+	z-index: 1002;
+	
+}
+// .layui-nav{
+// 	background-color: none;
+// }
+// .layui-nav-itemed>.layui-nav-child{
+// 	background-color:$blue	
+// }
+// .layui-nav {
+// 	background:$blue;
+// 	.layui-nav-item{
+// 		a{
+// 			color:#fff;
+// 		}
+		 
+// 	}
+// }
+.layui-nav .layui-nav-item a:hover{
+
+	background-color: $blue ;
+}
+//  .layui-layer-title{
+// 	 background-color: #fff !important;
+//  }
+
+ 
+ .phcolor{
+	 color:#ccc !important;
+ }
+ .layui-table-fixed{
+	z-index: 100;
+ }

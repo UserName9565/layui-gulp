@@ -1,0 +1,185 @@
+
+$hui:#9FA9BA;
+body{
+    background-color: #ebebeb;
+}
+.topBox{
+    background-color: #fff;
+}
+.top{
+    height:100px;
+    overflow: hidden;
+    .logo{
+        width:120px;
+        height:40px;
+        background: url("/static/images/index/logo.png") left top no-repeat;
+        margin-top:30px;
+        background-size:100% 100%;
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/index/logo.png',sizingMethod='1');
+    }
+} 
+
+.bbox{
+    margin-top:22px;
+    .btitle{
+        height:40px;
+        background-color: #f7f7f7;
+        line-height: 40px;
+        
+        .btitle-text{
+            font-family: PingFangSC-Semibold;
+            font-size: 14px;
+            color: #000000;
+            letter-spacing: 0;
+            margin-left:35px;
+        }
+        .btitle-tip{
+            font-size:12px;
+            color:$hui;
+        }
+    }
+    .bcontentBox{
+         
+        .bcontent{
+            width:100%;
+            font-size:14px;
+             
+            
+            .bcontent-box{
+                background-color: #fff;
+                height:atuo;
+                min-height: 48px;
+                // line-height: 48px;
+                border-bottom:1px solid #f3f3f3;
+                overflow: hidden;
+                .ctitle{
+                    height:48px;
+                     
+                    .bbox-font{
+                        width:28px;
+                        height:100%;
+                        display:inline-block;
+                        margin-left:20px;
+                        color: $hui;
+                        line-height: 24px;
+                        margin-top:14px;
+                        display: inline-block;
+                    }
+                    
+                }
+                
+                
+
+                .ccontent{
+                    min-height: 48px;
+                    overflow: hidden;
+                     
+                    .ccontent-text{
+                        font-size:14px;
+                        color:#333;
+                        line-height: 24px;
+                        margin-top:14px;
+                        display: inline-block;
+                    }
+                    .ccontent-title{
+                        
+                        font-family: PingFangSC-Semibold;
+                        font-size: 14px;
+                        color: $hui;
+                        line-height: 24px;
+                        margin-top:14px;
+                        display: inline-block;
+                        
+                    }
+                    .ccontent-newtitle-box{
+                        padding-left:24px;
+                        .ccontent-newtitle{
+                            font-size: 14px;
+                            color: #000000;
+                            letter-spacing: 0;
+                            margin:14px 0 8px 0;
+                        }
+                        .ccontent-newtime{
+                            font-size: 12px;
+                            color: $hui;
+                            margin-bottom:12px;
+                            display: inline-block
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+.bbox-active{
+    border-left:4px solid #219ee2;
+}
+.btn-box{
+    padding: 20px 23px ;
+    
+}
+.btn{
+    padding:8px 12px;
+    background: #219ee2;
+    color:#fff;
+    outline: none;
+    border:none;
+    cursor: pointer;
+}
+.btnBox{
+    margin-top: 20px; 
+}
+.com-btn{
+    width:66px;
+    height:62px;
+    text-indent: -9999px;
+    border:none;
+    outline: none;
+    margin-right: 22px;
+    border-radius: 5px;
+   cursor: pointer;
+}
+.sign{
+    background: url("/static/images/workSheetGeneration/btn_sign.png") left top no-repeat ;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/workSheetGeneration/btn_sign.png',sizingMethod='1');
+    background-size: 100% 100%;
+}
+.keep{
+    background: url("/static/images/workSheetGeneration/btn_save.png") left top no-repeat ;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/workSheetGeneration/btn_save.png',sizingMethod='1');
+    background-size: 100% 100%;
+}
+.additionalRecording{
+    background: url("/static/images/workSheetGeneration/btn_record.png") left top no-repeat ;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/workSheetGeneration/btn_record.png',sizingMethod='1');
+    background-size: 100% 100%;
+}
+.print{
+    background: url("/static/images/workSheetGeneration/btn_print.png") left top no-repeat ;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/workSheetGeneration/btn_print.png',sizingMethod='1');
+    background-size: 100% 100%;
+}
+.customerReview{
+    background: url("/static/images/workSheetGeneration/btn_preview.png") left top no-repeat ;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/workSheetGeneration/btn_preview.png',sizingMethod='1');
+    background-size: 100% 100%;
+}
+.phoneSign{
+    background: url("/static/images/workSheetGeneration/phone_hand.png") left top no-repeat #fce9eb ;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/workSheetGeneration/phone_hand.png',sizingMethod='1');
+    background-size: 100% 100%;
+}
+.HWPostil1Box{
+    text-align: center;
+    
+    height:800px
+}
+.contentOCX{
+    width:75%;
+    margin:0 auto;
+    background: #fff;
+}
+.mt20{
+    margin-top: 20px;
+}

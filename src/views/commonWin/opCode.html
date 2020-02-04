@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  @@include('url-config-win.html')
+</head>
+
+<body>
+    <div class="layui-form mt20" lay-filter="winId">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+              <label class="layui-form-label">业务类型名称：</label>
+              <div class="layui-input-inline">
+                <input type="text" name=""  lay-verify="" autocomplete="off" class="layui-input">
+                
+              </div>
+              <div class="left">
+                  <button class="layui-btn-sm layui-btn business" type="button"> 选择</button>
+              </div>
+            </div>
+            @@include('input.html',{"title":"业务代码","name":"elemName","verify":""})  
+        </div>
+      </div>
+      </div>         <div class="layui-card">             <div class="layui-card-body">                  <table id="agileTable" lay-filter="agileTable">
+    
+      </table>         <div id="page">          </div>
+
+  <script src="/static/js/bundle/businessWin.js?v=201809271123"></script>
+</body>
+
+</html>
