@@ -15,175 +15,104 @@
   <link rel="stylesheet" href="/static/css/bundle/index.css?v=201809131551">
   <title>首页</title>
 </head>
-
-<body class="layui-layout-body">
-
+<body class="layui-layout-body layuimini-all">
   <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-
-      <!-- 头部区域（可配合layui已有的水平导航） -->
-      <ul class="layui-nav layui-layout-left">
-
-      </ul>
-      <ul class="layui-nav layui-layout-right">
-          <!-- <li class="layui-nav-item ">
-              <a href="javascript:;" title="接口文档"  lay-href="apiDoc/apiDoc.html" class="apiB">
-                <span>接口文档</span></a>
-    
-            </li> -->
-            <li class="layui-nav-item">
-                <a href="javascript:;">帮助</a>
-                <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                  <dd><a href="javascript:;" title="接口文档"  lay-href="apiDoc/developmentDoc.html" class="apiB"><span>开发文档</span></a></dd>
-                  <dd><a href="javascript:;" title="接口文档"  lay-href="apiDoc/apiDoc.html" class="apiB"><span>接口文档</span></a></dd>
-                  
-                </dl>
-              </li>
-        <li class="layui-nav-item ">
-          <a href="javascript:;" lay-href="commonWin/userInfo.html" class="loginName">
+  
+      <div class="layui-header header">
+          <div class="layui-logo">
+          </div>
+          <a>
+              <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
           </a>
-
-        </li>
-        <li class="layui-nav-item ">
-          <a href="#this" id="quit" class="quit"> <i class="icon iconfont">&#xe608;</i> 退出</a>
-
-        </li>
-
-      </ul>
-      <!-- <form class="dpn login-jump">
-          <input type="hidden" class="jump" name="data">
-          <button type="submit" class="fire">跳转到admin</button>
-        </form> -->
-    </div>
-
-    <div class="layui-side layui-bg-black layui-side-menu" lay-filter="test">
-
-      <div class="layui-side-scroll">
-        <div class="layui-logo">
-          <img src="/static/images/index/logo.png" alt="">
-          <span>无纸化管理系统</span>
-        </div>
-        <!-- 无纸化管理系统 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree menuAgile" lay-filter="test">
-          <li class="layadmin-flexible shrink">
-            <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩" class="font-center">
-              <i class="layui-icon icon iconfont">&#xe612;</i>
-
-            </a>
-          </li>
-          <!-- <li class="layui-nav-item layui-nav-itemed">
-            <a class="" href="javascript:;">工单稽核</a>
-            <dl class="layui-nav-child">
-              <dd>
-                <a href="javascript:;" class="menu_three">一级稽核</a>
-                <ol class="layui-nav-child" style="display: none;">
-                  <li>
-                    <a lay-href="javascript:;">三级列表一</a>
-                  </li>
-                  <li>
-                    <a href="javascript:;">三级列表二</a>
-                  </li>
-                  <li>
-                    <a href="javascript:;">三级列表三</a>
-                  </li>
-                   
-                </ol>
-                
-              </dd>
-              <dd>
-                <a href="javascript:;" class="menu_three">二级稽核</a>
-                <ol class="layui-nav-child" style="display: none;">
-                  <li>
-                    <a lay-href="javascript:;">三级列表1</a>
-                  </li>
-                  <li>
-                    <a href="javascript:;">三级列表2222</a>
-                  </li>
-                  <li>
-                    <a href="javascript:;">三级列表3333</a>
-                  </li>
-                   
-                </ol>
-                
-              </dd>
-            </dl>
-          </li> -->
-
-        </ul>
-      </div>
-    </div>
-    <!-- 页面标签 -->
-
-
-    <div class="layadmin-pagetabs">
-
-      <div class="layui-tab" lay-allowClose="true" lay-filter="test">
-        <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
-        <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
-        <div class="layui-icon layadmin-tabs-control layui-icon-down webPage">
-          <ul class="layui-nav layadmin-tabs-select">
-            <!-- <li class="layui-nav-item" lay-unselect="">
-                      <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
-                      <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">修改信息</a></dd>
-                        <dd><a href="javascript:;">安全管理</a></dd>
-                        <dd><a href="javascript:;">退了</a></dd>
-                      </dl>
-                    </li> -->
-            <li class="layui-nav-item" lay-unselect="">
-              <!-- style="width:133px;height:141px" -->
-              <a href="javascript:;">
-                <span class="layui-nav-more"></span>
-              </a>
-              <dl class="layui-nav-child ">
-                <dd layadmin-event="closeThisTabs" class="">
-                  <a href="javascript:;">关闭当前标签页</a>
-                </dd>
-                <dd layadmin-event="closeOtherTabs">
-                  <a href="javascript:;">关闭其它标签页</a>
-                </dd>
-                <dd layadmin-event="closeAllTabs">
-                  <a href="javascript:;">关闭全部标签页</a>
-                </dd>
-              </dl>
-            </li>
-            <span class="layui-nav-bar"></span>
-            <!-- style="left: 20px; top: 35px; width: 0px; opacity: 0;" -->
+  
+          <ul class="layui-nav layui-layout-left layui-header-menu layui-header-pc-menu mobile layui-hide-xs">
           </ul>
-        </div>
-        <ul class="layui-tab-title">
-          <li lay-id="" class="layui-this">
-            主页
-            <i class="layui-icon layui-icon-home homeIcon"></i>
-            <i class="layui-icon layui-unselect layui-tab-close"></i>
-          </li>
-
-        </ul>
- 
-
+          <ul class="layui-nav layui-layout-left layui-header-menu mobile layui-hide-sm">
+              <li class="layui-nav-item">
+                  <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
+                  <dl class="layui-nav-child layui-header-mini-menu">
+                  </dl>
+              </li>
+          </ul>
+  
+          <ul class="layui-nav layui-layout-right">
+  
+              <li class="layui-nav-item" lay-unselect>
+                  <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
+              </li>
+              <li class="layui-nav-item" lay-unselect>
+                  <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
+              </li>
+              <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
+                  <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
+              </li>
+              <li class="layui-nav-item layuimini-setting">
+                  <a href="javascript:;">admin</a>
+                  <dl class="layui-nav-child">
+                      <dd>
+                          <a href="javascript:;" data-iframe-tab="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料</a>
+                      </dd>
+                      <dd>
+                          <a href="javascript:;" data-iframe-tab="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                      </dd>
+                      <dd>
+                          <a href="javascript:;" class="login-out">退出登录</a>
+                      </dd>
+                  </dl>
+              </li>
+              <li class="layui-nav-item layuimini-select-bgcolor mobile layui-hide-xs" lay-unselect>
+                  <a href="javascript:;" data-bgcolor="配色方案"><i class="fa fa-ellipsis-v"></i></a>
+              </li>
+          </ul>
       </div>
-    </div>
-    <div class="layui-body">
-      <div class="layui-tab-content clear">
-
-        <div class="layui-tab-item layui-show clear">
-            <!--  basicFunction/organizationalManagement.html-->
-          <iframe class="adminWin" u-src="homePage/homePage.html" frameborder="0"></iframe>
-        </div>
+  
+      <div class="layui-side layui-bg-black">
+          <div class="layui-side-scroll layui-left-menu">
+          </div>
       </div>
-    </div>
-    <!-- homePage/homePage.html templateManagement/templateManagementWin/templateManagementWin.html -->
-    <!-- <div class="layui-footer tac">
-
-      京ICP备 14049221 号版权所有 Copyright@2016 北京爱知之星科技股份有限公司，保留一切权利
-    </div> -->
+  
+      <div class="layui-body">
+          <div class="layui-tab" lay-filter="layuiminiTab" id="top_tabs_box">
+              <ul class="layui-tab-title" id="top_tabs">
+                  <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
+              </ul>
+              <ul class="layui-nav closeBox">
+                  <li class="layui-nav-item">
+                      <a href="javascript:;"> <i class="fa fa-dot-circle-o"></i> 页面操作</a>
+                      <dl class="layui-nav-child">
+                          <dd><a href="javascript:;" data-page-close="other"><i class="fa fa-window-close"></i> 关闭其他</a></dd>
+                          <dd><a href="javascript:;" data-page-close="all"><i class="fa fa-window-close-o"></i> 关闭全部</a></dd>
+                      </dl>
+                  </li>
+              </ul>
+              <div class="layui-tab-content clildFrame">
+                  <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show">
+                  </div>
+              </div>
+          </div>
+      </div>
+  
   </div>
-
-
-  <script src="/static/js/bundle/admin.js?v=201809271123"></script>
-  <!-- <input type="hidden" class="login" value='{"userId":"7121716388ca4d6aaac0c93cbfcda031","userName":"zww","departNumber":"1"}'> -->
-  <!-- 7121716388ca4d6aaac0c93cbfcda031  zww -->
-  <!-- df655ad8d3229f3269fad2a8bab59b6c admin -->
-</body>
+  
+   
+  
+  <!-- <script src="lib/layui-v2.5.5/layui.js?v=1.0.4" charset="utf-8"></script> -->
+  <!-- <script src="js/lay-config.js?v=1.0.4" charset="utf-8"></script> -->
+  <script>
+      layui.use(['element', 'layer', 'layuimini'], function () {
+          var $ = layui.jquery,
+              element = layui.element,
+              layer = layui.layer;
+  
+          layuimini.init('/static/layui/api/init.json');
+  
+          $('.login-out').on("click", function () {
+              layer.msg('退出登录成功', function () {
+                  window.location = '/page/login-1.html';
+              });
+          });
+      });
+  </script>
+  </body>
 
 </html>
