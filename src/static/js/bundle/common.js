@@ -1,91 +1,91 @@
-function NewDate(str) {
-  if (str == null)
-    return false;
+// function NewDate(str) {
+//   if (str == null)
+//     return false;
 
-  if(typeof(str)!="number" ){
+//   if(typeof(str)!="number" ){
 
-    str = str.split('-');
-  }
-  var date = new Date();
-  date.setUTCFullYear(str[0], str[1] - 1, str[2]);
-  date.setUTCHours(0, 0, 0, 0);
-  return date;
-}
+//     str = str.split('-');
+//   }
+//   var date = new Date();
+//   date.setUTCFullYear(str[0], str[1] - 1, str[2]);
+//   date.setUTCHours(0, 0, 0, 0);
+//   return date;
+// }
 
-function nowDate(type) {
-  var myDate = new Date();
-  var yyyy = myDate.getFullYear();
-  var mm = myDate.getMonth() + 1;
-  var DD = myDate.getDate();
-  var hh = myDate.getHours();
-  var ff = myDate.getMinutes();
-  var ss = myDate.getSeconds();
-  if (mm < 10) {
-    mm = "0" + mm
-  }
-  if (DD < 10) {
-    DD = "0" + DD
-  }
+// function nowDate(type) {
+//   var myDate = new Date();
+//   var yyyy = myDate.getFullYear();
+//   var mm = myDate.getMonth() + 1;
+//   var DD = myDate.getDate();
+//   var hh = myDate.getHours();
+//   var ff = myDate.getMinutes();
+//   var ss = myDate.getSeconds();
+//   if (mm < 10) {
+//     mm = "0" + mm
+//   }
+//   if (DD < 10) {
+//     DD = "0" + DD
+//   }
 
-  function bu0(str) {
-    if (str < 10) {
-      str = "0" + str
-    }
-    return str
-  }
-  if (type == 1) {
-    return yyyy + "-" + mm + "-" + "01 00:00:00"
-  } else if (type == 2) {
-    return yyyy + "-" + mm + "-" + DD + " 23:59:59"
-  } else if (type == 3) {
-    return yyyy + "-" + mm + "-" + DD + " " + bu0(hh) + ":" + bu0(ff) + ":" + bu0(ss)
-  }
-}
+//   function bu0(str) {
+//     if (str < 10) {
+//       str = "0" + str
+//     }
+//     return str
+//   }
+//   if (type == 1) {
+//     return yyyy + "-" + mm + "-" + "01 00:00:00"
+//   } else if (type == 2) {
+//     return yyyy + "-" + mm + "-" + DD + " 23:59:59"
+//   } else if (type == 3) {
+//     return yyyy + "-" + mm + "-" + DD + " " + bu0(hh) + ":" + bu0(ff) + ":" + bu0(ss)
+//   }
+// }
 
-function date7(type, noTag) {
-  var endTime = new Date().getTime();
-  var startTime = endTime - (60000 * 60 * 24 * 7);
-  if (type == 1) {
-    return hsDate(startTime, noTag)
-  } else {
-    return hsDate(endTime, noTag)
-  }
+// function date7(type, noTag) {
+//   var endTime = new Date().getTime();
+//   var startTime = endTime - (60000 * 60 * 24 * 7);
+//   if (type == 1) {
+//     return hsDate(startTime, noTag)
+//   } else {
+//     return hsDate(endTime, noTag)
+//   }
 
-}
+// }
 
-function hsDate(str, type) {
-  var oDate = new Date(str),
-    oYear = oDate.getFullYear(),
-    oMonth = oDate.getMonth() + 1,
-    oDay = oDate.getDate();
-  if (type == "yyyy") {
-    return oYear
-  }
-  if (type == "month") {
-    return oMonth
-  }
-  if (type == "date") {
-    return oDay
-  }
+// function hsDate(str, type) {
+//   var oDate = new Date(str),
+//     oYear = oDate.getFullYear(),
+//     oMonth = oDate.getMonth() + 1,
+//     oDay = oDate.getDate();
+//   if (type == "yyyy") {
+//     return oYear
+//   }
+//   if (type == "month") {
+//     return oMonth
+//   }
+//   if (type == "date") {
+//     return oDay
+//   }
 
-  if (type == "no") {
+//   if (type == "no") {
 
-    var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay); //最后拼接时间
-  } else if (type == "24no") {
-    var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + " 23:59:59"; //最后拼接时
-  } else {
-    var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + " 00:00:00"; //最后拼接时
-  }
+//     var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay); //最后拼接时间
+//   } else if (type == "24no") {
+//     var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + " 23:59:59"; //最后拼接时
+//   } else {
+//     var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + " 00:00:00"; //最后拼接时
+//   }
 
-  return oTime
+//   return oTime
 
-  function getzf(num) {
-    if (parseInt(num) < 10) {
-      num = '0' + num;
-    }
-    return num;
-  }
-}
+//   function getzf(num) {
+//     if (parseInt(num) < 10) {
+//       num = '0' + num;
+//     }
+//     return num;
+//   }
+// }
 var common = {
   pageSize: 10,
   type: "POST",
@@ -101,13 +101,6 @@ var common = {
 
     }
   },
-  startTime: nowDate(1),
-  endTime: nowDate(2),
-  nowTime: nowDate(3),
-  time7Start: date7(1),
-  time7End: date7(2, "24no"),
-  time7StartYMD: date7(1, "no"),
-  time7EndYMD: date7(2, "no"),
   getUrl: function (urls) {
     if (cv == 1) {
       var n = (urls.split('/')).length - 1;
@@ -160,73 +153,9 @@ var common = {
       return -1; //不是ie浏览器
     }
   },
-  layerWin: function (title, width, height, url, type, box) {
-    var _this = this;
-
-    var obj = {
-      btn: ["确定", "取消"],
-      type: 2,
-      area: [width, height],
-      title: title,
-      content: url,
-      yes: function (index, layero) {
-        var frameId = "#" + layero.find('iframe')[0].id;
-        var sonTemp = $(frameId).contents();
-        if (type == "organization") {
-          _this.orWin(sonTemp, box)
-        } else if (type == "business") {
-
-          _this.businessWin(sonTemp, box)
-        } else if (type == "jobNo") {
-
-          _this.jobNoWin(sonTemp, box)
-        }
-        layer.close(index)
-      }
-    }
-    layFun.layer(layer, obj)
-
-  },
-  orWin: function (sonTemp, box) {
-    var inputB = box.parent().siblings("div").find("input")
-    inputB.val(sonTemp.find(".groupName").val());
-    inputB.attr("groupId", sonTemp.find(".groupId").val())
-    if ($(".gong").length > 0) {
-      $(".gong").click();
-    }
-  },
-  businessWin: function (sonTemp, box) {
-    sonTemp.find(".getS").click();
-
-    var inputB = box.parent().siblings("div").find("input")
-    inputB.val(sonTemp.find(".opName").val());
-    inputB.attr("opCode", sonTemp.find(".opCodeHidden").val())
-    $(".opCode").val(sonTemp.find(".opCodeHidden").val())
-  },
-  jobNoWin: function (sonTemp, box) {
-    sonTemp.find(".getS").click();
-
-    var inputB = box.parent().siblings("div").find("input")
-    inputB.val(sonTemp.find(".opName").val());
-    inputB.attr("workNo", sonTemp.find(".opCodeHidden").val())
-
-  },
-  ieHtml5: function (version) {
-
-    if(version<9){
-     // str  = ' <script src="/static/js/libs/html5.min.js"></script><script src="/static/js/libs/respond.min.js"></script>'
-      $("body").addClass("ckk")//主动触发respond
-    }else if(version==9){
-      //str = '<script src="/static/js/libs/respond.min.js"></script>'
-      $("body").addClass("ckk")//主动触发respond
-    }else{
-      return false;
-    }
-    // var str = ' <script src="/static/js/libs/html5.min.js"></script>' +
-    //   '<script src="/static/js/libs/respond.min.js"></script>';
-
-   // $("body").append(str)
-  },
+   
+    
+   
   activeXHide: function (box) {
 
     document.getElementById(box).style.width = "0px";
@@ -257,146 +186,20 @@ var common = {
       url = window.webkitURL.createObjectURL(file);
     }
     return url;
-
-
-
-
   }
-
-
-
 
 }
 
-$(document).ready(function () {
+ 
 
-  var version = common.IEVersion();
-
-  if (version > 0) {//暂时保留
-   // common.ieHtml5(version);
-    // $("button").each(function () {
-    //   PIE.attach(this);
-    // });
-  }
-
-});
-
-var jsonChange = {
-  parse: function (text) {
-    text = JSON.parse(text) // eval('(' + text + ')');
-    return text
-  },
-  stringify: function (text) {
-    text = JSON.stringify(text);
-    return text
-  }
-}
+ 
 var publicFun = {
-  jq: function () {
-    var $ = null;
-    layui.use(['jquery'], function () {
-      $ = layui.jquery
-    })
-    return $;
-  },
+  
   getSSS:function(str){
     date = new Date(str);
     return  date.getTime();
   },
-  organization: function (success,type,dtree,checkedTag,sealId) { //组织机构
-
-    var obj_ajax = {};
-    var url_ajax = url.deparTreeNew;
-    publicFun.ajax(url_ajax, common.type, obj_ajax, success1);
-
-    function success1(data){
-      var obj_ajax2 = {
-        sealId:sealId
-      }
-      if(checkedTag){
-        publicFun.ajax(url.sealAuthorization.power, common.type, obj_ajax2, success2);
-
-        function success2(data2){
-          success(data,type,dtree,checkedTag,data2)
-        }
-      }else{
-        
-        success(data,type,dtree,checkedTag)
-      }
-    }
-
-  },
-  organiztionp: function (cmca_switch) {
-    //if(cv==1){
-    $(".organiztionp").on("click", function () {
-
-      if ($(this).attr("deepN") || $(this).attr("deepn")) {
-        win("组织结构", "730px", "460px", '../commonWin/organiztionWin.html?deepN=' + publicFun.getLogin("groupId"), $(this), cmca_switch)
-      } else {
-
-        win("组织结构", "730px", "460px", '../commonWin/organiztionWin.html', $(this), cmca_switch)
-      }
-
-
-
-    })
-
-
-    function win(title, width, height, url, box, cmca_switch) {
-
-      var obj = {
-        btn: ["确定", "取消"],
-        type: 2,
-        area: [width, height],
-        title: title,
-        content: url,
-        yes: function (index, layero) {
-          var frameId = "#" + layero.find('iframe')[0].id;
-
-          var sonTemp = parent.$(frameId).contents();
-
-          gorup(sonTemp, box)
-
-          parent.layer.close(index)
-
-        },
-
-      }
-
-      layFun.parentLayer(layer, obj)
-
-    }
-
-    function gorup(sonTemp, box) {
-
-      var inputB = box.parent().siblings("div").find("input")
-      inputB.val(sonTemp.find(".groupName").val());
-      inputB.attr("groupId", sonTemp.find(".groupId").val());
-      if($(".roleIds").length>0){
-
-        publicFun.userAct(publicFun.selectIn2,$(".roleIds"),"roleId","roleName",true,multiSelectInit,sonTemp.find(".groupId").val());
-        
-      }
-      if($(".businessNo").length>0){
-        box.parents("body").find('.businessNobtn').click();
-      }
-      if($(".templateId").length>0){
-        box.parents("body").find('.templateIdBtn').click();
-      }
-    }
-  },
-
-  selectIn: function (data, box, id, name, tag, back) {
-    var str = '<option value="" selected>请选择...</option>'
-    $.each(data, function (i, o) {
-      str += '<option keyword="' + o[id] + '" value="' + o[name] + '">' + o[name] + '</option>'
-    })
-    box.html(str);
-    if (tag) {
-
-      back();
-    }
-  },
+  
   selectIn2: function (data, box, id, name, tag, back,isxuanze) {
     var tagT = true;
      
@@ -486,40 +289,6 @@ var publicFun = {
     }
     return dataURL;
   },
-
-
-  userState:function(fun,box,id,name,tag,back,isxuanze){//用户管理-用户状态下拉
-    var obj = {};
-    var urls = url.urserManagement.other;
-
-    publicFun.ajax(urls,common.type,obj,success);
-    function success(data){
-
-      fun(data.data,box,id,name,tag,back,isxuanze)
-    }
-  },
-  userIdtype:function(fun,box,id,name,tag,back,isxuanze){//用户管理-证件类型下拉
-    var obj = {};
-    var urls = url.urserManagement.type;
-
-    publicFun.ajax(urls,common.type,obj,success);
-    function success(data){
-
-      fun(data.data,box,id,name,tag,back,isxuanze)
-    }
-  },
-  userAct:function(fun,box,id,name,tag,back,departNumber){//用户管理-用户角色下拉
-    var obj = {
-      departNumber:departNumber
-    };
-    var urls = url.urserManagement.act;
-
-    publicFun.ajax(urls,common.type,obj,success);
-    function success(data){
-
-      fun(data.data,box,id,name,tag,back,true)
-    }
-  },
   getLogin: function (wen) {
     var obj = null;
     try {
@@ -534,88 +303,34 @@ var publicFun = {
       return ''
       location.href = "../index.html"
    }
-
-    // var pWin = window.top;
-
-    // var json = jsonChange.parse(pWin.$(".login").val())
-
-    // return json[wen]
-
-
-
   },
-  goLogin: function (success) {
+  
+  ajax: function (pObj,success,error) {
+     //obj.url  请求地址
+    //obj.data  请求数据
+    //success   成功回调
+    //error     失败回调
+    // let defaultObj = {
+    //     type:"post",
 
-    var urls = url.comMethod.getLogin;
-    var obj_ajax = {};
-
-    $.ajax({
-      type: "POST",
-      url: urls + "?t=" + Math.random(),
-
-      async: true,
-      data: obj_ajax,
-      success: function (data) {
-
-        if (typeof data == 'string') {
-
-          data = jsonChange.parse(data);
-
-
-        }
-
-        if (!data.loginNo) {
-          document.getElementById("quit").click();
-        } else {
-
-          var str = '<input type="hidden" class="login">' //groupId:"10008"groupName:"四川省"loginName:"管理员"loginNo:"admin"
-          //success(data)
-
-          $(document.body).append(str)
-          $(".login").val(jsonChange.stringify(data))
-          success();
-        }
-      },
-      error: function (data) {
-        document.getElementById("quit").click();
-      }
-
-    });
-  },
-  ajax: function (url, type, data, success, messageTag, isWait,pObj) {
-    var obj_ajax = {};
-
-    if(!data.userName){
-      data.userName=publicFun.getLogin("userName");
-
-    }
-    if(!data.userId){
-      data.userId=publicFun.getLogin("userId")
-    }
-    data.workAccount = publicFun.getLogin("userName");
-    data.workDepartNumber=publicFun.getLogin("departNumber");
-    data.workChannelNo = publicFun.getLogin("channelNo");
-    if (!data.pageSize) {
-      data.pageSize = 10;
-    }
+    // }
+    var obj_ajax = {
+      pageSize:10,
+      isWait:false,
+      messageTag:false,
+      type:"post"
+    };
+    pObj = $.extend({},obj_ajax,pObj);
+    
+     
 
     $.each(data, function (i, o) { //为了去除ie8 空字符串传到后台变为null的问题
       if (o === "") {
         data[i] = ""
       }
     })
-    if(pObj){
-      if(pObj.params){
-        obj_ajax = data;
-       
-      }else{
-        obj_ajax.agileParam = jsonChange.stringify(data)
-      }
-    }else{
-
-      obj_ajax.agileParam = jsonChange.stringify(data)
-    }
-    if (!isWait) {
+    
+    if (!pObj.isWait) {
 
       var coverIndex = layer.load(1, {
         shade: [0.1, '#fff'] //0.1透明度的白色背景
@@ -629,20 +344,19 @@ var publicFun = {
     }
    
     $.ajax({
-      type: 'post',
-      url: url + "?t=" + Math.random(),
+      type: pObj.type,
+      url: pObj.url + "?t=" + Math.random(),
       cache: false,
       async: true,
       headers: {
         accessToken: $.cookie('JSESSIONID_token')
      },
-      // dataType: "json",
-      data: obj_ajax,
+      data: pObj.data,
       
       success: function (data) {
        
        
-        if (!isWait) {
+        if (!pObj.isWait) {
           layer.close(coverIndex)
         }
         if (!data) {
@@ -668,7 +382,7 @@ var publicFun = {
           }
 
         }   else {
-          if (messageTag) {
+          if (pObj.messageTag) {
             layer.msg(data.message)
           } else {
 
@@ -678,7 +392,7 @@ var publicFun = {
       },
       error: function (data) {
         
-        if (!isWait) {
+        if (!pObj.isWait) {
           layer.close(coverIndex)
         }
         layer.msg("请求失败")
@@ -687,304 +401,10 @@ var publicFun = {
 
     });
   },
-  ajaxDownload: function (url, type, data, success, can) {
-
-    var obj_ajax = {};
-
-    $.each(data, function (i, o) {
-      if (o === "") {
-        data[i] = ""
-      }
-    })
-
-
-
-    var coverIndex = layer.load(1, {
-      shade: [0.1, '#fff'] //0.1透明度的白色背景
-    });
-
-    $.ajax({
-      type: type,
-      url: url + "?t=" + Math.random(),
-      cache: false,
-      dataType: "jsonp",
-      data: data,
-      success: function (data) {
-
-        layer.close(coverIndex)
-
-        success(data)
-
-      },
-      complete: function (data) {
-
-
-        if (data.status == 200) {
-          success(data)
-        } else if (data.status == 404) {
-          layer.msg("无可导出文件")
-        }
-        layer.close(coverIndex)
-
-
-      }
-
-    });
-  },
-  formAjax: function (tptype,type,success) {//不同type代表不同功能 tptype是
-    var tips = null;
-    var _this = this;
-    var fpxTag = null;//是否是fpx文件
-    $(".funCode").val(tptype)
-    $(".upClick").attr("status", "-1")//status  -1  状态初始化
-    $(".file, .layui-upload-file").on("change", function () {
-      // _this.inputChange();
-      if (tips) { //将 提示删除
-        layer.close(tips)
-      }
-      var str = $(this).val();// 获取路径名
+ 
   
-      if (type == 1) { //必须是图片格式
-        var last_index_of = str.lastIndexOf(".");
-        var file_name_type = str.substring(last_index_of + 1, str.length);
-        if (file_name_type.toUpperCase() == "GIF" || file_name_type.toUpperCase() == "JPG" || file_name_type.toUpperCase() == "PNG" || file_name_type.toUpperCase() == "BMP") {
   
-        } else {
-          layer.msg("请选择正确的文件类型");
-          return;
-        }
   
-      }else if(type=="pdf"){
-        var last_index_of = str.lastIndexOf(".");
-        var file_name_type = str.substring(last_index_of + 1, str.length);
-        if (file_name_type.toUpperCase() == "PDF") {
-  
-        } else {
-          layer.msg("请选择PDF类型文件");
-          return;
-        }
-  
-      }
-      $(".upClick").html("上传");
-      $(".upClick").prop("disabled", false)
-      $(".upClick").attr("status", "0")
-      $(".ftpUrlLocal").val(str)
-  
-      if ($(".fileType").length == 0) {
-  
-        var str1 = '<input type="hidden" name="fileType" class="fileType">'
-        $('.inputFileBox').append(str1) //用于存储选择文件后缀
-      }
-      var index = str.lastIndexOf("\\");
-      str = str.substring(index + 1, str.length);
-      $('.fileupName').val(str.split(".")[0]);
-      $(".fileType").val("."+str.split(".")[1])
-      if(str.split(".")[1]=="pfx"){
-        $(".passwordBox").show();
-      }
-      fpxTag = (str.split(".")[1]=="pfx")
-  
-      if ($(".ftpUrl").length == 0) {
-  
-        var str = '<input type="hidden"  name="ftpUrl" class="ftpUrl"><input type="hidden"  name="imgPath" class="imgPath">'
-        $('.fileupName').after(str)
-      } else {
-        $(".ftpUrl").attr("disabled", "disabled")
-      }
-    })
-
-
-    $(".upClick").on("click", function () {
-
-      if(fpxTag){//如果是pfx文件  要password弄好
-        var len = $(".password").length;
-        if(len==0){
-          var stt = "<input type='hidden' class = 'password' name='password' >"
-          $("#upfiles").append(stt)
-        }
-        var pass = $(".passwordCopy").val();
-        if(pass){
-
-          $(".password").val(pass);
-
-          var agileParam = {
-            password: pass
-          }
-          $(".agileParam").val(JSON.stringify(agileParam))
-        }else{
-          layer.msg("请输入pfx密码")
-          return false;
-        }
-      }
-
-      if ($(this).attr("status") == "-1") {
-        layer.msg("请选择需要上传文件")
-        return false;
-      }
-      tips = layer.tips('上传中...', ".upClick", {
-        tips: [1, '#3595CC'],
-        time: 40000
-      });
-      $(this).attr("status", "1");
-      $(this).prop("disabled", true)
-      update($(this));
-      return false;
-    })
-
-    function update(box) {
-
-
-      var option = {
-        success:  fun2,   // 提交后的回调函数
-        dataType: 'text',
-        contentType:'application/json',
-        error:function(data){
-          
-
-        }
-    }
-        $("#upfiles").attr({
-          "action":url.comMethod.upload,
-          "method":"post"
-        });
-    $("#upfiles").ajaxSubmit(option)
-      function fun2(data) {
-       
-        if (typeof data == 'string') {
-          data = jsonChange.parse(data);
-        }
-        if (data.code == 200) {
-          var data = data.data;
-          if(data.code!=200){
-            box.attr("status", "3")
-            box.html("重传");
-            box.prop("disabled", false)
-            tips = layer.tips(data.message, ".upClick", {
-              tips: [1, '#3595CC'],
-              time: 40000
-            });
-            return false;
-          }
-
-          box.attr("status", "2")
-          box.html("已上传")
-          layer.close(tips)
-          data = data.data;
-          if(tptype=="0301"||tptype=="0302"){
-
-            var urlftp =data.templateUrl;
-          }else{
-            var urlftp = data.certFileurl||data
-          }
-
-
-          if(fpxTag){
-            if ($(".certEnddate").length == 0) {
-                var str2 = '<input type="hidden" disabled="disabled" name="certEnddate" class="certEnddate"><input type="hidden" disabled="disabled" name="certStartdate" class="certStartdate"><input type="hidden" disabled="disabled" name="certFileCharset" class="certFileCharset">'
-                $('.fileupName').after(str2)
-              }
-
-             $(".certEnddate").val(data.certEnddate.time);
-             $(".certStartdate").val(data.certStartdate.time);
-             $(".certFileCharset").val(data.certFileCharset);
-          }
-         
-          $(".ftpUrl").val(urlftp);
-          $(".imgPath").val(urlftp);
-          if(tptype=='0301'||tptype=='0302'){
-            var templateId = '<input type="hidden" name = "templateId" class="templateId" >'
-            $(".layui-form").append(templateId)
-            $(".templateId").val(data.templateId)
-          }
-          if(success){
-            success(data)
-          }
-        } else {
-          box.attr("status", "3")
-          box.html("重传");
-          box.prop("disabled", false)
-          tips = layer.tips('上传失败', ".upClick", {
-            tips: [1, '#3595CC'],
-            time: 40000
-          });
-        }
-      }
-      return false;
-    }
-  },
-  inputChange:function(){
-    if (tips) { //将 提示删除
-      layer.close(tips)
-    }
-    var str = $(this).val();// 获取路径名
-
-    if (type == 1) { //必须是图片格式
-      var last_index_of = str.lastIndexOf(".");
-      var file_name_type = str.substring(last_index_of + 1, str.length);
-      if (file_name_type.toUpperCase() == "GIF" || file_name_type.toUpperCase() == "JPG" || file_name_type.toUpperCase() == "PNG" || file_name_type.toUpperCase() == "BMP") {
-
-      } else {
-        layer.msg("请选择正确的文件类型");
-        return;
-      }
-
-    }else if(type=="pdf"){
-      var last_index_of = str.lastIndexOf(".");
-      var file_name_type = str.substring(last_index_of + 1, str.length);
-      if (file_name_type.toUpperCase() == "PDF") {
-
-      } else {
-        layer.msg("请选择PDF类型文件");
-        return;
-      }
-
-    }
-    $(".upClick").html("上传");
-    $(".upClick").prop("disabled", false)
-    $(".upClick").attr("status", "0")
-    $(".ftpUrlLocal").val(str)
-
-    if ($(".fileType").length == 0) {
-
-      var str1 = '<input type="hidden" name="fileType" class="fileType">'
-      $('.inputFileBox').append(str1) //用于存储选择文件后缀
-    }
-    var index = str.lastIndexOf("\\");
-    str = str.substring(index + 1, str.length);
-    $('.fileupName').val(str.split(".")[0]);
-    $(".fileType").val("."+str.split(".")[1])
-    if(str.split(".")[1]=="pfx"){
-      $(".passwordBox").show();
-    }
-    fpxTag = (str.split(".")[1]=="pfx")
-
-    if ($(".ftpUrl").length == 0) {
-
-      var str = '<input type="hidden"  name="ftpUrl" class="ftpUrl"><input type="hidden"  name="imgPath" class="imgPath">'
-      $('.fileupName').after(str)
-    } else {
-      $(".ftpUrl").attr("disabled", "disabled")
-    }
-  },
-  base64Form: function (content) {
-    $(".fileCtent").on("change", function () {
-      var file = this.files[0];
-      //callback(file)
-      $('.fileupName').val(file.name);
-
-      if ($(".contentB").length == 0) {
-
-        var str = '<input type="hidden" disabled="disabled" name="' + content + '" class="contentB">'
-        $('.fileupName').after(str)
-      } else {
-        $(".contentB").attr("disabled", "disabled")
-      }
-      // console.log(file)
-      // HWPostilTool.LoadFile();
-      var baseNow64 = MakeSeal.Base64Str()
-      console.log(baseNow64)
-    })
-  },
   inputParam: function (box) {
     var obj = {};
     $.each(box.find("[name]"), function () {
@@ -1002,33 +422,7 @@ var publicFun = {
       }
     })
     return obj;
-  },
-  dateBack: function (data, cop) {
-    var obj = {};
-    $.each(data, function (i, o) {
-      if (!obj[o[cop]]) {
-        obj[o[cop]] = o[cop];
-      }
-    })
-    var arr = [];
-    for (value in obj) {
-      arr.push(value)
-    }
-    return arr;
-  },
-  arrEcharts: function (data, cop, value) {
-    var obj = {};
-
-    $.each(data, function (i, o) {
-      if (!obj[o[cop]]) {
-        obj[o[cop]] = [];
-        obj[o[cop]].push(o[value])
-      } else {
-        obj[o[cop]].push(o[value])
-      }
-    })
-    return obj
-  },
+  } ,
   verify: function (box, veri) {
     var str = false;
    

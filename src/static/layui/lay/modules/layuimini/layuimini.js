@@ -6,7 +6,7 @@
 
 layui.define(["element", "jquery"], function (exports) {
     var element = layui.element,
-        $ = layui.$,
+        // $ = layui.$,
         layer = layui.layer;
 
     // 判断是否在web容器中打开
@@ -107,11 +107,13 @@ layui.define(["element", "jquery"], function (exports) {
          * 初始化背景色
          */
         this.initBgColor = function () {
+           
             var bgcolorId = sessionStorage.getItem('layuiminiBgcolorId');
             if (bgcolorId == null || bgcolorId == undefined || bgcolorId == '') {
                 bgcolorId = layuimini.config('BgColorDefault');
             }
             var bgcolorData = layuimini.bgColorConfig(bgcolorId);
+            console.log(bgcolorData)
             var styleHtml = '.layui-layout-admin .layui-header{background-color:' + bgcolorData.headerRight + '!important;}\n' +
                 '.layui-header>ul>.layui-nav-item.layui-this,.layuimini-tool i:hover{background-color:' + bgcolorData.headerRightThis + '!important;}\n' +
                 '.layui-layout-admin .layui-logo {background-color:' + bgcolorData.headerLogo + '!important;}\n' +
@@ -773,6 +775,7 @@ layui.define(["element", "jquery"], function (exports) {
         if (!checkTab) {
             layuimini.addTab(tabId, href, title, true);
         }
+       
         element.tabChange('layuiminiTab', tabId);
         layuimini.initDevice();
         layuimini.tabRoll();
@@ -944,6 +947,7 @@ layui.define(["element", "jquery"], function (exports) {
         var loading = layer.load(0, {shade: false, time: 2 * 1000});
         var clientHeight = (document.documentElement.clientHeight) - 95;
         var bgColorHtml = layuimini.buildBgColorHtml();
+        console.log(bgColorHtml)
         var html = '<div class="layuimini-color">\n' +
             '<div class="color-title">\n' +
             '<span>配色方案</span>\n' +
@@ -977,7 +981,9 @@ layui.define(["element", "jquery"], function (exports) {
         var bgcolorId = $(this).attr('data-select-bgcolor');
         $('.layuimini-color .color-content ul .layui-this').attr('class', '');
         $(this).attr('class', 'layui-this');
+        console.log(bgcolorId)
         sessionStorage.setItem('layuiminiBgcolorId', bgcolorId);
+
         layuimini.initBgColor();
     });
 
