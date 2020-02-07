@@ -113,14 +113,14 @@ layui.define(["element", "jquery"], function (exports) {
                 bgcolorId = layuimini.config('BgColorDefault');
             }
             var bgcolorData = layuimini.bgColorConfig(bgcolorId);
-            console.log(bgcolorData)
+            
             var styleHtml = '.layui-layout-admin .layui-header{background-color:' + bgcolorData.headerRight + '!important;}\n' +
                 '.layui-header>ul>.layui-nav-item.layui-this,.layuimini-tool i:hover{background-color:' + bgcolorData.headerRightThis + '!important;}\n' +
                 '.layui-layout-admin .layui-logo {background-color:' + bgcolorData.headerLogo + '!important;}\n' +
                 '.layui-side.layui-bg-black,.layui-side.layui-bg-black>.layui-left-menu>ul {background-color:' + bgcolorData.menuLeft + '!important;}\n' +
-                '.layui-left-menu .layui-nav .layui-nav-child a:hover:not(.layui-this) {background-color:' + bgcolorData.menuLeftHover + ';}\n' +
+                '.layui-left-menu .layui-nav .layui-nav-child a:hover:not(.layui-this) {background-color:' + bgcolorData.menuLeftHover + ';color:#fff !important}\n' +
                 '.layui-layout-admin .layui-nav-tree .layui-this, .layui-layout-admin .layui-nav-tree .layui-this>a, .layui-layout-admin .layui-nav-tree .layui-nav-child dd.layui-this, .layui-layout-admin .layui-nav-tree .layui-nav-child dd.layui-this a {\n' +
-                '    background-color: ' + bgcolorData.menuLeftThis + ' !important;\n' +
+                '    background-color: ' + bgcolorData.menuLeftThis + ' !important;color:#fff !important' +
                 '}';
             $('#layuimini-bg-color').html(styleHtml);
         };
@@ -280,6 +280,14 @@ layui.define(["element", "jquery"], function (exports) {
         this.bgColorConfig = function (bgcolorId) {
             var bgColorConfig = [
                 {
+                    headerRight: '#1e9fff',
+                    headerRightThis: '#0069b7',
+                    headerLogo: '#0b82ff',
+                    menuLeft: '#fff',
+                    menuLeftThis: '#0b82ff',
+                    menuLeftHover: '#0b82ff',
+                },
+                {
                     headerRight: '#1aa094',
                     headerRightThis: '#197971',
                     headerLogo: '#243346',
@@ -316,7 +324,7 @@ layui.define(["element", "jquery"], function (exports) {
                     headerRightThis: '#0069b7',
                     headerLogo: '#0c0c0c',
                     menuLeft: '#1f1f1f',
-                    menuLeftThis: '#1aa094',
+                    menuLeftThis: '#1e9fff',
                     menuLeftHover: '#3b3f4b',
                 },
 
@@ -325,7 +333,7 @@ layui.define(["element", "jquery"], function (exports) {
                     headerRightThis: '#d09600',
                     headerLogo: '#243346',
                     menuLeft: '#2f4056',
-                    menuLeftThis: '#1aa094',
+                    menuLeftThis: '#ffb800',
                     menuLeftHover: '#3b3f4b',
                 },
                 {
@@ -333,7 +341,7 @@ layui.define(["element", "jquery"], function (exports) {
                     headerRightThis: '#ae1919',
                     headerLogo: '#0c0c0c',
                     menuLeft: '#1f1f1f',
-                    menuLeftThis: '#1aa094',
+                    menuLeftThis: '#e82121',
                     menuLeftHover: '#3b3f4b',
                 },
                 {
@@ -341,23 +349,16 @@ layui.define(["element", "jquery"], function (exports) {
                     headerRightThis: '#772c6a',
                     headerLogo: '#243346',
                     menuLeft: '#2f4056',
-                    menuLeftThis: '#1aa094',
+                    menuLeftThis: '#963885',
                     menuLeftHover: '#3b3f4b',
                 },
-                {
-                    headerRight: '#1e9fff',
-                    headerRightThis: '#0069b7',
-                    headerLogo: '#0069b7',
-                    menuLeft: '#1f1f1f',
-                    menuLeftThis: '#1aa094',
-                    menuLeftHover: '#3b3f4b',
-                },
+                
                 {
                     headerRight: '#ffb800',
                     headerRightThis: '#d09600',
                     headerLogo: '#d09600',
                     menuLeft: '#2f4056',
-                    menuLeftThis: '#1aa094',
+                    menuLeftThis: '#ffb800',
                     menuLeftHover: '#3b3f4b',
                 },
                 {
@@ -365,15 +366,15 @@ layui.define(["element", "jquery"], function (exports) {
                     headerRightThis: '#ae1919',
                     headerLogo: '#d91f1f',
                     menuLeft: '#1f1f1f',
-                    menuLeftThis: '#1aa094',
+                    menuLeftThis: '#e82121',
                     menuLeftHover: '#3b3f4b',
-                },
+                }, 
                 {
-                    headerRight: '#963885',
+                    headerRight: '#963885', 
                     headerRightThis: '#772c6a',
                     headerLogo: '#772c6a',
                     menuLeft: '#2f4056',
-                    menuLeftThis: '#1aa094',
+                    menuLeftThis: '#963885',
                     menuLeftHover: '#3b3f4b',
                 }
             ];
@@ -907,11 +908,11 @@ layui.define(["element", "jquery"], function (exports) {
         if (isShow == 1) { // 缩放
             $(this).attr('data-side-fold', 0);
             $('.layuimini-tool i').attr('class', 'fa fa-indent');
-            $('.layui-layout-body').attr('class', 'layui-layout-body layuimini-mini');
+            $('.layui-layout-body').attr('class', 'paperless layui-layout-body layuimini-mini');
         } else { // 正常
             $(this).attr('data-side-fold', 1);
             $('.layuimini-tool i').attr('class', 'fa fa-outdent');
-            $('.layui-layout-body').attr('class', 'layui-layout-body layuimini-all');
+            $('.layui-layout-body').attr('class', 'paperless layui-layout-body layuimini-all');
         }
         layuimini.tabRoll();
         element.init();

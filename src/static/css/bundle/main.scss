@@ -1,0 +1,76 @@
+$blue:#0b82ff;
+$black:#333333;
+.agile-form{
+    .layui-form-item{
+        margin-bottom: 5px;
+    }
+    .layui-input{
+        padding-right:30px;
+        height:33px;
+    }
+    .layui-form-select dl dd.layui-this{
+        background-color:$blue
+    }
+}
+.paperless{
+    .layui-left-menu .layui-nav .layui-nav-item > a:hover{
+        background-color:$blue  !important;
+        color:#fff !important;
+        .layui-nav-more{//小三角
+            border-color: #fff transparent transparent  ;
+       }
+        
+    }
+    .layui-nav-itemed>a:hover{ 
+        .layui-nav-more{
+            border-color: transparent transparent #fff !important;
+        }
+    }
+    .layui-layout-admin .layui-logo img{
+        margin-left: 23px;
+    }
+   .layui-nav-tree .layui-nav-child a, .paperless-v1 .layui-nav-item a{
+        color:$black !important;
+    }
+    .layui-nav-itemed>.layui-nav-child{
+        background-color:#fff !important;
+    }
+    .layui-nav .layui-nav-more{//小三角
+         border-color: $black transparent transparent  ;
+    }
+    .layui-nav .layui-nav-mored, .layui-nav-itemed>a .layui-nav-more{
+        border-color: transparent transparent $black ;
+    }
+    
+    // .layui-nav .layui-nav-item a{
+    //     color:rgba(129,134,140,.7) !important;
+    // }
+
+}
+.layuimini-title{
+    position: absolute !important;
+    top: 0;
+    left: 283px;
+    // width: 60px;
+    // height: 100%;
+    line-height: 64px;
+    font-size:15px;
+    text-align: center;
+    color: #ffffff !important;
+    -webkit-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+}
+.layui-btn{
+    // background-color:$blue;
+    color:#fff;
+}
+.layui-form-checked[lay-skin=primary] i{
+    background-color:$blue;
+}
+.layui-laypage .layui-laypage-curr .layui-laypage-em{
+    background-color: $blue;
+}
+.layui-table-page .layui-laypage a:hover, .layui-table-page .layui-laypage span:hover{
+    color:$blue;
+}

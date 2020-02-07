@@ -324,9 +324,9 @@ var publicFun = {
     
      
 
-    $.each(data, function (i, o) { //为了去除ie8 空字符串传到后台变为null的问题
+    $.each(pObj.data, function (i, o) { //为了去除ie8 空字符串传到后台变为null的问题
       if (o === "") {
-        data[i] = ""
+        pObj.data[i] = ""
       }
     })
     
@@ -355,7 +355,7 @@ var publicFun = {
       
       success: function (data) {
        
-       
+        
         if (!pObj.isWait) {
           layer.close(coverIndex)
         }
@@ -364,7 +364,7 @@ var publicFun = {
         }
         if (typeof data == 'string') {
 
-          data = jsonChange.parse(data);
+          data = JSON.parse(data);
 
 
         }
@@ -753,9 +753,9 @@ var layFun = {
   layer: function (layer, obj, success, error) {
     var funObj = obj;
 
-    if (!funObj.offset) {
-      funObj.offset = '30px'
-    }
+    // if (!funObj.offset) {
+    //   funObj.offset = '30px'
+    // }
     // obj.content = common.getUrl(obj.content)
     obj.btnAlign = 'c'
     obj.shadeClose = true;
@@ -774,7 +774,7 @@ var layFun = {
     parent.layer.open(funObj)
 
   },
-  tableRender: function (table, laypage, data, arr, height) {
+  tableRender: function (table, laypage, data, arr) {
     var page = {
       elem: 'page',
       count: 1, //data.totalResultNumber
@@ -785,9 +785,6 @@ var layFun = {
       curr: "1",
       jump: function (obj, first) {
         //obj包含了当前分页的所有参数，比如：
-        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-
-
         //首次不执行
         if (!first) {
           $(".currentPage").val(obj.curr)
@@ -798,9 +795,6 @@ var layFun = {
         }
       }
     }
-
-
-
     page.count = data.total
     page.curr = data.pageNo;
     laypage.render(page);

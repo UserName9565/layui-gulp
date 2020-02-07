@@ -8,15 +8,29 @@
     "href": "/views/welcome-1.html?mpi=m-p-i-0"
   },
   "logoInfo": {
-    "title": "无纸化平台",
-    "image": "/static/images/index/logo.png",
+    "title": "",
+    "image": "/static/images/logo.png",
     "href": ""
   },
   "menuInfo": {
     "currency": {
-      "title": "常规管理",
-      "icon": "fa fa-address-book",
+      "title": "",
+      "icon": "",
       "child": [
+        {
+          "title": "工单管理",
+          "href": "",
+          "icon": "fa fa-file-text",
+          "target": "_self",
+          "child": [
+            {
+              "title": "电子工单调阅",
+              "href": "/views/documentsManag/checkDocuments.html",
+              "icon": "fa fa-minus",
+              "target": "_self"
+            }
+          ]
+        },
         {
           "title": "主页模板",
           "href": "",
@@ -134,12 +148,97 @@
               "target": "_self"
             }
           ]
+        },
+        
+        {
+          "title": "图标列表",
+          "href": "/views/icon.html",
+          "icon": "fa fa-dot-circle-o",
+          "target": "_self"
+        },
+        {
+          "title": "图标选择",
+          "href": "/views/icon-picker.html",
+          "icon": "fa fa-adn",
+          "target": "_self"
+        },
+        {
+          "title": "颜色选择",
+          "href": "/views/color-select.html",
+          "icon": "fa fa-dashboard",
+          "target": "_self"
+        },
+        {
+          "title": "下拉选择",
+          "href": "/views/table-select.html",
+          "icon": "fa fa-angle-double-down",
+          "target": "_self"
+        },
+        {
+          "title": "文件上传",
+          "href": "/views/upload.html",
+          "icon": "fa fa-arrow-up",
+          "target": "_self"
+        },
+        {
+          "title": "富文本编辑器",
+          "href": "/views/editor.html",
+          "icon": "fa fa-edit",
+          "target": "_self"
+        },
+        {
+          "title": "省市县区选择器",
+          "href": "/views/area.html",
+          "icon": "fa fa-rocket",
+          "target": "_self"
+        },
+        {
+          "title": "多级菜单",
+          "href": "",
+          "icon": "fa fa-meetup",
+          "target": "",
+          "child": [
+            {
+              "title": "按钮1",
+              "href": "/views/button.html",
+              "icon": "fa fa-calendar",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "按钮2",
+                  "href": "/views/button.html",
+                  "icon": "fa fa-snowflake-o",
+                  "target": "_self",
+                  "child": [
+                    {
+                      "title": "按钮3",
+                      "href": "/views/button.html",
+                      "icon": "fa fa-snowflake-o",
+                      "target": "_self"
+                    },
+                    {
+                      "title": "表单4",
+                      "href": "/views/form.html",
+                      "icon": "fa fa-calendar",
+                      "target": "_self"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "失效菜单",
+          "href": "/views/error.html",
+          "icon": "fa fa-superpowers",
+          "target": "_self"
         }
       ]
     },
     "component": {
-      "title": "组件管理",
-      "icon": "fa fa-lemon-o",
+      "title": "",
+      "icon": "",
       "child": [
         {
           "title": "图标列表",
@@ -186,8 +285,8 @@
       ]
     },
     "other": {
-      "title": "其它管理",
-      "icon": "fa fa-slideshare",
+      "title": "",
+      "icon": "",
       "child": [
         {
           "title": "多级菜单",

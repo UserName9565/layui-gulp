@@ -173,7 +173,7 @@ gulp.task('watch', () => {
   gulp.watch(config.dev.script, ['script']).on('change', reload)
   gulp.watch(config.dev.images, ['images']).on('change', reload)
   gulp.watch(config.dev.static, ['static']).on('change', reload)
-  gulp.watch(config.dev.layer, ['layui']).on('change', reload)
+  gulp.watch(config.dev.layer, ['layer']).on('change', reload)
 })
 
 gulp.task('zip', () => {
