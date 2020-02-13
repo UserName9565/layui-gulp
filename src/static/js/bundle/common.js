@@ -295,13 +295,13 @@ var publicFun = {
       obj = JSON.parse($.cookie('getLogin'));
       if(!obj){
         return ''
-        location.href = "../index.html"
+         
       }
       return obj[wen]
    }
    catch(err){
       return ''
-      location.href = "../index.html"
+      location.href = "./views/login-1.html"
    }
   },
   
@@ -349,9 +349,10 @@ var publicFun = {
       cache: false,
       async: true,
       headers: {
-        accessToken: $.cookie('JSESSIONID_token')
+        _agileAuthToken: $.cookie('JSESSIONID_token')
      },
-      data: pObj.data,
+    contentType: "application/json; charset=utf-8",
+      data:JSON.stringify(pObj.data),
       
       success: function (data) {
        
@@ -369,18 +370,8 @@ var publicFun = {
 
         }
   
-        if (data.code == 200) {
-          var data = data.data;
-          if(data.code==200){
-
+        if (data.result == 0) {
             success(data)
-          }else if (data.code == 201) {
-           
-            location.href = ctx + data.data
-          }else{
-            layer.msg(data.message)
-          }
-
         }   else {
           if (pObj.messageTag) {
             layer.msg(data.message)

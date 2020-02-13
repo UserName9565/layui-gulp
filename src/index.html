@@ -2,120 +2,230 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta content="black" name="apple-mobile-web-app-status-bar-style">
-  <meta name="full-screen" content="yes">
-  <meta name="x5-fullscreen" content="true">
-  <meta name="keywords" content="">
-  <meta name="description" content=""> @@include('url-config.html')
-  <!-- <link rel="stylesheet" href="/static/css/bundle/index.css?v=201809131551"> -->
-  <style id="layuimini-bg-color">
-  </style>
-  <title>首页</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="keywords" content="">
+    <meta name="description" content=""> @@include('url-config.html')
+    <!-- <link rel="stylesheet" href="/static/css/bundle/index.css?v=201809131551"> -->
+    <style id="layuimini-bg-color">
+    </style>
+    <title>首页</title>
 </head>
+
 <body class="paperless layui-layout-body layuimini-all">
-  <div class="layui-layout layui-layout-admin">
-  
-      <div class="layui-header header">
-          <div class="layui-logo">
-          </div>
-          <a>
-              <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
-          </a>
-          <a>
-            <div class="layuimini-title">无纸化集中业务管理系统 </div>
-          </a>
-          
-           
-          <ul class="layui-nav layui-layout-left layui-header-menu mobile layui-hide-sm">
-              <li class="layui-nav-item">
-                  <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
-                  <dl class="layui-nav-child layui-header-mini-menu">
-                  </dl>
-              </li>
-          </ul>
-  
-          <ul class="layui-nav layui-layout-right">
-  
-              <li class="layui-nav-item" lay-unselect>
-                  <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
-              </li>
-              <!-- <li class="layui-nav-item" lay-unselect>
+    <div class="layui-layout layui-layout-admin">
+
+        <div class="layui-header header">
+            <div class="layui-logo">
+            </div>
+            <a>
+                <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
+            </a>
+            <a>
+                <div class="layuimini-title">无纸化集中业务管理系统 </div>
+            </a>
+
+
+            <ul class="layui-nav layui-layout-left layui-header-menu mobile layui-hide-sm">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
+                    <dl class="layui-nav-child layui-header-mini-menu">
+                    </dl>
+                </li>
+            </ul>
+
+            <ul class="layui-nav layui-layout-right">
+
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
+                </li>
+                <!-- <li class="layui-nav-item" lay-unselect>
                   <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
               </li> -->
-              <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
-                  <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
-              </li>
-              <li class="layui-nav-item layuimini-setting" style="margin-right: 10px;">
-                  <a href="javascript:;">admin</a>
-                  <dl class="layui-nav-child">
-                      <dd>
-                          <a href="javascript:;" data-iframe-tab="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料</a>
-                      </dd>
-                      <dd>
-                          <a href="javascript:;" data-iframe-tab="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
-                      </dd>
-                      <dd>
-                          <a href="javascript:;" class="login-out">退出登录</a>
-                      </dd>
-                  </dl>
-              </li>
-              <!-- <li class="layui-nav-item layuimini-select-bgcolor mobile layui-hide-xs" lay-unselect>
-                  <a href="javascript:;" data-bgcolor="配色方案"><i class="fa fa-ellipsis-v"></i></a>
-              </!--> 
-          </ul>
-      </div>
-  
-      <div class="layui-side layui-bg-black">
-          <div class="layui-side-scroll layui-left-menu  paperless-v1">
-          </div>
-      </div>
-  
-      <div class="layui-body">
-          <div class="layui-tab" lay-filter="layuiminiTab" id="top_tabs_box">
-              <ul class="layui-tab-title" id="top_tabs">
-                  <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
-              </ul>
-              <ul class="layui-nav closeBox">
-                  <li class="layui-nav-item">
-                      <a href="javascript:;"> <i class="fa fa-dot-circle-o"></i> 页面操作</a>
-                      <dl class="layui-nav-child">
-                          <dd><a href="javascript:;" data-page-close="other"><i class="fa fa-window-close"></i> 关闭其他</a></dd>
-                          <dd><a href="javascript:;" data-page-close="all"><i class="fa fa-window-close-o"></i> 关闭全部</a></dd>
-                      </dl>
-                  </li>
-              </ul>
-              <div class="layui-tab-content clildFrame">
-                  <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show">
-                  </div>
-              </div>
-          </div>
-      </div>
-  
-  </div>
-  
-   
-  
- 
-  <script>
-      layui.use(['element', 'layer', 'layuimini'], function () {
-          var $ = layui.jquery,
-              element = layui.element,
-              layer = layui.layer;
-  
-          layuimini.init('/static/layui/api/init.json');
-  
-          $('.login-out').on("click", function () {
-              layer.msg('退出登录成功', function () {
-                  window.location = '/views/login-1.html';
-              });
-          });
-      });
-  </script>
-  </body>
+                <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
+                </li>
+                <li class="layui-nav-item layuimini-setting" style="margin-right: 10px;">
+                    <a href="javascript:;">admin</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-iframe-tab="page/user-setting.html" data-title="基本资料"
+                                data-icon="fa fa-gears">基本资料</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-iframe-tab="page/user-password.html" data-title="修改密码"
+                                data-icon="fa fa-gears">修改密码</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" class="login-out">退出登录</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layuimini-select-bgcolor mobile layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" data-bgcolor="配色方案"><i class="fa fa-ellipsis-v"></i></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll layui-left-menu  paperless-v1">
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <div class="layui-tab" lay-filter="layuiminiTab" id="top_tabs_box">
+                <ul class="layui-tab-title" id="top_tabs">
+                    <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
+                </ul>
+                <ul class="layui-nav closeBox">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"> <i class="fa fa-dot-circle-o"></i> 页面操作</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-page-close="other"><i class="fa fa-window-close"></i>
+                                    关闭其他</a></dd>
+                            <dd><a href="javascript:;" data-page-close="all"><i class="fa fa-window-close-o"></i>
+                                    关闭全部</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <div class="layui-tab-content clildFrame">
+                    <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <script>
+        layui.use(['element', 'layer', 'layuimini'], function () {
+            var  element = layui.element,
+                layer = layui.layer;
+                // var mmm = menu(JSON.parse(localStorage.getItem("menus")))
+                //     layuimini.init(mmm,true)
+                var obj = {
+                    url:url.menu,
+                    data:{}
+                }
+            
+                publicFun.ajax(obj,success)
+                function success(data){
+                    //data.functions
+                    console.log(data.functions)
+                    var mmm = menu(data.functions)
+                     
+                    layuimini.init(mmm,true)
+                }
+                
+                // layuimini.init('/static/layui/api/init.json');menu();
+           
+           
+            $('.login-out').on("click", function () {
+                layer.msg('退出登录成功', function () {
+                    window.location = '/views/login-1.html';
+                });
+            });
+            function menu(data){
+                // var data =JSON.parse(localStorage.getItem('menus')); 
+               
+                var arr = [];
+                $.each(data,function(i,o){
+                    var obj1={};
+                    if(o.parentCode){
+                        var cvTag = (o.parentCode=="99998")
+                    }else{
+                        var cvTag = false;
+                    }
+                    if(cvTag){//判断是否是第一层
+                        obj1.title = o.functionName;
+                        obj1.href = o.jspUrl
+                        obj1.icon = o.icon
+                        obj1.target = "_self"
+                        obj1.child = menuSon(o.functionCode);
+                        arr.push(obj1)
+                   }
+                })
+                
+                function menuSon(id){
+                    var _this =this;
+                var str = '';
+                var tag = true;
+                var arr1 = []
+                $.each(data,function(i,o){
+                    var obj1 = {};
+                    var myId = o.functionCode;
+                    if(o.parentCode==id){//找到是父亲的儿子数据
+                        obj1.title = "["+o.functionCode+"]"+o.functionName;;
+                        obj1.href = oldVersion+o.jspUrl+"?_agileAuthToken="+ $.cookie('JSESSIONID_token');
+                         
+                        obj1.icon = o.icon
+                        obj1.target = "_self"
+                        
+                        var tag = sonIs(myId);//判断是否有儿子
+                        if(tag){//有儿子
+                            obj1.child = menuSon(myId)//调用孙生成节点函数
+                           
+                        }else{
+                            obj1.child = ""
+                        } 
+                        arr1.push(obj1)
+                    }
+                })
+                  
+                 return arr1
+                };
+                function sonIs(id){
+                    //查找是否有儿子
+                        var tag = false;
+            
+                        $.each(data,function(i,o){
+                            
+                            if(o.parentCode==id){
+                                tag=true;
+                            }
+                        })
+                        return tag;
+                   
+                }
+
+                var obj = {
+                    "clearInfo": {
+                        "clearUrl": "api/clear.json"
+                    },
+                    "homeInfo": {
+                        "title": "首页",
+                        "icon": "fa fa-home",
+                        "href": "/views/welcome-1.html?mpi=m-p-i-0"
+                    },
+                    "logoInfo": {
+                        "title": "",
+                        "image": "/static/images/logo.png",
+                        "href": ""
+                    },
+                    'menuInfo':{
+                        "currency": {
+                            "title": "",
+                            "icon": "",
+                            "child": arr
+                        }
+                    }
+                }
+               
+                return obj
+               
+            }
+        });
+    </script>
+</body>
 
 </html>

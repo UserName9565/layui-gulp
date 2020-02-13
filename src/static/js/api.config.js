@@ -2,7 +2,7 @@
 var apiConfig = {
   // ctx: "http://192.168.1.79:8080",
  
-  ctx: "http://seal.agilestar.cn:8891",
-  ctxTest: "http://seal.agilestar.cn:8892"
+  ctx: "http://192.168.30.14:9011",
+  oldVersion:"http://192.168.30.14:8090/"
 }
 

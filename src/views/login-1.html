@@ -34,7 +34,7 @@
         .logo-title h1 img{
             height:32px;
         }
-        .login-form {background-color:#fff;border:1px solid #fff;border-radius:3px;padding:14px 20px;box-shadow:0 0 8px #eeeeee;}
+        .login-form {height: 320px;background-color:#fff;border:1px solid #fff;border-radius:3px;padding:14px 20px;box-shadow:0 0 8px #eeeeee;}
         .login-form .layui-form-item {position:relative;}
         .login-form .layui-form-item label {position:absolute;left:1px;top:1px;width:38px;line-height:36px;text-align:center;color:#d2d2d2;}
         .login-form .layui-form-item input {padding-left:36px;}
@@ -60,19 +60,19 @@
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-username" for="username"></label>
-                        <input type="text" name="username" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input" value="admin">
+                        <input type="text" name="loginNoStr" lay-verify="required" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input" value="admin">
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-password" for="password"></label>
-                        <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input" value="123456">
+                        <input type="password" name="loginPasswd" lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input" value="111">
                     </div>
-                    <div class="layui-form-item">
+                    <!-- <div class="layui-form-item">
                         <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                         <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
                         <div class="captcha-img">
                             <img id="captchaPic" src="../static/images/captcha.jpg">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="layui-form-item">
                         <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                     </div>
@@ -102,23 +102,43 @@
         });
 
         // 进行登录操作
-        form.on('submit(login)', function (data) {
-            data = data.field;
-            if (data.username == '') {
-                layer.msg('用户名不能为空');
-                return false;
+        form.on('submit(login)', function (request) {
+            request = request.field;
+            request.selfIp = ''
+            request.loginPasswd = ''
+            // if (data.username == '') {
+            //     layer.msg('用户名不能为空');
+            //     return false;
+            // }
+            // if (data.password == '') {
+            //     layer.msg('密码不能为空');
+            //     return false;
+            // }
+            // if (data.captcha == '') {
+            //     layer.msg('验证码不能为空');
+            //     return false;
+            // }
+            var obj = {
+                url:url.token,
+                data:request
             }
-            if (data.password == '') {
-                layer.msg('密码不能为空');
-                return false;
-            }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-            layer.msg('登录成功', function () {
+          
+            publicFun.ajax(obj,success)
+            function success(data){
+               
+                // modelInit(data.data);
+                // localStorage.setItem("menus",JSON.stringify(data.functions))
+                $.cookie("JSESSIONID_token", data.token, {
+                  expires: 7, path: '/'
+                })
+                 
+               
+                // return false;
                 window.location = '/index.html';
-            });
+            }
+            // layer.msg('登录成功', function () {
+            //     window.location = '/index.html';
+            // });
             return false;
         });
     });

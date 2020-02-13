@@ -3,7 +3,7 @@
  * author:Mr.Chung
  * description:layuimini 框架扩展
  */
-
+var _this =  $(this) 
 layui.define(["element", "jquery"], function (exports) {
     var element = layui.element,
         // $ = layui.$,
@@ -41,23 +41,33 @@ layui.define(["element", "jquery"], function (exports) {
          * 初始化
          * @param url
          */
-        this.init = function (url) {
+        this.init = function (data,tag) {
+           
             var loading = layer.load(0, {shade: false, time: 2 * 1000});
             layuimini.initBgColor();
             layuimini.initDevice();
-            $.getJSON(url, function (data, status) {
-                if (data == null) {
-                    layuimini.msg_error('暂无菜单信息');
-                } else {
-                    layuimini.initHome(data.homeInfo);
-                    layuimini.initLogo(data.logoInfo);
-                    layuimini.initClear(data.clearInfo);
-                    layuimini.initMenu(data.menuInfo);
-                    layuimini.initTab();
-                }
-            }).fail(function () {
-                layuimini.msg_error('菜单接口有误');
-            });
+            if(tag){
+                layuimini.initHome(data.homeInfo);
+                layuimini.initLogo(data.logoInfo);
+                layuimini.initClear(data.clearInfo);
+                layuimini.initMenu(data.menuInfo);
+                layuimini.initTab();
+            }else{
+
+                $.getJSON(url, function (data, status) {
+                    if (data == null) {
+                        layuimini.msg_error('暂无菜单信息');
+                    } else {
+                        layuimini.initHome(data.homeInfo);
+                        layuimini.initLogo(data.logoInfo);
+                        layuimini.initClear(data.clearInfo);
+                        layuimini.initMenu(data.menuInfo);
+                        layuimini.initTab();
+                    }
+                }).fail(function () {
+                    layuimini.msg_error('菜单接口有误');
+                });
+            }
             layer.close(loading);
         };
 
@@ -77,6 +87,7 @@ layui.define(["element", "jquery"], function (exports) {
          * @param data
          */
         this.initHome = function (data) {
+            console.log(data)
             sessionStorage.setItem('layuiminiHomeHref', data.href);
             $('#layuiminiHomeTabId').html('<i class="' + data.icon + '"></i> <span>' + data.title + '</span>');
             $('#layuiminiHomeTabId').attr('lay-id', data.href);
@@ -122,6 +133,46 @@ layui.define(["element", "jquery"], function (exports) {
                 '.layui-layout-admin .layui-nav-tree .layui-this, .layui-layout-admin .layui-nav-tree .layui-this>a, .layui-layout-admin .layui-nav-tree .layui-nav-child dd.layui-this, .layui-layout-admin .layui-nav-tree .layui-nav-child dd.layui-this a {\n' +
                 '    background-color: ' + bgcolorData.menuLeftThis + ' !important;color:#fff !important' +
                 '}';
+            if(bgcolorData.menuLeft=="#fff"){
+                styleHtml+='.paperless .layui-left-menu .layui-nav .layui-nav-item > a:hover {'
+                   +' background-color: #0b82ff !important;'
+                    +'color: #fff !important; }.paperless .layui-left-menu .layui-nav .layui-nav-item > a:hover .layui-nav-more {'
+                    +'border-color: #fff transparent transparent; }'
+                +'.paperless .layui-nav-itemed > a:hover .layui-nav-more {'
+                  +'border-color: transparent transparent #fff !important; }'
+                  +'.paperless .layui-nav-tree .layui-nav-child a, .paperless .paperless-v1 .layui-nav-item a {'
+                    +'color: #333333 !important; }'
+                  
+                  +'.paperless .layui-nav-itemed > .layui-nav-child {'
+                    +'background-color: #fff !important; }'
+                  
+                  +'.paperless .layui-nav .layui-nav-more {'
+                    +'border-color: #333333 transparent transparent; }'
+                  
+                  +'.paperless .layui-nav .layui-nav-mored, .paperless .layui-nav-itemed > a .layui-nav-more {'
+                    +'border-color: transparent transparent #333333; }'
+            }
+
+            //全局按钮以及其他基础配色
+            var baseHtml = '.agile-form .layui-form-select dl dd.layui-this {'
+                +'background-color: '+bgcolorData.base+'; }'
+              +'.layui-form-checked[lay-skin=primary] i {'
+                +'background-color: '+bgcolorData.base+'; }'
+              +'.layui-laypage .layui-laypage-curr .layui-laypage-em {'
+                +'background-color: '+bgcolorData.base+'; }'
+            +'.layui-btn{'
+               +' background-color:'+bgcolorData.base+' ;'
+           +' }'
+            +'.layui-btn-danger {'
+               +' background-color: #FF5722;'
+           +' }'
+                
+           setTimeout(function(){
+                var agile = $("iframe").contents().find("#agile-color");
+
+                agile.html(baseHtml)
+            },500)
+            
             $('#layuimini-bg-color').html(styleHtml);
         };
 
@@ -150,6 +201,7 @@ layui.define(["element", "jquery"], function (exports) {
                             html += '<dl class="layui-nav-child">\n';
                             $.each(child, function (childIndex, childMenu) {
                                 html += '<dd>\n';
+                               
                                 if (childMenu.child != undefined && childMenu.child != []) {
                                     html += '<a href="javascript:;" class="layui-menu-tips" ><i class="' + childMenu.icon + '"></i><span class="layui-left-nav"> ' + childMenu.title + '</span></a>';
                                     html = buildChildHtml(html, childMenu.child, menuParameId);
@@ -286,6 +338,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#fff',
                     menuLeftThis: '#0b82ff',
                     menuLeftHover: '#0b82ff',
+                    base:'#0b82ff'
                 },
                 {
                     headerRight: '#1aa094',
@@ -294,6 +347,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#2f4056',
                     menuLeftThis: '#1aa094',
                     menuLeftHover: '#3b3f4b',
+                    base:'#243346'
                 },
                 {
                     headerRight: '#23262e',
@@ -302,6 +356,8 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#23262e',
                     menuLeftThis: '#1aa094',
                     menuLeftHover: '#3b3f4b',
+                     
+                    base:'#3b3f4b'
                 },
                 {
                     headerRight: '#ffa4d1',
@@ -310,6 +366,8 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#1f1f1f',
                     menuLeftThis: '#ffa4d1',
                     menuLeftHover: '#1f1f1f',
+                     
+                    base:'#ffa4d1'
                 },
                 {
                     headerRight: '#1aa094',
@@ -318,6 +376,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#23262e',
                     menuLeftThis: '#1aa094',
                     menuLeftHover: '#3b3f4b',
+                    base:'#197971'
                 },
                 {
                     headerRight: '#1e9fff',
@@ -326,6 +385,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#1f1f1f',
                     menuLeftThis: '#1e9fff',
                     menuLeftHover: '#3b3f4b',
+                    base:'#0069b7'
                 },
 
                 {
@@ -335,6 +395,8 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#2f4056',
                     menuLeftThis: '#ffb800',
                     menuLeftHover: '#3b3f4b',
+                    base:'#d09600'
+                    
                 },
                 {
                     headerRight: '#e82121',
@@ -343,6 +405,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#1f1f1f',
                     menuLeftThis: '#e82121',
                     menuLeftHover: '#3b3f4b',
+                    base:'#ae1919'
                 },
                 {
                     headerRight: '#963885',
@@ -351,6 +414,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#2f4056',
                     menuLeftThis: '#963885',
                     menuLeftHover: '#3b3f4b',
+                    base:'#772c6a'
                 },
                 
                 {
@@ -360,6 +424,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#2f4056',
                     menuLeftThis: '#ffb800',
                     menuLeftHover: '#3b3f4b',
+                    base:'#d09600'
                 },
                 {
                     headerRight: '#e82121',
@@ -368,6 +433,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#1f1f1f',
                     menuLeftThis: '#e82121',
                     menuLeftHover: '#3b3f4b',
+                    base:'#ae1919'
                 }, 
                 {
                     headerRight: '#963885', 
@@ -376,6 +442,7 @@ layui.define(["element", "jquery"], function (exports) {
                     menuLeft: '#2f4056',
                     menuLeftThis: '#963885',
                     menuLeftHover: '#3b3f4b',
+                    base:'#772c6a'
                 }
             ];
 
@@ -948,7 +1015,7 @@ layui.define(["element", "jquery"], function (exports) {
         var loading = layer.load(0, {shade: false, time: 2 * 1000});
         var clientHeight = (document.documentElement.clientHeight) - 95;
         var bgColorHtml = layuimini.buildBgColorHtml();
-        console.log(bgColorHtml)
+      
         var html = '<div class="layuimini-color">\n' +
             '<div class="color-title">\n' +
             '<span>配色方案</span>\n' +
@@ -982,7 +1049,7 @@ layui.define(["element", "jquery"], function (exports) {
         var bgcolorId = $(this).attr('data-select-bgcolor');
         $('.layuimini-color .color-content ul .layui-this').attr('class', '');
         $(this).attr('class', 'layui-this');
-        console.log(bgcolorId)
+        
         sessionStorage.setItem('layuiminiBgcolorId', bgcolorId);
 
         layuimini.initBgColor();
