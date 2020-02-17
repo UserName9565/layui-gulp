@@ -36,6 +36,17 @@
     			<i class="layui-icon layui-icon-search "></i>
     			<span class="btn-span-middle">查询</span>
     		</button>
+
+        <button class="ag-btn-add layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户新增">
+        	<i class="layui-icon layui-icon-search "></i>
+        	<span class="btn-span-middle">新增</span>
+        </button>
+
+        <button class="ag-btn-update layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-win-id="1" ag-win-width="800" ag-win-height="600" ag-win-title="租户修改">
+        	<i class="layui-icon layui-icon-search "></i>
+        	<span class="btn-span-middle">修改</span>
+        </button>
+
     		<button class="layui-btn layui-btn-sm layui-btn-blue" type="reset">
     			<i class="layui-icon layui-icon-search "></i>
     			<span class="btn-span-middle">重置</span>
@@ -65,7 +76,7 @@
 			          "fixed": "left",
 			          "totalRowText": "合计"
 			        }, {
-			          "field": "username",
+			          "field": "tenantName",
 			          "title": "用户名",
 			          "width": 80
 			        }

@@ -46,6 +46,13 @@ layui.use(['form', 'table'], function() {
 
       $(".ag-btn-query").unbind();
       $(".ag-btn-query").bind("click",queryList);
+
+      $(".ag-btn-add").unbind();
+      $(".ag-btn-add").bind("click",addInit);
+
+      $(".ag-btn-update").unbind();
+      $(".ag-btn-update").bind("click",updateInit);
+
   };
 
 
@@ -160,6 +167,42 @@ layui.use(['form', 'table'], function() {
           }
       });
   };
+
+ 	/**
+  *
+  * 修改初始化方法
+  *
+  ***/
+  function updateInit(){
+
+    var index = $(this).attr("ag-data-index");
+    var url = $(this).attr("ag-data-url");
+    var winId = $(this).attr("ag-win-id");
+    var winW = $(this).attr("ag-win-width");
+    var winH = $(this).attr("ag-win-height");
+    var title =  $(this).attr("ag-win-title");
+
+    util.openWin(winId,title,url,winW,winH);
+
+  };
+
+
+  	/**
+  	*添加初始化方法
+  	*
+  	***/
+  	function addInit(){
+
+  		var index = $(this).attr("ag-data-index");
+  		var url = $(this).attr("ag-data-url");
+  		var winId = $(this).attr("ag-win-id");
+  		var winW = $(this).attr("ag-win-width");
+  		var winH = $(this).attr("ag-win-height");
+  		var title =  $(this).attr("ag-win-title");
+
+  		util.openWin(winId,title,url,winW,winH);
+
+  	};
 
   $(document).ready(function(){
 
