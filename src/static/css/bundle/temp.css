@@ -140,6 +140,14 @@ body{
 
 }
 
+.layui-card-list{
+	
+	position: relative;
+	
+	margin: 15px;
+	
+}
+
 .btn-span-middle {
 	float: right;
 	top: -10px;
@@ -163,5 +171,22 @@ body{
 }
 
 
+.ag-area-page{
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align: center;
+	padding: 10px;
+	
+	border-top: 1px solid #e6e6e6;
+}
+
+.ag-area-page>*{
+	
+	margin:0px 5px;
+	
+	
+}
 
 

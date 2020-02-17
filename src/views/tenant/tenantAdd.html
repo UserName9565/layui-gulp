@@ -31,17 +31,30 @@
 			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
 			<div class="btns-right">
 
+			
+
 				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
-					 ag-data-index="0" ag-data-url="/sys/tenant/queryPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/tenant/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
+
+				<button class="ag-btn-add layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户新增">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">新增</span>
+				</button>
+
+				<button class="ag-btn-update layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-win-id="1" ag-win-width="800" ag-win-height="600" ag-win-title="租户修改">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">修改</span>
+				</button>
+
 					<button class="layui-btn layui-btn-sm layui-btn-blue" type="reset">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
 				</div>
+
 
 			</div>
 
@@ -70,26 +83,28 @@
 			</div>
 			
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
-				[
-				[
-				{
-				"type": "checkbox",
-				"fixed": "left"
-				}, {
-				"field": "tenantId",
-				"title": "ID",
-				"width": 80,
-				"sort": true,
-				"fixed": "left",
-				"totalRowText": "合计"
-				}, {
-				"field": "username",
-				"title": "用户名",
-				"width": 80
-				}
 
-				]
-				]
+			    [
+			      [
+			        {
+			          "type": "checkbox",
+			          "fixed": "left"
+			        }, {
+			          "field": "tenantId",
+			          "title": "ID",
+			          "width": 80,
+			          "sort": true,
+			          "fixed": "left",
+			          "totalRowText": "合计"
+			        }, {
+			          "field": "tenantName",
+			          "title": "用户名",
+			          "width": 80
+			        }
+
+			      ]
+			    ]
+
 			</div>
 			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
 
