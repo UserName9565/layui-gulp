@@ -85,6 +85,11 @@
 	bottom: 0px;
 }
 
+body{
+	
+	font-family: PingFang SC;
+}
+
 
 
 
@@ -157,15 +162,6 @@
 	background-color: white;
 }
 
-.layui-table-cell {
 
-	font-weight: 700;
 
-	color: #423d3d;
-}
 
-.layui-table th,
-.layui-table td {
-
-	border: none;
-}
