@@ -31,23 +31,13 @@
 			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
 			<div class="btns-right">
 
-			
+
 
 				<div class="layui-inline">
 					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/tenant/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
-
-				<button class="ag-btn-add layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户新增">
-					<i class="layui-icon layui-icon-search "></i>
-					<span class="btn-span-middle">新增</span>
-				</button>
-
-				<button class="ag-btn-update layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-win-id="1" ag-win-width="800" ag-win-height="600" ag-win-title="租户修改">
-					<i class="layui-icon layui-icon-search "></i>
-					<span class="btn-span-middle">修改</span>
-				</button>
 
 					<button class="layui-btn layui-btn-sm layui-btn-blue" type="reset">
 						<i class="layui-icon layui-icon-search "></i>
@@ -66,12 +56,12 @@
 		<div class=" layui-card  layui-card-list" style="height: calc( 100vh - 105px);">
 
 			<div class="layui-border-box ">
-				
+
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="layui-inline" lay-event><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="layui-inline" lay-event><i class="layui-icon layui-icon-edit"></i></div>
-						<div class="layui-inline" lay-event><i class="layui-icon layui-icon-delete"></i></div>
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户新增"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户修改"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event><i class="layui-icon layui-icon-delete"></i></div>
 					</div>
 					<div class="layui-table-tool-self">
 						<div class="layui-inline" title="筛选列" lay-event><i class="layui-icon layui-icon-cols"></i></div>
@@ -79,9 +69,9 @@
 						<div class="layui-inline" title="打印" lay-event><i class="layui-icon layui-icon-print"></i></div>
 					</div>
 				</div>
-				
+
 			</div>
-			
+
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
 			    [
