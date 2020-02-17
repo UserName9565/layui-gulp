@@ -14,6 +14,8 @@ layui.use(['form', 'table'], function() {
     $ = layui.$;
     table = layui.table;
 
+
+
   	var $window = $(window);
 
   	/**
@@ -54,7 +56,6 @@ layui.use(['form', 'table'], function() {
   	 */
   	function addPageLisnr(page,index){
 
-      alert("分页事件处理");
 
   		//上一页
   		$(".ag-btn-page-pre").unbind();
@@ -111,6 +112,7 @@ layui.use(['form', 'table'], function() {
    */
   function queryList(){
 
+
       var index = $(this).attr("ag-data-index");
       var form = $(".ag-form[ag-data-index="+index+"]");
       var url = $(this).attr("ag-data-url");
@@ -140,6 +142,7 @@ layui.use(['form', 'table'], function() {
         success:function(page){
 
               var colsStr = $(".ag-table-header[ag-data-index="+index+"]").html();
+
               var cols = $.parseJSON(colsStr);
               //执行一个 table 实例
               table.render({
