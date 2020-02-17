@@ -47,16 +47,16 @@ util = {
 
 	//告警提示
 	warning:function(msg){
-    util.showDialog(1,msg);
+    util.showDialog(msg,1);
 	},
 	//操作成功提示
 	success:function(msg){
-		util.showDialog(2,msg);
+		 util.showDialog(msg,2);
 	},
 
 	//操作失败提示
 	error:function(msg){
-		util.showDialog(3,msg);
+    	util.showDialog(msg,0);
 	},
 
   //打开窗口
@@ -163,12 +163,11 @@ util = {
      * @param {Object} retMsg
      * @param {Object} type
      * @param {Object} callBack
-     * @param {Object} timeOut
+     * @param {Object} opts
      */
-    showDialog: function(retMsg, type, callBack,timeOut){
+    showDialog: function(retMsg, type, callBack,opts){
 
-    	closeAll();
-
+    	util.closeAll();
     	var winW = $(document).width();
     	var winH  = $(window).height() == 0 ?$(document).height() :$(window).height();
 
@@ -227,16 +226,13 @@ util = {
     		});
     	}else if(type == 3){
 
-
-
     		layer.confirm(retMsg,{offset:off,closeBtn:0,title:['\u63d0\u793a\u4fe1\u606f',true],yes:function(index){
 
     		    layer.close(index);
 
 
                 if($.isFunction(callBack)){
-
-    				callBack.call(this);
+                    callBack.call(this,opts);
                     return ;
                 }
 
@@ -261,7 +257,46 @@ util = {
     	}
 
 
-    }
+    },
+
+  /**
+   *获取查询字符串参数
+   *
+   */
+ getUrlParam: function() {
+
+   var param = {};
+
+   try {
+
+    var queryStr  = window.location.search.substr(1);
+    $.each(queryStr.split("&"), function(i, t) {
+
+     var arr = t.split("=");
+     if(!util.isNull(arr[0]) && arr.length == 2) {
+
+        param[arr[0]] = util.decode(arr[1]);
+     }
+
+    });
+
+   } catch(e) {
+
+    console.log(e);
+   }
+
+   return param;
+
+  },
+
+ encode: function(url) {
+   return encodeURI(url);
+  },
+
+  decode: function(url) {
+
+   return decodeURIComponent(url).replace(/\+/g," ");
+  },
 
 
 

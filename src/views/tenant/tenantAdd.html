@@ -31,8 +31,6 @@
 			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
 			<div class="btns-right">
 
-
-
 				<div class="layui-inline">
 					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/tenant/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
@@ -60,14 +58,10 @@
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
 						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户新增"><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户修改"><i class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event><i class="layui-icon layui-icon-delete"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户修改" ag-data-pk="tenantId" ag-data-url="/views/tenant/tenantUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="tenantId" ag-data-url="/sys/tenant/del"><i class="layui-icon layui-icon-delete"></i></div>
 					</div>
-					<div class="layui-table-tool-self">
-						<div class="layui-inline" title="筛选列" lay-event><i class="layui-icon layui-icon-cols"></i></div>
-						<div class="layui-inline" title="导出" lay-event><i class="layui-icon layui-icon-export"></i></div>
-						<div class="layui-inline" title="打印" lay-event><i class="layui-icon layui-icon-print"></i></div>
-					</div>
+
 				</div>
 
 			</div>
@@ -77,18 +71,22 @@
 			    [
 			      [
 			        {
-			          "type": "checkbox",
+			          "type": "radio",
 			          "fixed": "left"
 			        }, {
 			          "field": "tenantId",
-			          "title": "ID",
+			          "title": "租户ID",
 			          "width": 80,
 			          "sort": true,
 			          "fixed": "left",
 			          "totalRowText": "合计"
 			        }, {
 			          "field": "tenantName",
-			          "title": "用户名",
+			          "title": "租户名称",
+			          "width": 80
+			        }, {
+			          "field": "sts",
+			          "title": "状态",
 			          "width": 80
 			        }
 
@@ -105,7 +103,6 @@
 					&gt;</a>
 				<span id="totalPageSpan"></span>|<span id="totalRecordSpan"></span>|<span id="pageNoSpan"></span>
 			</div>
-
 
 		</div>
 

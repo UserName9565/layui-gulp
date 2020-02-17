@@ -53,6 +53,16 @@ layui.use(['form', 'table'], function() {
       $(".ag-btn-update").unbind();
       $(".ag-btn-update").bind("click",updateInit);
 
+      $(".ag-btn-cancel").unbind();
+      $(".ag-btn-cancel").bind("click",cancel);
+
+      $(".ag-btn-save").unbind();
+      $(".ag-btn-save").bind("click",save);
+
+      $(".ag-btn-del").unbind();
+      $(".ag-btn-del").bind("click",del);
+
+
   };
 
 
@@ -158,7 +168,6 @@ layui.use(['form', 'table'], function() {
                   data: page.data, //数据接口
                   title: '用户表',
                   page: false, //开启分页
-                  toolbar: 'default', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                   totalRow: false, //开启合计行
                   cols: cols
               });
@@ -175,6 +184,24 @@ layui.use(['form', 'table'], function() {
   ***/
   function updateInit(){
 
+	  var index = $(this).attr("ag-data-index");
+    var tableId = $("table[ag-data-index="+index+"]").attr("id");
+		var checkStatus = table.checkStatus(tableId);
+    var data = checkStatus.data;  //获取选中行数据
+    if(data.length == 0){
+
+      util.warning('请选择一条数据库记录!');
+      return ;
+    }
+
+    var pkCol = $(this).attr("ag-data-pk");
+    if(util.isNull(pkCol)){
+      pkCol = "id";
+    }
+
+    var pkVal = data[0][pkCol];
+
+
     var index = $(this).attr("ag-data-index");
     var url = $(this).attr("ag-data-url");
     var winId = $(this).attr("ag-win-id");
@@ -182,8 +209,19 @@ layui.use(['form', 'table'], function() {
     var winH = $(this).attr("ag-win-height");
     var title =  $(this).attr("ag-win-title");
 
-    util.openWin(winId,title,url,winW,winH);
+    if(url.indexOf("?") == -1){
+      url = url + "?" + pkCol + "=" + pkVal;
+    }else{
+      url = url + "&" + pkCol + "=" + pkVal;
+    }
 
+    var opts = {"winId":winId}
+    util.openWin(url,title,winW,winH,opts);
+
+  };
+
+  function cancel(){
+    util.closeWin();
   };
 
 
@@ -204,9 +242,199 @@ layui.use(['form', 'table'], function() {
 
   	};
 
+ /***
+  *保存方法-增加或者修改的保存方法
+  *
+  **/
+  function save(){
+
+
+  		var index = $(this).attr("ag-data-index");
+  		var url = ctx + $(this).attr("ag-data-url");
+
+
+      var form = $(".ag-form[ag-data-index="+index+"]");
+      var param = getFormJson(form);
+
+      $.ajax({
+            type:"POST",
+            url:url,
+            data:JSON.stringify(param),
+            contentType:"application/json",
+            xhrFields: {
+                withCredentials: false //跨域session保持
+              },
+            async: true ,
+            dataType:"json",
+            success:function(data){
+
+                 var result = data.result;
+                 var desc = data.desc;
+
+                 if(result == 0){
+                    util.success(desc);
+
+                    var queryBtn = parent.layui.$(".ag-btn-query");
+                    if(queryBtn.length > 0){
+                      $(queryBtn).click();
+                      util.closeWin();
+                    }
+                 }else{
+                    util.error(desc);
+                 }
+
+             }
+          });
+
+
+  };
+
+  function del(){
+
+	  var index = $(this).attr("ag-data-index");
+    var tableId = $("table[ag-data-index="+index+"]").attr("id");
+		var checkStatus = table.checkStatus(tableId);
+    var data = checkStatus.data;  //获取选中行数据
+    if(data.length == 0){
+
+      util.warning('请选择一条数据库记录!');
+      return ;
+    }
+
+    var pkCol = $(this).attr("ag-data-pk");
+    if(util.isNull(pkCol)){
+      pkCol = "id";
+    }
+
+    var pkVal = data[0][pkCol];
+    var opts= {"index":index};
+
+    util.showDialog("您确定要删除选中记录么?",3,doDel,opts);
+
+  }
+
+  function doDel(opts){
+
+    var index = opts.index;
+    var tableId = $("table[ag-data-index="+index+"]").attr("id");
+    var checkStatus = table.checkStatus(tableId);
+    var data = checkStatus.data;  //获取选中行数据
+
+    var btn = $(".ag-btn-del[ag-data-index="+index+"]")
+    var pkCol = $(btn).attr("ag-data-pk");
+    if(util.isNull(pkCol)){
+      pkCol = "id";
+    }
+
+    var pkVal = data[0][pkCol];
+
+    var param = {};
+    param[pkCol] = pkVal;
+    var url = ctx + $(btn).attr("ag-data-url");
+
+    $.ajax({
+          type:"POST",
+          url:url,
+          data:JSON.stringify(param),
+          contentType:"application/json",
+          xhrFields: {
+              withCredentials: false //跨域session保持
+            },
+          async: true ,
+          dataType:"json",
+          success:function(data){
+
+               var result = data.result;
+               var desc = data.desc;
+
+               if(result == 0){
+                  util.success(desc);
+
+                  var queryBtn = layui.$(".ag-btn-query");
+                  if(queryBtn.length > 0){
+                    $(queryBtn).click();
+                  }
+               }else{
+                  util.error(desc);
+               }
+
+           }
+        });
+
+
+
+
+  }
+
+
+
+  /**
+   * 初始化表单数据-修改表单
+   *
+   */
+  function initForm(){
+
+
+    var param = util.getUrlParam();
+
+    $(".ag-form").each(function(idx,form){
+
+        var condiCnt = 0;
+        var dataUrl = $(form).attr("ag-data-url");
+
+        if(!util.isNull(dataUrl)){
+
+          for(var name in param){
+
+             var val = param[name];
+
+             if(!util.isNull(val)){
+               $(form).find("input[name="+name+"],select[name="+name+"]").val(val);
+               condiCnt++;
+             }
+          }
+        }
+
+        var formParam = getFormJson($(form));
+        //加载数据并补充初始化表单
+        if(condiCnt > 0){
+            var url = ctx + dataUrl;
+            $.ajax({
+              type:"POST",
+              url:url,
+              data:JSON.stringify(formParam),
+              contentType:"application/json",
+              xhrFields: {
+                  withCredentials: false //跨域session保持
+                },
+              async: true ,
+              dataType:"json",
+              success:function(data){
+
+                  for(var name in data){
+
+                       var val = data[name];
+                       if(!util.isNull(val)){
+                         $(form).find("input[name="+name+"],select[name="+name+"]").val(val);
+                       }
+                    }
+               }
+            });
+
+
+        }
+
+    });
+
+  }
+
+
+
   $(document).ready(function(){
 
       initBtnLsnr();
+
+      initForm();
 
   });
 
