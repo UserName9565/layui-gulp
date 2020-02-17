@@ -1,7 +1,13 @@
-.layui-body-color-info {
+
+
+/**
+ * 背景颜色,灰色
+ */
+.bg-info {
 
 	background-color: #f2f3f7;
 }
+
 
 .layui-card-margin {
 	margin: 15px;
@@ -78,6 +84,9 @@
 	left: 320px;
 	bottom: 0px;
 }
+
+
+
 
 .layui-inline-search {
 	display: block;

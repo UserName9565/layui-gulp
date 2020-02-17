@@ -7,58 +7,80 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     @@include('url-config.html')
-    <style>
-      body {
-            background-color: #ffffff;
-        }
-    </style>
   </head>
-  <body>
-    <div class="ag-form layui-form layuimini-form" ag-data-index="0">
-      <div class="layui-form-item">
-        <label class="layui-form-label">短输入框</label>
-        <div class="layui-input-inline">
-          <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
-        </div>
-      </div>
+  <body class="bg-info">
+	  
+	  <div class="layui-card layui-card-margin ">
+	  
+	  	<form class="ag-form layui-form" ag-data-index="0">
+			
+			<div class="param-left">
+			
+				<div class="layui-inline ">
+					<label class="layui-form-label">租户ID：</label>
+					<div class="layui-input-block">
+						<input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+					</div>
+				</div>
+				
+			</div>
+			<div class="btns-right">
+			
+				<div class="layui-inline">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/tenant/queryList">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">查询</span>
+					</button>
+					<button class="layui-btn layui-btn-sm layui-btn-blue" type="reset">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">重置</span>
+					</button>
+				</div>
+			
+			</div>
+			
+		</form>
+		
+	 </div>
 
-      <div class="layui-form-item">
-        <div class="layui-input-block">
-          <button class="ag-btn-query layui-btn" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/tenant/queryList">查询</button>
-        </div>
-      </div>
-    </div>
-
-    <div style="display:none" class="ag-table-header" ag-data-index="0">
-        [
-          [
-            {
-              "type": "checkbox",
-              "fixed": "left"
-            }, {
-              "field": "tenantId",
-              "title": "ID",
-              "width": 80,
-              "sort": true,
-              "fixed": "left",
-              "totalRowText": "合计"
-            }, {
-              "field": "username",
-              "title": "用户名",
-              "width": 80
-            }
-
-          ]
-        ]
-    </div>
-    <table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
-
-    </table>
-
-    <div class="pagging ag-area-page">
-			    <a href="#" rel="pre" class="ag-btn-page-pre">&lt; 上一页</a> <a href="#" rel="next" class="ag-btn-page-next">下一页 &gt;</a>
-			    <span id="totalPageSpan"></span>|<span id="totalRecordSpan"></span>|<span id="pageNoSpan"></span>
-		</div>
+   
+	
+	
+	<div class=" layui-card " style="margin: 15px;height: calc( 100vh - 105px);">
+		
+			<div style="display:none" class="ag-table-header" ag-data-index="0">
+			    [
+			      [
+			        {
+			          "type": "checkbox",
+			          "fixed": "left"
+			        }, {
+			          "field": "tenantId",
+			          "title": "ID",
+			          "width": 80,
+			          "sort": true,
+			          "fixed": "left",
+			          "totalRowText": "合计"
+			        }, {
+			          "field": "username",
+			          "title": "用户名",
+			          "width": 80
+			        }
+			
+			      ]
+			    ]
+			</div>
+			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+			
+			</table>
+			
+			<div class="pagging ag-area-page">
+					    <a href="#" rel="pre" class="ag-btn-page-pre">&lt; 上一页</a> <a href="#" rel="next" class="ag-btn-page-next">下一页 &gt;</a>
+					    <span id="totalPageSpan"></span>|<span id="totalRecordSpan"></span>|<span id="pageNoSpan"></span>
+			</div>
+		
+			
+	 </div>
 
     <script>
 
