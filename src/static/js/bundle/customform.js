@@ -240,7 +240,9 @@ layui.use(['form', 'table', 'checkForm'], function() {
   		var winH = $(this).attr("ag-win-height");
   		var title =  $(this).attr("ag-win-title");
 
-  		util.openWin(winId,title,url,winW,winH);
+      var opts = {"winId":winId}
+      alert(url);
+      util.openWin(url,title,winW,winH,opts);
 
   	};
 
