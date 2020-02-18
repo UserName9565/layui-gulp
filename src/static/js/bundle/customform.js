@@ -73,6 +73,8 @@ layui.use(['form', 'table'], function() {
   	 */
   	function addPageLisnr(page,index){
 
+      var pageHtml = '<a href="#" rel="pre" class="ag-btn-page-pre">&lt; 上一页</a> <a href="#" rel="next" class="ag-btn-page-next">下一页&gt;</a><span id="totalPageSpan"></span>|<span id="totalRecordSpan"></span>|<span id="pageNoSpan"></span>';
+      $(".ag-area-page").html(pageHtml);
 
   		//上一页
   		$(".ag-btn-page-pre").unbind();
