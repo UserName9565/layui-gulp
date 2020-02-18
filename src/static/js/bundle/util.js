@@ -50,8 +50,10 @@ util = {
     util.showDialog(msg,1);
 	},
 	//操作成功提示
-	success:function(msg){
-		 util.showDialog(msg,2);
+	success:function(msg,closeParent){
+    closeParent = closeParent == undefined ? 1: 0;
+    var opts = {"closeParent":closeParent};
+		 util.showDialog(msg,2,"no",opts);
 	},
 
 	//操作失败提示
@@ -177,6 +179,9 @@ util = {
     		layer.alert(retMsg, {offset:off,title:['\u63d0\u793a\u4fe1\u606f',true],icon: 1,closeBtn:0},function(index){
 
     			layer.close(index);
+          if(opts != undefined && opts.closeParent == 1){
+            util.closeWin();
+          }
     			if($.isFunction(callBack)){
 
     				callBack.call(this);
@@ -184,7 +189,7 @@ util = {
     				return ;
     			}
 
-    			if(callBack){
+    			if(callBack != "no"){
     				var arr = callBack.split("=");
     				eval(arr[1]);
     			}
@@ -202,7 +207,7 @@ util = {
     				return ;
     			}
 
-    			if(callBack){
+    			if(callBack != "no"){
     				var arr = callBack.split("=");
     				eval(arr[1]);
     			}
@@ -219,7 +224,7 @@ util = {
     				return ;
     			}
 
-    			if(callBack){
+    			if(callBack != "no"){
     				var arr = callBack.split("=");
     				eval(arr[1]);
     			}

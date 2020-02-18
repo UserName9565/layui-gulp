@@ -7,13 +7,13 @@
  * @date 2020-02-16
  *
  */
-layui.use(['form', 'table'], function() {
+layui.use(['form', 'table', 'checkForm'], function() {
 
     var form = layui.form,
     layer = layui.layer,
     $ = layui.$;
     table = layui.table;
-
+    checkForm = layui.checkForm;
 
 
   	var $window = $(window);
@@ -250,12 +250,15 @@ layui.use(['form', 'table'], function() {
   **/
   function save(){
 
-
   		var index = $(this).attr("ag-data-index");
-  		var url = ctx + $(this).attr("ag-data-url");
-
-
       var form = $(".ag-form[ag-data-index="+index+"]");
+
+      var checkRet = checkForm.validateForm(form);
+      if(!checkRet){
+        return false;
+      }
+
+  		var url = ctx + $(this).attr("ag-data-url");
       var param = getFormJson(form);
 
       $.ajax({
@@ -279,7 +282,7 @@ layui.use(['form', 'table'], function() {
                     var queryBtn = parent.layui.$(".ag-btn-query");
                     if(queryBtn.length > 0){
                       $(queryBtn).click();
-                      util.closeWin();
+                      //util.closeWin();
                     }
                  }else{
                     util.error(desc);
