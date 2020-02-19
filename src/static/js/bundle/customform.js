@@ -7,13 +7,14 @@
  * @date 2020-02-16
  *
  */
-layui.use(['form', 'table', 'checkForm'], function() {
+layui.use(['form', 'table', 'checkForm','laydate'], function() {
 
     var form = layui.form,
     layer = layui.layer,
     $ = layui.$;
     table = layui.table;
     checkForm = layui.checkForm;
+    laydate = layui.laydate;
 
 
   	var $window = $(window);
@@ -241,7 +242,6 @@ layui.use(['form', 'table', 'checkForm'], function() {
   		var title =  $(this).attr("ag-win-title");
 
       var opts = {"winId":winId}
-      alert(url);
       util.openWin(url,title,winW,winH,opts);
 
   	};
@@ -433,8 +433,21 @@ layui.use(['form', 'table', 'checkForm'], function() {
 
     });
 
+
+    renderForm();
+
+
   }
 
+  //渲染表单-date,select
+  function renderForm(){
+
+
+    laydate.render({
+       elem: '#date',
+       type: 'datetime'
+     });
+  }
 
 
   $(document).ready(function(){
