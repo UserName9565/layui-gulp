@@ -384,10 +384,10 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
 
     var param = util.getUrlParam();
 
-    $(".ag-form").each(function(idx,form){
+    $(".ag-form").each(function(idx,agForm){
 
         var condiCnt = 0;
-        var dataUrl = $(form).attr("ag-data-url");
+        var dataUrl = $(agForm).attr("ag-data-url");
 
         if(!util.isNull(dataUrl)){
 
@@ -396,40 +396,62 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
              var val = param[name];
 
              if(!util.isNull(val)){
-               $(form).find("input[name="+name+"],select[name="+name+"]").val(val);
+               $(agForm).find("input[name="+name+"],select[name="+name+"]").val(val);
                condiCnt++;
              }
           }
-        }
 
-        var formParam = getFormJson($(form));
-        //加载数据并补充初始化表单
-        if(condiCnt > 0){
-            var url = ctx + dataUrl;
-            $.ajax({
-              type:"POST",
-              url:url,
-              data:JSON.stringify(formParam),
-              contentType:"application/json",
-              xhrFields: {
-                  withCredentials: false //跨域session保持
-                },
-              async: true ,
-              dataType:"json",
-              success:function(data){
+          var formParam = getFormJson($(agForm));
+          //加载数据并补充初始化表单
+          var url = ctx + dataUrl;
+          $.ajax({
+            type:"POST",
+            url:url,
+            data:JSON.stringify(formParam),
+            contentType:"application/json",
+            xhrFields: {
+                withCredentials: false //跨域session保持
+              },
+            async: true ,
+            dataType:"json",
+            success:function(data){
 
-                  for(var name in data){
+                for(var name in data){
 
-                       var val = data[name];
-                       if(!util.isNull(val)){
-                         $(form).find("input[name="+name+"],select[name="+name+"]").val(val);
+                     var val = data[name];
+                     if(!util.isNull(val)){
+                       $(agForm).find("input[name="+name+"]").val(val);
+                     }
+
+                     if(name.endsWith("Opt")){
+
+                       var optArr = data[name];
+                       var selectStr = "";
+                       for(var i = 0; i < optArr.length; i++){
+                         var selectedStr = optArr[i].selectedStr;
+                         if(util.isNull(selectedStr)){
+                           selectedStr = "";
+                         }
+                          var optBean = "<option value='"+optArr[i].optCode+"' "+selectedStr+">"+optArr[i].optName+"</option>";
+                          selectStr = selectStr + optBean;
                        }
-                    }
-               }
-            });
+
+                       var selObj = $("select[name="+name.substr(0,name.length -3)+"]");
+                       $(selObj).html(selectStr);
+                       form.render('select');
+                     }
+
+                  }
+
+
+             }
+          });
 
 
         }
+
+
+
 
     });
 
@@ -439,13 +461,14 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
 
   }
 
-  //渲染表单-date,select
+  //渲染表单-date
   function renderForm(){
-
-
-    laydate.render({
-       elem: '#date',
-       type: 'datetime'
+    var agDateArr = $(".ag-date");
+     $(agDateArr).each(function(idx,input){
+        laydate.render({
+           elem: input,
+           type: $(input).attr("ag-date-format")
+         });
      });
   }
 
