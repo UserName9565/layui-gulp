@@ -27,11 +27,20 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
   	function getFormJson(form){
 
   		var paramJson = {};
-  		var arr = $(form).find("input,select");
+  		var arr = $(form).find("input");
 
       for(var i = 0; i < arr.length; i++){
 
           paramJson[arr[i].name] = $(arr[i]).val();
+      }
+
+      var arr2 = $(form).find("select");
+      for(var i = 0; i < arr2.length; i++){
+
+        paramJson[arr2[i].name] = $(arr2[i]).val();
+        var nameKey = $(arr2[i]).attr("ag-sel-name");
+        var text = $(arr2[i]).find("option:selected").text();
+        paramJson[nameKey] = text;
       }
 
   		return paramJson;
@@ -428,13 +437,16 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
                        var optArr = data[name];
                        var selectStr = "";
                        for(var i = 0; i < optArr.length; i++){
-                         var selectedStr = optArr[i].selectedStr;
+                         var selectedStr = optArr[i].selected;
                          if(util.isNull(selectedStr)){
                            selectedStr = "";
                          }
+
                           var optBean = "<option value='"+optArr[i].optCode+"' "+selectedStr+">"+optArr[i].optName+"</option>";
                           selectStr = selectStr + optBean;
                        }
+
+
 
                        var selObj = $("select[name="+name.substr(0,name.length -3)+"]");
                        $(selObj).html(selectStr);

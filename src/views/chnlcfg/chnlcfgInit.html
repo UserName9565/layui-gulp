@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>layui</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+	</head>
+	<body class="bg-info">
+
+		<div class="layui-card layui-card-margin ">
+
+			<form class="ag-form layui-form" ag-data-index="0">
+
+				<div class="param-left">
+
+          <div class="layui-inline ">
+          	<label class="layui-form-label">办理方式编码：</label>
+          	<div class="layui-input-block">
+          		<input type="text" name="acceptType"  autocomplete="off" placeholder="办理方式编码" class="layui-input">
+          	</div>
+          </div>
+					<div class="layui-inline ">
+						<label class="layui-form-label">办理方式名称：</label>
+						<div class="layui-input-block">
+							<input type="text" name="acceptName" autocomplete="off" placeholder="办理方式名称" class="layui-input">
+						</div>
+					</div>
+
+				</div>
+
+
+			</form>
+
+			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
+			<div class="btns-right">
+
+				<div class="layui-inline">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/settings/chnlcfg/queryPage">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">查询</span>
+					</button>
+
+					<button class="layui-btn layui-btn-sm layui-btn-blue" type="reset">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">重置</span>
+					</button>
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+
+
+		<div class=" layui-card  layui-card-list" style="height: calc( 100vh - 105px);">
+
+			<div class="layui-border-box ">
+
+				<div class="layui-table-tool">
+					<div class="layui-table-tool-temp">
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="接入类型新增" ag-data-url="/views/chnlcfg/chnlcfgAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="接入类型修改" ag-data-pk="id" ag-data-url="/views/chnlcfg/chnlcfgUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/sys/settings/chnlcfg/del"><i class="layui-icon layui-icon-delete"></i></div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div style="display:none" class="ag-table-header" ag-data-index="0">
+
+			    [
+			      [
+			        {
+			          "type": "radio",
+			          "fixed": "left"
+			        },{
+			          "field": "id",
+			          "title": "主键",
+			          "hide": true,
+			          "fixed": "left"
+			        },{
+			          "field": "chnlType",
+			          "title": "接入类型编码",
+			          "sort": true,
+			          "fixed": "left"
+			        }, {
+			          "field": "chnlTypeName",
+			          "title": "接入类型名称"
+			        }, {
+			          "field": "tenantId",
+			          "title": "租户ID"
+			        }, {
+			          "field": "tenantName",
+			          "title": "租户名称"
+			        }, {
+			          "field": "chnlCode",
+			          "title": "渠道编码"
+			        }, {
+			          "field": "chnlName",
+			          "title": "渠道名称"
+			        }, {
+			          "field": "acceptType",
+			          "title": "办理方式编码"
+			        }, {
+			          "field": "acceptName",
+			          "title": "办理方式名称"
+			        }, {
+			          "field": "effectTime",
+			          "title": "生效时间"
+			        }, {
+			          "field": "expireTime",
+			          "title": "生效时间"
+			        }, {
+			          "field": "opNo",
+			          "title": "操作工号"
+			        }, {
+			          "field": "opName",
+			          "title": "操作姓名"
+			        }, {
+			          "field": "opTime",
+			          "title": "操作时间"
+			        }
+
+			      ]
+			    ]
+
+			</div>
+			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+			</table>
+
+			<div class="pagging ag-area-page">
+				   
+			</div>
+
+		</div>
+
+		<script>
+
+		</script>
+	</body>
+</html>
