@@ -397,7 +397,7 @@ body {
  */
 
  /**
- *tab样式修改
+ *tab样式修改  用法  1. layui-tab添加一个class ag-tab 2.layui-tab-title下的li  加span标签
  */
  .ag-tab .layui-this span{
 	display: inline-block;
