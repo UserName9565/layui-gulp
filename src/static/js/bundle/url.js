@@ -19,17 +19,21 @@ if (!console) {
 }
 
 var httpUrl = window.location.protocol + "//" + window.location.host;
+
+var agCtx= util.getAgCtx(null);
+
+
 var url = {
-  login: ctx + "/sys/login/loginCheck",
-  token: ctx + "/sys/login/auth/token", //菜单
+  login: ctx+"/"+agCtx+ "/sys/login/loginCheck",
+  token: ctx+"/"+agCtx+ "/sys/login/auth/token", //菜单
   
-  menu: ctx + "/sys/login/auth/functions",
-  deparTreeNew:ctx+'/department/selectTopDepart',//新树结构
-  deparTreeSon:ctx+'/department/selectChildDeparts',//新树结构
-  deparTreeSonTest:ctx+'/department/selectChildDepartsTest',//新树结构测试
+  menu: ctx+"/"+agCtx + "/sys/login/auth/functions",
+  deparTreeNew:ctx+"/"+agCtx+'/department/selectTopDepart',//新树结构
+  deparTreeSon:ctx+"/"+agCtx+'/department/selectChildDeparts',//新树结构
+  deparTreeSonTest:ctx+"/"+agCtx+'/department/selectChildDepartsTest',//新树结构测试
   comMethod: {
-    upload: ctx + "/fileTransfer/upload",
-    download: ctx + "/fileTransfer/download"
+    upload: ctx+"/"+agCtx + "/fileTransfer/upload",
+    download: ctx+"/"+agCtx + "/fileTransfer/download"
   },
   
   apiDoc: {

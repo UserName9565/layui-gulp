@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>layui</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../static/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../static/css/bundle/temp.css" />
+		<script src="../../static/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+
+		<style>
+			
+		</style>
+	</head>
+	<body class="bg-info">
+
+		<div class="layui-card layui-card-static" >
+
+			<div class="layui-card-header layui-card-header-bb-2" >
+
+				<span style="background-color: #3178ff; display: inline;padding: 12px 20px;color: white;margin-left: 10px;">证件采集</span>
+			</div>
+			<div class="layui-card-body">
+
+				<div style="padding-right: 150px;">
+
+					<div class="card-btn">
+						<div class="card-btn-img img-cert-idcard"></div>
+						<div class="card-btn-desc">
+							读卡
+						</div>
+					</div>
+					<div class="card-btn">
+						<div class="card-btn-img img-cert-photograph"></div>
+						<div class="card-btn-desc">
+							拍照
+						</div>
+					</div>
+
+				</div>
+
+				<div class="card-btn-right">
+					<div class="card-btn">
+						<div class="card-btn-img img-save"></div>
+						<div class="card-btn-desc">
+							保存
+						</div>
+					</div>
+					<div class="card-btn">
+						<div class="card-btn-img img-del"></div>
+						<div class="card-btn-desc">
+							关闭
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="layui-card card-dk  layui-card-static layui-hide" style="">
+
+			<div class="card-auto">
+
+				<div class="card-dk-left">
+
+					<div class="card-dk-left-split">
+
+						<div class="img-cert-card-front cert-img-size">
+
+
+
+						</div>
+					</div>
+					<div class="card-dk-left-split">
+
+						<div class="img-cert-card-back cert-img-size" style="margin-top: 30px;">
+
+
+
+						</div>
+					</div>
+					<div class="card-dk-left-btns">
+						<button class="layui-btn layui-btn-normal  layui-btn-sm">插入</button>
+						<button class="layui-btn layui-btn-blue layui-btn-sm">删除</button>
+					</div>
+
+
+				</div>
+
+				<div class="card-dk-right">
+
+					<form class="layui-form">
+
+						<div class="card-dk-right-type">
+
+							<div class="layui-inline">
+								<select>
+									<option>证件本地读卡方式</option>
+								</select>
+							</div>
+							<button class="layui-btn layui-btn-blue layui-btn-sm">重新连接</button>
+						</div>
+						<div>
+
+							<div class="img-default-face card-dk-right-img">
+
+							</div>
+						</div>
+						<table class="cert-table">
+							<tr>
+								<th>姓名：</th>
+								<td></td>
+								<th>性别：</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>民族：</th>
+								<td></td>
+								<th>出生日期：</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>证件类型：</th>
+								<td colspan="3"></td>
+							</tr>
+							<tr>
+								<th>证件号码：</th>
+								<td colspan="3"></td>
+							</tr>
+							<tr>
+								<th>证件地址：</th>
+								<td colspan="3"></td>
+							</tr>
+							<tr>
+								<th>生效日期：</th>
+								<td colspan="3"></td>
+							</tr>
+							<tr>
+								<th>失效日期：</th>
+								<td colspan="3"></td>
+							</tr>
+							<tr>
+								<th>签发机关：</th>
+								<td colspan="3"></td>
+							</tr>
+						</table>
+
+					</form>
+				</div>
+
+
+			</div>
+
+
+		</div>
+
+		<div class="layui-card layui-card-static card-photo ">
+			
+			<div class="card-auto">
+					<div class="card-photo-left">
+						
+					</div>
+					<div class="card-photo-right">
+						
+					</div>
+			</div>
+		
+		</div>
+	</body>
+
+	<script>
+		
+		
+		layui.use('form', function() {
+			
+			var $ = layui.jquery;
+			
+			var height = $(window).height() -180;
+			
+			$(".card-dk,.card-photo").height(height);
+
+			var form = layui.form;
+
+			form.render();
+
+		});
+	</script>
+</html>
