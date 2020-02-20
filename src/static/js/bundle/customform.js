@@ -223,7 +223,7 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
     var title =  $(this).attr("ag-win-title");
 
 	var agCtx = util.getAgCtx(this);
-		
+
 	url = apiConfig[agCtx+"_web"] + url;
     if(url.indexOf("?") == -1){
       url = url + "?" + pkCol + "=" + pkVal;
@@ -255,11 +255,11 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
   		var title =  $(this).attr("ag-win-title");
 
       var opts = {"winId":winId}
-	  
-	  var agCtx = util.getAgCtx(this);
-	  
-	  url = apiConfig[agCtx+"_web"] + url;
-	  
+
+      var agCtx = util.getAgCtx(this);
+
+	    url = apiConfig[agCtx+"_web"] + url;
+
       util.openWin(url,title,winW,winH,opts);
 
   	};
@@ -279,7 +279,7 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
       }
 
   	  var agCtx = util.getAgCtx(this);
-  	
+
   	  var url = ctx + "/" + agCtx + $(this).attr("ag-data-url");
       var param = getFormJson(form);
 
@@ -357,7 +357,7 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
 
     var param = {};
     param[pkCol] = pkVal;
-	
+
 	var url = ctx +"/"+util.getAgCtx(btn)+ $(btn).attr("ag-data-url");
 
     $.ajax({
@@ -424,7 +424,7 @@ layui.use(['form', 'table', 'checkForm','laydate'], function() {
 
           var formParam = getFormJson($(agForm));
           //加载数据并补充初始化表单
-		  var url = ctx +"/"+util.getAgCtx(form) + dataUrl;
+          var url = ctx +"/"+util.getAgCtx($(agForm)) + dataUrl;
           $.ajax({
             type:"POST",
             url:url,
