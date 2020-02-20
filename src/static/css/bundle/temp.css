@@ -395,3 +395,16 @@ body {
 /**
  * 证件采集相关样式  end 2020-2-19 16:06:01
  */
+
+ /**
+ *tab样式修改
+ */
+ .ag-tab .layui-this span{
+	display: inline-block;
+	line-height: 30px;
+	border-bottom: 2px solid #0b82ff;
+	color:#0b82ff;
+  }
+  .ag-tab .layui-this:after{
+	border: none;
+  }
