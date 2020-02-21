@@ -129,39 +129,42 @@
 			</div>
 
 		</div>
+		
+		<form  class="ag-form layui-hide" ag-data-url="" ag-data-index="1">
+			<input type="hidden" name="funcConfigList" />
+		</form>
 	</body>
 
 	<script>
-		var updateOutput = function(e) {
+		
+		
+		$(function(){
 			
-				
-			// if (window.JSON) {
-			// 	output.val(window.JSON.stringify(list.nestable('serialize'))); //, null, 2));
-			// } else {
-			// 	output.val('JSON browser support required for this demo.');
-			// }
-		};
-		// activate Nestable for list 1
-		$('#nestable').nestable({
-			group: 1,
-			maxDepth:1,
-			rmSourceItem:false
-		}).on('change', updateOutput);
+			
+			var funcConfigList =  $("input[name=funcConfigList]").val();
+			
+			
+			$('#nestable').nestable({
+				group: 1,
+				maxDepth:1,
+				rmSourceItem:false
+			});
+			
+			$('#nestable').nestable({
+				group: 1,
+				maxDepth:1,
+				dragFlag:false,
+				addItemCloseBtn:true,
+				addItemQuickBtn:true
+			});
+			
+			$('#nestable2').nestable({
+				group: 1,
+				maxDepth:1
+			});
+			
+		});
 		
-		
-		$('#nestable1').nestable({
-			group: 1,
-			maxDepth:1,
-			dragFlag:false,
-			addItemCloseBtn:true,
-			addItemQuickBtn:true
-		}).on('change', updateOutput);
-		
-		
-		$('#nestable2').nestable({
-			group: 1,
-			maxDepth:1
-		}).on('change', updateOutput);
 		
 		
 		function save(){
