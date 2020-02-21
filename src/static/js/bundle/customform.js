@@ -1097,6 +1097,8 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 	 */
 	function _listHrefDownloadFile(url){
 		
+		console.log(url);
+		
 		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('"+url+"')");
 		
 	
