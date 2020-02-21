@@ -29,12 +29,25 @@ util = {
 		$("<div class=\"datagrid-mask\"></div>").css({
 			display: "block",
 			width: "100%",
+			position: "absolute",
+			top:0,
+			left:0,
+			'background-color':'#000000',
+			'z-index': 19891014,
+			opacity: 0.4,
 			height: $(window).height()
 		}).appendTo("body");
-		$("<div class=\"datagrid-mask-msg\"></div>").html(msg)
-			.appendTo("body").css({
+		
+		var msgDiv = $("<div class=\"datagrid-mask-msg\"></div>");
+		
+		var span = $("<span>"+msg+"</span>");
+		
+		msgDiv.append(span).appendTo("body");
+		
+			msgDiv.css({
 				display: "block",
-				left: ($(document.body).outerWidth(true) - 190) / 2,
+				position: "absolute",
+				left: ($(document.body).outerWidth(true)-span.width()) / 2,
 				top: ($(window).height() - 45) / 2
 			});
 	},
@@ -283,8 +296,14 @@ util = {
 					}
 
 					if (callBack) {
-						var arr = callBack.split(";")[0].split("=");
-						eval(arr[1]);
+						
+						var arr = callBack.split(";")[0];
+						
+						arr  = arr.substring(arr.indexOf("=")+1);
+						
+						console.log(arr);
+						
+						eval(arr);
 					}
 				}
 			}, function(index) {
@@ -293,7 +312,8 @@ util = {
 
 				if (callBack && callBack.split(";").length > 1) {
 
-					var arr = callBack.split(";")[1].split("=");
+					var arr = callBack.split(";")[0].split("=");
+					
 					eval(arr[1]);
 				}
 
@@ -440,6 +460,21 @@ util = {
 			var s = ((date.getSeconds() + "").length == 1 ? "0" + date.getSeconds() : date.getSeconds());
 	
 			return y + mm + d + h + m + s;
+	},
+	
+	trans:function(str) {
+		var retStr = str;
+		if(!util.isNull(str)) {
+			retStr = str.replace(/=/g, "_isEqual");
+		}
+		return retStr;
+	},
+	deTrans:function(str) {
+		var retStr = str;
+		if(!util.isNull(str)) {
+			retStr = str.replace(/_isEqual/g, "=");
+		}
+		return retStr;
 	}
 
 

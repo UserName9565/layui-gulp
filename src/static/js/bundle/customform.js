@@ -527,11 +527,10 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 						var li = $(this).parents(".ag-file-item-li:first");
 
 
-						var fileName = li.data("ag-file-name-filename");
 
 						var saveName = li.data("ag-file-name-savename");
 
-						if (util.isNull(fileName) || util.isNull(saveName)) {
+						if (util.isNull(saveName)) {
 
 							showDialog("未上传,不能下载！", 0);
 
@@ -542,7 +541,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 						
 						url = ctx +"/" + util.getAgCtx(null) + url;
 
-						_listHrefDownloadFile(url + "?saveName=" + saveName + "&fileName=" + fileName);
+						_listHrefDownloadFile(url + "?saveName=" + saveName + "&fileId=" + saveName);
 
 					});
 
@@ -555,18 +554,17 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 						var li = $(this).parents(".ag-file-item-li:first");
 
-						var fileName = li.data("ag-file-name-filename");
-
 						var saveName = li.data("ag-file-name-savename");
 
 						var fileThat = $(this);
 
-						if (util.isNull(fileName) || util.isNull(saveName)) {
+						if ( util.isNull(saveName)) {
 
 							fileThat.parents(".ag-file-item-li:first").remove();
 
 							return;
 						}
+						
 							
 						var url = f.data("ag-file-iframe-del-url");
 						
@@ -575,42 +573,38 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 						
 						util.load("删除中,请稍后...");
 						
-						$.ajax({
-								type:"POST",
-								url:url,
-						//		data:param,
-								data:JSON.stringify({"fileId": saveName}),
-								contentType:"application/json",
-								
-								beforeSend:function(req){
-									
-								},
-								xhrFields: {
-									withCredentials: true //跨域session保持
-									},
-								async: true,
-								dataType:"json",
-								success:function(data){
-									
-										util.disLoad();
-										
-										alert(JSON.stringify(data));
-										
-										if(data.result == "0"){
-											
-											fileThat.parents(".ifile-item-li:first").remove();
-											
-											util.showDialog("删除成功!",2);
-											
-											return;
-										}
-										
-										util.showDialog("删除失败!",2);
-										
-								}
-							});
 						
-
+						
+						$.ajax({
+							type: "POST",
+							url: url,
+							data: JSON.stringify({"fileId": saveName}),
+							contentType: "application/json",
+							xhrFields: {
+								withCredentials: false //跨域session保持
+							},
+							async: true,
+							dataType: "json",
+							success: function(data) {
+									
+									util.disLoad();
+									
+									if(data.result == "0"){
+										
+										fileThat.parents(".ag-file-item-li:first").remove();
+										
+										util.showDialog("删除成功!",2);
+										
+										return;
+									}
+									
+									util.showDialog("删除失败!",0);
+										
+								
+							}
+						
+						});
+							
 
 					});
 
@@ -736,18 +730,20 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 			form.append("file", file);
 			
-			var moduleName = that.form.find(".ag-file").eq(0).data("module-name");
+			var moduleName = that.form.find(".ag-file").eq(0).attr("ag-file-module");
 			
+			form.append('moduleName',moduleName);
 			
 			var url = that.form.find(".ag-file").eq(0).data("ag-file-iframe-add-url");
 			
 			url = ctx+"/"+util.getAgCtx(null)+url;
 			
+			util.load("上传中,请稍后...");
 
 			$.ajax({
 				type: "post",
 				url:url ,
-				enctype: "multipart/form-data",
+		//		enctype: "multipart/form-data",
 				contentType: false,
 				processData: false,
 				crossDomain:true,
@@ -759,7 +755,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 				},
 				xhrFields: {
 
-					withCredentials: true //跨域session保持
+					withCredentials: false //跨域session保持
 				},
 				xhr: function() {
 
@@ -783,16 +779,24 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 				},
 
 				success: function(data) {
-
-					layui.element.progress(layFilter, "100%");
-					$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
-						data.saveName);
+					
+					util.disLoad();
+					
+					if(data.result != 0){
+						
+						error(layFilter,data.desc);
+						
+						return ;
+					}
+					
+					succ(layFilter,data);
+					
 				},
 				error: function(data) {
 					
-					var msg = "上传失败...";
+					util.disLoad();
 					
-					console.log(data);
+					var msg = "上传失败...";
 					
 					try{
 						
@@ -803,17 +807,32 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 							msg = "附件大小超出服务器限制";
 						}
 					}catch(e){
-						//TODO handle the exception
+						
 					}
 
 
-					$("[lay-filter=" + layFilter + "]", that.form).children().removeClass("layui-bg-green").addClass("layui-bg-red").width("100%").text(
-						msg).css("text-align", "center");
-					$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
-						"");
+					error(layFilter,msg);
 
 				}
 			});
+			
+			function succ(layFilter,data){
+				
+				layui.element.progress(layFilter, "100%");
+				$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
+					data.desc);
+				$("[lay-filter=" + layFilter + "]", that.form).children().width("100%").text(
+					'上传成功!').css({"text-align":"center","color":"white"});
+			}
+			
+			function error(layFilter,msg){
+				
+				$("[lay-filter=" + layFilter + "]", that.form).children().removeClass("layui-bg-green").addClass("layui-bg-red").width("100%").text(
+					msg).css("text-align", "center");
+				$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
+					"");
+				
+			}
 
 		}
 
@@ -1069,6 +1088,22 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 			});
 		});
 	}
+	
+	
+	/**
+	 * 列表链接，下载文件
+	 * 
+	 * @param {Object} url
+	 */
+	function _listHrefDownloadFile(url){
+		
+		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('"+url+"')");
+		
+	
+	}
+	
+
+
 
 
   $(document).ready(function(){
@@ -1080,12 +1115,18 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
   });
 
 
-
-
-
-
-
-
-
-
 });
+
+function _doRealDownLoad(url){
+	
+	if(url.indexOf("saveName") == -1){
+		util.showDialog("缺少存储文件名参数【saveName】",1);
+		return;
+	}
+	
+	var action =  url;
+	var form = $("<form></form>").attr("action", action).attr("method", "post");
+	form[0].target = "downloadHidenFr";
+	form.appendTo('body').submit().remove();
+	
+}
