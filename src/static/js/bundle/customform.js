@@ -7,7 +7,7 @@
  * @date 2020-02-16
  *
  */
-layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
+layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 
 	var form = layui.form,
 		layer = layui.layer,
@@ -18,19 +18,19 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 
 	var $window = $(window);
-	
-	
-	var file_types  = {
-			
-					"application/pdf":"pdf",
-	    			"application/x-zip-compressed":"zip",
-	    			"image/gif":"gif",
-	    			"image/png":"png",
-	    			"image/jpg":"jpg",
-	    			"image/bmp":"bmp",
-	    			"image/jpeg":"jpg"
-	    			
-				 };
+
+
+	var file_types = {
+
+		"application/pdf": "pdf",
+		"application/x-zip-compressed": "zip",
+		"image/gif": "gif",
+		"image/png": "png",
+		"image/jpg": "jpg",
+		"image/bmp": "bmp",
+		"image/jpeg": "jpg"
+
+	};
 
 	/**
 	 * 获取表单json格式参数
@@ -55,31 +55,31 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 			var text = $(arr2[i]).find("option:selected").text();
 			paramJson[nameKey] = text;
 		}
-		
+
 		/**
 		 * 存储附件ID
 		 */
-		if($(this).find("[ag-file-submit-key]").length > 0 ){
-			
+		if ($(this).find("[ag-file-submit-key]").length > 0) {
+
 			var key = $(this).find("[ag-file-submit-key]").eq(0).attr("ag-file-submit-key");
-			
-			if(!util.isNull(key)){
-				
+
+			if (!util.isNull(key)) {
+
 				var arr = new Array();
-				
-				$.each($(this).find("[ag-file-submit-key]").eq(0).find(".ag-file-item-li"), function(i,item) {
-				
-					if(!util.isNull($(item).data("ag-file-name-savename"))){
-						
+
+				$.each($(this).find("[ag-file-submit-key]").eq(0).find(".ag-file-item-li"), function(i, item) {
+
+					if (!util.isNull($(item).data("ag-file-name-savename"))) {
+
 						arr.push($(item).data("ag-file-name-savename"));
 					}
-					
+
 				});
-				
+
 				paramJson[key] = arr.join(",");
 			}
-			
-			
+
+
 		}
 
 		return paramJson;
@@ -122,7 +122,8 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 	 */
 	function addPageLisnr(page, index) {
 
-      var pageHtml = '<a href="#" rel="pre" class="ag-btn-page-pre">&lt; 上一页</a> <a href="#" rel="next" class="ag-btn-page-next">下一页&gt;</a><span id="totalPageSpan"></span>|<span id="totalRecordSpan"></span>|<span id="pageNoSpan"></span>';
+		var pageHtml =
+			'<a href="#" rel="pre" class="ag-btn-page-pre">&lt; 上一页</a> <a href="#" rel="next" class="ag-btn-page-next">下一页&gt;</a><span id="totalPageSpan"></span>|<span id="totalRecordSpan"></span>|<span id="pageNoSpan"></span>';
 		$(".ag-area-page").html(pageHtml);
 
 		//上一页
@@ -136,7 +137,10 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 				var pageSize = page.pageSize;
 
 
-  				var pageJson = {"pageNo":pageNo,"pageSize":pageSize};
+				var pageJson = {
+					"pageNo": pageNo,
+					"pageSize": pageSize
+				};
 				var pageJsonStr = JSON.stringify(pageJson);
 				$("input[name=page]").val(pageJsonStr);
 
@@ -158,7 +162,10 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 				pageNo = pageNo + 1;
 				var pageSize = page.pageSize;
-  				var pageJson = {"pageNo":pageNo,"pageSize":pageSize};
+				var pageJson = {
+					"pageNo": pageNo,
+					"pageSize": pageSize
+				};
 				var pageJsonStr = JSON.stringify(pageJson);
 				$("input[name=page]").val(pageJsonStr);
 
@@ -173,6 +180,179 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		$("#pageNoSpan").html("当前页:" + page.pageNo);
 
 	};
+
+
+	/**
+	 * 根据列配置信息和数据，装饰数据，加入链接处理
+	 * 
+	 * @param {Object} colInfo
+	 * @param {Object} data
+	 */
+ 	function decorateData(colsStr) {
+		
+		var colModel = $.parseJSON(colsStr);
+
+		for (var i = 0; i < colModel.length; i++) {
+
+			for (var k = 0; k < colModel[i].length; k++) {
+
+
+				if (!colModel[i][k].align) {
+
+					colModel[i][k].align = "center";
+				}
+
+				if (colModel[i][k].btns) {
+					
+					if(!$.isArray(colModel[i][k].btns)){
+						
+						return ;
+					}
+					var id = "tpl_btns_"+util.randomWord(false,8);
+					
+					colModel[i][k].templet = "#" + id;
+					
+					var appendAHtml = "";
+					
+					for(var z = 0 ; z < colModel[i][k].btns.length ; z++){
+						
+						var item = colModel[i][k].btns[z];
+						
+						var realUrl = decorateTpl(item.url);
+						
+						var lsnrStr = getHrefLsnr(item.openType);
+						
+						var aFunc = lsnrStr + "('" + realUrl + "','" + item.openTitle + "')";
+						
+						var a = "<a href='javascript:void(0)' class=' layui-table-link "+item.className+"' onclick=" + aFunc + ">" + (item.btnVal?item.btnVal:"操作") + "</a>";
+						
+						appendAHtml += a;
+							
+						
+						
+					}
+					
+					appendScript(id, appendAHtml);
+				}
+
+			}
+
+
+		}
+		
+		return colModel;
+
+	}
+
+	/**
+		 *根据href的类型获取链接处理函数名称
+		 * 
+		 * @param {Object} openType
+		 */
+		 function getHrefLsnr(openType){
+		
+			var hrefLsnr = {
+				"openType0":"_listHrefDownloadFile",
+				"openType1":"_listHrefWindow",
+				"openType2":"_listHrefTab",
+			};
+			var funcName = hrefLsnr["openType"+openType];
+			return funcName;
+		}
+
+	function appendScript(id, a) {
+
+		if ($("#" + id).length > 0) {
+
+			$("#" + id).remove();
+		}
+
+		var scr = $("<script type='text/html' id='" + id + "'></script>");
+		
+		scr.append(a);
+
+		scr.appendTo($(document.body));
+	}
+
+	/**
+	 * 
+	 * 根据配置url和参数 转换模板
+	 * 
+	 */
+	function decorateTpl(inUrl, model) {
+
+		var url = inUrl.replace("&amp;", "&");
+
+		var realUrl = url;
+
+		if (url.indexOf("?") != -1) {
+
+			var tempArr = url.split("?");
+
+			var realParam = "";
+
+			var urlNoParam = tempArr[0];
+
+			var paramStr = tempArr[1];
+
+			var paramArr = paramStr.split("&");
+
+			for (var k = 0; k < paramArr.length; k++) {
+
+				var pair = paramArr[k].split("=");
+
+				if (pair.length == 1 || util.isNull(pair[1])) {
+
+					realParam += paramArr[k] + "&";
+
+					continue;
+
+				}
+
+				/**
+				 * $Query 代表从查询参数获取
+				 */
+
+				if ("$Query" == pair[1]) {
+
+					if ($("[name=" + pair[0] + "]").length > 0) {
+
+						realParam += pair[0] + "=" + $("[name=" + pair[0] + "]").eq(0).val() + "&";
+
+					} else {
+
+						realParam += pair[0] + "=" + "&";
+					}
+
+					continue;
+
+				}
+				var arr = pair[1].match(/@(\S*)@/g);
+													
+				if(arr != null){
+					
+					for(var kk in arr){
+						
+						pair[1] = pair[1].replace(arr[kk], "{{d."+arr[kk].substring(1,arr[kk].length-1)+"}}");
+					}
+					
+					realParam += pair[0] + "=" + pair[1] + "&";
+					
+					continue;
+				}
+				
+
+				realParam += paramArr[k] + "&";
+
+			}
+
+			realUrl = urlNoParam + "?" + realParam;
+		}
+
+		
+		return realUrl;
+
+	}
 
 	/**
 	 *
@@ -194,25 +374,13 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		var param = getFormJson($(".ag-form[ag-data-index=" + index + "]"));
 		var agCtx = util.getAgCtx(this);
 		url = ctx + "/" + agCtx + url;
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: JSON.stringify(param),
-			contentType: "application/json",
-			beforeSend: function(req) {
-				var page = $("input[name=page]").val();
-				req.setRequestHeader("page", page);
-			},
-			xhrFields: {
-				withCredentials: false //跨域session保持
-			},
-			async: true,
-			dataType: "json",
-			success: function(page) {
-
+		
+		util.ajaxJson("查询中,请稍后...",url,param,function(page){
+			
 				var colsStr = $(".ag-table-header[ag-data-index=" + index + "]").html();
-
-				var cols = $.parseJSON(colsStr);
+			
+				var cols = decorateData(colsStr);
+				
 				//执行一个 table 实例
 				table.render({
 					elem: $(".ag-table[ag-data-index=" + index + "]"),
@@ -223,9 +391,14 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 					totalRow: false, //开启合计行
 					cols: cols
 				});
-
+			
 				addPageLisnr(page, index);
-			}
+			
+		},function(req){
+			
+			var page = $("input[name=page]").val();
+			req.setRequestHeader("page", page);
+			
 		});
 	};
 
@@ -270,7 +443,9 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 			url = url + "&" + pkCol + "=" + pkVal;
 		}
 
-    var opts = {"winId":winId}
+		var opts = {
+			"winId": winId
+		}
 		util.openWin(url, title, winW, winH, opts);
 
 	};
@@ -293,7 +468,9 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		var winH = $(this).attr("ag-win-height");
 		var title = $(this).attr("ag-win-title");
 
-      var opts = {"winId":winId}
+		var opts = {
+			"winId": winId
+		}
 
 		var agCtx = util.getAgCtx(this);
 
@@ -321,7 +498,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 		var url = ctx + "/" + agCtx + $(this).attr("ag-data-url");
 		var param = getFormJson(form);
-		
+
 		$.ajax({
 			type: "POST",
 			url: url,
@@ -373,7 +550,9 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		}
 
 		var pkVal = data[0][pkCol];
-    var opts= {"index":index};
+		var opts = {
+			"index": index
+		};
 
 		util.showDialog("您确定要删除选中记录么?", 3, doDel, opts);
 
@@ -398,18 +577,9 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		param[pkCol] = pkVal;
 
 		var url = ctx + "/" + util.getAgCtx(btn) + $(btn).attr("ag-data-url");
-
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: JSON.stringify(param),
-			contentType: "application/json",
-			xhrFields: {
-				withCredentials: false //跨域session保持
-			},
-			async: true,
-			dataType: "json",
-			success: function(data) {
+		
+		
+		util.ajaxJson("删除中,请稍后!",url,param,function(data) {
 
 				var result = data.result;
 				var desc = data.desc;
@@ -425,12 +595,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 					util.error(desc);
 				}
 
-			}
-		});
-
-
-
-
+			});
 	}
 
 	function createFile() {
@@ -467,29 +632,29 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 			that.form.delegate(".ag-file .ag-file-header .ag-file-header-file", "change", function(e) {
 
 				var inputFile = $(this);
-				
+
 				var agFile = that.form.find(".ag-file").eq(0);
-				
+
 				var items = agFile.find(".ag-file-item-li");
-				
+
 				var maxNum = agFile.attr("ag-file-max");
-				
-				if(parseInt(maxNum) <= items.length){
-					
-					util.showDialog("最大添加附件数量:"+maxNum+",无法继续添加!",0);
-					
-				}else{
-					
+
+				if (parseInt(maxNum) <= items.length) {
+
+					util.showDialog("最大添加附件数量:" + maxNum + ",无法继续添加!", 0);
+
+				} else {
+
 					$.each(inputFile[0].files, function(i, file) {
-					
+
 						that.addIfile(file, inputFile.parent().parent());
-					
+
 					});
-					
+
 				}
 
-				
-				
+
+
 
 				inputFile.after(inputFile.clone().val(""));
 
@@ -538,8 +703,8 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 						}
 
 						var url = f.data("ag-file-iframe-down-url");
-						
-						url = ctx +"/" + util.getAgCtx(null) + url;
+
+						url = ctx + "/" + util.getAgCtx(null) + url;
 
 						_listHrefDownloadFile(url + "?saveName=" + saveName + "&fileId=" + saveName);
 
@@ -558,53 +723,33 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 						var fileThat = $(this);
 
-						if ( util.isNull(saveName)) {
+						if (util.isNull(saveName)) {
 
 							fileThat.parents(".ag-file-item-li:first").remove();
 
 							return;
 						}
-						
-							
+
+
 						var url = f.data("ag-file-iframe-del-url");
-						
-						url = ctx +"/" + util.getAgCtx(null) + url;
-						
-						
-						util.load("删除中,请稍后...");
-						
-						
-						
-						$.ajax({
-							type: "POST",
-							url: url,
-							data: JSON.stringify({"fileId": saveName}),
-							contentType: "application/json",
-							xhrFields: {
-								withCredentials: false //跨域session保持
-							},
-							async: true,
-							dataType: "json",
-							success: function(data) {
-									
-									util.disLoad();
-									
-									if(data.result == "0"){
-										
-										fileThat.parents(".ag-file-item-li:first").remove();
-										
-										util.showDialog("删除成功!",2);
-										
-										return;
-									}
-									
-									util.showDialog("删除失败!",0);
-										
-								
-							}
-						
-						});
-							
+
+						url = ctx + "/" + util.getAgCtx(null) + url;
+
+						util.ajaxJson("删除中,请稍后...",url,{"fileId": saveName},function(data) {
+
+								if (data.result == "0") {
+
+									fileThat.parents(".ag-file-item-li:first").remove();
+
+									util.showDialog("删除成功!", 2);
+
+									return;
+								}
+
+								util.showDialog("删除失败!", 0);
+
+
+							});
 
 					});
 
@@ -633,29 +778,29 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 				return;
 			}
-			
-			var defaultOpt ={
-				"ag-file-multiple":"true",
-				"ag-file-delete":"true",
-				"ag-file-add":"true" ,
-				"ag-file-down" :"true",
-				"ag-file-max":99
+
+			var defaultOpt = {
+				"ag-file-multiple": "true",
+				"ag-file-delete": "true",
+				"ag-file-add": "true",
+				"ag-file-down": "true",
+				"ag-file-max": 99
 			}
 
 
 			$.each(fileDiv, function(i, f) {
-			
+
 				f = $(f);
-				
-				for( var key  in defaultOpt){
-					
-					if(util.isNull(f.attr(key))){
-						
-						f.attr(key,defaultOpt[key]);
+
+				for (var key in defaultOpt) {
+
+					if (util.isNull(f.attr(key))) {
+
+						f.attr(key, defaultOpt[key]);
 					}
-					
+
 				}
-				
+
 				/**
 				 * 判断是否可新增附件
 				 */
@@ -681,7 +826,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 				f.data("ag-file-iframe-name", "downloadHidenFr");
 
-				f.data("ag-file-iframe-down-url", "/sys/settings/file/download"); 
+				f.data("ag-file-iframe-down-url", "/sys/settings/file/download");
 
 				f.data("ag-file-iframe-del-url", "/sys/settings/file/delFile");
 
@@ -695,7 +840,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		/**
 		 * 追加添加附件区域
 		 */
-		formFile.appendFileHeadeTpl = function (f) {
+		formFile.appendFileHeadeTpl = function(f) {
 
 			var headerDiv = $("<div class='ag-file-header'></div>");
 
@@ -706,8 +851,9 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 			var headerBtn = $("<button type='button' class='ag-file-header-button'> 添加附件.</button>");
 
 			var multiple = f.attr("ag-file-multiple");
-			
-			var headerInput = $("<input class='ag-file-header-file' type='file' "+(multiple == "true" ? "multiple" :"")+" />");
+
+			var headerInput = $("<input class='ag-file-header-file' type='file' " + (multiple == "true" ? "multiple" : "") +
+				" />");
 
 			headerDiv.append(headerTextDiv);
 			headerDiv.append(headerIcon);
@@ -721,117 +867,92 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		 * 上传事件
 		 */
 
-		formFile.uploadFile = function (file, layFilter) {
-			
-			
+		formFile.uploadFile = function(file, layFilter) {
+
+
 			var that = this;
 
 			var form = new FormData();
 
 			form.append("file", file);
-			
+
 			var moduleName = that.form.find(".ag-file").eq(0).attr("ag-file-module");
-			
-			form.append('moduleName',moduleName);
-			
+
+			form.append('moduleName', moduleName);
+
 			var url = that.form.find(".ag-file").eq(0).data("ag-file-iframe-add-url");
+
+			url = ctx + "/" + util.getAgCtx(null) + url;
 			
-			url = ctx+"/"+util.getAgCtx(null)+url;
+			util.ajaxFile("上传中,请稍后...",url,form,function(data) {
 			
-			util.load("上传中,请稍后...");
-
-			$.ajax({
-				type: "post",
-				url:url ,
-		//		enctype: "multipart/form-data",
-				contentType: false,
-				processData: false,
-				crossDomain:true,
-				dataType: "json",
-				data: form,
-				beforeSend: function(req) {
-
-					req.setRequestHeader("_agileAuthToken", $.cookie('JSESSIONID_token'));
-				},
-				xhrFields: {
-
-					withCredentials: false //跨域session保持
-				},
-				xhr: function() {
-
-					var myXhr = $.ajaxSettings.xhr();
-					
-
-					if (myXhr.upload) {
-
-						myXhr.upload.addEventListener('progress', function(e) {
-
-							var progressRate = parseInt(e.loaded * 100 / e.total) + '%';
-
-
-							layui.element.progress(layFilter, progressRate == "100%" ? "99%" : progressRate);
-
-						}, false);
-
+			
+					if (data.result != 0) {
+			
+						error(layFilter, data.desc);
+			
+						return;
 					}
-					return myXhr;
-
-				},
-
-				success: function(data) {
-					
-					util.disLoad();
-					
-					if(data.result != 0){
-						
-						error(layFilter,data.desc);
-						
-						return ;
-					}
-					
-					succ(layFilter,data);
-					
-				},
-				error: function(data) {
-					
-					util.disLoad();
-					
+			
+					succ(layFilter, data);
+			
+				},function(data) {
+			
+			
 					var msg = "上传失败...";
-					
-					try{
-						
+			
+					try {
+			
 						var json = $.parseJSON(data.responseText);
-						
+			
 						if (json.message && json.message.indexOf("Maximum") != -1) {
-						
+			
 							msg = "附件大小超出服务器限制";
 						}
-					}catch(e){
-						
-					}
-
-
-					error(layFilter,msg);
-
-				}
-			});
+					} catch (e) {
 			
-			function succ(layFilter,data){
-				
+					}
+			
+			
+					error(layFilter, msg);
+			
+				},function(myXhr){
+					
+					if (myXhr.upload) {
+								
+						myXhr.upload.addEventListener('progress', function(e) {
+								
+							var progressRate = parseInt(e.loaded * 100 / e.total) + '%';
+								
+								
+							layui.element.progress(layFilter, progressRate == "100%" ? "99%" : progressRate);
+								
+						}, false);
+								
+					}
+					return myXhr;
+				});
+			
+			function succ(layFilter, data) {
+
 				layui.element.progress(layFilter, "100%");
 				$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
 					data.desc);
 				$("[lay-filter=" + layFilter + "]", that.form).children().width("100%").text(
-					'上传成功!').css({"text-align":"center","color":"white"});
+					'上传成功!').css({
+					"text-align": "center",
+					"color": "white"
+				});
 			}
-			
-			function error(layFilter,msg){
-				
-				$("[lay-filter=" + layFilter + "]", that.form).children().removeClass("layui-bg-green").addClass("layui-bg-red").width("100%").text(
-					msg).css("text-align", "center");
+
+			function error(layFilter, msg) {
+
+				$("[lay-filter=" + layFilter + "]", that.form).children().removeClass("layui-bg-green").addClass("layui-bg-red")
+					.width("100%").text(
+						msg).css("text-align", "center");
 				$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
 					"");
-				
+
 			}
 
 		}
@@ -841,7 +962,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		 *  插入附件 obj 可能是file对象 也可能是查询返回的bean
 		 * @param {Object} obj
 		 */
-		formFile.addIfile = function (obj, f) {
+		formFile.addIfile = function(obj, f) {
 
 			var that = this;
 
@@ -880,7 +1001,8 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 				$("[lay-filter=" + layFilter + "]", that.form).removeClass("layui-hide");
 
-				$("[lay-filter=" + layFilter + "]", that.form).children().removeClass("layui-bg-red").removeClass("layui-bg-green");
+				$("[lay-filter=" + layFilter + "]", that.form).children().removeClass("layui-bg-red").removeClass(
+					"layui-bg-green");
 
 				that.uploadFile(obj, layFilter);
 
@@ -892,7 +1014,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 		 *  追加附件模板到指定区域
 		 * @param {Object} data
 		 */
-		formFile.appendFileItemTpl = function (data, f) {
+		formFile.appendFileItemTpl = function(data, f) {
 
 			var that = this;
 
@@ -932,7 +1054,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 			var timeDd = $("<dd class='ag-file-item-li-date'><time >" + util.timeDiff(data.opTime) + "</time></dd>");
 
 			dt.append(span);
-			
+
 
 			if (f.attr("ag-file-delete") == "true") {
 
@@ -998,7 +1120,7 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 
 				var formParam = getFormJson($(agForm));
 				//加载数据并补充初始化表单
-          var url = ctx +"/"+util.getAgCtx($(agForm)) + dataUrl;
+				var url = ctx + "/" + util.getAgCtx($(agForm)) + dataUrl;
 				$.ajax({
 					type: "POST",
 					url: url,
@@ -1047,7 +1169,8 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 										selectedStr = "";
 									}
 
-                          var optBean = "<option value='"+optArr[i].optCode+"' "+selectedStr+">"+optArr[i].optName+"</option>";
+									var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
+										"</option>";
 									selectStr = selectStr + optBean;
 								}
 
@@ -1088,47 +1211,60 @@ layui.use(['element','form', 'table', 'checkForm', 'laydate'], function() {
 			});
 		});
 	}
-	
-	
+
+
 	/**
 	 * 列表链接，下载文件
 	 * 
 	 * @param {Object} url
 	 */
-	function _listHrefDownloadFile(url){
-		
-		console.log(url);
-		
-		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('"+url+"')");
-		
-	
+	function _listHrefDownloadFile(url) {
+
+		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('" + url + "')");
+
+
 	}
-	
 
 
 
 
-  $(document).ready(function(){
 
-      initBtnLsnr();
+	$(document).ready(function() {
 
-      initForm();
+		initBtnLsnr();
 
-  });
+		initForm();
+
+	});
 
 
 });
 
-function _doRealDownLoad(url){
-	
-	if(url.indexOf("saveName") == -1){
-		util.showDialog("缺少存储文件名参数【saveName】",1);
+function _doRealDownLoad(url) {
+
+	if (url.indexOf("saveName") == -1) {
+		util.showDialog("缺少存储文件名参数【saveName】", 1);
 		return;
 	}
-	
-	var action =  url;
+
+	var action = url;
 	var form = $("<form></form>").attr("action", action).attr("method", "post");
 	form[0].target = "downloadHidenFr";
 	form.appendTo('body').submit().remove();
+
+}
+
+
+function _listHrefWindow(url,title){
+	
+	util.openWin(util.decode(url),title,1000,1000);
+}
+
+
+function _listHrefTab(url,title){
+	
+	
+	alert("打开tab页带补充..");
 	
 }
+

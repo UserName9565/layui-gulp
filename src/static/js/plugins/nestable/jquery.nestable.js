@@ -39,7 +39,7 @@
         noDragClass     : 'dd-nodrag',
         emptyClass      : 'dd-empty',
 		deleteClass		: 'dd-del',
-		dataKey			:'id',
+		itemKey			:'',
         expandBtnHTML   : '<button data-action="expand" type="button">Expand</button>',
         collapseBtnHTML : '<button data-action="collapse" type="button">Collapse</button>',
         group           : 0,
@@ -49,6 +49,9 @@
 		addItemCloseBtn	:false,
 		dragFlag  :true,
 		addItemQuickBtn:false,
+		quickKey:'',
+		data:null,
+		dataJsonKey:'json'
     };
 
     function Plugin(element, options)
@@ -56,6 +59,7 @@
         this.w  = $(document);
         this.el = $(element);
         this.options = $.extend({}, defaults, options);
+		
         this.init();
     }
 
@@ -64,6 +68,8 @@
         init: function()
         {
             var list = this;
+			
+			list.buildOl();
 
             list.reset();
 
@@ -167,16 +173,24 @@
 			//2020年2月19日19:59:49 增加没有数据时插入空图片
 			list.el.children().length == 0 && list.el.append("<div class='"+list.options.emptyClass+"'></div>");
 			
-			
 			$.each(list.el.find("." + list.options.itemClass),function(i,item){
 				
 				var id = $(item).attr("data-id");
 				
 				if(id == null || id == undefined || id == ""){
 					
-					var num = list.randomNum();
+					if(util.isNull(list.options.itemKey)){
+						
+						var num = list.randomNum();
+						
+						$(item).attr("data-id",num) ;
+						
+						return true;
+					}
 					
-					$(item).attr("data-id",num) ;
+					
+						
+					$(item).attr("data-id",$(item).data(list.options.itemKey.toLowerCase())) ;
 				}
 				
 			});
@@ -357,8 +371,50 @@
 		},
 		getItems:function(){
 			
-			return this.el.find("."+this.options.handleClass);
+			return this.el.find("."+this.options.itemClass);
 		},
+		
+		getItemData: function(){
+			
+			var arr = new Array();
+			
+			var that =this;
+			
+			$.each(that.getItems(),function(i,item){
+				
+				var d = $(item).data("json");
+				
+				var quickFlag = "否";
+				
+				var checkbox = $(item).find("input[type=checkbox][name="+that.options.quickKey+"]:checked");
+				
+				if(checkbox.length > 0 ){
+					
+					quickFlag = "是"
+				}
+				
+				d[that.options.quickKey] = quickFlag;
+				
+				arr.push(d);
+				
+			});
+			
+			return arr;
+			
+		},
+		
+		getQuickHtml:function(flag){
+			
+			return  '<div style="float:right;margin-top:-35px;"><input type="checkbox" name="'+this.options.quickKey+'" '+(flag ? 'checked="checked"': '')+' />快捷</div> ';
+		},
+		getCloseBtnHtml:function(flag){
+			
+			var f = flag ? flag :this.options.addItemQuickBtn;
+			
+			return '<i class="layui-icon layui-icon-delete '+this.options.deleteClass+'" style="font-size: 30px; color:red ;float:right;margin-top:-35px;'+(f?'margin-right:50px;':'')+'"></i> ';
+			
+		},
+		
         dragStop: function(e)
         {
 			
@@ -377,16 +433,13 @@
 				var clone = el.clone();
 				
 				if(plceRoot.nestable('getQuickBtn') &&  this.el.attr("id")!= plceRoot.attr("id")){
-					
-					clone.append('<div style="float:right;margin-top:-35px;"><input type="checkbox"/>快捷</div> ');
+					clone.append(plceRoot.nestable('getQuickHtml'));
 				}
 				
 				if(plceRoot.nestable('getCloseBtnFlag') && this.el.attr("id")!= plceRoot.attr("id")){
 					
-					clone.append('<i class="layui-icon layui-icon-delete '+this.options.deleteClass+'" style="font-size: 30px; color:red ;float:right;margin-top:-35px;'+(plceRoot.nestable('getQuickBtn')?'margin-right:50px;':'')+'"></i> ');
+					clone.append(this.getCloseBtnHtml(plceRoot.nestable('getQuickBtn')));
 				}
-				
-				
 				
 				this.placeEl.replaceWith(clone);
 			
@@ -430,6 +483,44 @@
 				 this.sourceParent.children().eq(this.sourceIndex).before(el.clone());
 							 
 							 
+		},
+		buildOl :function (){
+			
+			var that = this;
+			
+			if(!util.isNull(that.options.data) && that.options.data.length > 0){
+				
+				var ol = $('<ol class="dd-list"></ol>');
+				
+				$.each(that.options.data,function(i,item){
+					
+					var li = $('<li class="dd-item" ></div>');
+					
+					li.attr("data-"+that.options.dataJsonKey,JSON.stringify(item));
+					li.attr("data-"+that.options.itemKey.toLowerCase(),item[that.options.itemKey]);
+					
+					var div = $('<div class="dd-handle">'+item[that.options.itemName]+'</div>');
+					
+					li.append(div);
+					
+					if(that.options.addItemQuickBtn){
+						
+						li.append(that.getQuickHtml(item[that.options.quickKey] == "是" ? true :false));
+						
+					}
+					
+					if(that.options.addItemCloseBtn){
+						
+						li.append(that.getCloseBtnHtml(true));
+					}
+					
+					ol.append(li);
+					
+				});
+				
+				that.el.append(ol);
+				
+			}
 		},
 
         dragMove: function(e)

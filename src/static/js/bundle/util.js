@@ -72,8 +72,14 @@ util = {
 	},
 
 	//操作失败提示
-	error: function(msg) {
-		util.showDialog(msg, 0);
+	error: function(msg,closeParent) {
+		
+		closeParent = closeParent == undefined ? 1 : 0;
+		var opts = {
+			"closeParent": closeParent
+		};
+		
+		util.showDialog(msg, 0,"no",opts);
 	},
 
 	//打开窗口
@@ -475,6 +481,103 @@ util = {
 			retStr = str.replace(/_isEqual/g, "=");
 		}
 		return retStr;
+	},
+	ajaxJson:function(msg,url,param,callBack,beforeSend,async){
+		
+		util.load(msg);
+		
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: JSON.stringify(param),
+			contentType: "application/json",
+			beforeSend: function(req) {
+				
+				if($.isFunction(beforeSend)){
+					
+					beforeSend.call(this,req);
+				}
+				
+				
+			},
+			xhrFields: {
+				withCredentials: false //跨域session保持
+			},
+			async: async == undefined ? true : async,
+			dataType: "json",
+			success: function(page) {
+				
+				util.disLoad();
+				
+				if($.isFunction(callBack)){
+					
+					callBack.call(this,page);
+				}
+				
+			},error:function(){
+				
+				util.disLoad();
+			}
+		});
+		
+	},
+	ajaxFile:function(msg,url,form,succFunc,errorFunc,xhrFunc){
+		
+		util.load(msg);
+		
+		$.ajax({
+			type: "post",
+			url: url,
+			//		enctype: "multipart/form-data",
+			contentType: false,
+			processData: false,
+			crossDomain: true,
+			dataType: "json",
+			data: form,
+			beforeSend: function(req) {
+		
+				req.setRequestHeader("_agileAuthToken", $.cookie('JSESSIONID_token'));
+			},
+			xhrFields: {
+		
+				withCredentials: false //跨域session保持
+			},
+			xhr: function() {
+				
+				
+				var myXhr = $.ajaxSettings.xhr();
+				
+				if($.isFunction(xhrFunc)){
+					
+					return xhrFunc.call(this,myXhr);
+				}
+		
+				return myXhr;
+		
+			},
+		
+			success: function(data) {
+		
+				util.disLoad();
+				
+				if($.isFunction(succFunc)){
+					
+					return succFunc.call(this,data);
+				}
+		
+			},
+			error: function(data) {
+				
+				util.disLoad();
+				
+				if($.isFunction(errorFunc)){
+					
+					return errorFunc.call(this,data);
+				}
+		
+			}
+		});
+		
 	}
 
 
