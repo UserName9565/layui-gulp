@@ -62,47 +62,40 @@
 
       <div class="layui-card-body">
 
-        <form class="ag-form layui-form" ag-data-index="1"  ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/waterrmarks/addInit">
+        <form class="ag-form layui-form" ag-data-index="1" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/mergeparams/updateInit">
 
+          <input type="hidden" name="id"/>
 
           <div class="layui-inline ">
 
-            <div class="layui-inline ">
-              <label class="layui-form-label">接入类型：</label>
-              <div class="layui-input-block">
-                <select name="chnlType" ag-sel-name="chnlTypeName">
-                </select>
-              </div>
-            </div>
+           <div class="layui-inline ">
+             <label class="layui-form-label">参数名称：</label>
+             <div class="layui-input-block">
+               <input type="text" name="paramName" ag-verify="required" autocomplete="off" placeholder="参数名称" class="layui-input">
+             </div>
+           </div>
+           <div class="layui-inline ">
+             <label class="layui-form-label">参数中文名称：</label>
+             <div class="layui-input-block">
+               <input type="text" name="paramNameCn" ag-verify="required" autocomplete="off" placeholder="参数中文名称" class="layui-input">
+             </div>
+           </div>
 
-            <div class="layui-inline ">
-              <label class="layui-form-label">水印类型：</label>
-              <div class="layui-input-block">
-                <select name="markType" ag-sel-name="markTypeName">
-                </select>
-              </div>
-            </div>
+           <div class="layui-inline ">
+             <label class="layui-form-label">前后台标示：</label>
+             <div class="layui-input-block">
+               <select name="fbFlag" ag-sel-name="fbFlagDesc">
+               </select>
+             </div>
+           </div>
 
-            <div class="layui-inline ">
-              <label class="layui-form-label">应用类型：</label>
-              <div class="layui-input-block">
-                <select name="appType" ag-sel-name="appTypeName">
-                </select>
-              </div>
-            </div>
-
-            <div class="layui-inline ">
-              <label class="layui-form-label">水印文本：</label>
-              <div class="layui-input-block">
-                <input type="text" name="markTxt" ag-verify="required" autocomplete="off" placeholder="水印文本" class="layui-input">
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-            	<label class="layui-form-label">水印图片：</label>
-            	<div class="ag-file"  ag-file-module="waterrmark" ag-file-multiple ='false' ag-file-max="1"  ag-file-submit-key ="markPic">
-            	</div>
-            </div>
+           <div class="layui-inline ">
+             <label class="layui-form-label">参数类型：</label>
+             <div class="layui-input-block">
+               <select name="paramType" ag-sel-name="paramTypeName">
+               </select>
+             </div>
+           </div>
 
         </form>
 
@@ -111,8 +104,7 @@
 
       <div class="layui-card-footer">
 
-        <button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/waterrmarks/add"
-          ag-data-index="1">
+        <button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/mergeparams/update"  ag-data-index="1">
           <i class="layui-icon layui-icon-search "></i>
           <span class="btn-span-middle">保存</span>
         </button>

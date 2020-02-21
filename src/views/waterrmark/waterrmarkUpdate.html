@@ -93,20 +93,17 @@
             </div>
 
             <div class="layui-inline ">
-              <label class="layui-form-label">水印图片：</label>
-              <div class="layui-input-block">
-                <input type="text" name="markPic" ag-verify="required" autocomplete="off" placeholder="水印图片" class="layui-input">
-              </div>
-            </div>
-
-            <div class="layui-inline ">
               <label class="layui-form-label">水印文本：</label>
               <div class="layui-input-block">
                 <input type="text" name="markTxt" ag-verify="required" autocomplete="off" placeholder="水印文本" class="layui-input">
               </div>
             </div>
 
-
+            <div class="layui-form-item">
+            	<label class="layui-form-label">水印图片：</label>
+            	<div class="ag-file"  ag-file-module="waterrmark" ag-file-multiple ='false' ag-file-max="1"  ag-file-submit-key ="markPic">
+            	</div>
+            </div>
 
         </form>
 
