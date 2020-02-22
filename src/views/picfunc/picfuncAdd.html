@@ -62,7 +62,7 @@
 
       <div class="layui-card-body">
 
-        <form class="ag-form layui-form" ag-data-index="1" ag-data-url="/sys/settings/chnls/addInit">
+        <form class="ag-form layui-form" ag-data-index="1" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/picfuncs/addInit">
 
 
           <div class="layui-inline ">
@@ -91,6 +91,14 @@
               <label class="layui-form-label">JS方法名称：</label>
               <div class="layui-input-block">
                 <input type="text" name="jsName" ag-verify="required" autocomplete="off" placeholder="JS方法名称" class="layui-input">
+              </div>
+            </div>
+
+            <div class="layui-inline ">
+              <label class="layui-form-label">功能类型：</label>
+              <div class="layui-input-block">
+                <select name="funcType" ag-sel-name="funcTypeName">
+                </select>
               </div>
             </div>
 
