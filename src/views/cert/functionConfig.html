@@ -150,12 +150,12 @@
 				$('#nestable1').nestable({
 					group: 1,
 					maxDepth:1,
-					dragFlag:false,
-					addItemCloseBtn:true,
-					addItemQuickBtn:true,
+					dragFlag:false,//是否允许拖拽
+					addItemCloseBtn:true,//是否添加删除按钮
+					addItemQuickBtn:true,//是否添加快捷方式选择
 					itemKey:"funcCode",
 					itemName:'funcName',
-					quickKey:'quickFlag',
+					quickKey:'quickFlag',//快捷方式 对应 bean的属性名
 					data:cfgChnlPicFuncYList
 				});
 				

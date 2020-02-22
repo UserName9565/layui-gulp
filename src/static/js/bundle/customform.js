@@ -56,18 +56,20 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 			paramJson[nameKey] = text;
 		}
 
+    var agFile =  $(form).find("[ag-file-submit-key]");
+
 		/**
 		 * 存储附件ID
 		 */
-		if ($(this).find("[ag-file-submit-key]").length > 0) {
+		if (agFile.length > 0) {
 
-			var key = $(this).find("[ag-file-submit-key]").eq(0).attr("ag-file-submit-key");
+			var key = agFile.eq(0).attr("ag-file-submit-key");
 
 			if (!util.isNull(key)) {
 
 				var arr = new Array();
 
-				$.each($(this).find("[ag-file-submit-key]").eq(0).find(".ag-file-item-li"), function(i, item) {
+				$.each(agFile.eq(0).find(".ag-file-item-li"), function(i, item) {
 
 					if (!util.isNull($(item).data("ag-file-name-savename"))) {
 
@@ -184,12 +186,12 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 
 	/**
 	 * 根据列配置信息和数据，装饰数据，加入链接处理
-	 * 
+	 *
 	 * @param {Object} colInfo
 	 * @param {Object} data
 	 */
  	function decorateData(colsStr) {
-		
+
 		var colModel = $.parseJSON(colsStr);
 
 		for (var i = 0; i < colModel.length; i++) {
@@ -203,35 +205,35 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 				}
 
 				if (colModel[i][k].btns) {
-					
+
 					if(!$.isArray(colModel[i][k].btns)){
-						
+
 						return ;
 					}
 					var id = "tpl_btns_"+util.randomWord(false,8);
-					
+
 					colModel[i][k].templet = "#" + id;
-					
+
 					var appendAHtml = "";
-					
+
 					for(var z = 0 ; z < colModel[i][k].btns.length ; z++){
-						
+
 						var item = colModel[i][k].btns[z];
-						
+
 						var realUrl = decorateTpl(item.url);
-						
+
 						var lsnrStr = getHrefLsnr(item.openType);
-						
+
 						var aFunc = lsnrStr + "('" + realUrl + "','" + item.openTitle + "')";
-						
+
 						var a = "<a href='javascript:void(0)' class=' layui-table-link "+item.className+"' onclick=" + aFunc + ">" + (item.btnVal?item.btnVal:"操作") + "</a>";
-						
+
 						appendAHtml += a;
-							
-						
-						
+
+
+
 					}
-					
+
 					appendScript(id, appendAHtml);
 				}
 
@@ -239,18 +241,18 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 
 
 		}
-		
+
 		return colModel;
 
 	}
 
 	/**
 		 *根据href的类型获取链接处理函数名称
-		 * 
+		 *
 		 * @param {Object} openType
 		 */
 		 function getHrefLsnr(openType){
-		
+
 			var hrefLsnr = {
 				"openType0":"_listHrefDownloadFile",
 				"openType1":"_listHrefWindow",
@@ -268,16 +270,16 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 		}
 
 		var scr = $("<script type='text/html' id='" + id + "'></script>");
-		
+
 		scr.append(a);
 
 		scr.appendTo($(document.body));
 	}
 
 	/**
-	 * 
+	 *
 	 * 根据配置url和参数 转换模板
-	 * 
+	 *
 	 */
 	function decorateTpl(inUrl, model) {
 
@@ -328,19 +330,19 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 
 				}
 				var arr = pair[1].match(/@(\S*)@/g);
-													
+
 				if(arr != null){
-					
+
 					for(var kk in arr){
-						
+
 						pair[1] = pair[1].replace(arr[kk], "{{d."+arr[kk].substring(1,arr[kk].length-1)+"}}");
 					}
-					
+
 					realParam += pair[0] + "=" + pair[1] + "&";
-					
+
 					continue;
 				}
-				
+
 
 				realParam += paramArr[k] + "&";
 
@@ -349,7 +351,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 			realUrl = urlNoParam + "?" + realParam;
 		}
 
-		
+
 		return realUrl;
 
 	}
@@ -374,13 +376,13 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 		var param = getFormJson($(".ag-form[ag-data-index=" + index + "]"));
 		var agCtx = util.getAgCtx(this);
 		url = ctx + "/" + agCtx + url;
-		
+
 		util.ajaxJson("查询中,请稍后...",url,param,function(page){
-			
+
 				var colsStr = $(".ag-table-header[ag-data-index=" + index + "]").html();
-			
+
 				var cols = decorateData(colsStr);
-				
+
 				//执行一个 table 实例
 				table.render({
 					elem: $(".ag-table[ag-data-index=" + index + "]"),
@@ -391,14 +393,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 					totalRow: false, //开启合计行
 					cols: cols
 				});
-			
+
 				addPageLisnr(page, index);
-			
+
 		},function(req){
-			
+
 			var page = $("input[name=page]").val();
 			req.setRequestHeader("page", page);
-			
+
 		});
 	};
 
@@ -577,8 +579,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 		param[pkCol] = pkVal;
 
 		var url = ctx + "/" + util.getAgCtx(btn) + $(btn).attr("ag-data-url");
-		
-		
+
+
 		util.ajaxJson("删除中,请稍后!",url,param,function(data) {
 
 				var result = data.result;
@@ -883,56 +885,56 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 			var url = that.form.find(".ag-file").eq(0).data("ag-file-iframe-add-url");
 
 			url = ctx + "/" + util.getAgCtx(null) + url;
-			
+
 			util.ajaxFile("上传中,请稍后...",url,form,function(data) {
-			
-			
+
+
 					if (data.result != 0) {
-			
+
 						error(layFilter, data.desc);
-			
+
 						return;
 					}
-			
+
 					succ(layFilter, data);
-			
+
 				},function(data) {
-			
-			
+
+
 					var msg = "上传失败...";
-			
+
 					try {
-			
+
 						var json = $.parseJSON(data.responseText);
-			
+
 						if (json.message && json.message.indexOf("Maximum") != -1) {
-			
+
 							msg = "附件大小超出服务器限制";
 						}
 					} catch (e) {
-			
+
 					}
-			
-			
+
+
 					error(layFilter, msg);
-			
+
 				},function(myXhr){
-					
+
 					if (myXhr.upload) {
-								
+
 						myXhr.upload.addEventListener('progress', function(e) {
-								
+
 							var progressRate = parseInt(e.loaded * 100 / e.total) + '%';
-								
-								
+
+
 							layui.element.progress(layFilter, progressRate == "100%" ? "99%" : progressRate);
-								
+
 						}, false);
-								
+
 					}
 					return myXhr;
 				});
-			
+
 			function succ(layFilter, data) {
 
 				layui.element.progress(layFilter, "100%");
@@ -1215,7 +1217,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 
 	/**
 	 * 列表链接，下载文件
-	 * 
+	 *
 	 * @param {Object} url
 	 */
 	function _listHrefDownloadFile(url) {
@@ -1256,15 +1258,14 @@ function _doRealDownLoad(url) {
 
 
 function _listHrefWindow(url,title){
-	
+
 	util.openWin(util.decode(url),title,1000,1000);
 }
 
 
 function _listHrefTab(url,title){
-	
-	
-	alert("打开tab页带补充..");
-	
-}
 
+
+	alert("打开tab页带补充..");
+
+}
