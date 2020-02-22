@@ -29,12 +29,25 @@ util = {
 		$("<div class=\"datagrid-mask\"></div>").css({
 			display: "block",
 			width: "100%",
+			position: "absolute",
+			top:0,
+			left:0,
+			'background-color':'#000000',
+			'z-index': 19891014,
+			opacity: 0.4,
 			height: $(window).height()
 		}).appendTo("body");
-		$("<div class=\"datagrid-mask-msg\"></div>").html(msg)
-			.appendTo("body").css({
+		
+		var msgDiv = $("<div class=\"datagrid-mask-msg\"></div>");
+		
+		var span = $("<span>"+msg+"</span>");
+		
+		msgDiv.append(span).appendTo("body");
+		
+			msgDiv.css({
 				display: "block",
-				left: ($(document.body).outerWidth(true) - 190) / 2,
+				position: "absolute",
+				left: ($(document.body).outerWidth(true)-span.width()) / 2,
 				top: ($(window).height() - 45) / 2
 			});
 	},
@@ -59,8 +72,14 @@ util = {
 	},
 
 	//操作失败提示
-	error: function(msg) {
-		util.showDialog(msg, 0);
+	error: function(msg,closeParent) {
+		
+		closeParent = closeParent == undefined ? 1 : 0;
+		var opts = {
+			"closeParent": closeParent
+		};
+		
+		util.showDialog(msg, 0,"no",opts);
 	},
 
 	//打开窗口
@@ -189,6 +208,12 @@ util = {
 				if (opts != undefined && opts.closeParent == 1) {
 					util.closeWin();
 				}
+				
+				if(util.isNull(callBack)){
+					
+					return ;
+				}
+				
 				if ($.isFunction(callBack)) {
 
 					callBack.call(this);
@@ -211,7 +236,11 @@ util = {
 
 				layer.close(index);
 
-
+				if(util.isNull(callBack)){
+					
+					return ;
+				}
+				
 				if ($.isFunction(callBack)) {
 
 					callBack.call(this);
@@ -233,6 +262,11 @@ util = {
 			}, function(index) {
 
 				layer.close(index);
+				
+				if(util.isNull(callBack)){
+					
+					return ;
+				}
 
 				if ($.isFunction(callBack)) {
 
@@ -255,6 +289,11 @@ util = {
 				yes: function(index) {
 
 					layer.close(index);
+					
+					if(util.isNull(callBack)){
+						
+						return ;
+					}
 
 
 					if ($.isFunction(callBack)) {
@@ -263,8 +302,14 @@ util = {
 					}
 
 					if (callBack) {
-						var arr = callBack.split(";")[0].split("=");
-						eval(arr[1]);
+						
+						var arr = callBack.split(";")[0];
+						
+						arr  = arr.substring(arr.indexOf("=")+1);
+						
+						console.log(arr);
+						
+						eval(arr);
 					}
 				}
 			}, function(index) {
@@ -273,7 +318,8 @@ util = {
 
 				if (callBack && callBack.split(";").length > 1) {
 
-					var arr = callBack.split(";")[1].split("=");
+					var arr = callBack.split(";")[0].split("=");
+					
 					eval(arr[1]);
 				}
 
@@ -325,15 +371,213 @@ util = {
 		return decodeURIComponent(url).replace(/\+/g, " ");
 	},
 	getAgCtx: function(obj) {
-		
-		if(obj == undefined || obj == null){
-			
+
+		if (obj == undefined || obj == null) {
+
 			return "sysmgr";
 		}
 
 		var ctx = $(obj).attr("ag-data-ctx");
-		
+
 		return util.isNull(ctx) ? "sysmgr" : ctx;
+	},
+	/*
+	 ** randomWord 产生任意长度随机字母数字组合
+	 ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+	 ** 
+	 */
+
+	randomWord: function(randomFlag, min, max) {
+		var str = "",
+			range = min,
+			arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+				'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+				'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+			];
+
+		// 随机产生
+		if (randomFlag) {
+			range = Math.round(Math.random() * (max - min)) + min;
+		}
+		for (var i = 0; i < range; i++) {
+			pos = Math.round(Math.random() * (arr.length - 1));
+			str += arr[pos];
+		}
+		return str;
+	},
+	/**
+	 * 时间计算差
+	 * 
+	 * @param {Object} timesData
+	 */
+	timeDiff: function(timesData) {
+
+		var dateBegin = new Date(timesData.replace(/-/g, "/")); //将-转化为/，使用new Date
+
+		var dateEnd = new Date(); //获取当前时间
+
+		var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
+
+		if (dateDiff < 0) {
+
+			return "未知";
+		}
+
+		var dayDiff = parseInt(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
+
+		var leave1 = dateDiff % (24 * 3600 * 1000) //计算天数后剩余的毫秒数
+
+		var hours = parseInt(leave1 / (3600 * 1000)) //计算出小时数
+
+		//计算相差分钟数
+		var leave2 = leave1 % (3600 * 1000) //计算小时数后剩余的毫秒数
+
+		var minutes = parseInt(leave2 / (60 * 1000)) //计算相差分钟数
+
+		//计算相差秒数
+		var leave3 = leave2 % (60 * 1000) //计算分钟数后剩余的毫秒数
+
+		var seconds = parseInt(leave3 / 1000);
+
+		var timesString = '';
+
+		if (dayDiff > 0) {
+			timesString = dayDiff + '天之前';
+		} else if (dayDiff < 1 && hours > 0) {
+			timesString = hours + '小时之前';
+		} else if (dayDiff < 1 && hours < 1 && minutes > 0) {
+
+			timesString = minutes + '分钟之前';
+		} else if (dayDiff < 1 && hours < 1 && minutes < 1) {
+			timesString = seconds + '秒之前';
+		}
+
+		return timesString;
+	},
+	getTime: function(datetime) {
+	
+			var date = datetime ? new Date(datetime) : new Date();
+	
+			var y = date.getFullYear() + '-';
+			var mm = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+			var d = date.getDate() + ' ';
+			var h = ((date.getHours() + "").length == 1 ? "0" + date.getHours() : date.getHours()) + ':';
+			var m = ((date.getMinutes() + "").length == 1 ? "0" + date.getMinutes() : date.getMinutes()) + ':';
+			var s = ((date.getSeconds() + "").length == 1 ? "0" + date.getSeconds() : date.getSeconds());
+	
+			return y + mm + d + h + m + s;
+	},
+	
+	trans:function(str) {
+		var retStr = str;
+		if(!util.isNull(str)) {
+			retStr = str.replace(/=/g, "_isEqual");
+		}
+		return retStr;
+	},
+	deTrans:function(str) {
+		var retStr = str;
+		if(!util.isNull(str)) {
+			retStr = str.replace(/_isEqual/g, "=");
+		}
+		return retStr;
+	},
+	ajaxJson:function(msg,url,param,callBack,beforeSend,async){
+		
+		util.load(msg);
+		
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: JSON.stringify(param),
+			contentType: "application/json",
+			beforeSend: function(req) {
+				
+				if($.isFunction(beforeSend)){
+					
+					beforeSend.call(this,req);
+				}
+				
+				
+			},
+			xhrFields: {
+				withCredentials: false //跨域session保持
+			},
+			async: async == undefined ? true : async,
+			dataType: "json",
+			success: function(page) {
+				
+				util.disLoad();
+				
+				if($.isFunction(callBack)){
+					
+					callBack.call(this,page);
+				}
+				
+			},error:function(){
+				
+				util.disLoad();
+			}
+		});
+		
+	},
+	ajaxFile:function(msg,url,form,succFunc,errorFunc,xhrFunc){
+		
+		util.load(msg);
+		
+		$.ajax({
+			type: "post",
+			url: url,
+			//		enctype: "multipart/form-data",
+			contentType: false,
+			processData: false,
+			crossDomain: true,
+			dataType: "json",
+			data: form,
+			beforeSend: function(req) {
+		
+				req.setRequestHeader("_agileAuthToken", $.cookie('JSESSIONID_token'));
+			},
+			xhrFields: {
+		
+				withCredentials: false //跨域session保持
+			},
+			xhr: function() {
+				
+				
+				var myXhr = $.ajaxSettings.xhr();
+				
+				if($.isFunction(xhrFunc)){
+					
+					return xhrFunc.call(this,myXhr);
+				}
+		
+				return myXhr;
+		
+			},
+		
+			success: function(data) {
+		
+				util.disLoad();
+				
+				if($.isFunction(succFunc)){
+					
+					return succFunc.call(this,data);
+				}
+		
+			},
+			error: function(data) {
+				
+				util.disLoad();
+				
+				if($.isFunction(errorFunc)){
+					
+					return errorFunc.call(this,data);
+				}
+		
+			}
+		});
+		
 	}
 
 
