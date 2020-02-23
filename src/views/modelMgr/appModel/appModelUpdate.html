@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" />
+    <link rel="stylesheet" href="/static/css/bundle/temp.css" />
+    <script src="/static/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+    @@include('url-config.html')
+  </head>
+  <body class="bg-info" onload="givePower_onclick()">
+
+    <div class="layui-card layui-card-form">
+
+      <div class="layui-card-body">
+
+        <form class="ag-form layui-form" ag-data-ctx="cfgmgr" ag-data-url="/cfg/appModelFile/addInit"  ag-data-index="1">
+
+          <div class="layui-inline ">
+
+            <div class="layui-inline ">
+              <label class="layui-form-label">模板类型：</label>
+              <div class="layui-input-block">
+                 <input type="text" name="typeName"  />
+              </div>
+            </div>
+
+            <div class="layui-inline ">
+              <label class="layui-form-label">模板名称：</label>
+              <div class="layui-input-block">
+                <input type="text" id="modelfileName" name="modelfileName" >
+              </div>
+            </div>
+            <div class="layui-inline ">
+              <label class="layui-form-label">操作代码：</label>
+              <div class="layui-input-block">
+                <input type="text" id="opCode" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码"
+                  class="layui-input">
+              </div>
+            </div>
+
+            <div class="layui-inline ">
+              <label class="layui-form-label">版本号：</label>
+              <div class="layui-input-block">
+                <select name="modelVersion" id="modelVersion">
+                  <option>1111</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-inline ">
+              <label class="layui-form-label">是否为可选协议：</label>
+              <div class="layui-input-block">
+                <select name="modelSelect" id="modelSelect">
+                </select>
+              </div>
+            </div>
+            </div>
+        </form>
+
+
+      </div>
+
+      <div class="layui-card-footer">
+
+        <button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr"
+          ag-data-index="1" onclick="updateSubmit()">
+          <i class="layui-icon layui-icon-search "></i>
+          <span class="btn-span-middle">保存</span>
+        </button>
+        <button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+          <i class="layui-icon layui-icon-search "></i>
+          <span class="btn-span-middle">取消</span>
+        </button>
+      </div>
+    </div>
+<OBJECT id="AgObj1" name="AgObj1"
+			classid="clsid:FE687895-F413-4D10-8740-D584DA23C74F"
+			style="HEIGHT: 500px; WIDTH: 100%"></OBJECT>
+  </body>
+</html>
+<script>
+  var iframe = document.getElementById("AgObj1");
+  var base64Str = "";
+</script>
+<script>
+  var base64Str = "";
+  function givePower_onclick(){
+    var url = ctx +"/cfgmgr/cfg/appModelFile/updateAjax";
+   var param={"modelfileId":getQueryString("modelfileId")};
+   $.ajax({
+         type:"POST",
+         url:url,
+         data:JSON.stringify(param),
+         contentType:"application/json",
+         xhrFields: {
+             withCredentials: false //跨域session保持
+           },
+         async: true ,
+         dataType:"json",
+         success:function(data){
+              var body=data.body;
+              $("#typeName").val(body.typeName);
+              $("#modelfileName").val(body.modelfileName);
+              alert(body.modelfileName);
+              $("#opCode").val(body.opCode);
+              $("#loginNo").val(body.loginNo);
+               $("#opTime").val(body.opTime);
+               $("#modelfileId").val(body.modelfileId);
+               $("#typeId").val(body.modelType.typeId);
+               $("#groupId").val(body.groupMsg.groupId);
+              //授权认证
+              var iframe = document.getElementById("AgObj1");
+              alert(iframe);
+              iframe.AddLicence(body.licence);
+              //编辑模板状态
+              iframe.Ag_InitFlag(true);
+              //设置模板元素
+              iframe.Ag_InitElement(body.elements,",",":");
+              //打开模板文件BILL.PDF
+              var modelfileId = getQueryString("modelfileId");
+              var url = ctx +"/cfgmgr/cfg/appModelFile/downloadFile?modelfileId="+modelfileId;
+              alert(url);
+              var fileLocal = body.fileLocal;
+              var ret = iframe.Ag_DownLoadFromHTTP(url,fileLocal+"appmodel.pdf");
+              iframe.Ag_OpenTempleteFile(fileLocal+"appmodel.pdf",true);
+              }
+       });
+  }
+
+
+
+
+  function getQueryString(name) {
+   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+   var r = window.location.search.substr(1).match(reg);
+   if (r != null) return unescape(r[2]); return null;
+  }
+ $(".ag-btn-save").bind("click",function(){
+  util.showDialog("您确定要修改么?",3,updateSubmit);
+  })
+function updateSubmit(){
+		var fileLocal = $("#fileLocal").val();
+	 var filePath = fileLocal + "appmodel.pdf";
+	  iframe.Ag_SaveTempleteAs(filePath, false);
+		iframe.Ag_HttpInit();
+    iframe.Ag_HttpAddPostString("modelfileId",$("#modelfileId").value);
+	  iframe.Ag_HttpAddPostString("modelVersion",$("#modelVersion").val());
+	 // iframe.Ag_HttpAddPostString("modelSelect",$("#modelSelect").val());
+	 iframe.Ag_HttpAddPostCurrFile(filePath);
+    var url = ctx+ "/cfgmgr/cfg/appModelFile/updateModelFile";
+    alert(url);
+		var message = iframe.Ag_HttpPostUrl(url);
+     alert(message);
+   if(message== '0'){
+     util.showDialog("修改成功！",1,function(){ util.closeWin();});
+   }else{
+     util.error("文件保存失败！");
+   }
+}
+
+
+</script>

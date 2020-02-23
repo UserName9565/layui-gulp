@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>模板文件申请</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+	</head>
+	<body class="bg-info">
+
+		<div class="layui-card layui-card-margin ">
+
+			<form class="ag-form layui-form" ag-data-index="0">
+
+				<div class="param-left">
+
+					<div class="layui-inline ">
+						<label class="layui-form-label">组织机构：</label>
+						<div class="layui-input-block">
+							<input type="text" name="groupId" lay-verify="title" autocomplete="off" placeholder="组织机构" class="layui-input">
+						</div>
+					</div>
+				</div>
+
+
+			</form>
+ 			<div class="btns-right">
+
+				<div class="layui-inline">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelFile/queryCApplyListPages">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">查询</span>
+					</button>
+
+					<button class="layui-btn layui-btn-sm layui-btn-blue" type="reset">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">重置</span>
+					</button>
+				</div>
+ 
+
+			</div>
+
+		</div>
+
+
+
+
+		<div class=" layui-card  layui-card-list" style="height: calc( 100vh - 105px);">
+
+			<div class="layui-border-box ">
+
+				<div class="layui-table-tool">
+					<div class="layui-table-tool-temp">
+ 					<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html"><i class="layui-icon layui-icon-edit"></i></div>
+
+          </div>
+				</div>
+			</div>
+			<div style="display:none" class="ag-table-header" ag-data-index="0">
+
+			    [
+			      [
+			        {
+			          "type": "radio",
+			          "fixed": "left"
+			        }, {
+			          "field": "modelfileId",
+			          "title": "模板文件编码",
+			          "sort": true,
+			          "fixed": "left",
+                "hide": true
+			        }, {
+			          "field": "modelfileName",
+			          "title": "模板文件名称",
+			          "sort": true,
+			          "fixed": "left"
+			        }, {
+			          "field": "groupName",
+			          "title": "组织机构"
+			        }, {
+			          "field": "opTimeString",
+			          "title": "操作时间"
+			        }, {
+			          "field": "loginNo",
+			          "title": "操作工号"
+			        }, {
+			          "field": "typeName",
+			          "title": "模板类型"
+			        }, {
+			          "field": "opCode",
+			          "title": "操作代码"
+			        }, {
+			          "field": "validValue",
+			          "title": "状态描述"
+			        }
+
+			      ]
+			    ]
+
+			</div>
+			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+			</table>
+
+			<div class="pagging ag-area-page">
+				   
+			</div>
+
+		</div>
+
+		<script>
+
+		</script>
+	</body>
+</html>
