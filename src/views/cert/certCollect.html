@@ -24,7 +24,7 @@
 			</div>
 			<div class="layui-card-body">
 
-				<div style="padding-right: 150px;">
+				<div class="cert-tabs" style="padding-right: 150px;">
 
 					<div class="card-btn">
 						<div class="card-btn-img img-cert-idcard"></div>
@@ -38,7 +38,13 @@
 							拍照
 						</div>
 					</div>
-
+					<div class="card-btn">
+						<div class="card-btn-img img-cert-upload	"></div>
+						<div class="card-btn-desc">
+							图片上传
+						</div>
+					</div>
+					
 				</div>
 
 				<div class="card-btn-right">
@@ -60,7 +66,7 @@
 		</div>
 
 
-		<div class="layui-card card-dk  layui-card-static layui-hide" style="">
+		<div class="layui-card cert-content  layui-card-static " style="">
 
 			<div class="card-auto">
 
@@ -68,15 +74,14 @@
 
 					<div class="card-dk-left-split">
 
-						<div class="img-cert-card-front cert-img-size">
-
+						<div class="img-cert-card-front ">
 
 
 						</div>
 					</div>
 					<div class="card-dk-left-split">
 
-						<div class="img-cert-card-back cert-img-size" style="margin-top: 30px;">
+						<div class="img-cert-card-back " style="margin-top: 30px;">
 
 
 
@@ -94,15 +99,17 @@
 
 					<form class="layui-form">
 
-						<div class="card-dk-right-type">
+						<div class="card-dk-right-type card-dk-right-type-padd" >
 
-							<div class="layui-inline">
-								<select>
+							<div class="layui-inline" >
+								<select >
 									<option>证件本地读卡方式</option>
 								</select>
 							</div>
 							<button class="layui-btn layui-btn-blue layui-btn-sm">重新连接</button>
+							<span class="layui-color-succ input-ljcg">(链接成功)</span>
 						</div>
+						
 						<div>
 
 							<div class="img-default-face card-dk-right-img">
@@ -157,18 +164,81 @@
 
 		</div>
 
-		<div class="layui-card layui-card-static card-photo ">
+		<div class="layui-card layui-card-static cert-content ">
 			
 			<div class="card-auto">
-					<div class="card-photo-left">
+					<div class="card-photo-left "> <!-- card-photo-left-succ 采集成功添加-->
+						
+						<div class="img-cert-card-image card-photo-default-center">
+							
+						</div>
+						<div class="img-cert-photo-rect layui-hide" >
+							
+							<div class="card-photo-succ">
+								
+								
+							</div>
+							
+						</div>
 						
 					</div>
 					<div class="card-photo-right">
+						<form class="layui-form">
+						<div class="card-dk-right-type">
 						
+							<div class="layui-row">
+								<div class="layui-inline" >
+									<select style="width: 305px;">
+										<option>临时身份证</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-row">
+								<div style="margin-left: -20px;margin-top:10px;">
+									<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-blue" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/tenant/queryPage">
+										<span class="btn-span-middle">采集识别</span>
+									</button>
+									<span  class="layui-color-succ" style="margin-left: 5px;line-height:30px;"><i class="layui-icon layui-icon-ok-circle"></i> 采集信息成功</span>
+								</div>
+								
+								<div  style="margin-left: -20px;margin-top:10px;">
+									
+									<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal"  lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/tenant/queryPage">
+										<span class="btn-span-middle" style="margin:0px 13px">拍照</span>
+									</button>
+									
+									
+								</div>
+							</div>
+						</div>
+						</form>
 					</div>
 			</div>
 		
 		</div>
+
+		
+		<div class="layui-card layui-card-static cert-content ">
+				
+				<div class="card-auto" style="border: 1px solid #0B82FF;background-color: #F9FAFE;">
+					
+					<div class="upload-tb" style="">
+						
+						<div class="card-btn" style="width: 100%;">
+							
+							<div class="card-btn-img img-cert-upload-pic" style="margin-top: 10px;"></div>
+							<div class="card-btn-desc" style="margin-top: 10px;margin-bottom: 10px;">
+								点击上传图片
+							</div>
+						</div>
+						
+						
+					</div>
+					<i class="upload-tb-del layui-icon layui-icon-delete" style=""></i>
+				</div>
+			
+			</div>
+		
 	</body>
 
 	<script>
@@ -180,11 +250,25 @@
 			
 			var height = $(window).height() -180;
 			
-			$(".card-dk,.card-photo").height(height);
+			$(".cert-content").toggleClass("layui-hide",true);
+			
+			$(".cert-content").eq(0).removeClass("layui-hide");
+			
+			$(".cert-content").height(height);
 
 			var form = layui.form;
 
 			form.render();
+			
+			$(".cert-tabs .card-btn").click(function(){
+				
+				var index = $(this).index();
+				
+				$(".cert-content").toggleClass("layui-hide",true);
+				
+				$(".cert-content").eq(index).removeClass("layui-hide");
+				
+			});
 
 		});
 	</script>

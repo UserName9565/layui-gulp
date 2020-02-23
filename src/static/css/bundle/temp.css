@@ -206,9 +206,10 @@ body {
 	margin: 0 auto;
 }
 
-.card-btn:hover {
-	border: 1px solid #80D5F5;
+.card-btn:hover,.card-btn:hover >.card-btn-desc {
 	background-color: #E4F6FD;
+	color: #77c7fe;
+	font-weight: 500;
 	cursor: pointer;
 }
 
@@ -225,9 +226,30 @@ body {
 	color: #605e5e;
 }
 
+.upload-tb{
+	
+	position: absolute;left: 50%;top: 50%;margin-top: -45px;margin-left: -50px;width: 120px;height: 90px;
+}
+
+.upload-tb-del{
+	
+	position: absolute;bottom: 0;right: 10px;
+	font-size: 45px;
+}
+
+.upload-tb-del:hover{
+	
+	color: #FF5722;
+}
+
 .img-cert-idcard {
 
 	background: url("../../images/face/idcard_40.png") no-repeat center top;
+}
+
+.img-cert-upload{
+
+	background: url("../../images/face/card-upload-btn_40.png") no-repeat center top;
 }
 
 .img-cert-photograph {
@@ -255,6 +277,85 @@ body {
 	width: 316px;
 	height: 200px;
 	background: url("../../images/face/cardfront_200.png") no-repeat center top;
+}
+
+.img-cert-card-image {
+	width: 92px;
+	height: 89px;
+	background: url("../../images/face/card-image_89.png") no-repeat center top;
+}
+
+.img-cert-photo-rect {
+	width: 380px;
+	height: 367px;
+	background: url("../../images/face/photo_rect_367.png") no-repeat center top;
+}
+
+.img-cert-upload-pic {
+	width: 34px;
+	height: 35px;
+	background: url("../../images/face/upload_35.png") no-repeat center top;
+}
+
+
+.card-photo-left.card-photo-left-succ{
+	
+	background: none;
+	border: none;
+}
+.card-photo-default-center{
+	
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -44px;
+	margin-left: -46px;;
+}
+
+.card-photo-left-succ .img-cert-photo-rect{
+	
+	display: block;
+	position: relative;
+}
+
+.card-dk-right-type.card-dk-right-type-padd{
+	
+	padding-top: 20px;
+	position: relative;
+}
+
+.card-dk-right-type.card-dk-right-type-padd .layui-btn{
+	
+	margin-left: 10px;
+}
+
+.card-dk-right-type-padd .input-ljcg{
+	
+	position: absolute;
+	top:25px;
+	left:150px;
+}
+
+
+ .card-dk-right-type-padd .layui-form-select .layui-input{
+	
+	padding-right: 60px;
+}
+
+.layui-color-succ{
+	
+	color: #5FB878;
+}
+
+.card-photo-succ{
+	
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 316px;
+	height: 200px;
+	margin-top: -100px;
+	margin-left: -158px;;
 }
 
 .img-cert-card-back {
@@ -344,12 +445,13 @@ body {
 	margin: 0px 10px;
 	background-color: #fafafe;
 	border: 1px solid rgba(169, 176, 183, 1);
+	position: relative;
 }
 
 .card-photo-right {
 	float: left;
 
-	border: 1px dashed #bcbfbe;
+	/* border: 1px dashed #bcbfbe; */
 	width: 348px;
 	height: 200px;
 }
@@ -363,21 +465,21 @@ body {
 .card-dk-right {
 	float: left;
 	background-color: #fafafe;
-	border: 1px dashed #bcbfbe;
+	/* border: 1px dashed #bcbfbe; */
 	width: 350px;
 	height: 100%;
 }
 
 .card-dk-right-type {
 
-	padding: 20px;
+	padding: 0px 20px 20px 20px;
 }
 
 .card-dk-right-img {
 
 	width: 83px;
 	height: 94px;
-	margin-left: 40px;
+	margin-left: 22px;
 }
 
 .card-dk-left-btns {
