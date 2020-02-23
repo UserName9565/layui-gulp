@@ -37,19 +37,17 @@
 				<div class="layui-card-body">
 
 					<form  class="ag-form layui-form" >
-          <input type="text" id="modelfileId" />
-          <input type="text" id="typeId" />
-          <input type="text" id="groupId" />
+          <input type="hidden" id="modelfileId" />
+          <input type="hidden" id="typeId" />
+          <input type="hidden" id="groupId" />
 							<div class="layui-inline ">
 
                 <div class="layui-inline ">
                 				<label class="layui-form-label">模板类型：</label>
                 				<div class="layui-input-block">
                 					<input type="text"  id="typeName" name="typeName" ag-verify="required" autocomplete="off" readonly="readonly" reaplaceholder="模板类型" class="layui-input">
-
                 				</div>
                  </div>
-
                 <div class="layui-inline ">
                 	<label class="layui-form-label">模板名称：</label>
                 	<div class="layui-input-block">
@@ -204,6 +202,7 @@ function update(opts){
             }
         }
        var url = ctx+"/cfgmgr/cfg/modelFile/updateModelFile";
+       var messages = HWPostil1.HttpPost(url);
          if(messages == 'success'){
           util.showDialog("修改成功！",1,function(){ util.closeWin();});
         }else{

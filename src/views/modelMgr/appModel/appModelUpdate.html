@@ -17,14 +17,14 @@
 
       <div class="layui-card-body">
 
-        <form class="ag-form layui-form" ag-data-ctx="cfgmgr" ag-data-url="/cfg/appModelFile/addInit"  ag-data-index="1">
-
+        <form class="ag-form layui-form" ag-data-ctx="cfgmgr" ag-data-url="/cfg/appModelFile/updateInit"  ag-data-index="1">
+      <input type="hidden" id="modelfileId" name="modelfileId" />
           <div class="layui-inline ">
 
             <div class="layui-inline ">
               <label class="layui-form-label">模板类型：</label>
               <div class="layui-input-block">
-                 <input type="text" name="typeName"  />
+                 <input type="text" name="typeName"  id="typeName" />
               </div>
             </div>
 
@@ -37,7 +37,21 @@
             <div class="layui-inline ">
               <label class="layui-form-label">操作代码：</label>
               <div class="layui-input-block">
-                <input type="text" id="opCode" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码"
+                <input type="text" id="opCode" name="opCode"  autocomplete="off" placeholder="操作代码"
+                  class="layui-input">
+              </div>
+            </div>
+          <div class="layui-inline ">
+              <label class="layui-form-label">操作人：</label>
+              <div class="layui-input-block">
+                <input type="text" id="loginNo" name="loginNo"  readonly="readonly" autocomplete="off" placeholder="操作人"
+                  class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline ">
+              <label class="layui-form-label">操作时间：</label>
+              <div class="layui-input-block">
+                <input type="text" id="opTime" name="opTime"  readonly="readonly"  autocomplete="off" placeholder="操作代码"
                   class="layui-input">
               </div>
             </div>
@@ -103,18 +117,16 @@
          dataType:"json",
          success:function(data){
               var body=data.body;
-              $("#typeName").val(body.typeName);
+              $("#typeName").val(body.modelType.typeName);
               $("#modelfileName").val(body.modelfileName);
-              alert(body.modelfileName);
-              $("#opCode").val(body.opCode);
               $("#loginNo").val(body.loginNo);
                $("#opTime").val(body.opTime);
+              $("#opCode").val(body.opCode);
+
                $("#modelfileId").val(body.modelfileId);
-               $("#typeId").val(body.modelType.typeId);
-               $("#groupId").val(body.groupMsg.groupId);
               //授权认证
               var iframe = document.getElementById("AgObj1");
-              alert(iframe);
+              alert("加载模板...");
               iframe.AddLicence(body.licence);
               //编辑模板状态
               iframe.Ag_InitFlag(true);
@@ -123,7 +135,6 @@
               //打开模板文件BILL.PDF
               var modelfileId = getQueryString("modelfileId");
               var url = ctx +"/cfgmgr/cfg/appModelFile/downloadFile?modelfileId="+modelfileId;
-              alert(url);
               var fileLocal = body.fileLocal;
               var ret = iframe.Ag_DownLoadFromHTTP(url,fileLocal+"appmodel.pdf");
               iframe.Ag_OpenTempleteFile(fileLocal+"appmodel.pdf",true);
@@ -147,14 +158,15 @@ function updateSubmit(){
 	 var filePath = fileLocal + "appmodel.pdf";
 	  iframe.Ag_SaveTempleteAs(filePath, false);
 		iframe.Ag_HttpInit();
-    iframe.Ag_HttpAddPostString("modelfileId",$("#modelfileId").value);
+    iframe.Ag_HttpAddPostString("modelfileId",$("#modelfileId").val());
 	  iframe.Ag_HttpAddPostString("modelVersion",$("#modelVersion").val());
-	 // iframe.Ag_HttpAddPostString("modelSelect",$("#modelSelect").val());
+	  iframe.Ag_HttpAddPostString("modelSelect",$("#modelSelect").val());
+  	iframe.Ag_HttpAddPostString("opCode",$("#opCode").val());
 	 iframe.Ag_HttpAddPostCurrFile(filePath);
     var url = ctx+ "/cfgmgr/cfg/appModelFile/updateModelFile";
-    alert(url);
+    //alert("保存中。。。");
 		var message = iframe.Ag_HttpPostUrl(url);
-     alert(message);
+     alert("保存中。。。");
    if(message== '0'){
      util.showDialog("修改成功！",1,function(){ util.closeWin();});
    }else{

@@ -29,7 +29,7 @@
  			<div class="btns-right">
 
 				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/appModelFile/queryCAppModelFileListPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/appModelFile/queryCAppModelFileListPages">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
@@ -58,9 +58,9 @@
  			  <div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/appModel/AppModelUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
  			  <div class="ag-btn-delele layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
 		    <!-- 申请-->
-        <div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
+        <div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-ok"></i></div>
 		    <!-- 作废-->
-        <div class="ag-btn-abolish layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
+        <div class="ag-btn-abolish layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-close"></i></div>
 
           </div>
 				</div>
@@ -87,7 +87,7 @@
 			          "field": "groupName",
 			          "title": "组织机构"
 			        }, {
-			          "field": "opTimeString",
+			          "field": "opTime",
 			          "title": "操作时间"
 			        }, {
 			          "field": "loginNo",
