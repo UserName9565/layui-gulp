@@ -210,7 +210,7 @@ var envName = options.env || 'dev';
 gulp.task('env-config', function() {
     return gulp.src('config/api.config.' + envName + '.js')
         .pipe(rename('api.config.js'))
-        .pipe(gulp.dest('./static/js/'));
+        .pipe(gulp.dest('./dist/static/js/'));
 })
 
 gulp.task('default', () => {
