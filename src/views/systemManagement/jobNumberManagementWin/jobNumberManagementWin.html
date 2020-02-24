@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  @@include('url-config-win.html',{
+    "rootD":"../../.."
+  })
+</head>
+
+<body>
+  <form class="layui-form" lay-filter="winId">
+    <div class="layui-form-item"> 
+      
+        @@include('input.html',{"title":"工号","name":"loginNoStr","verify":"requiredM"})
+    </div>
+    <div class="layui-form-item">
+        @@include('input.html',{"title":"工号名称","name":"loginNameStr","verify":"requiredM"})
+    </div>
+    <div class="layui-form-item">
+        @@include('inputAndBtn.html',{"title":"组织机构","name":"groupName","verify":"requiredM","choice":"organiztionp"})
+    </div>
+    
+    <div class="layui-form-item">
+        @@include('select.html',{"title":"有效标志","name":"validFlag","verify":"requiredM"})
+    </div>
+   
+  </form>
+
+  <script src="../../../static/js/bundle/jobNumberManagementWin.js?v=1.0.0"></script>
+</body>
+
+</html>

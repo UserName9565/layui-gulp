@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    @@include('url-config.html')
+    @@include('url-config.html',{"rootD":".."})
   
     <style>
         html, body {width: 100%;height: 100%;overflow: hidden}
@@ -53,7 +53,7 @@
                 <form class="layui-form" action="">
                     <div class="layui-form-item logo-title">
                         <div class="clear" style="margin:0 auto;display: inline-block">
-                            <h1 class="left"><img src="../static//images/blue-logo.png" alt=""></h1>
+                            <h1 class="left"><img src="../static/images/blue-logo.png" alt=""></h1>
                             <h1 class="left" style="width:2px;background-color: #3b77e3; height:23px;margin-top:4px;"></h1>
                             <h1 class="left">无纸化集中业务管理系统</h1>
                         </div>
@@ -84,7 +84,7 @@
         </div>
     </div>
 </div>
-<script src="/static/layui/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
+<script src="../static/layui/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
 <script>
     layui.use(['form'], function () {
         var form = layui.form,
@@ -129,12 +129,12 @@
                 // modelInit(data.data);
                 // localStorage.setItem("menus",JSON.stringify(data.functions))
                 $.cookie("JSESSIONID_token", data.token, {
-                  expires: 7, path: '/'
+                  path: '/'
                 })
                  
                
                 // return false;
-                window.location = '/index.html';
+                window.location = '../index.html';
             }
             // layer.msg('登录成功', function () {
             //     window.location = '/index.html';

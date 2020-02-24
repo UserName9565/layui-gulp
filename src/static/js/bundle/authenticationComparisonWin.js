@@ -21,9 +21,9 @@ layui.use(['form', 'laydate', 'table', 'laypage', 'layer', 'element'], function 
     });
     /////////////////////////
     table.render({
-        elem: '#agileTable',
+        elem: '#ag-table',
         url: '/static/layui/api/table.json',
-        toolbar: '#toolbarDemo',
+        toolbar: '#ag-table-header',
         defaultToolbar: ['filter', 'exports', 'print', {
             title: '提示',
             layEvent: 'LAYTABLE_TIPS',
@@ -52,9 +52,9 @@ layui.use(['form', 'laydate', 'table', 'laypage', 'layer', 'element'], function 
     //第一个实例
 
     function selet() {
-        publicFun.comSelect(url.impressionManagement.type, publicFun.selectIn2, $(".statusCode"), "key", "value", true, success, true);
+        publicFun.comSelect(url.impressionManagement.type, publicFun.selectIn2, $(".statusCode"), "key", "value", success, true);
         function success() {
-            $(".submission").click();
+            $(".ag-btn-query").click();
 
             form.render("select")
         }
@@ -108,7 +108,7 @@ layui.use(['form', 'laydate', 'table', 'laypage', 'layer', 'element'], function 
     }
 
     //监听工具条
-    table.on('tool(agileTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+    table.on('tool(ag-table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data; //获得当前行数据
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -132,7 +132,7 @@ layui.use(['form', 'laydate', 'table', 'laypage', 'layer', 'element'], function 
         }
     });
     //监听表头
-    table.on('toolbar(agileTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+    table.on('toolbar(ag-table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data; //获得当前行数据
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 
@@ -166,7 +166,7 @@ layui.use(['form', 'laydate', 'table', 'laypage', 'layer', 'element'], function 
               
             }
             
-            // var submited = sonTemp.find(".submission");
+            // var submited = sonTemp.find(".ag-btn-query");
             // submited.click()
             // console.log(submited.click())
              
@@ -195,7 +195,7 @@ layui.use(['form', 'laydate', 'table', 'laypage', 'layer', 'element'], function 
             layer.msg("添加成功")
           }
           layer.close(index)
-          $(".submission").click();
+          $(".ag-btn-query").click();
         }
       }
       $(".data-add-btn").on("click", function () {

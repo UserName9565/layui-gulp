@@ -11,7 +11,7 @@
   <meta name="full-screen" content="yes">
   <meta name="x5-fullscreen" content="true">
   <meta name="keywords" content="">
-  <meta name="description" content=""> @@include('url-config.html')
+  <meta name="description" content=""> @@include('url-config.html',{"rootD":".."})
   <!-- <link rel="stylesheet" href="/static/css/bundle/index.css?v=201809131551"> -->
   <title>首页</title>
 </head>
@@ -96,8 +96,7 @@
   
    
   
-  <!-- <script src="lib/layui-v2.5.5/layui.js?v=1.0.4" charset="utf-8"></script> -->
-  <!-- <script src="js/lay-config.js?v=1.0.4" charset="utf-8"></script> -->
+   
   <script>
       layui.use(['element', 'layer', 'layuimini'], function () {
           var $ = layui.jquery,

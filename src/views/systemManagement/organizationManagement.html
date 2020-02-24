@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  @@include('url-config.html',{
+    "rootD":"../.."
+  })
+  @@include('ztree.html',{
+    "rootD":"../.."
+  })
+  
+</head>
+<style>
+
+    .layui-form-label{
+      width:130px;
+    }
+  </style>
+<body class="orgmanag">
+  <div class="layui-fluid">
+   
+    <div class="layui-col-md3">
+      <div class="layui-card">
+        <div class="layui-card-body">
+          <ul id="ag-tree" class="ztree orgTree" data-id="0"></ul>
+          <!-- <div class="eleTree ele1" lay-filter="data1" style="margin-top:55px"></div> -->
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md9 layui-form mt20" layui-filter="winId">
+        <div class="layui-card clear" style="height:550px">
+            <div class="layui-card-body clear">
+
+
+              <input type="hidden" class="groupId" name="groupId">
+             
+              <input type="hidden" class="groupIdPks" name="groupIdPks">
+              <input type="hidden" class="validFlag" name="validFlag">
+              <input type="hidden" name="parentGroupId" class="parentGroupId">
+              <div class="layui-col-md12 mt60 orgSt ">
+                <div class="layui-form-item layui-col-md-offset1">
+                  <div class="layui-inline ">
+                    <label class="layui-form-label  ">
+                      技能组名称：</label>
+                    <div class="layui-input-inline ">
+                      <input type="text" name="groupName" lay-verify="" autocomplete="off" class="layui-input groupName">
+
+                    </div>
+
+                  </div>
+                  <!-- @@include('input.html',{"title":"组织机构名称","name":"elemName","verify":""}) -->
+                </div>
+                <div class="layui-form-item layui-col-md-offset1">
+                  <div class="layui-inline ">
+                    <label class="layui-form-label  ">技能组描述：</label>
+                    <div class="layui-input-inline ">
+                      <input type="text" name="describe" lay-verify="" autocomplete="off" class="layui-input describe">
+
+                    </div>
+
+                  </div>
+                  <!-- @@include('input.html',{"title":"组织机构描述","name":"elemName","verify":""}) -->
+                </div>
+                <div class="layui-form-item layui-col-md-offset1">
+                  <div class="layui-inline">
+                    <label class="layui-form-label">底层标识：</label>
+                    <div class="layui-input-inline">
+                      <select name="leafFlag" class="leafFlag" lay-verify="required" lay-search="">
+                      
+                        <option value="Y">是</option>
+                        <option value="N">否</option>
+                      
+                      </select>
+                       
+                    </div>
+                  </div>
+
+                </div>
+                 
+                <div class="layui-col-md12 pl50 mt20 layui-col-md-offset1">
+                  <button class="layui-btn add" type="button">添加子机构</button>
+                  <button class="layui-btn edit" type="button">修改机构</button>
+                  <button class="layui-btn layui-btn-danger del" type="button">删除机构</button>
+                  <button class="layui-btn authmanag" type="button">员工权限管理</button>
+                  <!-- <button class="layui-btn del" type="button">删除组织机构</button> -->
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+     
+       
+    </form>
+     
+  </div>
+  <script src="../../static/js/bundle/organizationalManagement.js?v=201809271123"></script>
+</body>
+
+</html>

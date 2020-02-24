@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  @@include('url-config-win.html')
+  @@include('url-config-win.html',{
+    "rootD":"../.."
+  })
 </head>
 
 <body>
@@ -15,15 +17,15 @@
            <input type="hidden" class="opCodeHidden">
            <input type="hidden" class="opName">
             @@include('input.html',{"title":"业务代码","name":"opCode","verify":""})  
-            <button class="layui-btn layui-btn-sm submission" lay-submit lay-filter="formQuery">检索</button>
+            <button class="layui-btn layui-btn-sm ag-btn-query" lay-submit lay-filter="formQuery">检索</button>
         </div>
       </div>
-      </div>         <div class="layui-card">             <div class="layui-card-body">                  <table id="agileTable" lay-filter="agileTable">
+      </div>         <div class="layui-card">             <div class="layui-card-body">                  <table id="ag-table" lay-filter="ag-table">
     
-      </table>         <div id="page">          </div>
+      </table>         <div id="ag-area-page">          </div>
       <span class=" getS" style="display: none">点击</span>
 
-  <script src="/static/js/bundle/businessWin.js?v=201809271123"></script>
+  <script src="../../static/js/bundle/businessWin.js?v=1.0.0"></script>
 </body>
 
 </html>

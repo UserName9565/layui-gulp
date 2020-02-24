@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  @@include('url-config.html',{
+    "rootD":"../.."
+  })
+</head>
+
+<body>
+  <div class="layui-fluid">
+    
+    <div class="layui-card">
+      
+
+      <form class="layui-form layui-card-body mt20"> <input type="hidden" name="pageNo" class="pageNo"
+          value="1">
+
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">业务类型名称：</label>
+            <div class="layui-input-inline">
+              <input type="text" name=""  lay-verify="" autocomplete="off" class="layui-input">
+              
+            </div>
+            <div class="left">
+                <button class="layui-btn-sm layui-btn business" type="button"> 选择</button>
+            </div>
+          </div>
+          @@include('input.html',{"title":"业务代码","verify":"","name":"groupName"})
+          <div class="layui-inline right">
+            <button type="button" class="layui-btn layui-btn-sm ag-btn-query" lay-submit lay-filter="formQuery"><i
+                class="layui-icon layui-icon-search"></i>查询</button>
+            <button type="button" reset="true" class="layui-btn layui-btn-sm layui-btn-danger"><i
+                class="layui-icon layui-icon-refresh"></i>重置</button>
+
+          </div>
+        </div>
+ 
+      </form>
+    </div>
+    <div class="layui-card">
+      <div class="layui-card-body">
+        <script type="text/html" id="ag-table-header">
+          <div class="layui-btn-container" >
+              <button class="layui-btn layui-btn-sm ag-btn-add" lay-event="add"> <i class="layui-icon layui-icon-add-1"></i>新增 </button>
+              <button class="layui-btn layui-btn-sm ag-btn-update" lay-event="edit"> <i class="layui-icon layui-icon-edit"></i>修改 </button>
+              <button class="layui-btn layui-btn-sm layui-btn-danger ag-btn-del" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除 </button>
+          </div>
+      </script>
+        <table id="ag-table" lay-filter="ag-table">
+
+        </table>
+        <div id="ag-area-page"> </div>
+        
+        <!-- <div id="barDemo" style="display:none">
+          <a class="layui-btn layui-btn-xs" lay-event="ag-btn-update">编辑</a>
+          <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="ag-btn-del">删除</a>
+          <a class="layui-btn layui-btn-xs" lay-event="ag-btn-repass">密码重置</a>
+        
+        </div> -->
+      </div>
+      
+    </div>
+    
+  </div>
+  <script src="../../static/js/bundle/businessRule.js?v=1.0.0"></script>
+</body>
+
+</html>
