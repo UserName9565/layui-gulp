@@ -14,7 +14,7 @@
     <style>
         html, body {width: 100%;height: 100%;overflow: hidden}
         body {
-            background: url("../static/images/background.png") left top;
+            background: url("/static/images/background.png") left top;
         }
         body:after {content:'';background-repeat:no-repeat;background-size:cover;-webkit-filter:blur(3px);-moz-filter:blur(3px);-o-filter:blur(3px);-ms-filter:blur(3px);filter:blur(3px);position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;}
         .layui-container {width: 100%;height: 100%;overflow: hidden}
@@ -22,7 +22,7 @@
         .admin-login-background-left{
             height:350px;
             width:440px;
-            float:left;background: url("../static/images/leftlog.png") left top no-repeat ;
+            float:left;background: url("/static/images/leftlog.png") left top no-repeat ;
             background-size: 100% 100%;
         }
         .admin-login-background-right{
@@ -53,7 +53,7 @@
                 <form class="layui-form" action="">
                     <div class="layui-form-item logo-title">
                         <div class="clear" style="margin:0 auto;display: inline-block">
-                            <h1 class="left"><img src="../static/images/blue-logo.png" alt=""></h1>
+                            <h1 class="left"><img src="/static/images/blue-logo.png" alt=""></h1>
                             <h1 class="left" style="width:2px;background-color: #3b77e3; height:23px;margin-top:4px;"></h1>
                             <h1 class="left">无纸化集中业务管理系统</h1>
                         </div>
@@ -70,7 +70,7 @@
                         <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                         <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
                         <div class="captcha-img">
-                            <img id="captchaPic" src="../static/images/captcha.jpg">
+                            <img id="captchaPic" src="/static/images/captcha.jpg">
                         </div>
                     </div> -->
                     <div class="layui-form-item">
@@ -84,7 +84,7 @@
         </div>
     </div>
 </div>
-<script src="../static/layui/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
+<script src="/static/layui/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
 <script>
     layui.use(['form'], function () {
         var form = layui.form,
