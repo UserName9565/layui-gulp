@@ -36,7 +36,7 @@ var url = {
     download: ctx + "/fileTransfer/download"
   },
   jobNumber:{
-    getList:ctx+'/sys/login/queryCLoginMsgPage',
+    getList:ctx+"/"+agCtx+'/sys/login/queryCLoginMsgPage',
     findById:ctx+"/"+agCtx+ "/sys/login/queryLoginByLoginNo",
     add:ctx+"/"+agCtx+ "/sys/login/saveLoginMsg",
     edit:ctx+"/"+agCtx+ "/sys/login/updateLoginMsg",
