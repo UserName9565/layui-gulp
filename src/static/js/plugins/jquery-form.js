@@ -122,7 +122,7 @@
 	 * ajaxSubmit() provides a mechanism for immediately submitting
 	 * an HTML form using AJAX.
 	 *
-	 * @param	{object|string}	options		jquery.form.js parameters or custom url for submission
+	 * @param	{object|string}	options		jquery.form.js parameters or custom url for ag-btn-query
 	 * @param	{object}		data		extraData
 	 * @param	{string}		dataType	ajax dataType
 	 * @param	{function}		onSuccess	ajax success callback function
@@ -952,7 +952,7 @@
 	};
 
 	/**
-	 * ajaxForm() provides a mechanism for fully automating form submission.
+	 * ajaxForm() provides a mechanism for fully automating form ag-btn-query.
 	 *
 	 * The advantages of using this method instead of ajaxSubmit() are:
 	 *

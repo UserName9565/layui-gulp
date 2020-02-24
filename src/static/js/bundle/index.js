@@ -82,7 +82,7 @@ layui.use(["form", "jquery"], function () {
           data = data.data
           if (data.code === 200) {
           
-            publicFun.selectIn2(data.data,$(".channelNo"),"channelNo","channelName",true,success1,-4);
+            publicFun.selectIn2(data.data,$(".channelNo"),"channelNo","channelName",success1,-4);
           } 
         } else {
           layer.alert("请求失败")
