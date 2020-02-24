@@ -108,7 +108,6 @@
 
 
     <script>
-       
         layui.use(['element', 'layer', 'layuimini'], function () {
             var  element = layui.element,
                 layer = layui.layer;
@@ -118,22 +117,17 @@
                     url:url.menu,
                     data:{}
                 }
-                // layuimini.init('/static/layui/api/init.json');
+            
                 publicFun.ajax(obj,success)
                 function success(data){
                     //data.functions
-                    if(data.result==-1){
-                        location.href = "./views/login-1.html"
-                    }else{
-
-                        var mmm = menu(data.functions)
-                         
-                        layuimini.init(mmm,true)
-                        // layuimini.init('/static/layui/api/init.json');
-                    }
+                    console.log(data.functions)
+                    var mmm = menu(data.functions)
+                     
+                    layuimini.init(mmm,true)
                 }
                 
-                // menu();
+                // layuimini.init('/static/layui/api/init.json');menu();
            
            
             $('.login-out').on("click", function () {
@@ -175,6 +169,8 @@
                         obj1.title = "["+o.functionCode+"]"+o.functionName;;
                         obj1.href = oldVersion+o.jspUrl+"?_agileAuthToken="+ $.cookie('JSESSIONID_token');
                          
+						 obj1.href = o.jspUrl;
+						 
                         obj1.icon = o.icon
                         obj1.target = "_self"
                         
@@ -212,11 +208,11 @@
                     "homeInfo": {
                         "title": "首页",
                         "icon": "fa fa-home",
-                        "href": "./views/welcome-1.html?mpi=m-p-i-0"
+                        "href": "/views/welcome-1.html?mpi=m-p-i-0"
                     },
                     "logoInfo": {
                         "title": "",
-                        "image": "./static/images/logo.png",
+                        "image": "/static/images/logo.png",
                         "href": ""
                     },
                     'menuInfo':{
