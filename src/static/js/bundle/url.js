@@ -20,11 +20,14 @@ if (!console) {
 }
 
 var httpUrl = window.location.protocol + "//" + window.location.host;
+
+var agCtx= util.getAgCtx(null);
+
 var url = {
-  login: ctx + "/sys/login/loginCheck",
-  token: ctx + "/sys/login/auth/token", //菜单
+  login: ctx +"/"+ agCtx+ "/sys/login/loginCheck",
+  token: ctx+"/" + agCtx+"/sys/login/auth/token", //菜单
   
-  menu: ctx + "/sys/login/auth/functions",
+  menu: ctx +"/"+ agCtx+ "/sys/login/auth/functions",
   deparTreeNew:ctx+'/department/selectTopDepart',//新树结构
   deparTreeSon:ctx+'/department/selectChildDeparts',//新树结构
   deparTreeSonTest:ctx+'/department/selectChildDepartsTest',//新树结构测试
@@ -33,24 +36,24 @@ var url = {
     download: ctx + "/fileTransfer/download"
   },
   jobNumber:{
-    getList:ctx+'/sys/login/queryCLoginMsgPage',
-    findById:ctx+"/sys/login/queryLoginByLoginNo",
-    add:ctx+"/sys/login/saveLoginMsg",
-    edit:ctx+"/sys/login/updateLoginMsg",
-    del:ctx+"/sys/login/deleteLoginMsg"
+    getList:ctx+"/"+agCtx+'/sys/login/queryCLoginMsgPage',
+    findById:ctx+"/"+agCtx+ "/sys/login/queryLoginByLoginNo",
+    add:ctx+"/"+agCtx+ "/sys/login/saveLoginMsg",
+    edit:ctx+"/"+agCtx+ "/sys/login/updateLoginMsg",
+    del:ctx+"/"+agCtx+ "/sys/login/deleteLoginMsg"
   },
   organization:{
-    allTree:ctx+"/sys/groupmsg/queryAllArea",
-    getList:ctx+'/sys/login/queryCLoginMsgPage',
-    findById:ctx+"/sys/groupmsg/loadGroupMsgById",
-    add:ctx+"/sys/groupmsg/add",
-    edit:ctx+"/sys/groupmsg/updateGroupMsg",
-    del:ctx+"/sys/groupmsg/deleteGroupMsg",
-    getNodes:ctx+"/sys/groupmsg/getNodes",
-    getGroupMsgByParentGroupId:ctx+"/sys/groupmsg/getParentNodes",
-    qx:ctx+'/sys/groupmsg/getDsikillPower',
-    initqx:ctx+"/sys/groupmsg/privilegeInit",
-    save:ctx+'/sys/groupmsg/saveFunctionInfo'
+    allTree:ctx+"/"+agCtx+ "/sys/groupmsg/queryAllArea",
+    getList:ctx+"/"+agCtx+'/sys/login/queryCLoginMsgPage',
+    findById:ctx+"/"+agCtx+ "/sys/groupmsg/loadGroupMsgById",
+    add:ctx+"/"+agCtx+ "/sys/groupmsg/add",
+    edit:ctx+"/"+agCtx+ "/sys/groupmsg/updateGroupMsg",
+    del:ctx+"/"+agCtx+ "/sys/groupmsg/deleteGroupMsg",
+    getNodes:ctx+"/"+agCtx+ "/sys/groupmsg/getNodes",
+    getGroupMsgByParentGroupId:ctx+"/"+agCtx+ "/sys/groupmsg/getParentNodes",
+    qx:ctx+"/"+agCtx+'/sys/groupmsg/getDsikillPower',
+    initqx:ctx+"/"+agCtx+ "/sys/groupmsg/privilegeInit",
+    save:ctx+"/"+agCtx+'/sys/groupmsg/saveFunctionInfo'
   },
   apiDoc: {
     impression: "/static/layui/json/apiDoc.json"
