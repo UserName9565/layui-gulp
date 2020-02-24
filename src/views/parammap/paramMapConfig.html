@@ -161,27 +161,22 @@
 				return ;
 			}
 			var cfgMergeParamList = data.body.cfgMergeParamList;
-
-
-		  var modelmentList=modelmentList=data.body.modelmentList;
+		  var modelmentList  =  modelmentList=data.body.modelmentList;
 		  if(param.frontBack=='0'){
 		      modelmentList=data.body.appModelmentList;
 		  }
 		  var cfgParamMapList=data.body.cfgParamMapList;
-		  //初始化第一列
+
+      //初始化第一列
 		  initPage('#nestable',cfgMergeParamList,"paramName","paramNameCn");
 		  //初始化第二列
 		  initPage('#nestable1',modelmentList,"modelementCode","modelementName");
-		  //初始化第三列
+
+      //初始化第三列
 		  //initPage('#nestable2',cfgParamMapList,"paramKey","paramDesc");
       initThree('#nestable2',cfgParamMapList,"paramKey","paramDesc","modelKey","modelName");
 		});
 
-		//第一步
-		//initPage('#nestable',data,key,keyName);
-
-		// 第二部
-		// initPage('#nestable1',data,key,keyName);
 
 		//绑定事件
 		buildEvent();
@@ -194,23 +189,23 @@
 
 			$.each($("#nestable2 li "),function(i,item){
 
-				var r = {};
 
-				//r.standardKey = $(item).data("json");
-
-				//r.modelKey = $(item).data("json1");
-
-        r.chnlType=$("input[name=chnlType]").val()
-        r.chnlTypeName=$("input[name=chnlTypeName]").val();
-        r.paramKey= $(item).data("json")['paramName'];
-        r.paramDesc=$(item).data("json")['paramNameCn'];
-        r.frontBack=$(item).data("json")['fbFlag'];
-        r.frontBackName=$(item).data("json")['fbFlagDesc'];
-        r.modelKey=$(item).data("json1")['modelementCode'];
-        r.modelName=$(item).data("json1")['modelementName'];
+        //js变量命名不要只写一个字母，要有含义 record，也便于搜索r->record
+				var record = {};
 
 
-				ret.push(r);
+        record.chnlType=$("input[name=chnlType]").val()
+        record.chnlTypeName=$("input[name=chnlTypeName]").val();
+
+        record.paramKey= $(item).data("json")['paramName'];
+        record.paramDesc=$(item).data("json")['paramNameCn'];
+        record.frontBack=$(item).data("json")['fbFlag'];
+        record.frontBackName=$(item).data("json")['fbFlagDesc'];
+        record.modelKey=$(item).data("json1")['modelementCode'];
+        record.modelName=$(item).data("json1")['modelementName'];
+
+
+				ret.push(record);
 			});
 
 			console.log(ret);
@@ -318,20 +313,25 @@
 
 				var li = $('<li class="dd-item" ></div>');
 
+        //标准参数-命名为paramInfo更好
 				var json = {};
-				json[key] = item[key];
-				json[keyName] = item[keyName];
+				json["paramName"] = item[key];
+				json["paramNameCn"] = item[keyName];
+        json["fbFlag"] =  item["frontBack"];
+        json["fbFlagDesc"] = item["frontBackName"];
 
-				$("#nestable li[ag-key="+key+"]").remove();
 
-				$("#nestable1 li[ag-key="+key1+"]").remove();
+				$("#nestable li[ag-key="+item[key]+"]").remove();
 
+				$("#nestable1 li[ag-key="+item[key1]+"]").remove();
+
+        //模板参数-命名为modelInfo更好
 				var json1 = {};
-				json1[key1] = item[key1];
-				json1[keyName1] = item[keyName1];
+				json1["modelementCode"] = item[key1];
+				json1["modelementName"] = item[keyName1];
 
+        //同理data-param,data-model表意更明确
 				li.attr("data-json",JSON.stringify(json));
-
 				li.attr("data-json1",JSON.stringify(json1));
 
 				var closeBtn = '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:-35px;"></i> ';
