@@ -847,6 +847,7 @@ body {
     list-style: none;
     font-size: 13px;
     line-height: 20px;
+	overflow-y: auto;
   }
   .dd-list {
     display: block;
