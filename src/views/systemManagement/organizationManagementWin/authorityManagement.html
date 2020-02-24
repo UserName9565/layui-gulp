@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  @@include('url-config-win.html') 
+  
+  @@include('ztree.html')
+  <!-- <link rel="stylesheet" href="../../../static/css/bundle/spare.css?v=1.0.0"> -->
+</head>
+<style>
+    .orgTree {
+        height: 280px;
+        
+    }
+</style>
+<body>
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <form class="layui-form mt20" lay-filter="winId">
+        <div class="layui-form-item">
+          @@include('input.html',{"title":"组织机构编号","name":"parent_group_number","verify":""}) @@include('input.html',{"title":"组织机构名称","name":"parent_group_name","verify":""})
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="layui-card">
+
+    <div class="layui-card-body clear">
+
+      <div class="layui-col-md5 layui-col-sm5">
+          <!-- <div class="layui-form-item">
+              <div class="layui-inline layui-col-md5">
+                <label class="layui-form-label" style="width: 78px;">检索工号：</label>
+                <div class="layui-input-inline layui-col-md4">
+                  <input type="tel" name="loginStr" lay-verify=""
+                    autocomplete="off" ignore='1' class="layui-input loginStr">
+                </div>
+                <div class="left layui-col-md4 ">
+                  <button type="button" lay-submit
+                    class="layui-btn layui-btn-sm ag-btn-query"
+                    style="height: 24px;line-height: 20px;padding: 0 5px;">检索</button>
+                  <button type="button" reset="true"
+                    class="layui-btn layui-btn-sm layui-btn-primary reset"
+                    style="height: 24px;line-height: 20px;padding: 0 5px;">重置</button>
+                </div>
+              </div>
+            </div> -->
+         <ul class="ai-ul">
+             <!-- <li class="ai-list">管理员</li>
+             <li class="ai-list">管理员</li>
+             <li class="ai-list active">管理员</li> -->
+         </ul>
+        
+      </div>
+      <div class="layui-col-md7 layui-col-sm7">
+        <ul id="ag-tree" class="ztree orgTree" data-id="0"></ul>
+      </div>
+    </div>
+  </div>
+  <script src="../../../static/js/bundle/authorityManagement.js?v=1.0.0"></script>
+</body>
+
+</html>

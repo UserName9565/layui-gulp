@@ -99,7 +99,7 @@ layui.use(['form', 'laydate', 'table',  'laypage', 'layer', 'element'], function
     }
 
     table.render({
-      elem: '#agileTable',
+      elem: '#ag-table',
       id: 'idTest',
       data: data[strName].requestJson,
       cols: [
@@ -110,7 +110,7 @@ layui.use(['form', 'laydate', 'table',  'laypage', 'layer', 'element'], function
       }
     });
     table.render({
-      elem: '#agileTable2',
+      elem: '#ag-table2',
       id: 'idTest2',
       data: data[strName].backJson,
       cols: [

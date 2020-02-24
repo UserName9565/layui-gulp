@@ -24,7 +24,7 @@
     paramName: 'p',                  //页码参数
     prevText: '上一页',
     nextText: '下一页',
-    pageInfo: '当前第<b>{{currentPage}}</b>页/共<b>{{totalPages}}</b>页'
+    pageInfo: '当前第<b>{{pageNo}}</b>页/共<b>{{totalPages}}</b>页'
   }
 
 	/**
@@ -127,7 +127,7 @@
     }
 
     // 是否显示右侧分页信息
-    if (args.isPageInfo) html.push('<div class="gb-paging-info">' + args.pageInfo.replace('{{currentPage}}', args.curPage).replace('{{totalPages}}', args.pages) + '</div>');
+    if (args.isPageInfo) html.push('<div class="gb-paging-info">' + args.pageInfo.replace('{{pageNo}}', args.curPage).replace('{{totalPages}}', args.pages) + '</div>');
 
 		args.container.innerHTML = html.join('');
 		if(args.callback){
