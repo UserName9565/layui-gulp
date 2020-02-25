@@ -35,6 +35,26 @@ var url = {
     upload: ctx+"/"+agCtx + "/fileTransfer/upload",
     download: ctx+"/"+agCtx + "/fileTransfer/download"
   },
+  jobNumber:{
+    getList:ctx+'/sys/login/queryCLoginMsgPage',
+    findById:ctx+"/sys/login/queryLoginByLoginNo",
+    add:ctx+"/sys/login/saveLoginMsg",
+    edit:ctx+"/sys/login/updateLoginMsg",
+    del:ctx+"/sys/login/deleteLoginMsg"
+  },
+  organization:{
+    allTree:ctx+"/sys/groupmsg/queryAllArea",
+    getList:ctx+'/sys/login/queryCLoginMsgPage',
+    findById:ctx+"/sys/groupmsg/loadGroupMsgById",
+    add:ctx+"/sys/groupmsg/add",
+    edit:ctx+"/sys/groupmsg/updateGroupMsg",
+    del:ctx+"/sys/groupmsg/deleteGroupMsg",
+    getNodes:ctx+"/sys/groupmsg/getNodes",
+    getGroupMsgByParentGroupId:ctx+"/sys/groupmsg/getParentNodes",
+    qx:ctx+'/sys/groupmsg/getDsikillPower',
+    initqx:ctx+"/sys/groupmsg/privilegeInit",
+    save:ctx+'/sys/groupmsg/saveFunctionInfo'
+  },
   
   apiDoc: {
     impression: "/static/layui/json/apiDoc.json"
