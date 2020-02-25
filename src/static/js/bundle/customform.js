@@ -7,15 +7,18 @@
  * @date 2020-02-16
  *
  */
-layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
+layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], function() {
 
 	var form = layui.form,
 		layer = layui.layer,
 		$ = layui.$;
-	table = layui.table;
-	checkForm = layui.checkForm;
-	laydate = layui.laydate;
-
+	  table = layui.table;
+	  checkForm = layui.checkForm;
+	  laydate = layui.laydate;
+    mapChooser = layui.mapChooser;
+    //自定义插件
+   var customPlugins = {};
+   customPlugins["mapChooser"] = mapChooser;
 
 	var $window = $(window);
 
@@ -1180,9 +1183,17 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 
 						}
 
+            //自定义插件入口
+            var pluginName = $(agForm).attr("ag-plugin-name");
+
+            if(!util.isNull(pluginName)){
+              //init参数根据需要在扩展
+              customPlugins[pluginName].init(data);
+            }
 
 					}
-				});
+
+        });
 
 
 			}
