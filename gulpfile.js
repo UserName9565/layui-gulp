@@ -47,11 +47,14 @@ var knowOptions = {
   }
 }
  
- 
+var pathed = '';
+var pathed2 = '';
 if(env=='development'){
   pathed = "/static"//开发环境根路径
+  pathed2 = "/views"
 }else{
   pathed = "/bhps/static"//打包环境下根路径
+  pathed2 = "/bhps/views"//打包环境下根路径
 }
 function respath(dir) {
   return path.join(__dirname, './', dir)
@@ -104,6 +107,7 @@ gulp.task('html', () => {
       minifyCSS: true
     })))
     .pipe(replace('/static', pathed))
+    .pipe(replace('/views', pathed2))
     .pipe(gulp.dest(config.build.html))
 })
 
@@ -158,6 +162,8 @@ gulp.task('script', useEslint, () => {
     // .pipe(jsFilter)
     .pipe(gulpif(config.useWebpack, webpackStream(webpackConfig, webpack)))
     .pipe(gulpif(condition, uglify()))
+    .pipe(replace('/static', pathed))
+    .pipe(replace('/views', pathed2))
     // .pipe(jsFilter.restore)
     .pipe(gulp.dest(config.build.script))
 })

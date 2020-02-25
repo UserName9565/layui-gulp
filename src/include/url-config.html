@@ -27,7 +27,7 @@
 <script>
     var ht = location.pathname;
 
-    if(ht!='/views/login-1.html'){
+    if(ht.indexOf("/login-1.html")==-1){
         var token = $.cookie('JSESSIONID_token');
 
 
