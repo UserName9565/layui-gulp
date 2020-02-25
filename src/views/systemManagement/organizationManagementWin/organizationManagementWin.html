@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  @@include('url-config-win.html')
+</head>
+
+<body>
+  <form class="layui-form mt20" lay-filter="winId">
+      <input type="hidden" name="parentGroupId">
+      <div class="layui-form-item">
+          @@include('input.html',{"title":"上级技能组","name":"parentGroupName","verify":"requiredM"})
+      </div>
+      <!-- {groupId}, #{parentGroupMsg.groupId}, #{groupName}, #{describe}, #{leafFlag}, #{validFlag} -->
+      <div class="layui-form-item">
+          @@include('input.html',{"title":"技能组id","name":"groupId","verify":"requiredM"})
+      </div>
+    <div class="layui-form-item">
+        @@include('input.html',{"title":"技能组名称","name":"groupName","verify":"requiredM"})
+    </div>
+    <div class="layui-form-item">
+        @@include('input.html',{"title":"技能组描述","name":"describe","verify":"requiredM"})
+    </div>
+    <div class="layui-form-item">
+            @@include('select.html',{"title":"技能组有效性","name":"validFlag","verify":"requiredM"})
+        </div>
+    
+    <div class="layui-form-item">
+        @@include('select.html',{"title":"底层标识","name":"leafFlag","verify":"requiredM"})
+    </div>
+  </form>
+
+  <script src="../../../static/js/bundle/organizationManagementWin.js?v=1.0.0"></script>
+</body>
+
+</html>

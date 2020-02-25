@@ -1,91 +1,4 @@
-// function NewDate(str) {
-//   if (str == null)
-//     return false;
 
-//   if(typeof(str)!="number" ){
-
-//     str = str.split('-');
-//   }
-//   var date = new Date();
-//   date.setUTCFullYear(str[0], str[1] - 1, str[2]);
-//   date.setUTCHours(0, 0, 0, 0);
-//   return date;
-// }
-
-// function nowDate(type) {
-//   var myDate = new Date();
-//   var yyyy = myDate.getFullYear();
-//   var mm = myDate.getMonth() + 1;
-//   var DD = myDate.getDate();
-//   var hh = myDate.getHours();
-//   var ff = myDate.getMinutes();
-//   var ss = myDate.getSeconds();
-//   if (mm < 10) {
-//     mm = "0" + mm
-//   }
-//   if (DD < 10) {
-//     DD = "0" + DD
-//   }
-
-//   function bu0(str) {
-//     if (str < 10) {
-//       str = "0" + str
-//     }
-//     return str
-//   }
-//   if (type == 1) {
-//     return yyyy + "-" + mm + "-" + "01 00:00:00"
-//   } else if (type == 2) {
-//     return yyyy + "-" + mm + "-" + DD + " 23:59:59"
-//   } else if (type == 3) {
-//     return yyyy + "-" + mm + "-" + DD + " " + bu0(hh) + ":" + bu0(ff) + ":" + bu0(ss)
-//   }
-// }
-
-// function date7(type, noTag) {
-//   var endTime = new Date().getTime();
-//   var startTime = endTime - (60000 * 60 * 24 * 7);
-//   if (type == 1) {
-//     return hsDate(startTime, noTag)
-//   } else {
-//     return hsDate(endTime, noTag)
-//   }
-
-// }
-
-// function hsDate(str, type) {
-//   var oDate = new Date(str),
-//     oYear = oDate.getFullYear(),
-//     oMonth = oDate.getMonth() + 1,
-//     oDay = oDate.getDate();
-//   if (type == "yyyy") {
-//     return oYear
-//   }
-//   if (type == "month") {
-//     return oMonth
-//   }
-//   if (type == "date") {
-//     return oDay
-//   }
-
-//   if (type == "no") {
-
-//     var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay); //最后拼接时间
-//   } else if (type == "24no") {
-//     var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + " 23:59:59"; //最后拼接时
-//   } else {
-//     var oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + " 00:00:00"; //最后拼接时
-//   }
-
-//   return oTime
-
-//   function getzf(num) {
-//     if (parseInt(num) < 10) {
-//       num = '0' + num;
-//     }
-//     return num;
-//   }
-// }
 var common = {
   pageSize: 10,
   type: "POST",
@@ -153,9 +66,6 @@ var common = {
       return -1; //不是ie浏览器
     }
   },
-   
-    
-   
   activeXHide: function (box) {
 
     document.getElementById(box).style.width = "0px";
@@ -186,6 +96,57 @@ var common = {
       url = window.webkitURL.createObjectURL(file);
     }
     return url;
+  },
+  layerWin: function (title, width, height, url, type, box) {
+    var _this = this;
+
+    var obj = {
+      btn: ["确定", "取消"],
+      type: 2,
+      area: [width, height],
+      title: title,
+      content: url,
+      yes: function (index, layero) {
+        var frameId = "#" + layero.find('iframe')[0].id;
+        var sonTemp = $(frameId).contents();
+        if (type == "organization") {
+          _this.orWin(sonTemp, box)
+        } else if (type == "business") {
+
+          _this.businessWin(sonTemp, box)
+        } else if (type == "jobNo") {
+
+          _this.jobNoWin(sonTemp, box)
+        }
+        layer.close(index)
+      }
+    }
+    layFun.layer(layer, obj)
+
+  },
+  orWin: function (sonTemp, box) {
+    var inputB = box.parent().siblings("div").find("input")
+    inputB.val(sonTemp.find(".groupName").val());
+    inputB.attr("groupId", sonTemp.find(".groupId").val())
+    if ($(".gong").length > 0) {
+      $(".gong").click();
+    }
+  },
+  businessWin: function (sonTemp, box) {
+    sonTemp.find(".getS").click();
+
+    var inputB = box.parent().siblings("div").find("input")
+    inputB.val(sonTemp.find(".opName").val());
+    inputB.attr("opCode", sonTemp.find(".opCodeHidden").val())
+    $(".opCode").val(sonTemp.find(".opCodeHidden").val())
+  },
+  jobNoWin: function (sonTemp, box) {
+    sonTemp.find(".getS").click();
+
+    var inputB = box.parent().siblings("div").find("input")
+    inputB.val(sonTemp.find(".opName").val());
+    inputB.attr("workNo", sonTemp.find(".opCodeHidden").val())
+
   }
 
 }
@@ -199,10 +160,69 @@ var publicFun = {
     date = new Date(str);
     return  date.getTime();
   },
+  organiztionp: function (cmca_switch) {
+   
+    $(".organiztionp").on("click", function () {
+
+      if ($(this).attr("deepN") || $(this).attr("deepn")) {
+        win("组织结构", "730px", "460px", '../commonWin/organiztionWin.html?deepN=' + publicFun.getLogin("groupId"), $(this), cmca_switch)
+      } else {
+
+        win("组织结构", "730px", "460px", '../commonWin/organiztionWin.html', $(this), cmca_switch)
+      }
+
+
+
+    })
+
+
+    function win(title, width, height, url, box, cmca_switch) {
+
+      var obj = {
+        btn: ["确定", "取消"],
+        type: 2,
+        area: [width, height],
+        title: title,
+        content: url,
+        yes: function (index, layero) {
+          var frameId = "#" + layero.find('iframe')[0].id;
+
+          var sonTemp = parent.$(frameId).contents();
+
+          gorup(sonTemp, box)
+
+          parent.layer.close(index)
+
+        },
+
+      }
+
+      layFun.parentLayer(layer, obj)
+
+    }
+
+    function gorup(sonTemp, box) {
+
+      var inputB = box.parent().siblings("div").find("input")
+      inputB.val(sonTemp.find(".groupName").val());
+      inputB.attr("groupId", sonTemp.find(".groupId").val());
+      if($(".roleIds").length>0){
+
+        publicFun.userAct(publicFun.selectIn2,$(".roleIds"),"roleId","roleName",true,multiSelectInit,sonTemp.find(".groupId").val());
+        
+      }
+      if($(".businessNo").length>0){
+        box.parents("body").find('.businessNobtn').click();
+      }
+      if($(".templateId").length>0){
+        box.parents("body").find('.templateIdBtn').click();
+      }
+    }
+  },
   
-  selectIn2: function (data, box, id, name, tag, back,isxuanze) {
+  selectIn2: function (data, box, id, name, back,isxuanze) {
     var tagT = true;
-     
+      
     if(!isxuanze){
 
       var str = '<option value="" selected>请选择...</option>'
@@ -232,10 +252,10 @@ var publicFun = {
       })
     }
     box.html(str);
-    if (tag) {
+     
 
       back();
-    }
+     
   },
   radioIn:function(data, box, id, name, tag, back,className){
       var str = '';
@@ -342,17 +362,28 @@ var publicFun = {
     if (accessToken != null) {
       $.cookie('JSESSIONID_token', accessToken, { path: '/' });
     }
-   
+    if(pObj.type=="get"){
+        var req = pObj.data;
+    }else{
+
+      var req = JSON.stringify(pObj.data);
+    }
+    var url = ''
+    if(pObj.url.indexOf("?")!=-1){
+      url= pObj.url + "&t=" + Math.random()
+    }else{
+      url= pObj.url + "?t=" + Math.random()
+    }
     $.ajax({
       type: pObj.type,
-      url: pObj.url + "?t=" + Math.random(),
+      url:url ,
       cache: false,
       async: true,
       headers: {
         _agileAuthToken: $.cookie('JSESSIONID_token')
      },
     contentType: "application/json; charset=utf-8",
-      data:JSON.stringify(pObj.data),
+      data:req,
       
       success: function (data) {
        
@@ -369,17 +400,17 @@ var publicFun = {
 
 
         }
-  
-        if (data.result == 0) {
+         
+        // if (data.result == 0) {
             success(data)
-        }   else {
-          if (pObj.messageTag) {
-            layer.msg(data.message)
-          } else {
+        // }   else {
+        //   if (pObj.messageTag) {
+        //     layer.msg(data.message)
+        //   } else {
 
-            layer.msg("请求失败")
-          }
-        }
+        //     layer.msg("请求失败")
+        //   }
+        // }
       },
       error: function (data) {
         
@@ -392,17 +423,10 @@ var publicFun = {
 
     });
   },
- 
-  
-  
-  
-  inputParam: function (box) {
+  inputParam: function (box) {//自动组装表单数据
     var obj = {};
     $.each(box.find("[name]"), function () {
-      // if($(this).attr("isVer")){//当isver===true时  不要此表单信息
-      //   return false;
-      // }
-      // if($(this).attr())
+      
       if($(this).attr("type")=="radio"){
 
         obj[$(this).attr("name")] = box.find('input[name='+$(this).attr("name")+']:checked').val();
@@ -414,7 +438,7 @@ var publicFun = {
     })
     return obj;
   } ,
-  verify: function (box, veri) {
+  verify: function (box, veri) {//表单校验
     var str = false;
    
     var pin = box.find("[lay-verify]");
@@ -450,25 +474,111 @@ var publicFun = {
     })
     return str;
   },
+ 
+  downTap: function (urls, obj, urls2, tag) {
+    var str = '';
+    $.each(obj, function (i, o) {
+
+      str += '&' + i + "=" + o;
 
 
-  treeNode: function (data,type,dtree,checkedTag,sealIds) {
+    })
+    str = str.replace("&", "")
+    if ($("#downTap").length == 0) {
+      var str1 = '<a href=""  class="dpn" id="downTap"> 导出下载</a>'
+      $("body").append(str1)
+    }
+    $("#downTap").attr({
+      "href": urls + "?" + str
+    })
 
+    if (urls2) {
+
+      publicFun.ajax(urls2, common.type, obj, fun1)
+
+      function fun1(data) {
+        if (data.data.length > 0) {
+          document.getElementById("downTap").click();
+        } else {
+          layer.msg("无数据可导出")
+        }
+
+
+      }
+    } else {
+      document.getElementById("downTap").click();
+    }
+
+
+
+  },
+  getOrgTree:function(tree,treeObj){
+      var obj = {};
+     
+      var urls = url.organization.allTree;
+      var ajaxObj = {
+          url: urls,//  请求地址
+          data: obj
+      }
+      this.ajax(ajaxObj, function(data){
+        treefun(data)
+      });
+
+      function treefun(data){
+         
+        $.each(data,function(i,o){
+          o.id = o.groupId;
+          o.field = o.groupName;
+          o.title = o.groupName;
+          if(o.leafFlag=="N"){
+            o.child = [];
+          }
+        })
+        var inst1 = tree.render({
+          elem: treeObj.elem  //绑定元素
+          ,data:  data
+        });
+      }
+  },
+  organization: function (success,type,dtree,checkedTag,form) { //组织机构
+
+    var obj = {
+      isWithHall: "",
+      rootId: ""
+    };
+     
+    var urls = url.organization.getNodes;
+    var ajaxObj = {
+        url: urls,//  请求地址
+        data: obj
+    }
+    this.ajax(ajaxObj, function(data){
+      success(data,type,dtree,checkedTag,form)
+    });
+
+  },
+  treeNode: function (data,type,dtree,checkedTag,form) {
+    
     var obj = {};
-    var data = data.data;
+    
     try {
       sealIds = sealIds.data
     } catch (error) {
       
     }
-  
+   
     $.each(data,function(i,o){
 
-      o.children =[] //data.childrens;
-      o.id = o.departNumber;
-      o.parentId = '0';
-      o.title = o.departName;
-      o.last = false;
+      // o.children =[] //data.childrens;
+      // o.id = o.groupId;
+      o.parentId = o.pid;
+      o.title = o.name;
+      if(o.isParent=="true"){
+
+        o.last = false;
+      }else{
+        o.last = true;
+      }
       o.spread =false;
       if(checkedTag){
         o.checkArr = [
@@ -501,7 +611,7 @@ var publicFun = {
     function tree(obj){
    
       var DemoTree = dtree.render({
-        elem: "#treeDemo",
+        elem: "#ag-tree",
         data: obj.data,
         dot: false,  // 隐藏小圆点
         checkbar: checkedTag,
@@ -510,28 +620,47 @@ var publicFun = {
         skin: "layui",
         async:false,
       });
-      dtree.on("node('treeDemo')" ,function(obj){
+      dtree.on("node('ag-tree')" ,function(obj){
          
         //layer.msg(JSON.stringify(obj.param));
         var treeNode = obj.param
-
+       
         if(type==1){
-         
-          var obj = {
-              departNumber:treeNode.nodeId
-          }
-          publicFun.ajax(url.organizationalManagement.upload,common.type,obj,success)
-          function success(data){
-              var data = data.data;
-              $(".nodeid").val(treeNode.nodeId);
-              $(".pName").val(treeNode.context);
-              $(".departName").val(data.departName);
-              $(".departShortName").val(data.departShortName);
-              $(".parentDepartName").val(data.parentDepartName);
-              $(".parentCode").val(data.parentCode);
+          
+            var obj21 = {
+              url:url.organization.findById,
+              type:"get",
+              data:{
+                groupId:treeNode.nodeId
+              }
+              
+            }
+          
+            publicFun.ajax(obj21,success2)
+            function success2(data){
+              // form.val("winId", {
+              //   "describe":data.describe,
+              //   "groupId":data.groupId ,
+              //   "groupIdPks":data.groupIdPks,
+              //   "leafFlag":data.leafFlag ,
+              //   "groupName":data.groupName,
+              //   "parentGroupId":data.parentGroupId ,
+              //   "validFlag":data.validFlag
+              // })
+              $(".describe").val(data.describe);
+              $(".groupId").val(data.groupId);
+              $(".groupIdPks").val(data.groupIdPks);
+              $(".groupName").val(data.groupName);
+              $(".leafFlag").val(data.leafFlag);
+              $(".parentGroupId").val(data.parentGroupId);
+              $(".validFlag").val(data.validFlag);
+              form.render();  
+              
+            }
+               
 
 
-          }
+          
         }else{
            if(treeNode){
 
@@ -541,32 +670,43 @@ var publicFun = {
         }
 
       });
-      dtree.on("changeTree('treeDemo')" ,function(treeobj){
+      dtree.on("changeTree('ag-tree')" ,function(treeobj){
 
         if(!treeobj.show){
           return false;
         }
         var obj1 = treeobj.param;
+       
         var obj2 = {
-          departNumber:obj1.nodeId,
-          agileParam:'{}',
+          url:url.organization.getNodes,
+          type:"get",
+          data:{
+            parentId:obj1.nodeId,
+            n:obj1.context,
+            lv: obj1.level-1,
+            isWithHall:"" ,
+            rootId:"" 
+          }
           
         }
       
-        publicFun.ajax(url.deparTreeSon,common.type,obj2,success,false,false,{params:true})
+        publicFun.ajax(obj2,success)
         function success(data1){
-      
-          var objA = data1.data
+         
+          var objA = data1
         
           if(objA.length == 0){
             return false;
           }
           $.each(objA,function(i,o){
+            o.parentId = o.pid;
+            o.title = o.name;
+            if(o.isParent=="true"){
 
-            o.id = o.departNumber;
-            o.parentId = o.parentCode;
-            o.title = o.departName;
-            o.last = false;
+              o.last = false;
+            }else{
+              o.last = true;
+            }
             o.spread =false;
             if(checkedTag){
               o.checkArr = [
@@ -608,83 +748,107 @@ var publicFun = {
     }
 
   },
-  downTap: function (urls, obj, urls2, tag) {
-    var str = '';
-    $.each(obj, function (i, o) {
-
-      str += '&' + i + "=" + o;
-
-
-    })
-    str = str.replace("&", "")
-    if ($("#downTap").length == 0) {
-      var str1 = '<a href=""  class="dpn" id="downTap"> 导出下载</a>'
-      $("body").append(str1)
-    }
-    $("#downTap").attr({
-      "href": urls + "?" + str
-    })
-
-    if (urls2) {
-
-      publicFun.ajax(urls2, common.type, obj, fun1)
-
-      function fun1(data) {
-        if (data.data.length > 0) {
-          document.getElementById("downTap").click();
-        } else {
-          layer.msg("无数据可导出")
-        }
-
-
-      }
-    } else {
-      document.getElementById("downTap").click();
-    }
-
-
-
-  }
 }
 var layFun = {
   startTime: null,
   endTime: null,
-  layData: function (startTime, endTime, pCom, obj, tag) {
-
-    if (!obj) {
-      return false;
+  layData:function(startTime,endTime,pCom,obj,tag){
+        
+    if(!obj){
+        return false;
     }
-    if (tag == "1") {
+    if(tag=="1"){
 
-    } else {
-      if (obj.elem == "#startTime" ) {
-        // obj.btns = ['clear']
-        obj.max = 1;
+    }else{
+        if(obj.elem=="#startTime"||obj.elem=="#timeInstar"||obj.elem=="#timeStart"||obj.elem=="#startIn"){
+         
+            obj.btns= ['confirm']
+            obj.max = 0;
+            obj.min = '2013-1-1 00:00:00'
+            obj.btns= ['confirm']
+            obj.done= function(value, date){
+            //     //{"year":2018,"month":9,"date":7,"hours":0,"minutes":0,"seconds":0}
+            //     // layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
+                var a1=date.year%4==0;
 
-        obj.done = function (value, date) {
-          if (layFun.endTime) {
-            layFun.endTime.config.min = {
-              year: date.year,
-              month: date.month - 1, //关键
-              date: date.date+1
-            };
+                var a2=date.year%100!=0;
+                
+                var a3=date.year%400==0;
+                var DD = 31;
+                if(date.month==4||date.month==6||date.month==9||date.month==10){
+                    DD = 30;
+                }
+                if((a1&&a2)||a3){//闰年 判断是平年还是闰年
+                    
+                    if(date.month==2){
+                        DD = 29;
+                    }
+                }else{
+                     
+                    if(date.month==2){
+                        DD = 28;
+                    }
+                }
+                var myDate = new Date();
+                var yyyy=myDate.getFullYear(); 
+                var mm=myDate.getMonth()+1;
+                var DD3 = myDate.getDate();
 
-          }
+                if(date.year==yyyy&&mm==date.month){
+                    DD = DD3;
+                    if(DD<10){
+                        DD = "0"+DD
+                    }
+                }
 
+
+
+
+                if(date.month<10){
+                    date.month  = "0"+date.month;
+                }
+                if(date.date<10){
+                    date.date  = "0"+date.date;
+                }
+            
+                
+                var endT = date.year+"-"+date.month+"-"+DD+" 23:59:59"
+            
+                if(layFun.endTime){
+
+                    layFun.endTime.config.max ={
+                        year:date.year,
+                        month:date.month-1, //关键
+                        date: DD,
+                        hours: 23, 
+                        minutes: 59, 
+                        seconds : 59
+
+                    };
+                    layFun.endTime.config.min ={
+                        year:date.year,
+                        month:date.month-1, //关键
+                        date: date.date
+                    };
+                     
+                }
+                $(endTime).val(endT)  
+              
+            }
+            
+            layFun.startTime = pCom.render(obj);
+        }else if(obj.elem=="#endTime"||obj.elem=="#endInstar"||obj.elem=="#timeEnd"||obj.elem=="#startEnd"){
+            
+             obj.max = 1;
+             obj.btns= ['confirm'];
+            //  obj.min = common.startTime
+            layFun.endTime = pCom.render(obj);
         }
-
-        layFun.startTime = pCom.render(obj);
-      } else if (obj.elem == "#endTime") {
-        obj.max = 1;
-        // obj.btns = ['clear']
-        obj.min = common.startTime
-        layFun.endTime = pCom.render(obj);
-      }
     }
-
-
-
-  },
+    
+     
+    
+},
   layData7: function (startTime, endTime, pCom, obj, tag) {
 
     if (!obj) {
@@ -767,26 +931,26 @@ var layFun = {
   },
   tableRender: function (table, laypage, data, arr) {
     var page = {
-      elem: 'page',
+      elem: 'ag-area-page',
       count: 1, //data.totalResultNumber
       limit: 10,
       groups: 5,
       layout: ['prev', 'page', 'next', 'count', 'skip'],
-      theme: '#44ade5',
+      // theme: '#44ade5',
       curr: "1",
       jump: function (obj, first) {
         //obj包含了当前分页的所有参数，比如：
         //首次不执行
         if (!first) {
-          $(".currentPage").val(obj.curr)
+          $(".pageNo").val(obj.curr)
 
-          $(".submission").click();
-          //page.curr = $(".currentPage").val();
-          $(".currentPage").val(1)
+          $(".ag-btn-query").click();
+          //page.curr = $(".pageNo").val();
+          $(".pageNo").val(1)
         }
       }
     }
-    page.count = data.total
+    page.count = data.totalRecord
     page.curr = data.pageNo;
     laypage.render(page);
     $.each(arr,function(i,o){
@@ -794,14 +958,14 @@ var layFun = {
     })
 
     table.render({
-      elem: '#agileTable',
+      elem: '#ag-table',
       id: 'idTest',
       // height: 500,
-      data: data.rows
+      data: data.data
         //,url: '/static/layui/json/page.json' //数据接口
 
         ,
-      toolbar: '#toolbarDemo',
+      toolbar: '#ag-table-header',
       limit: 10,
       skin: 'line' //行边框风格
       ,even: true //开启隔行背景
@@ -888,7 +1052,7 @@ layui.use(['form', 'laydate', 'table',  'laypage', 'layer', 'element'], function
   var laypage = layui.laypage;
   var layer = layui.layer;
 
-  $("#agileTable").parents(".layui-card").addClass("p100")
+  $("#ag-table").parents(".layui-card").addClass("p100")
   $(".organiztion").on("click", function () {
     if ($(this).attr("deepN") || $(this).attr("deepn")) {
       var str = '?deepN=' + publicFun.getLogin("groupId")
@@ -975,9 +1139,14 @@ layui.use(['form', 'laydate', 'table',  'laypage', 'layer', 'element'], function
 
   $(document).keyup(function(event){
     if(event.keyCode ==13){
-      $(".submission").trigger("click");
+      $(".ag-btn-query").trigger("click");
     }
   });
+
+  $('.ag-tab-title').on("click","li",function(){
+    $(this).addClass("ag-this").siblings("li").removeClass("ag-this");
+    console.log($(this).index())
+  })
 })
 
 var TimeUtil = {
@@ -1218,4 +1387,14 @@ var TimeUtil = {
     var str1 = str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8) + " " + str.substring(8, 10) + ":" + str.substring(10, 12) + ":" + str.substring(12, 14)
     return str1
   }
+}
+var publicParams={ 
+  yesNot:[
+      {title:"是",value:"是"},
+      {title:"否",value:"否"}
+  ],
+  yesNotYN:[
+      {title:"是",value:"Y"},
+      {title:"否",value:"N"}
+  ]
 }

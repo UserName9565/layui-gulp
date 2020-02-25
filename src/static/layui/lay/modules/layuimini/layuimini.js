@@ -53,8 +53,8 @@ layui.define(["element", "jquery"], function (exports) {
                 layuimini.initMenu(data.menuInfo);
                 layuimini.initTab();
             }else{
-
-                $.getJSON(url, function (data, status) {
+                
+                $.getJSON(data, function (data, status) {
                     if (data == null) {
                         layuimini.msg_error('暂无菜单信息');
                     } else {
@@ -87,6 +87,7 @@ layui.define(["element", "jquery"], function (exports) {
          * @param data
          */
         this.initHome = function (data) {
+            console.log(data)
             sessionStorage.setItem('layuiminiHomeHref', data.href);
             $('#layuiminiHomeTabId').html('<i class="' + data.icon + '"></i> <span>' + data.title + '</span>');
             $('#layuiminiHomeTabId').attr('lay-id', data.href);
@@ -153,7 +154,7 @@ layui.define(["element", "jquery"], function (exports) {
             }
 
             //全局按钮以及其他基础配色
-            var baseHtml = '.agile-form .layui-form-select dl dd.layui-this {'
+            var baseHtml = '.ag-form .layui-form-select dl dd.layui-this {'
                 +'background-color: '+bgcolorData.base+'; }'
               +'.layui-form-checked[lay-skin=primary] i {'
                 +'background-color: '+bgcolorData.base+'; }'
@@ -165,6 +166,9 @@ layui.define(["element", "jquery"], function (exports) {
             +'.layui-btn-danger {'
                +' background-color: #FF5722;'
            +' }'
+           +'.layui-form-radio>i:hover, .layui-form-radioed>i{'
+           +'color:'+bgcolorData.base+';'
+           +'}'
                 
            setTimeout(function(){
                 var agile = $("iframe").contents().find("#agile-color");

@@ -7,15 +7,18 @@
  * @date 2020-02-16
  *
  */
-layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
+layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], function() {
 
 	var form = layui.form,
 		layer = layui.layer,
 		$ = layui.$;
-	table = layui.table;
-	checkForm = layui.checkForm;
-	laydate = layui.laydate;
-
+	  table = layui.table;
+	  checkForm = layui.checkForm;
+	  laydate = layui.laydate;
+    mapChooser = layui.mapChooser;
+    //自定义插件
+   var customPlugins = {};
+   customPlugins["mapChooser"] = mapChooser;
 
 	var $window = $(window);
 
@@ -95,23 +98,17 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 	 */
 	function initBtnLsnr() {
 
-		$(".ag-btn-query").unbind();
-		$(".ag-btn-query").bind("click", queryList);
+		$(".ag-btn-query").one("click", queryList);
 
-		$(".ag-btn-add").unbind();
-		$(".ag-btn-add").bind("click", addInit);
+		$(".ag-btn-add").one("click", addInit);
 
-		$(".ag-btn-update").unbind();
-		$(".ag-btn-update").bind("click", updateInit);
+		$(".ag-btn-update").one("click", updateInit);
 
-		$(".ag-btn-cancel").unbind();
-		$(".ag-btn-cancel").bind("click", cancel);
+		$(".ag-btn-cancel").one("click", cancel);
 
-		$(".ag-btn-save").unbind();
-		$(".ag-btn-save").bind("click", save);
-
-		$(".ag-btn-del").unbind();
-		$(".ag-btn-del").bind("click", del);
+		$(".ag-btn-save").one("click", save);
+    //用bind方法绑定可能会导致重负提交
+		$(".ag-btn-del").one("click", del);
 
 
 	};
@@ -504,6 +501,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 		$.ajax({
 			type: "POST",
 			url: url,
+      timeout:3000,
 			data: JSON.stringify(param),
 			contentType: "application/json",
 			xhrFields: {
@@ -1185,9 +1183,17 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate'], function() {
 
 						}
 
+            //自定义插件入口
+            var pluginName = $(agForm).attr("ag-plugin-name");
+
+            if(!util.isNull(pluginName)){
+              //init参数根据需要在扩展
+              customPlugins[pluginName].init(data);
+            }
 
 					}
-				});
+
+        });
 
 
 			}
