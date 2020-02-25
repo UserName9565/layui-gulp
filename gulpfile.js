@@ -23,7 +23,7 @@ const zip = require('gulp-zip')
 const del = require('del')
 const minimist = require('minimist')
 const rename = require('gulp-rename')
- 
+const replace = require('gulp-replace');
 
 
 // webpack
@@ -46,7 +46,13 @@ var knowOptions = {
     env: process.env.NODE_ENV || 'development'
   }
 }
-
+ 
+ 
+if(env=='development'){
+  pathed = "/static"//开发环境根路径
+}else{
+  pathed = "/bhps/static"//打包环境下根路径
+}
 function respath(dir) {
   return path.join(__dirname, './', dir)
 }
@@ -97,6 +103,7 @@ gulp.task('html', () => {
       minifyJS: true,
       minifyCSS: true
     })))
+    .pipe(replace('/static', pathed))
     .pipe(gulp.dest(config.build.html))
 })
 

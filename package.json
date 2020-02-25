@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "gulp server",
-    "build": "cross-env NODE_ENV=development gulp build",
+    "build": "cross-env NODE_ENV=build gulp build",
     "build:test": "cross-env NODE_ENV=test gulp build",
     "build:dev": "cross-env NODE_ENV=development gulp build",
     "build:prod": "cross-env NODE_ENV=production gulp build"
@@ -49,6 +49,7 @@
     "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
+    "gulp-replace": "^1.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-sequence": "^0.4.6",
     "gulp-strip-debug": "^1.1.0",
