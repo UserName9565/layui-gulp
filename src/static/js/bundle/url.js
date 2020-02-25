@@ -6,7 +6,7 @@
 var ctx = apiConfig.ctx //agile_sign_web的服务
 var oldVersion = apiConfig.oldVersion //agile_sign_seal_web的服务
 //  var ctx = "http://192.168.1.79:8080"
-
+var rootD = apiConfig.rootD 
 var cv = 2; //1  开发。2 测试
 jQuery.support.cors = true;
 if (!console) {
