@@ -152,7 +152,7 @@
                     }
                     if(cvTag){//判断是否是第一层
                         obj1.title = o.functionName;
-                        obj1.href = o.jspUrl
+                        obj1.href = rootD+o.jspUrl
                         obj1.icon = o.icon
                         obj1.target = "_self"
                         obj1.child = menuSon(o.functionCode);
@@ -172,7 +172,7 @@
                         obj1.title = "["+o.functionCode+"]"+o.functionName;;
                         obj1.href = oldVersion+rootD+o.jspUrl+"?_agileAuthToken="+ $.cookie('JSESSIONID_token');
                          
-						 obj1.href = o.jspUrl;
+						 obj1.href = rootD+o.jspUrl;
 						 
                         obj1.icon = o.icon
                         obj1.target = "_self"
