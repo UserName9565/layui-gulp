@@ -5,7 +5,7 @@ var apiConfig = {
   ctx: "http://127.0.0.1:9600",//接口地址http://192.168.1.76:8090/ api-gateway
   // ctx: "http://192.168.1.76:9600/sysmgr",
   oldVersion:"http://127.0.0.1:8090",//嵌入页面工程地址
-  rootD:""
+  rootD:""//根目录前置路径
    
 }
 
