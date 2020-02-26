@@ -98,17 +98,17 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 	 */
 	function initBtnLsnr() {
 
-		$(".ag-btn-query").one("click", queryList);
+		$(".ag-btn-query").on("click", queryList);
 
-		$(".ag-btn-add").one("click", addInit);
+		$(".ag-btn-add").on("click", addInit);
 
-		$(".ag-btn-update").one("click", updateInit);
+		$(".ag-btn-update").on("click", updateInit);
 
-		$(".ag-btn-cancel").one("click", cancel);
+		$(".ag-btn-cancel").on("click", cancel);
 
-		$(".ag-btn-save").one("click", save);
+		$(".ag-btn-save").on("click", save);
     //用bind方法绑定可能会导致重负提交
-		$(".ag-btn-del").one("click", del);
+		$(".ag-btn-del").on("click", del);
 
 
 	};
