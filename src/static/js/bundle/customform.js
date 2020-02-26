@@ -435,7 +435,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 		var agCtx = util.getAgCtx(this);
 
-		url = apiConfig[agCtx + "_web"] + url;
+		//url = apiConfig[agCtx + "_web"] + url;
 		if (url.indexOf("?") == -1) {
 			url = url + "?" + pkCol + "=" + pkVal;
 		} else {
@@ -473,7 +473,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 		var agCtx = util.getAgCtx(this);
 
-		url = apiConfig[agCtx + "_web"] + url;
+		//url = apiConfig[agCtx + "_web"] + url;
 
 		util.openWin(url, title, winW, winH, opts);
 
