@@ -122,9 +122,12 @@
                 function success(data){
                     //data.functions
                     console.log(data.functions)
-                    var mmm = menu(data.functions)
-                     
-                    layuimini.init(mmm,true)
+                    if(data.result=="-1"){
+                        window.location = '/views/login-1.html';
+                    }else{
+                        var mmm = menu(data.functions)
+                         layuimini.init(mmm,true)
+                     }
                 }
                 
                 // layuimini.init('/static/layui/api/init.json');menu();
