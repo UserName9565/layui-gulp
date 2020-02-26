@@ -25,16 +25,114 @@ layui.define(['jquery','form' ],function(exports){
   //组件初始化方法
   mapChooser.prototype.init = function(data){
 
-     initDiv(data.leftArr,"ag-map-left");
-     initDiv(data.rightArr,"ag-map-right");
 
+     initDiv(data.body.leftArr,".ag-map-left");
+     initDiv(data.body.middleArr,".ag-map-middle");
+     initRightDiv(data.body.rightArr,".ag-map-right");
+
+     buildEvent();
+
+  }
+
+  function initDiv(arr,selector) {
+
+    var ol = $('<ol class="dd-list"></ol>');
+
+    for(var i=0; i < arr.length; i++){
+      var li = $('<li class="dd-item" ></div>');
+      var div=$('<div class="dd-handle">'+arr[i].optCode+"-"+arr[i].optName+'</div>');
+
+      li.append(div);
+      ol.append(li)
+    }
+    $(selector).append(ol);
+  }
+
+  function initRightDiv(arr,selector) {
+
+    var ol = $('<ol class="dd-list"></ol>');
+
+    for(var i=0; i < arr.length; i++){
+      var li = $('<li class="dd-item" ></div>');
+      var closeBtn = '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:0px;"></i> ';
+      var div=$('<div class="dd-handle"><span>'+arr[i].sourceCode+"-"+arr[i].sourceCodeName+'||'+arr[i].targetCode+"-"+arr[i].targetCodeName+'</span>'+closeBtn+'</div>');
+
+      li.append(div);
+      ol.append(li)
+    }
+    $(selector).append(ol);
   }
 
 
 
+  function buildEvent() {
 
-  function initDiv(arr,selector) {
 
+    $(".dd").delegate('li', 'click', function() {
+
+      $(this).parents("ol").find("li").removeClass("layui-this");
+
+      $(this).addClass('layui-this');
+    });
+
+
+    $(".left-move i").click(function() {
+
+
+      var leftSelect = $(".ag-map-left li.layui-this ");
+
+      var middleSelect = $(".ag-map-middle li.layui-this ");
+
+      if (leftSelect.length == 0) {
+
+        util.showDialog("请选择标准参数！", 0);
+
+        return;
+      }
+
+      if (middleSelect.length == 0) {
+
+        util.showDialog("请选择模板参数！", 0);
+
+        return;
+      }
+
+      leftSelect.attr("data-json1", JSON.stringify(middleSelect.data("json")));
+
+      var leftHtml = leftSelect.find(".dd-handle").html();
+
+      var middleHtml = middleSelect.find(".dd-handle").html();
+
+      var rightli = $('<li class="dd-item" ></div>');
+      var closeBtn = '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:0px;"></i> ';
+      var rightDiv=$('<div class="dd-handle"><span>'+leftHtml+'||'+middleHtml+'</span>'+closeBtn+'</div>');
+      rightli.append(rightDiv);
+
+      if ($(".ag-map-right>ol").length == 0) {
+
+        $(".ag-map-right").append($('<ol class="dd-list"></ol>'));
+      }
+      $(".ag-map-right ol ").append(rightli);
+      //将数据存入input
+      var record = [];
+      $.each($(".ag-map-right li div"), function(i, item) {
+        var oneRightHtml=$(item).find("span").eq(0).html();
+        record.push(oneRightHtml);
+      });
+      $("input[name='returnList']").val(record);
+    });
+
+    $(".ag-map-right").delegate('.layui-icon-delete', 'click', function() {
+
+      var parentLi = $(this).parent().parent("li");
+      parentLi.remove();
+      var record = [];
+      $.each($(".ag-map-right li div"), function(i, item) {
+        var oneRightHtml=$(item).find("span").eq(0).html();
+        record.push(oneRightHtml);
+      });
+      $("input[name='returnList']").val(record);
+    });
   }
 
 

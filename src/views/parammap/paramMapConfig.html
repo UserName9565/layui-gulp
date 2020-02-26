@@ -46,7 +46,7 @@
 
         <div style="border-left: 2px solid #e1e4e3;float: right;margin: 5px;">
 
-          <div class="card-btn" style="margin-left: 10px;" onclick="save()">
+          <div class="ag-btn-save card-btn" style="margin-left: 10px;" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/cfgParamMaps/saveUpdate"  ag-data-index="1">
             <div class="card-btn-img img-save"></div>
             <div class="card-btn-desc">
               保存
@@ -54,11 +54,9 @@
           </div>
 
         </div>
-
-
       </div>
 
-      <form class="ag-form" ag-data-url="/cfg/cfgParamMaps/updateInit" ag-data-ctx="cfgmgr" ag-plugin-name="mapChooser">
+      <form class="ag-form" ag-data-url="/cfg/cfgParamMaps/updateInit" ag-data-index="1" ag-data-ctx="cfgmgr" ag-plugin-name="mapChooser">
 
           <div class="layui-card-body">
 
@@ -122,263 +120,19 @@
               </div>
             </div>
 
+            <input type="hidden" name="chnlType" />
+            <input type="hidden" name="chnlTypeName" />
+            <input type="hidden" name="frontBack" />
+            <input type="hidden" name="frontBackName" />
+            <input type="hidden" name="returnList" />
 
           </div>
 
       </div>
 
-      <input type="hidden" name="chnlType" />
-      <input type="hidden" name="chnlTypeName" />
-
     </form>
   </body>
-
   <script>
-    $(".dd").height($(window).height() - 200);
-
-    $(function() {
-      //init();
-    });
-
-    function init() {
-
-
-      var url = ctx + "/cfgmgr/cfg/cfgParamMaps/updateInit";
-
-      var param = util.getUrlParam();
-
-      $("input[name=chnlType]").val(param.chnlType);
-
-      $("input[name=chnlTypeName]").val(param.chnlTypeName);
-
-      util.ajaxJson("页面加载中，请稍后...", url, {
-        "chnlType": param.chnlType,
-        "frontBack": param.frontBack
-      }, function(data) {
-
-        if (data.result != "0") {
-
-          util.showDialog("页面加载失败!", 0);
-
-          console.log(data);
-
-          return;
-        }
-        var cfgMergeParamList = data.body.cfgMergeParamList;
-        var modelmentList = modelmentList = data.body.modelmentList;
-        if (param.frontBack == '0') {
-          modelmentList = data.body.appModelmentList;
-        }
-        var cfgParamMapList = data.body.cfgParamMapList;
-
-        //初始化第一列
-        initPage('#nestable', cfgMergeParamList, "paramName", "paramNameCn");
-        //初始化第二列
-        initPage('#nestable1', modelmentList, "modelementCode", "modelementName");
-
-        //初始化第三列
-        //initPage('#nestable2',cfgParamMapList,"paramKey","paramDesc");
-        initThree('#nestable2', cfgParamMapList, "paramKey", "paramDesc", "modelKey", "modelName");
-      });
-
-
-      //绑定事件
-      buildEvent();
-    }
-
-
-    function save() {
-
-      var ret = [];
-
-      $.each($("#nestable2 li "), function(i, item) {
-
-
-        //js变量命名不要只写一个字母，要有含义 record，也便于搜索r->record
-        var record = {};
-
-
-        record.chnlType = $("input[name=chnlType]").val()
-        record.chnlTypeName = $("input[name=chnlTypeName]").val();
-
-        record.paramKey = $(item).data("json")['paramName'];
-        record.paramDesc = $(item).data("json")['paramNameCn'];
-        record.frontBack = $(item).data("json")['fbFlag'];
-        record.frontBackName = $(item).data("json")['fbFlagDesc'];
-        record.modelKey = $(item).data("json1")['modelementCode'];
-        record.modelName = $(item).data("json1")['modelementName'];
-
-
-        ret.push(record);
-      });
-
-      console.log(ret);
-
-      var url = ctx + "/cfgmgr/cfg/cfgParamMaps/saveUpdate";
-      util.ajaxJson("保存中，请稍后···", url, {
-        "chnlType": $("input[name=chnlType]").val(),
-        "cfgParamMapList": ret
-      }, function(data) {
-
-
-        console.log(data);
-
-        if (data.result != "0") {
-
-          util.error("保存失败!");
-
-        } else {
-
-          util.success("保存成功!");
-        }
-      });
-
-    }
-
-    function buildEvent() {
-
-      $("#nestable,#nestable1").delegate('li', 'click', function() {
-
-        $(this).parents("ol").find("li").removeClass("layui-this");
-
-        $(this).addClass('layui-this');
-
-      });
-
-
-      $(".left-move i").click(function() {
-
-
-        var onethis = $("#nestable li.layui-this ");
-
-        var twothis = $("#nestable1 li.layui-this ");
-
-        if (onethis.length == 0) {
-
-          util.showDialog("请选择标准参数！", 0);
-
-          return;
-        }
-
-        if (twothis.length == 0) {
-
-          util.showDialog("请选择模板参数！", 0);
-
-          return;
-        }
-
-        onethis.attr("data-json1", JSON.stringify(twothis.data("json")));
-
-        var html1 = onethis.find(".dd-handle").html();
-
-        var html2 = twothis.find(".dd-handle").html();
-
-        var closeBtn =
-          '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:-35px;"></i> ';
-
-        onethis.find(".dd-handle").html('<span>' + html1 + "||" + html2 + '</span>' + closeBtn);
-
-        if ($("#nestable2>ol").length == 0) {
-
-          $("#nestable2").append($('<ol class="dd-list"></ol>'));
-        }
-        $("#nestable2 ol ").append(onethis);
-      });
-
-      $("#nestable2").delegate('.layui-icon-delete', 'click', function() {
-
-        var parentLi = $(this).parent().parent("li");
-
-        var clone1 = parentLi.clone();
-
-        var clone2 = parentLi.clone();
-
-        clone1.data("json1", null);
-
-        var span = clone1.find("span");
-
-        var spanArr = span.html().split("||");
-
-        clone2.data("json", clone2.data("json1"));
-
-        clone2.data("json1", null);
-
-        clone1.find(".dd-handle").html(spanArr[0]);
-
-        clone2.find(".dd-handle").html(spanArr[1]);
-
-        parentLi.remove();
-      });
-    }
-
-
-    function initThree(id, data, key, keyName, key1, keyName1) {
-
-
-      var ol = $('<ol class="dd-list"></ol>');
-
-      $.each(data, function(i, item) {
-
-        var li = $('<li class="dd-item" ></div>');
-
-        //标准参数-命名为paramInfo更好
-        var json = {};
-        json["paramName"] = item[key];
-        json["paramNameCn"] = item[keyName];
-        json["fbFlag"] = item["frontBack"];
-        json["fbFlagDesc"] = item["frontBackName"];
-
-
-        $("#nestable li[ag-key=" + item[key] + "]").remove();
-
-        $("#nestable1 li[ag-key=" + item[key1] + "]").remove();
-
-        //模板参数-命名为modelInfo更好
-        var json1 = {};
-        json1["modelementCode"] = item[key1];
-        json1["modelementName"] = item[keyName1];
-
-        //同理data-param,data-model表意更明确
-        li.attr("data-json", JSON.stringify(json));
-        li.attr("data-json1", JSON.stringify(json1));
-
-        var closeBtn =
-          '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:-35px;"></i> ';
-
-        var div = $('<div class="dd-handle"><span>' + item[key] + "-" + item[keyName] + "||" + item[key1] + "-" +
-          item[keyName1] + '</span> ' + closeBtn + '</div>');
-
-        li.append(div);
-
-        ol.append(li);
-
-      });
-
-      $(id).append(ol);
-
-    }
-
-
-    function initPage(id, data, key, keyName) {
-
-      var ol = $('<ol class="dd-list"></ol>');
-
-      $.each(data, function(i, item) {
-
-        var li = $('<li class="dd-item" ></div>');
-
-        li.attr("data-json", JSON.stringify(item));
-        li.attr('ag-key', item[key]);
-
-        var div = $('<div class="dd-handle">' + item[key] + "-" + item[keyName] + '</div>');
-
-        li.append(div);
-
-        ol.append(li);
-
-      });
-
-      $(id).append(ol);
-    }
+      $(".dd").height($(window).height() - 200);
   </script>
 </html>
