@@ -49,7 +49,7 @@ var knowOptions = {
  
 var pathed = '';
 var pathed2 = '';
-if(env=='development'){
+if(env!='build'){
   pathed = "/static"//开发环境根路径
   pathed2 = "/views"
 }else{
