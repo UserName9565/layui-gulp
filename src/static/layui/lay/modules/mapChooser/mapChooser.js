@@ -25,9 +25,10 @@ layui.define(['jquery','form' ],function(exports){
   //组件初始化方法
   mapChooser.prototype.init = function(data){
 
-
      initDiv(data.body.leftArr,".ag-map-left");
-     initDiv(data.body.middleArr,".ag-map-middle");
+     if($(".ag-map-middle").length > 0){
+       initDiv(data.body.middleArr,".ag-map-middle");
+     }
      initRightDiv(data.body.rightArr,".ag-map-right");
 
      buildEvent();
@@ -55,8 +56,14 @@ layui.define(['jquery','form' ],function(exports){
     for(var i=0; i < arr.length; i++){
       var li = $('<li class="dd-item" ></div>');
       var closeBtn = '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:0px;"></i> ';
-      var div=$('<div class="dd-handle"><span>'+arr[i].sourceCode+"-"+arr[i].sourceCodeName+'||'+arr[i].targetCode+"-"+arr[i].targetCodeName+'</span>'+closeBtn+'</div>');
-
+      var div;
+      console.log($(".ag-map-middle"));
+      if($(".ag-map-middle").length > 0){
+        div=$('<div class="dd-handle"><span>'+arr[i].sourceCode+"-"+arr[i].sourceCodeName+'||'+arr[i].targetCode+"-"+arr[i].targetCodeName+'</span>'+closeBtn+'</div>');
+      }
+      if($(".ag-map-input").length > 0){
+        div=$('<div class="dd-handle"><span>'+arr[i].sourceCode+"-"+arr[i].sourceCodeName+"-"+arr[i].targetCode+'</span>'+closeBtn+'</div>');
+      }
       li.append(div);
       ol.append(li)
     }
@@ -78,34 +85,40 @@ layui.define(['jquery','form' ],function(exports){
 
     $(".left-move i").click(function() {
 
-
-      var leftSelect = $(".ag-map-left li.layui-this ");
-
-      var middleSelect = $(".ag-map-middle li.layui-this ");
-
-      if (leftSelect.length == 0) {
-
-        util.showDialog("请选择标准参数！", 0);
-
-        return;
-      }
-
-      if (middleSelect.length == 0) {
-
-        util.showDialog("请选择模板参数！", 0);
-
-        return;
-      }
-
-      leftSelect.attr("data-json1", JSON.stringify(middleSelect.data("json")));
-
-      var leftHtml = leftSelect.find(".dd-handle").html();
-
-      var middleHtml = middleSelect.find(".dd-handle").html();
-
       var rightli = $('<li class="dd-item" ></div>');
       var closeBtn = '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:0px;"></i> ';
-      var rightDiv=$('<div class="dd-handle"><span>'+leftHtml+'||'+middleHtml+'</span>'+closeBtn+'</div>');
+      var rightDiv;
+      var middleHtml;
+
+      var leftSelect = $(".ag-map-left li.layui-this ");
+      if (leftSelect.length == 0) {
+        util.showDialog("请选择标准参数！", 0);
+        return;
+      }
+      var leftHtml = leftSelect.find(".dd-handle").html();
+
+
+      if($(".ag-map-middle").length > 0){
+        var middleSelect = $(".ag-map-middle li.layui-this ");
+        if (middleSelect.length == 0) {
+          util.showDialog("请选择模板参数！", 0);
+          return;
+        }
+        middleHtml = middleSelect.find(".dd-handle").html();
+        rightDiv=$('<div class="dd-handle"><span>'+leftHtml+'||'+middleHtml+'</span>'+closeBtn+'</div>');
+      }
+
+
+      if($(".ag-map-input").length > 0){
+         middleHtml =$(".ag-map-input input").val();
+         if(util.isNull(middleHtml))
+         {
+           util.showDialog("转换格式不能为空！", 0);
+           return;
+         }
+         rightDiv=$('<div class="dd-handle"><span>'+leftHtml+'-'+middleHtml+'</span>'+closeBtn+'</div>');
+      }
+
       rightli.append(rightDiv);
 
       if ($(".ag-map-right>ol").length == 0) {
