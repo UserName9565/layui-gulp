@@ -118,7 +118,7 @@ layui.define(['jquery','form' ],function(exports){
          }
          rightDiv=$('<div class="dd-handle"><span>'+leftHtml+'-'+middleHtml+'</span>'+closeBtn+'</div>');
       }
-
+      leftSelect.remove();
       rightli.append(rightDiv);
 
       if ($(".ag-map-right>ol").length == 0) {
@@ -138,7 +138,25 @@ layui.define(['jquery','form' ],function(exports){
     $(".ag-map-right").delegate('.layui-icon-delete', 'click', function() {
 
       var parentLi = $(this).parent().parent("li");
+      var spanHtml = $(this).parent().find("span").eq(0).html();
+
       parentLi.remove();
+      
+      var leftOneHtml;
+      if($(".ag-map-middle").length > 0){
+        var strs=spanHtml.split("||");
+        leftOneHtml=strs[0];
+      }
+      if($(".ag-map-input").length > 0){
+        var strs=spanHtml.split("-");
+        leftOneHtml=strs[0]+"-"+strs[1];
+      }
+
+      var leftOneli = $('<li class="dd-item" ></div>');
+      var leftOneDiv=$('<div class="dd-handle">'+leftOneHtml+'</div>');
+      leftOneli.append(leftOneDiv);
+      $(".ag-map-left ol").append(leftOneli);
+
       var record = [];
       $.each($(".ag-map-right li div"), function(i, item) {
         var oneRightHtml=$(item).find("span").eq(0).html();
