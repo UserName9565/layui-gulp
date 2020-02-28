@@ -223,7 +223,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 						var aFunc = lsnrStr + "('" + realUrl + "','" + item.openTitle + "')";
 
-						var a = "<a href='javascript:void(0)' class=' layui-table-link "+item.className+"' onclick=" + aFunc + ">" + (item.btnVal?item.btnVal:"操作") + "</a>";
+						var a = "<a href='javascript:void(0)'  style='padding:0px 5px' class=' layui-table-link "+item.className+"' onclick=" + aFunc + ">" + (item.btnVal?item.btnVal:"操作") + "</a>";
 
 						appendAHtml += a;
 
