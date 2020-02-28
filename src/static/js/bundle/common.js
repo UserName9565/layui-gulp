@@ -368,6 +368,7 @@ var publicFun = {
 
       var req = JSON.stringify(pObj.data);
     }
+    pObj.data._agileAuthToken = $.cookie('JSESSIONID_token')
     var url = ''
     if(pObj.url.indexOf("?")!=-1){
       url= pObj.url + "&t=" + Math.random()
