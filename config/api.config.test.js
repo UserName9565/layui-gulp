@@ -5,6 +5,6 @@ var apiConfig = {
   ctx: "http://bhps.agilestar.cn:9600",//接口地址http://192.168.1.76:8090/ api-gateway
   // ctx: "http://192.168.1.76:9600/sysmgr",
   oldVersion:"http://bhps.agilestar.cn",//嵌入页面工程地址
-  rootD:"/bhps" //根目录前置路径
+  rootD:"/" //根目录前置路径
 }
 
