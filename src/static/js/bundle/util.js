@@ -484,7 +484,12 @@ util = {
 	},
 	ajaxJson:function(msg,url,param,callBack,beforeSend,async){
 		
-		util.load(msg);
+		if(!util.isNull(msg)){
+			
+			util.load(msg);
+			
+		}
+		
 		
 		$.ajax({
 			type: "POST",

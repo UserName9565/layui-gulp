@@ -127,7 +127,7 @@
 				$('#chnlChain2').nestable({
 					group: 1,
 					maxDepth:1,
-					dragFlag:false,//是否允许拖拽
+					dragFlag:true,//是否允许拖拽
 					addItemCloseBtn:true,//是否添加删除按钮
 					itemKey:"compName",
 					itemName:'compNameCn',
@@ -158,7 +158,6 @@
 			util.ajaxJson("保存中，请稍后···",url,{"chnlType":$("input[name=chnlType]").val(),"cfgChnlChainList":array},function(data){
 
 
-				console.log(data);
 
 				if(data.result != "0"){
 
@@ -167,6 +166,10 @@
 				}else{
 
 					util.success("保存成功!");
+					
+					alert(array.length);
+					
+					parent.refreshSts(array.length > 0 ? true :false );
 
 				}
 

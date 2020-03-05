@@ -522,6 +522,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 						$(queryBtn).click();
 						//util.closeWin();
 					}
+					
+					var func = $(this).attr("ag-back-func");
+					
+					if(!util.isNull(func)){
+						
+						eval(func);
+					}
+					
+					
 				} else {
 					util.error(desc);
 				}

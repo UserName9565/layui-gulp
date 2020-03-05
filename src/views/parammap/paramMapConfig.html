@@ -46,7 +46,7 @@
 
         <div style="border-left: 2px solid #e1e4e3;float: right;margin: 5px;">
 
-          <div class="ag-btn-save card-btn" style="margin-left: 10px;" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/cfgParamMaps/saveUpdate"  ag-data-index="1">
+          <div class="ag-btn-save card-btn" style="margin-left: 10px;" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/cfgParamMaps/saveUpdate" ag-back-func="parentExe()"  ag-data-index="1">
             <div class="card-btn-img img-save"></div>
             <div class="card-btn-desc">
               保存
@@ -133,6 +133,22 @@
     </form>
   </body>
   <script>
+	  
       $(".dd").height($(window).height() - 200);
+	  
+	  function parentExe(){
+		  
+		 var val =  $(".ag-form input=[name=returnList] ").val();
+		 
+		 var flag = true;
+		 
+		if(util.isNull(val) || $.parseJSON(val).length == 0){
+			
+			flag =false;
+		}
+		
+		parent.refreshSts(flag);
+		  
+	  }
   </script>
 </html>
