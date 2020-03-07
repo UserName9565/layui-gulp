@@ -600,6 +600,13 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 					if (queryBtn.length > 0) {
 						$(queryBtn).click();
 					}
+					
+					var func = $(this).attr("ag-back-func");
+					
+					if(!util.isNull(func)){
+						
+						eval(func);
+					}
 				} else {
 					util.error(desc);
 				}
@@ -1281,6 +1288,6 @@ function _listHrefWindow(url,title){
 function _listHrefTab(url,title){
 
 
-	alert("打开tab页带补充..");
+	util.addTab(url,title);
 
 }

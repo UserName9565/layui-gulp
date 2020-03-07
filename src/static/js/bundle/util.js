@@ -82,6 +82,37 @@ util = {
 		util.showDialog(msg, 0,"no",opts);
 	},
 
+	/** 添加选项卡
+	 * @param {Object} href
+	 * @param {Object} title
+	 */
+	addTab:function(href,title){
+		
+		var parentObj = util.getMainWin();
+		
+		if(!parentObj.layuimini.checkTab(href,true)){
+			
+			parentObj.layuimini.addTab(href, href, title, true);
+			
+		}
+		
+		parentObj.layuimini.changeTab(href);
+		
+	},
+	
+	getMainWin:function(obj){
+		
+		var parentObj = obj|| parent;
+		
+		
+		if(parentObj.layuimini != undefined){
+			
+			return parentObj;
+		}
+		
+		return util.getMainWin(parentObj.parent);
+		
+	},
 	//打开窗口
 	openWin: function(url, title, w, h, opts) {
 
