@@ -90,13 +90,17 @@ util = {
 		
 		var parentObj = util.getMainWin();
 		
-		if(!parentObj.layuimini.checkTab(href,true)){
+		var tabId = href.split("?")[0];
+		
+		if(parentObj.layuimini.checkTab(tabId,true)){
 			
-			parentObj.layuimini.addTab(href, href, title, true);
+			parentObj.layuimini.delTab(tabId);
 			
 		}
 		
-		parentObj.layuimini.changeTab(href);
+		parentObj.layuimini.addTab(tabId, href, title, true);
+		
+		parentObj.layuimini.changeTab(tabId);
 		
 	},
 	
