@@ -28,6 +28,10 @@ layui.define(['jquery','form' ],function(exports){
 				          /^1\d{10}$/
 				          ,'请输入正确的手机号'
 				        ]
+						,ip:[
+							/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+							,'请输入正确IP地址'
+						]
 				        ,email: [
 				          /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
 				          ,'邮箱格式不正确'
@@ -36,9 +40,15 @@ layui.define(['jquery','form' ],function(exports){
 				          /(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/
 				          ,'链接格式不正确'
 				        ]
+						,charSet: function(value){
+						  if(!value || ( value != "GBK" && value != "UTF-8")) return '只能填写GBK,或UTF-8'
+						}
 				        ,number: function(value){
 				          if(!value || isNaN(value)) return '只能填写数字'
 				        }
+						,number5: function(value){
+						  if(!value || isNaN(value) || parseInt(value) > 4 || parseInt(value) <1) return '请填写大于0,小于5数字'
+						}
 				    	,number100:function(value){
 
 				    			var patrn = /^(0|[1-9]\d?|100)$/;
@@ -120,17 +130,20 @@ layui.define(['jquery','form' ],function(exports){
 
 
 		 $(verifyElem).each(function(_,item){
+			 
 
 		      var othis = $(this)
 		      ,vers = othis.attr('ag-verify').split('|')
 		      ,verType = othis.attr('lay-verType') //提示方式
 		      ,value = othis.val();
-
+			
+			  value  = util.isNull(othis.val()) ? "" : value;
 
 		      othis.removeClass(DANGER);
 
-
 		      $(vers).each(function(_, thisVer){
+				  
+				
 
 		          var isTrue //是否命中校验
 		          ,errorText = '' //错误提示文本
