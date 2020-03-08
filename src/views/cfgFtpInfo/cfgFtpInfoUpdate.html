@@ -17,18 +17,11 @@
 
       <div class="layui-card-body">
 
-        <form class="ag-form layui-form" ag-data-index="1" ag-data-ctx="cfgmgr"  ag-data-url="/cfg/settings/cfgFtpinfos/updateInit">
+        <form class="ag-form layui-form" ag-data-index="1" ag-data-ctx="cfgmgr"  ag-data-url="/cfg/settings/cfgFtpinfo/query">
 					
 		   <input type="hidden" name ="id" />
 
           <div class="layui-inline ">
-
-            <div class="layui-inline ">
-              <label class="layui-form-label">ftp编码：</label>
-              <div class="layui-input-block">
-                <input type="text" name="ftpCode" readonly="readonly" ag-verify="required" autocomplete="off" placeholder="ftp编码" class="layui-input">
-              </div>
-            </div>
 
             <div class="layui-inline ">
               <label class="layui-form-label">ftp名称：</label>
@@ -37,13 +30,6 @@
               </div>
             </div>
 
-            <div class="layui-inline ">
-              <label class="layui-form-label">接入租户：</label>
-              <div class="layui-input-block">
-                <select name="tenantId" ag-sel-name="tenantName" ag-verify="required">
-                </select>
-              </div>
-            </div>
 			<div class="layui-inline ">
 			  <label class="layui-form-label">编码集：</label>
 			  <div class="layui-input-block">
@@ -107,7 +93,7 @@
 
       <div class="layui-card-footer">
 
-        <button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr"  ag-data-url="/cfg/settings/cfgFtpinfo/update"
+        <button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr"  ag-data-url="/cfg/settings/cfgFtpinfos/update"
           ag-data-index="1">
           <i class="layui-icon layui-icon-search "></i>
           <span class="btn-span-middle">保存</span>

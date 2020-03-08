@@ -17,15 +17,9 @@
 				<div class="param-left">
 
 					<div class="layui-inline ">
-						<label class="layui-form-label">路径Key：</label>
-						<div class="layui-input-block">
-							<input type="text" name="saveKey" autocomplete="off" placeholder="路径Key" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-inline ">
-					  <label class="layui-form-label">ftp连接：</label>
+					  <label class="layui-form-label">存储项：</label>
 					  <div class="layui-input-block">
-					    <select name="ftpCode" ag-sel-name="ftpName">
+					    <select name="saveKey" ag-sel-name="saveDesc"  ag-select-default-val ="true" ag-verify="required">
 					    </select>
 					  </div>
 					</div>
@@ -69,7 +63,7 @@
 						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
 						 ag-win-height="600" ag-win-title="二级存储修改" ag-data-pk="id" ag-data-url="/views/cfgWoSave/cfgWoSaveUpdate.html"><i
 							 class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-pk="id" ag-data-url="/cfg/settings/cfgWoSave/del"><i
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-pk="id" ag-data-url="/cfg/settings/cfgWoSaves/del"><i
 							 class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
@@ -88,10 +82,19 @@
 						"title": "主键",
 						"hide": true,
 						"fixed": "left"
+					},  {
+						"field": "tenantId",
+						"width": 120,
+						"title": "租户ID"
 					}, {
+						"field": "tenantName",
+						"width": 120,
+						"title": "租户名称"
+					},{
 						"field": "ftpCode",
 						"width": 120,
-						"title": "ftp编码"
+						"title": "ftp编码",
+						"hide":true
 					}, {
 						"field": "ftpName",
 						"width": 120,

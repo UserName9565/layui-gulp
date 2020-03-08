@@ -1179,6 +1179,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 								var optArr = data[name];
 								var selectStr = "";
+								
+								var selObj = $("select[name=" + name.substr(0, name.length - 3) + "]");
+								
+								if(selObj.attr("ag-select-default-val") == "true"){
+									
+									selectStr += "<option value=''>-请选择-</option>"
+								}
+								
 								for (var i = 0; i < optArr.length; i++) {
 									var selectedStr = optArr[i].selected;
 									if (util.isNull(selectedStr)) {
@@ -1192,7 +1200,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 
 
-								var selObj = $("select[name=" + name.substr(0, name.length - 3) + "]");
+								
 								$(selObj).html(selectStr);
 								form.render('select');
 							}

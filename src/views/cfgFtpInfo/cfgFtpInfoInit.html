@@ -12,7 +12,7 @@
 
 		<div class="layui-card layui-card-margin ">
 
-			<form class="ag-form layui-form" ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/cfgFtpinfos/queryInit">
+			<form class="ag-form layui-form" ag-data-index="0" ag-data-ctx="cfgmgr" >
 
 				<div class="param-left">
 
@@ -28,13 +28,7 @@
 							<input type="text" name="hostIp" autocomplete="off" placeholder="IP地址" class="layui-input">
 						</div>
 					</div>
-					<div class="layui-inline ">
-					  <label class="layui-form-label">接入租户：</label>
-					  <div class="layui-input-block">
-					    <select name="tenantId" ag-sel-name="tenantName">
-					    </select>
-					  </div>
-					</div>
+					
 				</div>
 
 
@@ -75,7 +69,7 @@
 						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
 						 ag-win-height="600" ag-win-title="ftp修改" ag-data-pk="id" ag-data-url="/views/cfgFtpInfo/cfgFtpInfoUpdate.html"><i
 							 class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-pk="id" ag-data-url="/cfg/settings/cfgFtpinfo/del"><i
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-pk="id" ag-data-url="/cfg/settings/cfgFtpinfos/del"><i
 							 class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
@@ -94,19 +88,7 @@
 						"title": "主键",
 						"hide": true,
 						"fixed": "left"
-					}, {
-						"field": "tenantId",
-						"width": 120,
-						"title": "租户ID"
-					}, {
-						"field": "tenantName",
-						"width": 120,
-						"title": "租户名称"
-					}, {
-						"field": "ftpCode",
-						"width": 120,
-						"title": "ftp编码"
-					}, {
+					},  {
 						"field": "ftpName",
 						"width": 120,
 						"title": "ftp名称"
