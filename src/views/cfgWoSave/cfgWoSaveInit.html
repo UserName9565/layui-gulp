@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>layui</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+	</head>
+	<body class="bg-info">
+
+		<div class="layui-card layui-card-margin ">
+
+			<form class="ag-form layui-form" ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/cfgWoSaves/queryInit">
+
+				<div class="param-left">
+
+					<div class="layui-inline ">
+						<label class="layui-form-label">路径Key：</label>
+						<div class="layui-input-block">
+							<input type="text" name="saveKey" autocomplete="off" placeholder="路径Key" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-inline ">
+					  <label class="layui-form-label">ftp连接：</label>
+					  <div class="layui-input-block">
+					    <select name="ftpCode" ag-sel-name="ftpName">
+					    </select>
+					  </div>
+					</div>
+				</div>
+
+
+			</form>
+
+			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
+			<div class="btns-right">
+
+				<div class="layui-inline">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-url="/cfg/settings/cfgWoSave/queryPage">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">查询</span>
+					</button>
+
+					<button class="layui-btn layui-btn-sm layui-btn-blue" type="reset">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">重置</span>
+					</button>
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+
+
+		<div class=" layui-card  layui-card-list" style="height: calc( 100vh - 105px);">
+
+			<div class="layui-border-box ">
+
+				<div class="layui-table-tool">
+					<div class="layui-table-tool-temp">
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
+						 ag-win-title="二级存储新增" ag-data-url="/views/cfgWoSave/cfgWoSaveAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="二级存储修改" ag-data-pk="id" ag-data-url="/views/cfgWoSave/cfgWoSaveUpdate.html"><i
+							 class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-pk="id" ag-data-url="/cfg/settings/cfgWoSave/del"><i
+							 class="layui-icon layui-icon-delete"></i></div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div style="display:none" class="ag-table-header" ag-data-index="0">
+
+				[
+					[{
+						"type": "radio",
+						"fixed": "left"
+					}, {
+						"field": "id",
+						"title": "主键",
+						"hide": true,
+						"fixed": "left"
+					}, {
+						"field": "ftpCode",
+						"width": 120,
+						"title": "ftp编码"
+					}, {
+						"field": "ftpName",
+						"width": 120,
+						"title": "ftp名称"
+					}, {
+						"field": "saveKey",
+						"width": 120,
+						"title": "路径Key"
+					}, {
+						"field": "saveName",
+						"width": 120,
+						"title": "路径地址"
+					}, {
+						"field": "opNo",
+						"width": 120,
+						"title": "操作工号"
+					}, {
+						"field": "opName",
+						"width": 120,
+						"title": "操作姓名"
+					}, {
+						"field": "opTime",
+						"width": 120,
+						"title": "操作时间"
+					}]
+				]
+
+			</div>
+			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+			</table>
+
+			<div class="pagging ag-area-page">
+				   
+			</div>
+
+		</div>
+
+		<script>
+
+		</script>
+	</body>
+</html>
