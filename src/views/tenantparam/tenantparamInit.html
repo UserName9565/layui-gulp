@@ -38,7 +38,7 @@
 			<div class="btns-right">
 
 				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/cfg/settings/cfgWoSaveOne/queryPage" ag-data-ctx="cfgmgr">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/cfg/settings/tenantparam/queryPage" ag-data-ctx="cfgmgr">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
@@ -63,9 +63,9 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="一级存储配置新增" ag-data-url="/views/wosaveone/wosaveoneAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="一级存储配置修改" ag-data-pk="id" ag-data-url="/views/wosaveone/wosaveoneUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/cfg/settings/cfgWoSaveOnes/del" ag-data-ctx="cfgmgr"><i class="layui-icon layui-icon-delete"></i></div>
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户参数新增" ag-data-url="/views/tenantparam/tenantparamAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="租户参数修改" ag-data-pk="id" ag-data-url="/views/tenantparam/tenantparamUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/cfg/settings/tenantparamss/del" ag-data-ctx="cfgmgr"><i class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
 				</div>
@@ -73,7 +73,7 @@
 			</div>
 
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
- 
+
 			    [
 			      [
 			        {
@@ -93,6 +93,9 @@
 			        }, {
 			          "field": "rootDir",
 			          "title": "一级存储根目录"
+			        }, {
+			          "field": "ydOpCode",
+			          "title": "异地销户代码"
 			        }, {
 			          "field": "opTime",
 			          "title": "配置时间"

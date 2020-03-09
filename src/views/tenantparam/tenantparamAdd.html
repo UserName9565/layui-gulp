@@ -15,9 +15,9 @@
 
 		<div class="layui-card layui-card-form">
 
-			<div class="layui-card-body"> 
+			<div class="layui-card-body">
 
-				<form class="ag-form layui-form " ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/cfgWoSaveOnes/addInit" ag-data-index="1">
+				<form class="ag-form layui-form " ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/tenantparams/addInit" ag-data-index="1">
 
 
 					<div class="layui-inline ">
@@ -38,6 +38,14 @@
 
 						</div>
 
+            <div class="layui-inline ">
+            	<label class="layui-form-label">异地销户代码：</label>
+            	<div class="layui-input-block">
+            		<input type="text" name="ydOpCode" ag-verify="required" placeholder="异地销户代码" autocomplete="off" class="layui-input">
+            	</div>
+
+            </div>
+
 				</form>
 
 
@@ -45,7 +53,7 @@
 
 			<div class="layui-card-footer">
 
-				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/cfgWoSaveOnes/add" ag-data-index="1">
+				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/tenantparams/add" ag-data-index="1">
 					<i class="layui-icon layui-icon-search "></i>
 					<span class="btn-span-middle">保存</span>
 				</button>
