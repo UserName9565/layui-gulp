@@ -618,7 +618,27 @@ util = {
 			}
 		});
 		
-	}
+	},
+		getMarginHeight: function(obj) {
+	
+			return parseInt($(obj).css("margin-top").replace("px", "")) +
+				parseInt($(obj).css("margin-bottom").replace("px", ""))
+		},
+	
+		/**
+		 * 刨除 height属性高度外 所有高度
+		 * @param {Object} obj
+		 */
+		getRealityOrderHeight: function(obj) {
+	
+			return parseInt($(obj).css("margin-top").replace("px", "")) +
+				parseInt($(obj).css("margin-bottom").replace("px", "")) +
+				parseInt($(obj).css("padding-top").replace("px", "")) +
+				parseInt($(obj).css("padding-bottom").replace("px", "")) +
+				parseInt($(obj).css("border-top-width").replace("px", "")) +
+				parseInt($(obj).css("border-bottom-width").replace("px", ""))
+	
+		}
 
 
 

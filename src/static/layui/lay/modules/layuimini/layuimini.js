@@ -535,9 +535,12 @@ layui.define(["element", "jquery"], function (exports) {
                 layuiminiTabInfo[tabId] = {href: href, title: title}
                 sessionStorage.setItem("layuiminiTabInfo", JSON.stringify(layuiminiTabInfo));
             }
+			
+			var height = $('.layui-tab-item.layui-show').height()-5;
+			
             element.tabAdd('layuiminiTab', {
                 title: title + '<i data-tab-close="" class="layui-icon layui-unselect layui-tab-close">ဆ</i>' //用于演示
-                , content: '<iframe width="100%" height="100%" frameborder="0"  src="' + href + '"></iframe>'
+                , content: '<iframe width="100%" height="'+height+'" frameborder="0"  src="' + href + '"></iframe>'
                 , id: tabId
             });
         };
