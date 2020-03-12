@@ -401,7 +401,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 				//执行一个 table 实例
 				table.render({
 					elem: $(".ag-table[ag-data-index=" + index + "]"),
-					height: 420,
+					height: $(".ag-table").height(),
 					data: page.data, //数据接口
 					title: '用户表',
 					page: false, //开启分页
@@ -1306,6 +1306,47 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 
 	}
+	
+	function  initListHeight(){
+		
+		var  agTable =  $(".ag-table");
+		
+		if(agTable.length == 0){
+			
+			return ;
+		}
+						
+		var sibHeight = 30;
+		
+		//获取容器父级--父级所有兄弟节点
+		var $query =agTable.parent().siblings(":visible").not("script").not("iframe");
+	
+		for(var i = 0 ; i<$query.length ;i++){
+			
+			if(!$($query[i]).attr("class") || $($query[i]).attr("class").indexOf("layui-layer") != -1){
+				
+				continue;
+			}
+			
+			sibHeight  += ($($query[i]).outerHeight()+ util.getMarginHeight($query[i]));
+			
+		}
+		
+		sibHeight += util.getRealityOrderHeight(agTable.parent());
+		
+		
+		agTable.parent().attr("style","");
+		
+		agTable.parent().css('height','calc( 100vh - '+sibHeight+'px)');
+		
+		//获取容器兄弟节点高度
+		$.each(agTable.siblings(":visible").not("script").not("iframe").not(".layui-form.layui-border-box.layui-table-view"), function(i,t) {
+			
+			sibHeight  += ($(t).outerHeight()+ util.getMarginHeight($(t)));
+		});
+		
+		agTable.css('height','calc( 100vh - '+sibHeight+'px)');
+	}
 
 
 
@@ -1316,6 +1357,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 		initBtnLsnr();
 
 		initForm();
+		
+		initListHeight();
 
 	});
 
