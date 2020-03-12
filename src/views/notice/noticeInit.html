@@ -16,16 +16,10 @@
 
 				<div class="param-left">
 
-          <div class="layui-inline ">
-          	<label class="layui-form-label">渠道编码：</label>
-          	<div class="layui-input-block">
-          		<input type="text" name="chnlCode"  autocomplete="off" placeholder="渠道编码" class="layui-input">
-          	</div>
-          </div>
 					<div class="layui-inline ">
-						<label class="layui-form-label">渠道名称：</label>
+						<label class="layui-form-label">公告名称：</label>
 						<div class="layui-input-block">
-							<input type="text" name="chnlName" autocomplete="off" placeholder="渠道名称" class="layui-input">
+							<input type="text" name="noticeTitle" autocomplete="off" placeholder="公告名称" class="layui-input">
 						</div>
 					</div>
 
@@ -38,7 +32,7 @@
 			<div class="btns-right">
 
 				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/settings/chnl/queryPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/settings/notice/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
@@ -63,7 +57,7 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="渠道新增" ag-data-url="/views/chnl/chnlAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="公告发布" ag-data-url="/views/notice/noticeAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
 						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="渠道修改" ag-data-pk="chnlCode" ag-data-url="/views/chnl/chnlUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
 						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="chnlCode" ag-data-url="/sys/settings/chnl/del"><i class="layui-icon layui-icon-delete"></i></div>
 					</div>
@@ -80,29 +74,31 @@
 			          "type": "radio",
 			          "fixed": "left"
 			        },{
-			          "field": "id",
-			          "title": "主键",
+			          "field": "chnlCode",
+			          "title": "渠道编码",
+			          "sort": true,
+			          "fixed": "left"
 			        }, {
-			          "field": "tenantId",
-			          "title": "租户ID"
+			          "field": "chnlName",
+			          "title": "渠道名称"
 			        }, {
-			          "field": "tenantName",
-			          "title": "租户名称"
+			          "field": "sts",
+			          "title": "渠道状态"
 			        }, {
-			          "field": "noticeTitle",
-			          "title": "公告标题"
+			          "field": "effectTime",
+			          "title": "生效时间"
 			        }, {
-			          "field": "pubTime",
-			          "title": "发布时间"
+			          "field": "expireTime",
+			          "title": "生效时间"
 			        }, {
-			          "field": "pubNo",
-			          "title": "发布工号"
+			          "field": "opNo",
+			          "title": "操作工号"
 			        }, {
-			          "field": "pubName",
-			          "title": "发布姓名"
+			          "field": "opName",
+			          "title": "操作姓名"
 			        }, {
-			          "field": "stsDesc",
-			          "title": "状态"
+			          "field": "opTime",
+			          "title": "操作时间"
 			        }
 
 			      ]
