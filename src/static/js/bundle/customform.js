@@ -43,10 +43,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 	function getFormJson(form) {
 
 		var paramJson = {};
-		var arr = $(form).find("input");
+		var arr = $(form).find("input[type!=checkbox]");
 
 		for (var i = 0; i < arr.length; i++) {
-
 			paramJson[arr[i].name] = $(arr[i]).val();
 		}
 
@@ -58,6 +57,25 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 			var text = $(arr2[i]).find("option:selected").text();
 			paramJson[nameKey] = text;
 		}
+
+    //复选框
+    $(".ag-chkbox").each(function(idx,chkDiv){
+        var key = $(chkDiv).attr("ag-chkbox-name");
+        var chkVal = "";
+        $("input[name="+key+"]").each(function(chkIdx,chk){
+            if($(chk)[0].checked){
+              chkVal = chkVal + $(chk).attr("customVal") + ",";
+            }
+        });
+
+        if(!util.isNull(chkVal)){
+
+          chkVal = chkVal.substr(0,chkVal.length -1);
+          paramJson[key] =  chkVal;
+        }
+    });
+
+
 
     var agFile =  $(form).find("[ag-file-submit-key]");
 
@@ -522,15 +540,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 						$(queryBtn).click();
 						//util.closeWin();
 					}
-					
+
 					var func = $(this).attr("ag-back-func");
-					
+
 					if(!util.isNull(func)){
-						
+
 						eval(func);
 					}
-					
-					
+
+
 				} else {
 					util.error(desc);
 				}
@@ -600,11 +618,11 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 					if (queryBtn.length > 0) {
 						$(queryBtn).click();
 					}
-					
+
 					var func = $(this).attr("ag-back-func");
-					
+
 					if(!util.isNull(func)){
-						
+
 						eval(func);
 					}
 				} else {
@@ -1149,13 +1167,45 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 					dataType: "json",
 					success: function(data) {
 
+
+
+            /**
+             * 复选框
+             *
+             */
+            var chkBoxDivArr = $(agForm).find(".ag-chkbox");
+            if(chkBoxDivArr.length > 0){
+              var chkStr = "";
+              $(chkBoxDivArr).each(function(idx,chkboxDiv){
+
+                  var key = $(chkboxDiv).attr("ag-chkbox-name");
+                  var dataArr = data[key+"ChkBox"];
+                  $(dataArr).each(function(idxData,chkData){
+                     var checked = 'checked=""';
+                     if(util.isNull(chkData.selected)){
+                       checked = '';
+                     }
+                     var record = '<input type="checkbox" customVal="'+chkData.optCode+'" value="'+chkData.optCode+'" name="'+key+'" lay-skin="primary" title="'+chkData.optName+'" '+checked+'>'
+                     chkStr = chkStr + record;
+                  });
+
+                  $(chkboxDiv).html(chkStr);
+                  form.render('checkbox');
+
+
+              });
+
+
+
+            }
+
+
 						for (var name in data) {
 
 							var val = data[name];
 							if (!util.isNull(val)) {
 								$(agForm).find("input[name=" + name + "]").val(val);
 							}
-
 
 							/**
 							 * 附件
@@ -1179,14 +1229,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 								var optArr = data[name];
 								var selectStr = "";
-								
+
 								var selObj = $("select[name=" + name.substr(0, name.length - 3) + "]");
-								
+
 								if(selObj.attr("ag-select-default-val") == "true"){
-									
+
 									selectStr += "<option value=''>-请选择-</option>"
 								}
-								
+
 								for (var i = 0; i < optArr.length; i++) {
 									var selectedStr = optArr[i].selected;
 									if (util.isNull(selectedStr)) {
@@ -1200,7 +1250,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate','mapChooser'], fun
 
 
 
-								
+
 								$(selObj).html(selectStr);
 								form.render('select');
 							}
