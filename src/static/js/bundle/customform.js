@@ -395,10 +395,30 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			var cols = decorateData(colsStr);
 			
+			var allWidth = 0;
+			
+			for(var k in cols[0]){
+				
+				if(!util.isNull(cols[0][k].width) ){
+					
+					allWidth += parseInt(cols[0][k].width);
+					
+					continue;
+				}
+				
+				allWidth += 120;
+				
+				
+			}
+			
+			var gdtWidth = $(document.body).width()  < allWidth ? 18 : 0 ;
+			
+			
+			
 			//执行一个 table 实例
 			table.render({
 				elem: $(".ag-table[ag-data-index=" + index + "]"),
-				height: $(".ag-table").height()-50,
+				height: $(".ag-table").height()-35 - gdtWidth,
 				data: page.data, //数据接口
 				title: '用户表',
 				page: false, //开启分页
