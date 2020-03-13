@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+		<link rel="stylesheet" href="/static/css/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.all.min.js" ></script>
+		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.exhide-3.5.js" ></script>
+	</head>
+	<style>
+
+	
+
+	</style>
+	<body class="bg-info">
+		
+		<div class="layui-card  border-info">
+			
+			<div class="layui-card-header   layui-card-header-bb-2" style="height: 55px;line-height: 20px; padding-left: 0;padding-right: 8px;padding-top: 15px;">
+					<div class="layui-input-inline" style="padding-left: 30px;">
+					  <input class="layui-input  " id="searchInput" value="" placeholder="输入查询菜单内容...">
+					</div>
+					<div class="layui-input-inline">
+					  <button class="layui-btn layui-btn-normal" id="search_btn" onclick="showcheck()">查询</button>
+					</div>  
+						  
+						  
+			</div>
+			
+			<div class="layui-card-body" >
+		
+				<div class="layui-row" >
+					
+					<ul id="tree"class="ztree"  style="height: calc( 100vh - 190px);overflow-y: auto;" ></ul>
+		
+				</div>
+		
+			</div>
+			
+			<div class="layui-card-footer">
+			
+			  <button class=" layui-btn layui-btn-sm layui-btn-blue "  onclick="save()">
+			    <i class="layui-icon layui-icon-search "></i>
+			    <span class="btn-span-middle">保存</span>
+			  </button>
+			  <button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+			    <i class="layui-icon layui-icon-search "></i>
+			    <span class="btn-span-middle">取消</span>
+			  </button>
+			</div>
+		
+		</div>
+		
+		<input type="hidden" name='roleCode' />
+
+		<input type="hidden" name="roleName" />
+		
+	</body>
+
+	<script>
+
+	  	var zTreeObj,
+	  	setting = {
+	  		check: {
+	  				enable: true,
+	  				chkboxType : { "Y": "ps", "N": "s" }
+	  			},
+	  
+	  
+	  		view: {
+	  			dblClickExpand: true,//双击节点时，是否自动展开父节点的标识
+	  			showLine: false, //设置 zTree 是否显示节点之间的连线。
+	  			selectedMulti: false, //设置是否允许同时选中多个节点。
+	  			autoCancelSelected: false, //禁止按住ctrl多选
+	  			showTitle:true, //设置显示提示信息
+	  			txtSelectedEnable: true //设置可以选择节点名称
+	  		}, 
+	  		data: {
+	  			key:{
+	  			name:"functionName"
+	  		},
+	  		simpleData: {
+	  			enable:true,
+	  			idKey: "functionCode",
+	  			pIdKey: "parentCode",
+	  			rootPId: ""
+	  		}
+	  	},
+	  	callback: {
+	  		//点击节点开始时执行
+	  		beforeClick: function(treeId, treeNode) {
+	  		}
+	  	}
+	  
+	  	};
+	  
+	  	$(document).ready(function(){
+			
+			
+			var param = util.getUrlParam();
+			
+	  		var url = ctx+"/"+util.getAgCtx()+"/sys/settings/sysRoleFuncs/queryInit";
+			
+	  		util.ajaxJson("页面加载中，请稍后...",url,{"roleCode":param.id},function(data){
+	  			
+				
+				if(data.result != "0"){
+					
+					util.error("页面初始化失败！");
+					
+					return ;
+				}
+				
+	  			zTreeObj = $.fn.zTree.init($("#tree"), setting,data.body.funcList );
+				
+				$("[name=roleCode]").val(data.body.roleCode);
+				
+				$("[name=roleName]").val(data.body.roleName);
+	  			
+	  			var node  = zTreeObj.getNodeByTId("tree_1");
+	  			
+	  			zTreeObj.expandNode(node, true, false, false);
+	  			
+	  		});
+	  	});
+	  	//初始化节点树
+	  	
+	  	 function trimtest(str){
+	  	         //   用正则表达式将前后空格
+	  	         //   用空字符串替代。
+	  	        return   str.replace(/(^\s*)|(\s*$)/g,"");
+	  	}
+	  	//将所有隐藏的节点显示出来。
+	      function refreashNodes() {
+	          nodes = zTreeObj.getNodesByParam("isHidden", true);
+	          zTreeObj.showNodes(nodes);
+	      }
+	      function save(){
+	  		refreashNodes();
+	  		
+	  		var nodes = zTreeObj.getCheckedNodes(true);
+	  		
+	  		
+			var url = ctx+"/"+util.getAgCtx()+"/sys/settings/sysRoleFuncs/updateFunc";
+			
+			
+			util.ajaxJson("保存中，请稍后...",url,{"roleCode":$("[name=roleCode]").val(),
+													"roleName":$("[name=roleName]").val(),
+													"funcList":nodes},function(data){
+				
+				
+				if(data.result != "0"){
+					
+					util.error("菜单配置保存失败!");
+					
+					return ;
+				}
+				
+				util.success("保存成功!");
+				
+			});
+			
+	  	}
+	    
+	    function showcheck(){
+	    			
+	    	util.load('检索中请稍后!');
+	    	
+	    	showSelected();
+	    	
+	    	
+	    	util.disLoad();
+	    }
+	    function showSelected(){
+	    	
+	        var searchStr = $('#searchInput').val();//通过id获取页面输入的值
+	        if (searchStr=='') {
+	            refreashNodes();
+	            return ;
+	        }
+	    	
+	        var allNodes = zTreeObj.transformToArray(zTreeObj.getNodes());
+	       
+	        	zTreeObj.hideNodes(allNodes); //隐藏所有节点
+	       // var nodes = zTreeObj.getNodesByFilter(filter); // 查找节点集合 两种方式
+	       
+	      	var nodes = zTreeObj.getNodesByParamFuzzy("functionName", searchStr);
+	       
+	        if(nodes.length == 0){
+	            return ;
+	        }
+	    	
+	        var resultNodes  = new Array();
+	        $.each( nodes, function(i, n){
+	            var tempNode = n;
+	            for(var i=0;i< n.level;i++){
+	                tempNode = tempNode.getParentNode();//获取当前被选中的节点的父节点
+	                if(tempNode!=null&&tempNode!=""){
+	                 resultNodes.push(tempNode);
+	                }
+	            }
+	        });
+	        resultNodes = resultNodes.concat(nodes);           //concat() 方法用于连接两个或多个数组。该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。
+	        zTreeObj.showNodes(resultNodes);
+	        zTreeObj.expandAll(true);
+	     
+	    }
+	    
+	    function showValNode(obj){
+	    	var val = $(obj).val();
+	    	val =trimtest(val);
+	    	if(val==""){
+	    		refreashNodes();
+	    	}
+	    }
+
+
+	</script>
+</html>
