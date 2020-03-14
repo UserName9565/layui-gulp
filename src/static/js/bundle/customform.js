@@ -7,12 +7,15 @@
  * @date 2020-02-16
  *
  */
+
+
 layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], function() {
 
 	var form = layui.form,
 		layer = layui.layer,
 		$ = layui.$;
 	table = layui.table;
+	
 	checkForm = layui.checkForm;
 	laydate = layui.laydate;
 	mapChooser = layui.mapChooser;
@@ -783,7 +786,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 		var url = ctx + "/" + agCtx + $(this).attr("ag-data-url");
 		var param = getFormJson(form);
-
+		
+		var that = this;
 		$.ajax({
 			type: "POST",
 			url: url,
@@ -809,11 +813,18 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 						//util.closeWin();
 					}
 
-					var func = $(this).attr("ag-back-func");
+					var func = $(that).attr("ag-back-func");
 
 					if (!util.isNull(func)) {
-
-						eval(func);
+						
+						if(func.indexOf(".") != -1){
+							
+							eval(func);
+							
+							return ;
+						}
+						
+						window[func](data);
 					}
 
 

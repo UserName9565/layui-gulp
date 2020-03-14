@@ -230,7 +230,6 @@ util = {
 		var winH = $(window).height() == 0 ? $(document).height() : $(window).height();
 
 		var off = [(winH / 2 - 72) + 'px', (winW / 2 - 181) + 'px'];
-
 		if (type == 2) {
 			layer.alert(retMsg, {
 				offset: off,
