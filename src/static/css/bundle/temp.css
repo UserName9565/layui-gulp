@@ -787,8 +787,7 @@ body {
   	position: relative;
   	top: -8px;
   }
-  
-  .iform-type-zip {
+  .ag-form-type-zip {
   	background-image: url(../../images/file/zip.png);
   	background-size: contain;
   }

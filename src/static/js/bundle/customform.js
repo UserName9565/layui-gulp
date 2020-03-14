@@ -1284,7 +1284,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			var data = {};
 
 			if (obj.__proto__.constructor && obj.__proto__.constructor.name == "File") {
-
+				
 				data.fileType = file_types[obj.type] ? file_types[obj.type] : "default";
 
 				data.fileName = obj.name;
@@ -1480,6 +1480,25 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 
 						}
+						
+						
+						/**
+						 * 附件
+						 */
+						if (formFile.form.find(".ag-file").length > 0) {
+						
+							var key = formFile.form.find(".ag-file").eq(0).attr("ag-file-key");
+						
+							if (!util.isNull(data[key]) && data[key].length > 0) {
+						
+								$.each(data[key], function(ind, file) {
+						
+									formFile.addIfile(file, formFile.form.find(".ag-file").eq(0));
+								});
+							}
+						
+						
+						}
 
 
 						for (var name in data) {
@@ -1487,24 +1506,6 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 							var val = data[name];
 							if (!util.isNull(val)) {
 								$(agForm).find("input[name=" + name + "]").val(val);
-							}
-
-							/**
-							 * 附件
-							 */
-							if (formFile.form.find(".ag-file").length > 0) {
-
-								var key = formFile.form.find(".ag-file").eq(0).attr("ag-file-key");
-
-								if (!util.isNull(data[key]) && data[key].length > 0) {
-
-									$.each(data[key], function(ind, file) {
-
-										formFile.addIfile(file, formFile.form.find(".ag-file").eq(0));
-									});
-								}
-
-
 							}
 
 							if (name.endsWith("Opt")) {
