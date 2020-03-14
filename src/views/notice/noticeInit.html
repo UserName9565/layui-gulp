@@ -58,8 +58,8 @@
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
 						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="公告发布" ag-data-url="/views/notice/noticeAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="渠道修改" ag-data-pk="chnlCode" ag-data-url="/views/chnl/chnlUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="chnlCode" ag-data-url="/sys/settings/chnl/del"><i class="layui-icon layui-icon-delete"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="渠道修改" ag-data-pk="id" ag-data-url="/views/notice/noticeUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/sys/settings/notice/del"><i class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
 				</div>
@@ -74,33 +74,31 @@
 			          "type": "radio",
 			          "fixed": "left"
 			        },{
-			          "field": "chnlCode",
-			          "title": "渠道编码",
-			          "sort": true,
-			          "fixed": "left"
+			          "field": "id",
+			          "title": "主键",
+                "hide":true
 			        }, {
-			          "field": "chnlName",
-			          "title": "渠道名称"
+			          "field": "tenantId",
+			          "title": "租户ID"
 			        }, {
-			          "field": "sts",
-			          "title": "渠道状态"
+			          "field": "tenantName",
+			          "title": "租户名称"
 			        }, {
-			          "field": "effectTime",
-			          "title": "生效时间"
+			          "field": "noticeTitle",
+			          "title": "公告标题"
 			        }, {
-			          "field": "expireTime",
-			          "title": "生效时间"
+			          "field": "pubNo",
+			          "title": "发布工号"
 			        }, {
-			          "field": "opNo",
-			          "title": "操作工号"
+			          "field": "pubName",
+			          "title": "发布姓名"
 			        }, {
-			          "field": "opName",
-			          "title": "操作姓名"
+			          "field": "pubTime",
+			          "title": "发布时间"
 			        }, {
-			          "field": "opTime",
-			          "title": "操作时间"
+			          "field": "stsDesc",
+			          "title": "公告状态"
 			        }
-
 			      ]
 			    ]
 

@@ -338,10 +338,9 @@
 						<div class="display-inline">
 							<span class="main-gg">系统公告</span>
 						</div>
-						<div class=" display-inline main-gg-msg nowrap">
-							业务办理人工稽核未办理完成
+						<div class=" display-inline main-gg-msg nowrap" id="noticeDiv">
 						</div>
-						<div class="display-inline main-gg-more">
+						<div class="display-inline main-gg-more" id="noticeMoreDiv">
 							查看更多
 							<div class=" main-gg-more-back">
 
@@ -560,7 +559,43 @@
           }
 
 			}
+
 		});
+
+    //系统公告
+    var url = ctx + "/sysmgr/sys/settings/notices/queryLastOne" ;
+    var noticeParam = {};
+    $.ajax({
+      type: "POST",
+      url: url,
+      timeout:3000,
+      data: JSON.stringify(noticeParam),
+      contentType: "application/json",
+      xhrFields: {
+        withCredentials: false //跨域session保持
+      },
+      async: true,
+      dataType: "json",
+      success: function(data) {
+          var noticeTitle = data.noticeTitle;
+          if(!util.isNull(noticeTitle)){
+              $("#noticeDiv").html(noticeTitle);
+          }else{
+              $("#noticeDiv").html("暂无新公告");
+          }
+        }
+      });
+
+      $("#noticeDiv").css("cursor","pointer");
+      $("#noticeDiv").click(function(){
+         util.addTab("/views/notice/noticeInit.html","公告查询");
+      });
+
+      $("#noticeMoreDiv").click(function(){
+
+          util.addTab("/views/notice/noticeInit.html","公告查询");
+      });
+
 
 
   });
