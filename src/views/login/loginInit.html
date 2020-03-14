@@ -17,9 +17,9 @@
 				<div class="param-left">
 
 					<div class="layui-inline ">
-						<label class="layui-form-label">角色名称：</label>
+						<label class="layui-form-label">工号：</label>
 						<div class="layui-input-block">
-							<input type="text" name="roleName" autocomplete="off" placeholder="角色名称" class="layui-input">
+							<input type="text" name="loginNoStr" autocomplete="off" placeholder="工号" class="layui-input">
 						</div>
 					</div>
 
@@ -32,7 +32,7 @@
 			<div class="btns-right">
 
 				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0"  ag-data-url="/sys/settings/sysRoleInfo/queryPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0"  ag-data-url="/sys/login/queryCLoginMsgPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
@@ -51,16 +51,13 @@
 
 
 
-		<div class=" layui-card  layui-card-list" style="height: calc( 100vh - 105px);">
+		<div class=" layui-card  layui-card-list" >
 
 			<div class="layui-border-box ">
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="角色新增" ag-data-url="/views/sysRoleInfo/sysRoleInfoAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="角色修改" ag-data-pk="id" ag-data-url="/views/sysRoleInfo/sysRoleInfoUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
 						
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id"  ag-data-url="/sys/settings/sysRoleInfo/del"><i class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
 				</div>
@@ -75,26 +72,12 @@
 			          "type": "radio",
 			          "fixed": "left"
 			        },{
-			          "field": "id",
-			          "title": "主键",
-			          "hide": true,
-			          "fixed": "left"
-			        },{
-			          "field": "roleCode",
-			          "title": "角色编码",
+			          "field": "loginNoStr",
+			          "title": "工号",
 			          "sort": true
 			        }, {
-			          "field": "roleName",
-			          "title": "角色名称"
-			        }, {
-			          "field": "opNo",
-			          "title": "配置工号"
-			        }, {
-			          "field": "opName",
-			          "title": "配置姓名"
-			        }, {
-			          "field": "opTime",
-			          "title": "配置时间"
+			          "field": "loginNameStr",
+			          "title": "工号名称"
 			        }, {
 						"width": 220,
 						"title": "操作",
@@ -103,11 +86,9 @@
 
 							{
 								"className": "",
-								"openTitle":"菜单配置",
-								"btnVal":"菜单配置",
-								"width":"400",
-								"height":"600",
-								"url": "/views/sysRoleFunc/sysRoleFuncInit.html?roleCode=@roleCode@&roleName=@roleName@",
+								"openTitle":"角色赋权",
+								"btnVal":"角色赋权",
+								"url": "/views/sysLoginRole/sysLoginRoleInit.html?loginNo=@loginNoStr@&loginName=@loginNameStr@",
 								"openType": "1"
 								}
 							]

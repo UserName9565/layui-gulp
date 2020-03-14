@@ -49,7 +49,10 @@
 		addItemCloseBtn	:false,
 		dragFlag  :true,
 		addItemQuickBtn:false,
-		quickKey:'',
+		quickKey:'quickKey',
+		quickDesc:'quickDesc',
+		quickTitle:'快捷',
+		quickEnum:[{'key':'是','value':'是'},{'key':'否','value':'否'}],
 		data:null,
 		dataJsonKey:'json'
     };
@@ -384,16 +387,18 @@
 				
 				var d = $(item).data("json");
 				
-				var quickFlag = "否";
+				var quickFlag = that.options.quickEnum[1].key;
 				
 				var checkbox = $(item).find("input[type=checkbox][name="+that.options.quickKey+"]:checked");
 				
 				if(checkbox.length > 0 ){
 					
-					quickFlag = "是"
+					quickFlag = that.options.quickEnum[0].key;
 				}
 				
-				d[that.options.quickKey] = quickFlag;
+				d[that.options.quickKey] = checkbox.length > 0 ?  that.options.quickEnum[0].key : that.options.quickEnum[1].key;
+				
+				d[that.options.quickDesc] = checkbox.length > 0 ?  that.options.quickEnum[0].value : that.options.quickEnum[1].value;
 				
 				arr.push(d);
 				
@@ -405,7 +410,7 @@
 		
 		getQuickHtml:function(flag){
 			
-			return  '<div style="float:right;margin-top:-35px;"><input type="checkbox" name="'+this.options.quickKey+'" '+(flag ? 'checked="checked"': '')+' />快捷</div> ';
+			return  '<div style="float:right;margin-top:-35px;"><input type="checkbox" name="'+this.options.quickKey+'" '+(flag ? 'checked="checked"': '')+' />'+this.options.quickTitle+'</div> ';
 		},
 		getCloseBtnHtml:function(flag){
 			
@@ -505,7 +510,7 @@
 					
 					if(that.options.addItemQuickBtn){
 						
-						li.append(that.getQuickHtml(item[that.options.quickKey] == "是" ? true :false));
+						li.append(that.getQuickHtml(item[that.options.quickKey] == that.options.quickEnum[0].key ? true :false));
 						
 					}
 					

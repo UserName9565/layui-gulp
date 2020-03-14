@@ -105,8 +105,6 @@
 
 					util.showDialog("页面加载失败!",0);
 
-					console.log(data);
-
 					return ;
 				}
 
@@ -151,13 +149,12 @@
 				arr[i].outFlagName="外部接入";
 			}
 
-			var array = arr
+			var array = arr;
+			
 			var url = ctx+"/cfgmgr/cfg/settings/chnlchains/update";
 
 
 			util.ajaxJson("保存中，请稍后···",url,{"chnlType":$("input[name=chnlType]").val(),"cfgChnlChainList":array},function(data){
-
-
 
 				if(data.result != "0"){
 
@@ -166,8 +163,6 @@
 				}else{
 
 					util.success("保存成功!");
-					
-					alert(array.length);
 					
 					parent.refreshSts(array.length > 0 ? true :false );
 

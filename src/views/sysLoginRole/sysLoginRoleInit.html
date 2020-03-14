@@ -5,230 +5,194 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		@@include('url-config.html')
-		<link rel="stylesheet" href="/static/css/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
-		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.all.min.js" ></script>
-		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.exhide-3.5.js" ></script>
+		<script  src="/static/js/plugins/nestable/jquery.nestable.js"></script>
+		<script src="/static/js/plugins/echart/js/echarts.min.js"></script>
 	</head>
 	<style>
 
-	
+
+	.border-info{
+
+		border: 1px solid #e1e4e3;
+	}
 
 	</style>
 	<body class="bg-info">
-		
+
 		<div class="layui-card  border-info">
-			
-			<div class="layui-card-header   layui-card-header-bb-2" style="height: 55px;line-height: 20px; padding-left: 0;padding-right: 8px;padding-top: 15px;">
-					<div class="layui-input-inline" style="padding-left: 30px;">
-					  <input class="layui-input  " id="searchInput" value="" placeholder="输入查询角色内容...">
-					</div>
-					<div class="layui-input-inline">
-					  <button class="layui-btn layui-btn-normal" id="search_btn" onclick="showcheck()">查询</button>
-					</div>  
-						  
-						  
-			</div>
-			
-			<div class="layui-card-body" >
-				
-				<div class="layui-row">
-					
-					<div class="layui-col-sm12">
-						<div class="layui-inline ">
-						  <label class="layui-form-label">允许赋权：</label>
-						  <div class="layui-input-block">
-						    <select name="autoTo" ag-sel-name="autoToDesc">
-								<option value="N">否</option>
-								<option value="Y">是</option>
-						    </select>
-						  </div>
+
+			<div class="layui-card-header layui-card-header-bb-2" style="height: 70px;line-height: 20px; padding-left: 0;padding-right: 8px;">
+				<div style="float: left;line-height: 70px; padding-left: 20px;font-size: 15px;font-weight: bold;">
+
+					工号角色配置
+				</div>
+
+				<div style="border-left: 2px solid #e1e4e3;float: right;margin: 5px;">
+
+					<div class="card-btn" style="margin-left: 10px;" onclick="save()">
+						<div class="card-btn-img img-save"></div>
+						<div class="card-btn-desc">
+							保存
 						</div>
 					</div>
-				</div>
-				<div class="layui-row" >
-					
-					<ul id="tree"class="ztree"  style="height: calc( 100vh - 230px);overflow-y: auto;" ></ul>
-		
-				</div>
-		
-			</div>
-			
-			<div class="layui-card-footer">
-			
-			  <button class=" layui-btn layui-btn-sm layui-btn-blue "  onclick="save()">
-			    <i class="layui-icon layui-icon-search "></i>
-			    <span class="btn-span-middle">保存</span>
-			  </button>
-			  <button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
-			    <i class="layui-icon layui-icon-search "></i>
-			    <span class="btn-span-middle">取消</span>
-			  </button>
-			</div>
-		
-		</div>
-		
-		<input type="hidden" name='loginNo' />
 
-		<input type="hidden" name="loginName" />
-		
+				</div>
+
+
+			</div>
+			<div class="layui-card-body">
+
+				<div class="layui-row">
+
+					<div class="layui-col-sm4 " style="padding-right: 15px;">
+
+						<div class="layui-card border-info" >
+
+							<div class="layui-card-header " style="font-weight: bold;">
+
+								可选角色
+								<!-- <div style="float: right;">
+									<i class="layui-icon layui-icon-addition" style="font-size: 30px; color: #1E9FFF;"></i>
+								</div> -->
+							</div>
+							<div class="layui-card-body" style="padding: 10px;">
+
+								<div class="dd" id="chnlChain1" style="overflow-y: auto;">
+
+									</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="layui-col-sm4 " style="">
+						<div class="layui-card border-info" >
+
+							<div class="layui-card-header" style="font-weight: bold;">
+
+								已选角色
+							</div>
+							<div class="layui-card-body" style="padding: 10px;">
+								<div class="dd" id="chnlChain2" style="overflow-y: auto;"></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<input type="hidden" name ="loginNo" />
+		<input type="hidden" name ="loginName" />
 	</body>
 
 	<script>
 
-	  	var zTreeObj,
-	  	setting = {
-	  		check: {
-	  				enable: true,
-	  				chkboxType : { "Y": "ps", "N": "s" }
-	  			},
-	  
-	  
-	  		view: {
-	  			dblClickExpand: true,//双击节点时，是否自动展开父节点的标识
-	  			showLine: false, //设置 zTree 是否显示节点之间的连线。
-	  			selectedMulti: false, //设置是否允许同时选中多个节点。
-	  			autoCancelSelected: false, //禁止按住ctrl多选
-	  			showTitle:true, //设置显示提示信息
-	  			txtSelectedEnable: true //设置可以选择节点名称
-	  		}, 
-	  		data: {
-	  			key:{
-	  			name:"roleName"
-	  		},
-	  		simpleData: {
-	  			enable:true,
-	  			idKey: "roleCode",
-	  			pIdKey: "parentCode",
-	  			rootPId: ""
-	  		}
-	  	},
-	  	callback: {
-	  		//点击节点开始时执行
-	  		beforeClick: function(treeId, treeNode) {
-	  		}
-	  	}
-	  
-	  	};
-	  
-	  	$(document).ready(function(){
-			
-			
+
+		$(function(){
+
+			var url = ctx+"/sysmgr/sys/settings/sysLoginFuncs/queryInit";
+
 			var param = util.getUrlParam();
-			
-	  		var url = ctx+"/"+util.getAgCtx()+"/sys/settings/sysLoginFuncs/queryInit";
-			
-	  		util.ajaxJson("页面加载中，请稍后...",url,{"loginNo":param.id},function(data){
-	  			
-				
+
+			$("input[name=loginNo]").val(param.loginNo);
+
+			$("input[name=loginName]").val(param.loginName);
+
+			util.ajaxJson("页面加载中，请稍后...",url,{"loginNo":param.loginNo},function(data){
+
 				if(data.result != "0"){
-					
-					util.error("页面初始化失败！");
-					
+
+					util.showDialog("页面加载失败!",0);
+
+					console.log(data);
+
 					return ;
 				}
 				
-	  			zTreeObj = $.fn.zTree.init($("#tree"), setting,data.body.funcList );
 				
-				$("[name=loginNo]").val(data.body.loginNo);
+				var authEnum = [];
 				
-				$("[name=loginName]").val(data.body.loginName);
-	  			
-	  			var node  = zTreeObj.getNodeByTId("tree_1");
-	  			
-	  			zTreeObj.expandNode(node, true, false, false);
-	  			
-	  		});
-	  	});
-	  	//初始化节点树
-	  	
-	  	 function trimtest(str){
-	  	         //   用正则表达式将前后空格
-	  	         //   用空字符串替代。
-	  	        return   str.replace(/(^\s*)|(\s*$)/g,"");
-	  	}
-	  	//将所有隐藏的节点显示出来。
-	      function refreashNodes() {
-	          nodes = zTreeObj.getNodesByParam("isHidden", true);
-	          zTreeObj.showNodes(nodes);
-	      }
-	      function save(){
-	  		refreashNodes();
-	  		
-	  		var nodes = zTreeObj.getCheckedNodes(true);
-	  		
-	  		
-			var url = ctx+"/"+util.getAgCtx()+"/sys/settings/sysLoginFuncs/updateRole";
-			
-			
-			util.ajaxJson("保存中，请稍后...",url,{"loginNo":$("[name=loginNo]").val(),
-													"loginName":$("[name=loginName]").val(),
-													"roleList":nodes},function(data){
-				
-				
-				if(data.result != "0"){
+				$.each(data.body.authList,function(i,item){
 					
-					util.error("角色配置保存失败!");
-					
-					return ;
-				}
-				
-				util.success("保存成功!");
-				
+					authEnum.push({"key":item.optCode,"value":item.optName});
+				});
+
+
+				$('#chnlChain1').nestable({
+					group: 1,
+					maxDepth:1,
+					rmSourceItem:false,
+					itemKey:"roleCode",
+					itemName:'roleName',
+					data:data.body.roleList
+				});
+
+				$('#chnlChain2').nestable({
+					group: 1,
+					maxDepth:1,
+					dragFlag:true,//是否允许拖拽
+					addItemCloseBtn:true,//是否添加删除按钮
+					addItemQuickBtn:true,
+					quickKey:'authTar',
+					quickDesc:'authTarDesc',
+					quickTitle:'赋权',
+					quickEnum:authEnum,
+					itemKey:"roleCode",
+					itemName:'roleName',
+					data:data.body.checkRoleList
+				});
 			});
+		});
+
+
+
+
+		function save(){
 			
-	  	}
-	    
-	    function showcheck(){
-	    			
-	    	util.load('检索中请稍后!');
-	    	
-	    	showSelected();
-	    	
-	    	
-	    	util.disLoad();
-	    }
-	    function showSelected(){
-	    	
-	        var searchStr = $('#searchInput').val();//通过id获取页面输入的值
-	        if (searchStr=='') {
-	            refreashNodes();
-	            return ;
-	        }
-	    	
-	        var allNodes = zTreeObj.transformToArray(zTreeObj.getNodes());
-	       
-	        	zTreeObj.hideNodes(allNodes); //隐藏所有节点
-	       // var nodes = zTreeObj.getNodesByFilter(filter); // 查找节点集合 两种方式
-	       
-	      	var nodes = zTreeObj.getNodesByParamFuzzy("roleName", searchStr);
-	       
-	        if(nodes.length == 0){
-	            return ;
-	        }
-	    	
-	        var resultNodes  = new Array();
-	        $.each( nodes, function(i, n){
-	            var tempNode = n;
-	            for(var i=0;i< n.level;i++){
-	                tempNode = tempNode.getParentNode();//获取当前被选中的节点的父节点
-	                if(tempNode!=null&&tempNode!=""){
-	                 resultNodes.push(tempNode);
-	                }
-	            }
-	        });
-	        resultNodes = resultNodes.concat(nodes);           //concat() 方法用于连接两个或多个数组。该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。
-	        zTreeObj.showNodes(resultNodes);
-	        zTreeObj.expandAll(true);
-	     
-	    }
-	    
-	    function showValNode(obj){
-	    	var val = $(obj).val();
-	    	val =trimtest(val);
-	    	if(val==""){
-	    		refreashNodes();
-	    	}
-	    }
+			var sourceArr  = $('#chnlChain1').nestable('getItemData');
+
+			var arr  = $('#chnlChain2').nestable('getItemData');
+
+			for(var i = 0 ; i < arr.length ; i++){
+
+				arr[i].loginNo = $("input[name=loginNo]").val();
+				arr[i].loginName = $("input[name=loginName]").val();
+			}
+			
+			if(sourceArr.length == 0){
+				
+				arr = [];
+			}
+
+			var url = ctx+"/sysmgr/sys/settings/sysLoginFuncs/updateRole";
+
+
+			util.ajaxJson("保存中，请稍后···",url,{"loginNo":$("input[name=loginNo]").val(),"checkRoleList":arr},function(data){
+
+
+
+				if(data.result != "0"){
+
+					util.error("保存失败!");
+
+				}else{
+
+					util.success("保存成功!");
+					
+
+				}
+
+
+
+			});
+		}
+
+
+
+		$(".dd").height($(window).height()-200);
+
 
 
 	</script>

@@ -103,7 +103,11 @@
 			
 	  		var url = ctx+"/"+util.getAgCtx()+"/sys/settings/sysRoleFuncs/queryInit";
 			
-	  		util.ajaxJson("页面加载中，请稍后...",url,{"roleCode":param.id},function(data){
+			$("[name=roleCode]").val(param.roleCode);
+			
+			$("[name=roleName]").val(param.roleName);
+			
+	  		util.ajaxJson("页面加载中，请稍后...",url,{"roleCode":param.roleCode},function(data){
 	  			
 				
 				if(data.result != "0"){
@@ -114,10 +118,6 @@
 				}
 				
 	  			zTreeObj = $.fn.zTree.init($("#tree"), setting,data.body.funcList );
-				
-				$("[name=roleCode]").val(data.body.roleCode);
-				
-				$("[name=roleName]").val(data.body.roleName);
 	  			
 	  			var node  = zTreeObj.getNodeByTId("tree_1");
 	  			

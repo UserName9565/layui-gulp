@@ -242,7 +242,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						var lsnrStr = getHrefLsnr(item.openType);
 
-						var aFunc = lsnrStr + "('" + realUrl + "','" + item.openTitle + "')";
+						var aFunc = lsnrStr + "('" + realUrl + "','" + item.openTitle + "',"+item.width+","+item.height+")";
 
 						var a = "<a href='javascript:void(0)'  style='padding:0px 5px' class=' layui-table-link " + item.className +
 							"' onclick=" + aFunc + ">" + (item.btnVal ? item.btnVal : "操作") + "</a>";
@@ -1663,9 +1663,13 @@ function _doRealDownLoad(url) {
 }
 
 
-function _listHrefWindow(url, title) {
-
-	util.openWin(util.decode(url), title, 1000, 1000);
+function _listHrefWindow(url, title,width,height) {
+	
+	width =  width || 1000;
+	
+	height = height ||1000;
+	
+	util.openWin(util.decode(url), title, width, height);
 }
 
 
