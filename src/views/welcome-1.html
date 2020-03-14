@@ -326,6 +326,7 @@
 		}
 
     </style>
+    <script src="/static/js/plugins/echart/js/echarts.min.js"></script>
 </head>
 <body>
 <div class="layuimini-container">
@@ -484,8 +485,9 @@
 
 
 							<div class="main-data-chart">
-
-
+                <div class="echartsDiv" id="echarts-records1" style="width: 100%;min-height:500px"></div>
+                <div class="echartsDiv" id="echarts-records2" style="width: 100%;min-height:500px"></div>
+                <div class="echartsDiv" id="echarts-records3" style="width: 100%;min-height:500px"></div>
 							</div>
 						</div>
 					</div>
@@ -595,6 +597,105 @@
 
           util.addTab("/views/notice/noticeInit.html","公告查询");
       });
+      
+      
+      /**
+       * 报表功能
+       */
+      var echartsRecords1 = echarts.init(document.getElementById('echarts-records1'), 'walden');
+          var optionRecords = {
+              tooltip: {
+                  trigger: 'axis'
+              },
+              legend: {
+                  data:['前天','昨天','今天']
+              },
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              toolbox: {
+                  feature: {
+                      saveAsImage: {}
+                  }
+              },
+              xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: []
+              },
+              yAxis: {
+                  type: 'value'
+              },
+              series: []
+          };
+      
+      var echartsRecordArr=[];
+      $(".echartsDiv").each(function(){
+          var echartsRecord=echarts.init(this, 'walden');
+          echartsRecord.setOption(optionRecords);
+          echartsRecordArr.push(echartsRecord);
+      });
+      
+      //报表功能获取数据
+      var url = ctx + "/sysmgr/sys/monitor/monitorcnts/echartsQuery" ;
+      var echartsData={};
+      $.ajax({
+        type: "POST",
+        url: url,
+        timeout:3000,
+        data: JSON.stringify(echartsData),
+        contentType: "application/json",
+        xhrFields: {
+          withCredentials: false //跨域session保持
+        },
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            //循环租户
+            for(var i=0;i<data.length;i++){
+              var tenantBean=data[i];
+              var interList=tenantBean.interList;
+              //循环接口
+              for(var j=0;j<interList.length;j++){
+                var interBean=interList[j];
+      
+                var interCode=interBean.interCode;
+                var interName=interBean.interName;
+                var timeArr=interBean.timeArr;
+                var dayList=interBean.dayList;
+                var seriesDataArr=[];
+                for(var k=0;k<dayList.length;k++){
+                   var dayBean=dayList[k];
+                   var oneData={};
+                   oneData.name=dayBean.accessDayName;
+                   oneData.type='line';
+                   oneData.data=dayBean.valueArr;
+                   seriesDataArr.push(oneData);
+                }
+                var oneEchart=echartsRecordArr[j];
+                oneEchart.setOption({
+                  xAxis: {
+                      type: 'category',
+                      boundaryGap: false,
+                      data: timeArr
+                  },
+                  series:seriesDataArr
+                });
+      
+              }
+            }
+          }
+        });
+      
+        // echarts 窗口缩放自适应
+        window.onresize = function(){
+          for(var i=0;i<echartsRecordArr.length;i++){
+            echartsRecordArr[i].resize();
+          }
+        };
 
 
 
