@@ -34,7 +34,12 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		"image/png": "png",
 		"image/jpg": "jpg",
 		"image/bmp": "bmp",
-		"image/jpeg": "jpg"
+		"image/jpeg": "jpg",
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.document":"doc",
+		"application/msword":"doc",
+		"application/vnd.ms-excel":"excel",
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":"excel",
+		"application/vnd.openxmlformats-officedocument.presentationml.presentation":"ppt"
 
 	};
 

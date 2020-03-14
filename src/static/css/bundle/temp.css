@@ -795,6 +795,20 @@ body {
   	background-size: contain;
   }
   
+  .ag-form-type-doc {
+  	background-image: url(../../images/file/doc.png);
+  	background-size: contain;
+  }
+  .ag-form-type-excel {
+  	background-image: url(../../images/file/excel.png);
+  	background-size: contain;
+  }
+  
+  .ag-form-type-ppt {
+  	background-image: url(../../images/file/ppt.png);
+  	background-size: contain;
+  }
+  
   .ag-form-type-pdf {
   	background-image: url(../../images/file/pdf.png);
   	background-size: contain;
