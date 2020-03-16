@@ -172,11 +172,11 @@
                     if(o.parentCode==id){//找到是父亲的儿子数据
                         obj1.title = o.functionName;
 						
-						obj1.href = rootD+o.jspUrl;
+						obj1.href = o.jspUrl;
 						
 						if(!util.isNull(o.moduleName)){
 							
-							 obj1.href = oldVersion+rootD+o.moduleName+o.jspUrl+"?agileAuthToken="+ $.cookie('JSESSIONID_token');
+							 obj1.href = ctx+"/"+o.moduleName+o.jspUrl+"?agileAuthToken="+ $.cookie('JSESSIONID_token');
 							 
 						}
 						 
