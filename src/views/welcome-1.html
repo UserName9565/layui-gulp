@@ -484,7 +484,7 @@
 							</div>
 
 
-							<div class="main-data-chart">
+							<div class="main-data-chart" style="width: 100%;min-height:1500px" >
                 <div class="echartsDiv" id="echarts-records1" style="width: 100%;min-height:500px"></div>
                 <div class="echartsDiv" id="echarts-records2" style="width: 100%;min-height:500px"></div>
                 <div class="echartsDiv" id="echarts-records3" style="width: 100%;min-height:500px"></div>
@@ -597,8 +597,43 @@
 
           util.addTab("/views/notice/noticeInit.html","公告查询");
       });
-      
-      
+
+      /**
+       * 业务办理数量
+       */
+      var url = ctx + "/sysmgr/sys/monitor/monitorcnts/queryTotalCnt" ;
+      var acceptTotalCnt = {};
+      $.ajax({
+        type: "POST",
+        url: url,
+        timeout:3000,
+        data: JSON.stringify(acceptTotalCnt),
+        contentType: "application/json",
+        xhrFields: {
+          withCredentials: false //跨域session保持
+        },
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            var databody = data.body;
+            var beforeTotalCnt=databody.beforeCnt;
+            var riseRate=databody.riseRate;
+            $(".main-data-two-title-num").html(beforeTotalCnt);
+            if(databody.riseflag=="1"){
+              $(".main-data-two-title-num-up").html(riseRate);
+              $(".main-data-two-title-num-down").css('display','none');
+              $(".main-data-two-title-num-down-pic").css('display','none');
+
+            }else if(databody.riseflag=="0"){
+              $(".main-data-two-title-num-down").html(riseRate);
+              $(".main-data-two-title-num-up").css('display','none');
+              $(".main-data-two-title-num-up-pic").css('display','none');
+            }
+
+          }
+        });
+
+
       /**
        * 报表功能
        */
@@ -607,7 +642,13 @@
               tooltip: {
                   trigger: 'axis'
               },
+              color:['blue','yellow','#ff3399'],
               legend: {
+                  orient:'horizontal',
+                  icon:"roundRect",
+                  itemWidth:50,
+                  itemHeight:10,
+                  itemGap:30,
                   data:['前天','昨天','今天']
               },
               grid: {
@@ -627,18 +668,19 @@
                   data: []
               },
               yAxis: {
+                  name:"数量",
                   type: 'value'
               },
               series: []
           };
-      
+
       var echartsRecordArr=[];
       $(".echartsDiv").each(function(){
           var echartsRecord=echarts.init(this, 'walden');
           echartsRecord.setOption(optionRecords);
           echartsRecordArr.push(echartsRecord);
       });
-      
+
       //报表功能获取数据
       var url = ctx + "/sysmgr/sys/monitor/monitorcnts/echartsQuery" ;
       var echartsData={};
@@ -661,8 +703,18 @@
               //循环接口
               for(var j=0;j<interList.length;j++){
                 var interBean=interList[j];
-      
+                var oneEchart;
+
                 var interCode=interBean.interCode;
+                if(interCode=='1001'){
+                  oneEchart=echartsRecordArr[0];
+                }else if(interCode=='1002'){
+                  oneEchart=echartsRecordArr[1];
+                }else if(interCode=='1003'){
+                  oneEchart=echartsRecordArr[2];
+                }else{
+                  continue;
+                }
                 var interName=interBean.interName;
                 var timeArr=interBean.timeArr;
                 var dayList=interBean.dayList;
@@ -671,25 +723,44 @@
                    var dayBean=dayList[k];
                    var oneData={};
                    oneData.name=dayBean.accessDayName;
+                   oneData.symbol='none';
+                   oneData.smooth=true;
                    oneData.type='line';
+                   oneData.lineStyle={width:4};
                    oneData.data=dayBean.valueArr;
                    seriesDataArr.push(oneData);
                 }
-                var oneEchart=echartsRecordArr[j];
                 oneEchart.setOption({
+                  title:{
+                       x: 'right',
+                       text:interName,
+                       textStyle:{
+                          //文字颜色
+                          color:'red',
+                          //字体风格,'normal','italic','oblique'
+                          fontStyle:'normal',
+                          //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                          fontWeight:'bolder',
+                          //字体系列
+                          fontFamily:'sans-serif',
+                          fontSize:38
+                      }
+                  },
                   xAxis: {
+                     axisLine:{show:true,},
+                     axisLabel: {rotate: 60,},
                       type: 'category',
                       boundaryGap: false,
                       data: timeArr
                   },
                   series:seriesDataArr
                 });
-      
+
               }
             }
           }
         });
-      
+
         // echarts 窗口缩放自适应
         window.onresize = function(){
           for(var i=0;i<echartsRecordArr.length;i++){
