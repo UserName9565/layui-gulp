@@ -637,6 +637,25 @@ util = {
 				parseInt($(obj).css("border-top-width").replace("px", "")) +
 				parseInt($(obj).css("border-bottom-width").replace("px", ""))
 	
+		},
+		
+		addToken:function(){
+			
+			
+			var auth = $("input[type=hidden][name=agileAuthToken]",document.body);
+			
+			if(auth.length == 0){
+				
+				$(document.body).append("<input type='hidden' name='agileAuthToken' value='' />");
+			}
+			
+			$("input[type=hidden][name=agileAuthToken]",document.body).val($.cookie('JSESSIONID_token'));
+			
+		},
+		
+		getToken:function(){
+			
+			return "agileAuthToken="+$("input[type=hidden][name=agileAuthToken]",document.body).val();
 		}
 
 
