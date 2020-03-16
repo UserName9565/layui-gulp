@@ -793,33 +793,24 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		var param = getFormJson(form);
 		
 		var that = this;
-		$.ajax({
-			type: "POST",
-			url: url,
-			timeout: 3000,
-			data: JSON.stringify(param),
-			contentType: "application/json",
-			xhrFields: {
-				withCredentials: false //跨域session保持
-			},
-			async: true,
-			dataType: "json",
-			success: function(data) {
-
+		
+		
+		util.ajaxJson("保存中,请稍后....",url,param,function(data){
+			
 				var result = data.result;
 				var desc = data.desc;
-
+			
 				if (result == 0) {
 					util.success(desc);
-
+			
 					var queryBtn = parent.layui.$(".ag-btn-query");
 					if (queryBtn.length > 0) {
 						$(queryBtn).click();
 						//util.closeWin();
 					}
-
+			
 					var func = $(that).attr("ag-back-func");
-
+			
 					if (!util.isNull(func)) {
 						
 						if(func.indexOf(".") != -1){
@@ -831,13 +822,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 						
 						window[func](data);
 					}
-
-
+			
+			
 				} else {
 					util.error(desc);
 				}
-
-			}
+			
+			
+			
+			
 		});
 
 
@@ -1441,20 +1434,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				var formParam = getFormJson($(agForm));
 				//加载数据并补充初始化表单
 				var url = ctx + "/" + util.getAgCtx($(agForm)) + dataUrl;
-				$.ajax({
-					type: "POST",
-					url: url,
-					data: JSON.stringify(formParam),
-					contentType: "application/json",
-					xhrFields: {
-						withCredentials: false //跨域session保持
-					},
-					async: true,
-					dataType: "json",
-					success: function(data) {
-
-
-
+				
+				util.ajaxJson("",url,formParam,function(data){
+					
 						/**
 						 * 复选框
 						 *
@@ -1463,7 +1445,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 						if (chkBoxDivArr.length > 0) {
 							var chkStr = "";
 							$(chkBoxDivArr).each(function(idx, chkboxDiv) {
-
+					
 								var key = $(chkboxDiv).attr("ag-chkbox-name");
 								var dataArr = data[key + "ChkBox"];
 								$(dataArr).each(function(idxData, chkData) {
@@ -1475,15 +1457,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 										'" name="' + key + '" lay-skin="primary" title="' + chkData.optName + '" ' + checked + '>'
 									chkStr = chkStr + record;
 								});
-
+					
 								$(chkboxDiv).html(chkStr);
 								form.render('checkbox');
-
-
+					
+					
 							});
-
-
-
+					
+					
+					
 						}
 						
 						
@@ -1504,61 +1486,64 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 						
 						
 						}
-
-
+					
+					
 						for (var name in data) {
-
+					
 							var val = data[name];
 							if (!util.isNull(val)) {
 								$(agForm).find("input[name=" + name + "]").val(val);
 							}
-
+					
 							if (name.endsWith("Opt")) {
-
+					
 								var optArr = data[name];
 								var selectStr = "";
-
+					
 								var selObj = $("select[name=" + name.substr(0, name.length - 3) + "]");
-
+					
 								if (selObj.attr("ag-select-default-val") == "true") {
-
+					
 									selectStr += "<option value=''>-请选择-</option>"
 								}
-
+					
 								for (var i = 0; i < optArr.length; i++) {
 									var selectedStr = optArr[i].selected;
 									if (util.isNull(selectedStr)) {
 										selectedStr = "";
 									}
-
+					
 									var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
 										"</option>";
 									selectStr = selectStr + optBean;
 								}
-
-
-
-
+					
+					
+					
+					
 								$(selObj).html(selectStr);
 								form.render('select');
 							}
-
+					
 						}
-
+					
 						//自定义插件入口
 						var pluginName = $(agForm).attr("ag-plugin-name");
-
+					
 						if (!util.isNull(pluginName)) {
 							//init参数根据需要在扩展
 							customPlugins[pluginName].init(data);
 						}
-
-					}
-
-				});
-
-
-			}
+					
+					
+					
+					
+				}) ;
+				
+				
+				
+				
+				};
 
 
 

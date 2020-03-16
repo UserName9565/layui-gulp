@@ -109,7 +109,7 @@ util = {
 		var parentObj = obj|| parent;
 		
 		
-		if(parentObj.layuimini != undefined){
+		if(parentObj.$("#top_tabs_box").length > 0  ){
 			
 			return parentObj;
 		}
@@ -532,6 +532,8 @@ util = {
 			contentType: "application/json",
 			beforeSend: function(req) {
 				
+				req.setRequestHeader("agileAuthToken",util.getToken());
+				
 				if($.isFunction(beforeSend)){
 					
 					beforeSend.call(this,req);
@@ -575,7 +577,7 @@ util = {
 			data: form,
 			beforeSend: function(req) {
 		
-				req.setRequestHeader("_agileAuthToken", $.cookie('JSESSIONID_token'));
+				req.setRequestHeader("agileAuthToken", util.getToken());
 			},
 			xhrFields: {
 		
@@ -641,6 +643,7 @@ util = {
 		
 		addToken:function(){
 			
+			var obj = util.getMainWin();
 			
 			var auth = $("input[type=hidden][name=agileAuthToken]",document.body);
 			
@@ -651,11 +654,14 @@ util = {
 			
 			$("input[type=hidden][name=agileAuthToken]",document.body).val($.cookie('JSESSIONID_token'));
 			
+			
 		},
 		
 		getToken:function(){
 			
-			return "agileAuthToken="+$("input[type=hidden][name=agileAuthToken]",document.body).val();
+			//return util.getMainWin().$("input[type=hidden][name=agileAuthToken]",document.body).val();
+			
+			return $.cookie('JSESSIONID_token');
 		}
 
 
