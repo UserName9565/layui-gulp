@@ -121,12 +121,13 @@
                 publicFun.ajax(obj,success)
                 function success(data){
                     //data.functions
-                    console.log(data.functions)
                     if(data.result=="-1"){
                         window.location = '/views/login-1.html';
                     }else{
                         var mmm = menu(data.functions)
-                         layuimini.init(mmm,true)
+                         layuimini.init(mmm,true);
+						 
+						 util.addToken();
                      }
                 }
                 
@@ -173,9 +174,9 @@
 						
 						obj1.href = rootD+o.jspUrl;
 						
-						if(!util.isNull(o.modelName)){
+						if(!util.isNull(o.moduleName)){
 							
-							 obj1.href = oldVersion+rootD+o.modelName+o.jspUrl+"?_agileAuthToken="+ $.cookie('JSESSIONID_token');
+							 obj1.href = oldVersion+rootD+o.moduleName+o.jspUrl+"?agileAuthToken="+ $.cookie('JSESSIONID_token');
 							 
 						}
 						 
