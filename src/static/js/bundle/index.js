@@ -44,6 +44,9 @@ layui.use(["form", "jquery"], function () {
             //   expires: 7, path: '/'
             // })
             
+						console.log(data);
+						
+						debugger;
             $.cookie('JSESSIONID_token', data.accessToken, { path: '/' });
             
             // var obj1 = JSON.parse($.cookie('getLogin'));

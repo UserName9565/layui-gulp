@@ -152,7 +152,7 @@
                     }
                     if(cvTag){//判断是否是第一层
                         obj1.title = o.functionName;
-                        obj1.href = rootD+o.jspUrl
+                        obj1.href = rootD+o.modelName+o.jspUrl
                         obj1.icon = o.icon
                         obj1.target = "_self"
                         obj1.child = menuSon(o.functionCode);
@@ -169,10 +169,15 @@
                     var obj1 = {};
                     var myId = o.functionCode;
                     if(o.parentCode==id){//找到是父亲的儿子数据
-                        obj1.title = o.functionName;;
-                        obj1.href = oldVersion+rootD+o.jspUrl+"?_agileAuthToken="+ $.cookie('JSESSIONID_token');
-                         
-						 obj1.href = rootD+o.jspUrl;
+                        obj1.title = o.functionName;
+						
+						obj1.href = rootD+o.jspUrl;
+						
+						if(!util.isNull(o.modelName)){
+							
+							 obj1.href = oldVersion+rootD+o.modelName+o.jspUrl+"?_agileAuthToken="+ $.cookie('JSESSIONID_token');
+							 
+						}
 						 
                         obj1.icon = o.icon
                         obj1.target = "_self"
