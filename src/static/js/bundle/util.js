@@ -645,23 +645,23 @@ util = {
 			
 			var obj = util.getMainWin();
 			
-			var auth = $("input[type=hidden][name=agileAuthToken]",document.body);
+			var auth = $("input[type=hidden][name=agileAuthToken]",obj);
 			
 			if(auth.length == 0){
 				
-				$(document.body).append("<input type='hidden' name='agileAuthToken' value='' />");
+				$(obj).find("body").append("<input type='hidden' name='agileAuthToken' value='' />");
 			}
 			
-			$("input[type=hidden][name=agileAuthToken]",document.body).val($.cookie('JSESSIONID_token'));
+			$(obj).find("body").find("input[type=hidden][name=agileAuthToken]").val($.cookie('JSESSIONID_token'));
 			
 			
 		},
 		
 		getToken:function(){
 			
-			//return util.getMainWin().$("input[type=hidden][name=agileAuthToken]",document.body).val();
+			return util.getMainWin().$("input[type=hidden][name=agileAuthToken]").val();
 			
-			return $.cookie('JSESSIONID_token');
+			//return $.cookie('JSESSIONID_token');
 		}
 
 

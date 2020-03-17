@@ -101,8 +101,10 @@
 			        <div class="layui-inline ">
 			          <label class="layui-form-label">菜单编码：</label>
 			          <div class="layui-input-block">
-			            <input type="text" name="functionCode" ag-verify="required" readonly="readonly" autocomplete="off" placeholder="菜单编码" class="layui-input ">
-			          </div>
+			            <input type="text" name="functionCode" ag-verify="required"  autocomplete="off" placeholder="菜单编码" class="layui-input ">
+						<input type="hidden" name="functionCodeOld" ag-verify="required" autocomplete="off" placeholder="菜单编码" class="layui-input ">
+						
+					  </div>
 			        </div>
 			
 			        <div class="layui-inline ">
@@ -144,7 +146,7 @@
 			        <div class="layui-inline ">
 			          <label class="layui-form-label">模块名称：</label>
 			          <div class="layui-input-block">
-			            <input type="text" name="moduleName" ag-verify="required" autocomplete="off" placeholder="模块名称" class="layui-input">
+			            <input type="text" name="moduleName"  autocomplete="off" placeholder="模块名称" class="layui-input">
 			          </div>
 			        </div>
 					
@@ -233,8 +235,6 @@
 				
 				var parNode =zTreeObj.getNodeByTId(treeNode.parentTId);
 				
-				console.log(treeNode);
-				
 				refreashForm(parNode,treeNode);
 				
 				showForm();
@@ -260,6 +260,13 @@
 					
 					$(item).val(treeNode[$(item).attr("name")]);
 				});
+				
+				if(parNode.functionCode.startsWith("new")){
+					
+					$(".ag-form [name=functonCode]").val("");
+				}
+				
+				$(".ag-form [name=functionCodeOld]").val(treeNode.functionCode);
 				
 				$(".ag-form [name=parentCode]").val(parNode.functionCode);
 				
