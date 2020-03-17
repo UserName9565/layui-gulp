@@ -62,26 +62,50 @@
 
       <div class="layui-card-body">
 
-        <form class="ag-form layui-form" ag-data-index="1"  ag-data-url="/sys/settings/interinfos/updateInit">
+        <form class="ag-form layui-form" ag-data-index="1"  ag-data-url="/sys/settings/interparams/updateInit">
 
           <input type="hidden" name="id"/>
 
           <div class="layui-inline ">
 
-            <div class="layui-inline ">
-              <label class="layui-form-label">接口名称：</label>
-              <div class="layui-input-block">
-                <select name="interCode" ag-sel-name="interName">
-                </select>
-              </div>
+          <div class="layui-inline ">
+            <label class="layui-form-label">接口名称：</label>
+            <div class="layui-input-block">
+              <select name="interCode" ag-sel-name="interName">
+              </select>
             </div>
+          </div>
 
-           <div class="layui-inline ">
-             <label class="layui-form-label">URL地址：</label>
-             <div class="layui-input-block">
-               <input type="text" name="interUrl" ag-verify="required" autocomplete="off" placeholder="URL地址" class="layui-input">
-             </div>
-           </div>
+
+          <div class="layui-inline ">
+            <label class="layui-form-label">URL地址：</label>
+            <div class="layui-input-block">
+              <input type="text" name="interUrl" ag-verify="required" autocomplete="off" placeholder="URL地址" class="layui-input">
+            </div>
+          </div>
+
+
+
+          <div class="layui-inline ">
+            <label class="layui-form-label">请求方法名：</label>
+            <div class="layui-input-block">
+              <input type="text" name="methodName" autocomplete="off" placeholder="请求方法名" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-inline ">
+            <label class="layui-form-label">参数编码：</label>
+            <div class="layui-input-block">
+              <input type="text" name="reqEncoding" ag-verify="required" autocomplete="off" placeholder="参数编码" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-inline ">
+            <label class="layui-form-label">文件存储：</label>
+            <div class="layui-input-block">
+              <input type="text" name="reqDataSaveName" ag-verify="required" autocomplete="off" placeholder="文件存储" class="layui-input">
+            </div>
+          </div>
 
         </form>
 
@@ -90,7 +114,7 @@
 
       <div class="layui-card-footer">
 
-        <button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-url="/sys/settings/interinfos/update"  ag-data-index="1">
+        <button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-url="/sys/settings/interparams/update"  ag-data-index="1">
           <i class="layui-icon layui-icon-search "></i>
           <span class="btn-span-middle">保存</span>
         </button>
