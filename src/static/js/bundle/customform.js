@@ -136,9 +136,20 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		//用bind方法绑定可能会导致重负提交
 		$(".ag-btn-del").on("click", del);
 
-
+		$(".ag-btn-reset").on("click",resetForm);
 	};
-
+	
+	function resetForm(){
+		
+			var index = $(this).attr("ag-data-index");
+			var form = $(".ag-form[ag-data-index=" + index + "]");
+			
+			$.each(form.find("[name]"),function(i ,item){
+					
+					$(item).val("");
+			});
+		
+	}
 
 	/**
 	 *
@@ -374,7 +385,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			realUrl = urlNoParam + "?" + realParam;
 		}
-
+		
+		realUrl = realUrl.replace("@ctx@",ctx);
 
 		return realUrl;
 
@@ -1568,17 +1580,6 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	}
 
 
-	/**
-	 * 列表链接，下载文件
-	 *
-	 * @param {Object} url
-	 */
-	function _listHrefDownloadFile(url) {
-
-		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('" + url + "')");
-
-
-	}
 
 	function initListHeight() {
 
@@ -1589,7 +1590,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			return;
 		}
 
-		var sibHeight = 30;
+		var sibHeight = -15;
 
 		//获取容器父级--父级所有兄弟节点
 		var $query = agTable.parent().siblings(":visible").not("script").not("iframe");
@@ -1639,12 +1640,19 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 });
 
-function _doRealDownLoad(url) {
+	/**
+	 * 列表链接，下载文件
+	 *
+	 * @param {Object} url
+	 */
+function _listHrefDownloadFile(url) {
 
-	if (url.indexOf("saveName") == -1) {
-		util.showDialog("缺少存储文件名参数【saveName】", 1);
-		return;
-	}
+		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('" + url + "')");
+
+
+}
+
+function _doRealDownLoad(url) {
 
 	var action = url;
 	var form = $("<form></form>").attr("action", action).attr("method", "post");
