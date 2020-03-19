@@ -162,11 +162,11 @@ util = {
 
 		if (url.indexOf("?") != -1) {
 
-			//url  = url + "&"+ "_agileAuthToken="+$.getAndSaveToken();
+			//url  = url + "&"+ "_agileauthtoken="+$.getAndSaveToken();
 
 		} else {
 
-			//url  = url +"?_agileAuthToken="+$.getAndSaveToken();
+			//url  = url +"?_agileauthtoken="+$.getAndSaveToken();
 		}
 
 		var layIndex = layer.open({
@@ -532,7 +532,7 @@ util = {
 			contentType: "application/json",
 			beforeSend: function(req) {
 				
-				req.setRequestHeader("agileAuthToken",util.getToken());
+				req.setRequestHeader("agileauthtoken",util.getToken());
 				
 				if($.isFunction(beforeSend)){
 					
@@ -577,7 +577,7 @@ util = {
 			data: form,
 			beforeSend: function(req) {
 		
-				req.setRequestHeader("agileAuthToken", util.getToken());
+				req.setRequestHeader("agileauthtoken", util.getToken());
 			},
 			xhrFields: {
 		
@@ -645,21 +645,21 @@ util = {
 			
 			var obj = util.getMainWin();
 			
-			var auth = $("input[type=hidden][name=agileAuthToken]",obj);
+			var auth = $("input[type=hidden][name=agileauthtoken]",obj);
 			
 			if(auth.length == 0){
 				
-				$(obj).find("body").append("<input type='hidden' name='agileAuthToken' value='' />");
+				$(obj).find("body").append("<input type='hidden' name='agileauthtoken' value='' />");
 			}
 			
-			$(obj).find("body").find("input[type=hidden][name=agileAuthToken]").val($.cookie('JSESSIONID_token'));
+			$(obj).find("body").find("input[type=hidden][name=agileauthtoken]").val($.cookie('JSESSIONID_token'));
 			
 			
 		},
 		
 		getToken:function(){
 			
-			return util.getMainWin().$("input[type=hidden][name=agileAuthToken]").val();
+			return util.getMainWin().$("input[type=hidden][name=agileauthtoken]").val();
 			
 			//return $.cookie('JSESSIONID_token');
 		}
