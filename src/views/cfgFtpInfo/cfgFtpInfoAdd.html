@@ -33,7 +33,7 @@
 			<div class="layui-inline ">
 			  <label class="layui-form-label">编码集：</label>
 			  <div class="layui-input-block">
-			    <input type="text" name="fileNameEncoding" ag-verify="charSet" autocomplete="off" placeholder="编码集" class="layui-input">
+			    <input type="text" name="fileNameEncoding" ag-verify="charSet" value="GBK" autocomplete="off" placeholder="编码集" class="layui-input">
 			  </div>
 			</div>
 
@@ -47,7 +47,7 @@
             <div class="layui-inline ">
               <label class="layui-form-label">端口：</label>
               <div class="layui-input-block">
-                <input type="text" name="hostPort" ag-verify="number" autocomplete="off" placeholder="端口" class="layui-input">
+                <input type="text" name="hostPort" ag-verify="number" value="21" autocomplete="off" placeholder="端口" class="layui-input">
               </div>
             </div>
 			<div class="layui-inline ">
@@ -65,25 +65,25 @@
 			<div class="layui-inline ">
 			  <label class="layui-form-label">最小空闲：</label>
 			  <div class="layui-input-block">
-			    <input type="text" name="initConn" ag-verify="number5" autocomplete="off" placeholder="最小空闲连接数" class="layui-input">
+			    <input type="text" name="initConn" ag-verify="number5" value="1" autocomplete="off" placeholder="最小空闲连接数" class="layui-input">
 			  </div>
 			</div>
 			<div class="layui-inline ">
 			  <label class="layui-form-label">最大连接：</label>
 			  <div class="layui-input-block">
-			    <input type="text" name="maxConn" ag-verify="number5" autocomplete="off" placeholder="最大连接数" class="layui-input">
+			    <input type="text" name="maxConn" ag-verify="number5" value="1"  autocomplete="off" placeholder="最大连接数" class="layui-input">
 			  </div>
 			</div>
 			<div class="layui-inline ">
 			  <label class="layui-form-label">最大空闲：</label>
 			  <div class="layui-input-block">
-			    <input type="text" name="maxIdle" ag-verify="number5" autocomplete="off" placeholder="最大空闲连接数" class="layui-input">
+			    <input type="text" name="maxIdle" ag-verify="number5" value="1" autocomplete="off" placeholder="最大空闲连接数" class="layui-input">
 			  </div>
 			</div>
 			<div class="layui-inline ">
 			  <label class="layui-form-label">空闲时间：</label>
 			  <div class="layui-input-block">
-			    <input type="text" name="maxIdleTime" ag-verify="number" autocomplete="off" placeholder="最大空闲时间(毫秒)" class="layui-input">
+			    <input type="text" name="maxIdleTime" ag-verify="number" value="60000"  autocomplete="off" placeholder="最大空闲时间(毫秒)" class="layui-input">
 			  </div>
 			</div>
         </form>

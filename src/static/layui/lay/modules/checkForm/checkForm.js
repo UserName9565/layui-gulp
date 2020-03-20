@@ -47,7 +47,7 @@ layui.define(['jquery','form' ],function(exports){
 				          if(!value || isNaN(value)) return '只能填写数字'
 				        }
 						,number5: function(value){
-						  if(!value || isNaN(value) || parseInt(value) > 4 || parseInt(value) <1) return '请填写大于0,小于5数字'
+						  if(!value || isNaN(value) || parseInt(value) > 4 || parseInt(value) <0) return '请填写不小于0,小于5数字'
 						}
 				    	,number100:function(value){
 

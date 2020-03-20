@@ -48,13 +48,19 @@
             </div>
 
             <div class="layui-inline ">
-              <label class="layui-form-label">是否加密：</label>
+              <label class="layui-form-label">前台加密：</label>
               <div class="layui-input-block">
                 <select name="encryFlag" ag-sel-name="encryFlagname">
                 </select>
               </div>
             </div>
-
+			<div class="layui-inline ">
+			  <label class="layui-form-label">后台加密：</label>
+			  <div class="layui-input-block">
+			    <select name="backEncryFlag" ag-sel-name="backEncryFlagName">
+			    </select>
+			  </div>
+			</div>
             <div class="layui-inline ">
               <label class="layui-form-label">是否验证有效期：</label>
               <div class="layui-input-block">
@@ -67,6 +73,14 @@
               <label class="layui-form-label">加密秘钥：</label>
               <div class="layui-input-block">
                 <input type="text" name="secretKey"  autocomplete="off" placeholder="加密秘钥" class="layui-input">
+              </div>
+            </div>
+
+            <div class="layui-inline ">
+              <label class="layui-form-label">是否活体检测：</label>
+              <div class="layui-input-block">
+                <select name="livingFlag" ag-sel-name="livingFlagName">
+                </select>
               </div>
             </div>
 

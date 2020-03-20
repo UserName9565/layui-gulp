@@ -17,15 +17,15 @@
 				<div class="param-left">
 
           <div class="layui-inline ">
-          	<label class="layui-form-label">接入类型编码：</label>
+          	<label class="layui-form-label">接口编码：</label>
           	<div class="layui-input-block">
-          		<input type="text" name="chnlType"  autocomplete="off" placeholder="接入类型编码" class="layui-input">
+          		<input type="text" name="interCode"  autocomplete="off" placeholder="接口编码" class="layui-input">
           	</div>
           </div>
 					<div class="layui-inline ">
-						<label class="layui-form-label">接入类型名称：</label>
+						<label class="layui-form-label">接口名称：</label>
 						<div class="layui-input-block">
-							<input type="text" name="chnlTypeName" autocomplete="off" placeholder="接入类型名称" class="layui-input">
+							<input type="text" name="interName" autocomplete="off" placeholder="接口名称" class="layui-input">
 						</div>
 					</div>
 
@@ -38,7 +38,7 @@
 			<div class="btns-right">
 
 				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/waterrmark/queryPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0"  ag-data-url="/sys/settings/interparam/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
@@ -64,9 +64,9 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="水印新增" ag-data-url="/views/waterrmark/waterrmarkAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="水印修改" ag-data-pk="id" ag-data-url="/views/waterrmark/waterrmarkUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/waterrmarks/del"><i class="layui-icon layui-icon-delete"></i></div>
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="接口新增" ag-data-url="/views/sysInterParam/interParamAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="接口修改" ag-data-pk="id" ag-data-url="/views/sysInterParam/interParamUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id"  ag-data-url="/sys/settings/interparams/del"><i class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
 				</div>
@@ -86,31 +86,25 @@
 			          "hide": true,
 			          "fixed": "left"
 			        },{
-			          "field": "chnlType",
-			          "title": "接入类型编码",
+			          "field": "interCode",
+			          "title": "接口编码",
 			          "sort": true,
 			          "fixed": "left"
 			        }, {
-			          "field": "chnlTypeName",
-			          "title": "接入类型名称"
+			          "field": "interName",
+			          "title": "接口名称"
 			        }, {
-			          "field": "markType",
-			          "title": "水印类型"
+			          "field": "interUrl",
+			          "title": "URL地址"
 			        }, {
-			          "field": "markTypeName",
-			          "title": "水印类型名称"
+			          "field": "methodName",
+			          "title": "请求方法名"
 			        }, {
-			          "field": "appType",
-			          "title": "应用类型"
+			          "field": "reqEncoding",
+			          "title": "参数编码"
 			        }, {
-			          "field": "appTypeName",
-			          "title": "应用类型名称"
-			        }, {
-			          "field": "markPic",
-			          "title": "水印图片"
-			        }, {
-			          "field": "markTxt",
-			          "title": "水印文本"
+			          "field": "reqDataSaveName",
+			          "title": "文件存储"
 			        }
 			      ]
 			    ]
