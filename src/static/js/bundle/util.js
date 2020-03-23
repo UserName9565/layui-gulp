@@ -529,7 +529,7 @@ util = {
 			type: "POST",
 			url: url,
 			data: JSON.stringify(param),
-			contentType: "application/json",
+			contentType: "application/json;charset=UTF-8",
 			beforeSend: function(req) {
 
 				req.setRequestHeader("agileauthtoken", util.getToken());

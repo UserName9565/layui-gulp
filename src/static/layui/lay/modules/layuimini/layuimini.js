@@ -87,7 +87,7 @@ layui.define(["element", "jquery"], function (exports) {
          * @param data
          */
         this.initHome = function (data) {
-            console.log(data)
+           
             sessionStorage.setItem('layuiminiHomeHref', data.href);
             $('#layuiminiHomeTabId').html('<i class="' + data.icon + '"></i> <span>' + data.title + '</span>');
             $('#layuiminiHomeTabId').attr('lay-id', data.href);
@@ -170,13 +170,32 @@ layui.define(["element", "jquery"], function (exports) {
            +'color:'+bgcolorData.base+';'
            +'}'
                 
-           setTimeout(function(){
-                var agile = $("iframe").contents().find("#agile-color");
-
-                agile.html(baseHtml)
-            },500)
+           
+            var version = common.IEVersion();
+            if(version==8||version==9){
+                // var domStyle = document.getElementById("layuimini-bg-color");
+                　 var cssStyle=document.createStyleSheet();  //兼容ie8
+　　                cssStyle.cssText=styleHtml;     //要添加的css
+                    setTimeout(function(){
+                        var agile = document.getElementsByTagName("iframe");
+                        var len = agile.length;
+                        for(var i = 0;i<len;i++){
+                            // alert(agile[i].getAttribute("src"))
+                            var cssStyle2 = agile[i].contentWindow.document.createStyleSheet();  //兼容ie8
+                            cssStyle2.cssText=baseHtml;     //要添加的css
+                        }
+                       
+                    },500)
+            }else{
+                setTimeout(function(){
+                    var agile = $("iframe").contents().find("#agile-color");
+    
+                    agile.html(baseHtml)
+                },500)
+                $('#layuimini-bg-color').html(styleHtml);
+            }
             
-            $('#layuimini-bg-color').html(styleHtml);
+            
         };
 
         /**

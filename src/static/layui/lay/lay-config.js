@@ -2,11 +2,18 @@
 
 window.rootPath = (function (src) {
     src = document.scripts[document.scripts.length - 1].src;
-    return src.substring(0, src.lastIndexOf("/") + 1);
+   
+    var astr = ''
+    if(src.indexOf('modules')!=-1){
+        astr = src.lastIndexOf('lay/')+3
+    }else{
+        astr = src.lastIndexOf('/')
+    }
+    return src.substring(0, astr);
 })();
-
+ 
 layui.config({
-    base: rootPath + "modules/",
+    base: rootPath + "/modules/",
     version: true
 }).extend({
     layuimini: "layuimini/layuimini", // layuimini扩展

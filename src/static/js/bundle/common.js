@@ -1,4 +1,4 @@
-
+jQuery.support.cors = true;
 var common = {
   pageSize: 10,
   type: "POST",
