@@ -15,6 +15,7 @@
         html, body {width: 100%;height: 100%;overflow: hidden}
         body {
             background: url("/static/images/background.png") left top;
+            
         }
         body:after {content:'';background-repeat:no-repeat;background-size:cover;-webkit-filter:blur(3px);-moz-filter:blur(3px);-o-filter:blur(3px);-ms-filter:blur(3px);filter:blur(3px);position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;}
         .layui-container {width: 100%;height: 100%;overflow: hidden}
@@ -23,7 +24,8 @@
             height:350px;
             width:440px;
             float:left;background: url("/static/images/leftlog.png") left top no-repeat ;
-            background-size: 100% 100%;
+            background-size: cover;
+            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/images/leftlog.png',sizingMethod='scale');
         }
         .admin-login-background-right{
             float:right;
