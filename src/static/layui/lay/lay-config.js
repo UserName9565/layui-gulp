@@ -11,7 +11,7 @@ window.rootPath = (function (src) {
     }
     return src.substring(0, astr);
 })();
-console.log(rootPath+ "/modules/")
+ 
 layui.config({
     base: rootPath + "/modules/",
     version: true
