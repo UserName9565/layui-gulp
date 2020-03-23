@@ -1588,6 +1588,23 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		});
 			
 	}
+	
+	function initFormHeight(){
+		
+		//目前没有唯一标识判断 先根据查询按钮判断是不是查询页面
+		//如果是查询页面则返回.
+		if($(".ag-btn-query").length > 0 ){
+			
+			return;
+		}
+		
+		$(".ag-form").css("height","calc( 100vh - 140px)");
+		
+		$(".ag-form").css("overflow-y","auto");
+		
+		
+	}
+	
 
 
 
@@ -1644,6 +1661,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		initForm();
 
 		initListHeight();
+		
+		initFormHeight();
 
 	});
 
