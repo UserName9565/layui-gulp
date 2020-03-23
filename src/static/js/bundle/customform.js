@@ -1125,7 +1125,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				return;
 			}
 
-			var defaultOpt = $.extend({},that.config());
+			var defaultOpt = $.extend({},that.config);
 
 			$.each(fileDiv, function(i, f) {
 
