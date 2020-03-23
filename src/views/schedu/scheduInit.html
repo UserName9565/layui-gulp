@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>layui</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+	</head>
+	<body class="bg-info" >
+
+		<div class="layui-card layui-card-margin ">
+
+			<form class="ag-form layui-form" ag-data-index="0">
+
+				<div class="param-left">
+
+					<div class="layui-inline ">
+						<label class="layui-form-label">计划名称：</label>
+						<div class="layui-input-block">
+							<input type="text" name="scheduName" ag-verify="required" placeholder="调度计划名称" autocomplete="off" class=" layui-input"
+							>
+						</div>
+					</div>
+					<div class="layui-inline ">
+						<label class="layui-form-label">执行对象：</label>
+						<div class="layui-input-block">
+							<input type="text" name="scheduComp" ag-verify="required" placeholder="执行对象" autocomplete="off" class=" layui-input"
+							 >
+						</div>
+					</div>
+				</div>
+
+
+			</form>
+
+			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
+			<div class="btns-right">
+
+				<div class="layui-inline">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/cfgDamonSchedu/queryPage">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">查询</span>
+					</button>
+
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">重置</span>
+					</button>
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+
+
+		<div class=" layui-card  layui-card-list" >
+
+			<div class="layui-border-box ">
+			
+				<div class="layui-table-tool">
+					<div class="layui-table-tool-temp">
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="1000" ag-win-height="1000" ag-win-title="调度计划新增" ag-data-url="/views/schedu/scheduAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="1000" ag-win-height="1000" ag-win-title="调度计划修改"  ag-data-url="/views/schedu/scheduUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="funcCode" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/settings/cfgDamonSchedus/del"><i class="layui-icon layui-icon-delete"></i></div>
+					</div>
+			
+				</div>
+			
+			</div>
+
+			<div style="display:none" class="ag-table-header" ag-data-index="0">
+
+				[
+					[{
+							"type": "radio",
+							"fixed": "left"
+						}, {
+							"field": "id",
+							"title": "编号",
+							"sort": true,
+							"hide": true
+						}, {
+							"field": "scheduName",
+							"title": "计划名称"
+						}, {
+							"field": "scheduCron",
+							"title": "表达式"
+						}, {
+							"field": "scheduDesc",
+							"title": "计划描述"
+						}, {
+							"field": "scheduComp",
+							"title": "执行对象"
+						}, {
+							"field": "opNo",
+							"title": "创建人工号"
+						}, {
+							"field": "opName",
+							"title": "创建人姓名"
+						}, {
+							"field": "opTime",
+							"title": "创建时间"
+						}
+				
+					]
+				]
+
+			</div>
+			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+			</table>
+
+			<div class="pagging ag-area-page">
+				   
+			</div>
+
+		</div>
+
+		<script>
+
+		</script>
+	</body>
+</html>

@@ -51,13 +51,13 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function getFormJson(form) {
 
 		var paramJson = {};
-		var arr = $(form).find("input[type!=checkbox]");
+		var arr = $(form).find("input[type!=checkbox][name],textarea[name]");
 
 		for (var i = 0; i < arr.length; i++) {
 			paramJson[arr[i].name] = $(arr[i]).val();
 		}
 
-		var arr2 = $(form).find("select");
+		var arr2 = $(form).find("select[name]");
 		for (var i = 0; i < arr2.length; i++) {
 
 			paramJson[arr2[i].name] = $(arr2[i]).val();
@@ -911,8 +911,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				var func = $(this).attr("ag-back-func");
 
 				if (!util.isNull(func)) {
-
-					eval(func);
+					
+					if(func.indexOf(".") != -1){
+						
+						eval(func);
+						
+						return ;
+					}
+					
+					window[func](data);
 				}
 			} else {
 				util.error(desc);
@@ -924,6 +931,20 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function createFile() {
 
 		var formFile = new Object();
+		
+		formFile.config = {
+			
+			"ag-file-multiple": "true",
+			"ag-file-delete": "true",
+			"ag-file-add": "true",
+			"ag-file-down": "true",
+			"ag-file-max": 99,
+			"ag-file-iframe-down-url":"/sys/settings/file/download",
+			"ag-file-iframe-del-url" : "/sys/settings/file/delFile",
+			"ag-file-iframe-add-url":"/sys/settings/file/upload",
+			"ag-file-iframe-name":"downloadHidenFr",
+			"ag-data-ctx":"sysmgr"
+		}
 
 		formFile.loadForm = function(obj) {
 
@@ -1027,7 +1048,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						var url = f.data("ag-file-iframe-down-url");
 
-						url = ctx + "/" + util.getAgCtx(null) + url;
+						url = ctx + "/" + util.getAgCtx(f) + url;
 
 						_listHrefDownloadFile(url + "?saveName=" + saveName + "&fileId=" + saveName);
 
@@ -1056,7 +1077,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						var url = f.data("ag-file-iframe-del-url");
 
-						url = ctx + "/" + util.getAgCtx(null) + url;
+						url = ctx + "/" + util.getAgCtx(f) + url;
 
 						util.ajaxJson("删除中,请稍后...", url, {
 							"fileId": saveName
@@ -1104,14 +1125,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				return;
 			}
 
-			var defaultOpt = {
-				"ag-file-multiple": "true",
-				"ag-file-delete": "true",
-				"ag-file-add": "true",
-				"ag-file-down": "true",
-				"ag-file-max": 99
-			}
-
+			var defaultOpt = $.extend({},that.config());
 
 			$.each(fileDiv, function(i, f) {
 
@@ -1123,6 +1137,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						f.attr(key, defaultOpt[key]);
 					}
+					
+					f.data(key,f.attr(key));
 
 				}
 
@@ -1142,20 +1158,12 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				f.append(item);
 
 				/*********插入下载配置*********/
-				if ($("[name=downloadHidenFr]").length == 0) {
+				if ($("[name="+f.data("ag-file-iframe-name")+"]").length == 0) {
 
-					var iframe = $("<iframe name='downloadHidenFr' class='layui-hide'></iframe>");
+					var iframe = $("<iframe name='"+f.data("ag-file-iframe-name")+"' class='layui-hide'></iframe>");
 
 					f.append(iframe);
 				}
-
-				f.data("ag-file-iframe-name", "downloadHidenFr");
-
-				f.data("ag-file-iframe-down-url", "/sys/settings/file/download");
-
-				f.data("ag-file-iframe-del-url", "/sys/settings/file/delFile");
-
-				f.data("ag-file-iframe-add-url", "/sys/settings/file/upload");
 
 			});
 
@@ -1504,7 +1512,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 					
 							var val = data[name];
 							if (!util.isNull(val)) {
-								$(agForm).find("input[name=" + name + "]").val(val);
+								$(agForm).find("input[name=" + name + "],textarea[name="+name+"]").val(val);
 							}
 					
 							if (name.endsWith("Opt")) {
@@ -1573,10 +1581,12 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		var agDateArr = $(".ag-date");
 		$(agDateArr).each(function(idx, input) {
 			laydate.render({
+			
 				elem: input,
 				type: $(input).attr("ag-date-format")
 			});
 		});
+			
 	}
 
 

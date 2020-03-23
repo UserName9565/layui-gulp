@@ -20,7 +20,8 @@ layui.config({
     layarea: 'layarea/layarea', //  省市县区三级联动下拉选择器
     dtree: 'dtree/dist/dtree', //树形结构
 	checkForm:'checkForm/checkForm',  //表单校验
-    mapChooser:'mapChooser/mapChooser'    //映射选择
+    mapChooser:'mapChooser/mapChooser'    ,//映射选择
+	schedu:'schedu/schedu'    //映射选择
 });
 
 // layui.config({

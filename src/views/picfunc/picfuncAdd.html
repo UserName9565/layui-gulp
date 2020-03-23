@@ -1,61 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>layui</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/static/layui/css/layui.css" />
-    <link rel="stylesheet" href="/static/css/bundle/temp.css" />
-    <script src="/static/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
-
-
-<link charset="utf-8" rel="shortcut icon" href="/static/images/index/logo.png" type="image/x-icon">
-<link charset="utf-8" rel="stylesheet" href="/static/layui/css/layui.css?v=1.0.0">
-<link charset="utf-8" rel="stylesheet" href="/static/css/bundle/main.css?v=1.0.0">
-<link charset="utf-8" rel="stylesheet" href="/static/css/bundle/common.css?v=1.0.0">
-<link charset="utf-8" rel="stylesheet" href="/static/css/libs/admin.css?v=1.0.0">
-<link rel="stylesheet" href="/static/css/bundle/layuimini.css" media="all">
-<link rel="stylesheet" href="/static/layui/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
-<link rel="stylesheet" href="/static/css/bundle/temp.css" media="all">
-<style id="agile-color">
-
-</style>
-<script src="/static/js/libs/jquery-1.8.2.min.js?v=1.0.0"></script>
-
-<!--[if IE]>
-    <script src="/static/js/libs/html5.min.js"></script>
- <script src="/static/js/libs/respond.min.js"></script>
-    <script src="/static/js/plugins/PIE.js?v=1.0.0"></script>
-    <script src="/static/js/plugins/jq-placehoder.js?v=1.0.0"></script>
-
-<![endif]-->
-<script src="/static/js/plugins/jquery.xdomainrequest.min.js?v=1.0.0"></script>
-<!-- <script src="/static/js/plugins/jquery-form.js?v=1.0.0"></script> -->
-<script src="/static/layui/layui.js?v=1.0.0"></script>
-<script src="/static/js/plugins/jquery.cookie.js?v=1.0.0"></script>
-<script>
-    var ht = location.pathname;
-
-    if(ht!='/views/login-1.html'){
-        var token = $.cookie('JSESSIONID_token');
-
-
-        if(!token){
-
-            location.href = "/views/login-1.html"
-        }
-    }
-</script>
-<script src="/static/js/api.config.js"></script>
-<script src="/static/js/bundle/common.js?v=1.0.0"></script>
-<script src="/static/js/bundle/util.js?v=1.0.0"></script>
-<script src="/static/js/bundle/customform.js?v=1.0.0"></script>
-<script src="/static/js/bundle/url.js?v=1.0.0"></script>
-<script src="/static/layui/lay/lay-config.js?v=1.0.0"></script>
-
-  </head>
+	<head>
+		<meta charset="utf-8">
+		<title>layui</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+	</head>
   <body class="bg-info">
 
     <div class="layui-card layui-card-form">
