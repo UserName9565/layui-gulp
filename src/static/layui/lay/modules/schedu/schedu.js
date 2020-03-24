@@ -38,14 +38,14 @@ layui.define(['jquery', 'form', 'laydate'], function(exports) {
 				"desc": "按天执行",
 				"type": "time",
 				"format":"HH:mm:ss"
-			},
-			"3": {
-				"desc": "特定时间执行",
-				"type": "datetime"
-			},
-			"4": {
-				"desc": "自定义执行"
 			}
+			// ,"3": {
+			// 	"desc": "特定时间执行",
+			// 	"type": "datetime"
+			// },
+			// "4": {
+			// 	"desc": "自定义执行"
+			// }
 		}
 		this.selects = null
 	};
@@ -100,6 +100,10 @@ layui.define(['jquery', 'form', 'laydate'], function(exports) {
 	 * @param {Object} scheduObj
 	 */
 	schedu.prototype.clickDateTime = function(data){
+		
+			util.error("功能实现中");
+			
+			return ;
 			
 			var that = this;
 			
@@ -133,6 +137,10 @@ layui.define(['jquery', 'form', 'laydate'], function(exports) {
 	 */
 	schedu.prototype.customTime = function(data){
 		
+		util.error("功能实现中");
+		
+		return ;
+		
 		util.openWin("/views/schedu/customSchedu.html", "自定义表达式配置", 1000, 1000);
 	}
 	
@@ -160,17 +168,17 @@ layui.define(['jquery', 'form', 'laydate'], function(exports) {
 					
 					if (that.currScheduType.format == "ss") {
 						
-						exeExpr  ="0/" + data.seconds + " * * * * ?";
+						exeExpr  ="*/" + data.seconds + " * * * * ?";
 					}
 					
 					 if (that.currScheduType.format == "mm") {
 					 	
-						exeExpr = " 0 0/" + data.minutes + " * * * ?";
+						exeExpr = " 0 */" + data.minutes + " * * * ?";
 					 }
 					
 					if (that.currScheduType.format == "HH:mm:ss") {
 						
-						exeExpr = data.seconds+" "+data.minutes+" "+data.hours+" * * ? *";
+						exeExpr = data.seconds+" "+data.minutes+" "+data.hours+" * * ? ";
 					}
 					
 					$("[name=scheduCron]").val(exeExpr);
