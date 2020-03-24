@@ -20,8 +20,7 @@
         <form class="ag-form layui-form" ag-data-ctx="cfgmgr" ag-data-url="/cfg/appModelFile/addInit" ag-data-index="1">
 
 
-          <div class="layui-inline ">
-
+			
             <div class="layui-inline ">
               <label class="layui-form-label">模板类型：</label>
               <div class="layui-input-block">
@@ -51,29 +50,26 @@
                   class="layui-input">
               </div>
             </div>
-            <div class="layui-inline ">
-              <label class="layui-form-label">版本号：</label>
-              <div class="layui-input-block">
-                <select name="modelVersion" id="modelVersion">
-                </select>
-              </div>
-            </div>
-            <div class="layui-inline ">
-              <label class="layui-form-label">是否为可选协议：</label>
-              <div class="layui-input-block">
-                <select name="modelSelect" id="modelSelect">
-                </select>
-              </div>
-            </div>
-            <div class="layui-inline ">
-              <label class="layui-form-label">选择附件：</label>
-              <div class="layui-input-block">
-                <div class="ag-file" ag-file-module="appModelFile" ag-file-multiple='false' ag-file-max="1"
-                  ag-file-submit-key="fileId">
-                </div>
-              </div>
-
-
+				<div class="layui-inline ">
+				  <label class="layui-form-label">版本号：</label>
+				  <div class="layui-input-block">
+					<select name="modelVersion" id="modelVersion">
+					</select>
+				  </div>
+				</div>
+				<div class="layui-inline ">
+				  <label class="layui-form-label">是否为可选协议：</label>
+				  <div class="layui-input-block">
+					<select name="modelSelect" id="modelSelect">
+					</select>
+				  </div>
+				</div>
+				<div class="layui-form-item">
+				  <label class="layui-form-label">上传附件：</label>
+				  <div class="ag-file"  ag-file-module="appModelFile" ag-file-multiple ='false' ag-file-max="4"  ag-file-submit-key ="fileId">
+				  </div>
+				</div> 
+			
         </form>
 
 

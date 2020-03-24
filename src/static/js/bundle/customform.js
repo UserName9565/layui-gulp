@@ -965,6 +965,20 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		formFile.bindLsnr = function() {
 
 			var that = this;
+			
+			var width = that.form.width();
+			
+			that.form.find(".ag-file").width(parseInt(width /305) * 305 - 120 );
+			
+			window.onresize = function(){
+				
+					var width = that.form.width();
+					
+					var num = parseInt(width /305);
+					
+					that.form.find(".ag-file").width( num* 305 - 120 -(num == 1 ? 5 : 0));
+					
+			}
 
 			that.form.delegate(".ag-file .ag-file-header .ag-file-header-button", "click", function() {
 				$(this).siblings(".ag-file-header-file").trigger("click");
