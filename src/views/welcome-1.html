@@ -387,7 +387,7 @@
 						</div>
 				</div>
 			</div>
-			<div class="layui-col-sm4">
+			<div class="layui-col-sm4" id="bizErrContainer">
 
 				<div class=" main-jk ">
 					<img src="/static/images/main/opcode_jk.png" height="100%" width="100%" />
@@ -411,7 +411,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="layui-col-sm4">
+			<div class="layui-col-sm4"  id="certErrContainer">
 
 				<div class=" main-jk">
 
@@ -510,70 +510,88 @@
         util.addTab(url,"设备异常日志");
     });
 
+    //打开业务异常日志界面
+    $("#bizErrContainer").css("cursor","pointer");
+    $("#bizErrContainer").click(function(){
+
+        var url = "/views/monitorBiz/monitorBizInit.html";
+        util.addTab(url,"业务办理异常监控");
+    });
+
+    //打开证件采集异常日志界面
+    $("#certErrContainer").css("cursor","pointer");
+    $("#certErrContainer").click(function(){
+
+        var url = "/views/monitorBiz/monitorBizInit.html";
+        util.addTab(url,"证件采集异常监控");
+    });
+
+
+
 
 		var url = ctx + "/sysmgr/sys/monitors/firstpage/init" ;
-		
-		
+
+
     var param = {};
-		
+
 		util.ajaxJson("",url,param,function(data){
-			
-			
-			
+
+
+
 			var acceptFlag = data.acceptFlag;
 			var deviceFlag = data.deviceFlag;
 			var certFlag = data.certFlag;
-			
+
 			if(acceptFlag == "0"){
-			
+
 			  $("#acceptMonitorDiv").removeClass("ball-error");
 			  $("#acceptMonitorDiv").addClass("ball-succ");
-			
+
 			}else{
 			  $("#acceptMonitorDiv").removeClass("ball-succ");
 			  $("#acceptMonitorDiv").addClass("ball-error");
 			}
-			
+
 			if(deviceFlag == "0"){
-			
+
 			  $("#deviceMonitorDiv").removeClass("ball-error");
 			  $("#deviceMonitorDiv").addClass("ball-succ");
 			}else{
 			   $("#deviceMonitorDiv").removeClass("ball-succ");
 			   $("#deviceMonitorDiv").addClass("ball-error");
 			}
-			
-			
+
+
 			if(certFlag == "0"){
-			
+
 			  $("#certMonitorDiv").removeClass("ball-error");
 			  $("#certMonitorDiv").addClass("ball-succ");
-			
+
 			}else{
 			   $("#certMonitorDiv").removeClass("ball-succ");
 			   $("#certMonitorDiv").addClass("ball-error");
 			}
-			
-						
+
+
 		});
-	
-		
+
+
 
     //系统公告
     var url = ctx + "/sysmgr/sys/settings/notices/queryLastOne" ;
     var noticeParam = {};
-	
+
 	util.ajaxJson("",url,noticeParam,function(data){
-		
+
 			var noticeTitle = data.noticeTitle;
 			if(!util.isNull(noticeTitle)){
 				$("#noticeDiv").html(noticeTitle);
 			}else{
 				$("#noticeDiv").html("暂无新公告");
 			}
-		  
-		
-		
+
+
+
 	});
 
       $("#noticeDiv").css("cursor","pointer");
@@ -591,7 +609,7 @@
        */
       var url = ctx + "/sysmgr/sys/monitor/monitorcnts/queryTotalCnt" ;
       var acceptTotalCnt = {};
-	  
+
 	  util.ajaxJson("",url,acceptTotalCnt,function(data){
 	  		    var databody = data.body;
 	  		    var beforeTotalCnt=databody.beforeCnt;
@@ -601,15 +619,15 @@
 	  		      $(".main-data-two-title-num-up").html(riseRate);
 	  		      $(".main-data-two-title-num-down").css('display','none');
 	  		      $(".main-data-two-title-num-down-pic").css('display','none');
-	  		
+
 	  		    }else if(databody.riseflag=="0"){
 	  		      $(".main-data-two-title-num-down").html(riseRate);
 	  		      $(".main-data-two-title-num-up").css('display','none');
 	  		      $(".main-data-two-title-num-up-pic").css('display','none');
 	  		    }
-	  		
+
 	  });
-	  
+
 
 
       /**
@@ -662,11 +680,11 @@
       //报表功能获取数据
       var url = ctx + "/sysmgr/sys/monitor/monitorcnts/echartsQuery" ;
       var echartsData={};
-	  
-	  
+
+
 	  util.ajaxJson("",url,echartsData,function(data){
-		  
-		  
+
+
 		      //循环租户
 		      for(var i=0;i<data.length;i++){
 		        var tenantBean=data[i];
@@ -675,7 +693,7 @@
 		        for(var j=0;j<interList.length;j++){
 		          var interBean=interList[j];
 		          var oneEchart;
-		  
+
 		          var interCode=interBean.interCode;
 		          if(interCode=='1001'){
 		            oneEchart=echartsRecordArr[0];
@@ -726,12 +744,12 @@
 		            },
 		            series:seriesDataArr
 		          });
-		  
+
 		        }
 		      }
-		    
-	  		    
-	  		
+
+
+
 	  });
 
         // echarts 窗口缩放自适应
