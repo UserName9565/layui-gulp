@@ -1,4 +1,4 @@
-jQuery.support.cors = true;
+
 var common = {
   pageSize: 10,
   type: "POST",
@@ -375,15 +375,18 @@ var publicFun = {
     }else{
       url= pObj.url + "?t=" + Math.random()
     }
+    jQuery.support.cors = true;
     $.ajax({
       type: pObj.type,
       url:url ,
+      dataType:"json",
       cache: false,
       async: true,
       headers: {
         'X-Token': $.cookie('JSESSIONID_token')
      },
-    contentType: "application/json; charset=utf-8",
+       
+      contentType: "application/json; charset=utf-8",
       data:req,
       
       success: function (data) {
