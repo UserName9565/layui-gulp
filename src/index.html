@@ -158,7 +158,7 @@
                         var cvTag = false;
                     }
                     if(cvTag){//判断是否是第一层
-                        obj1.title = "["+o.functionCode+"]"+o.functionName;;
+                        obj1.title = o.functionName;;
                         obj1.href = rootD+o.modelName+o.jspUrl
                         obj1.icon = o.icon
                         obj1.target = "_self"
@@ -176,7 +176,7 @@
                     var obj1 = {};
                     var myId = o.functionCode;
                     if(o.parentCode==id){//找到是父亲的儿子数据
-                        obj1.title = "["+o.functionCode+"]"+o.functionName;;
+                        obj1.title = o.functionName;;
 						
 						obj1.href = o.jspUrl;
 						

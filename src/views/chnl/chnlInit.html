@@ -16,12 +16,12 @@
 
 				<div class="param-left">
 
-          <div class="layui-inline ">
-          	<label class="layui-form-label">渠道编码：</label>
-          	<div class="layui-input-block">
-          		<input type="text" name="chnlCode"  autocomplete="off" placeholder="渠道编码" class="layui-input">
-          	</div>
-          </div>
+					<div class="layui-inline ">
+						<label class="layui-form-label">渠道编码：</label>
+						<div class="layui-input-block">
+							<input type="text" name="chnlCode" autocomplete="off" placeholder="渠道编码" class="layui-input">
+						</div>
+					</div>
 					<div class="layui-inline ">
 						<label class="layui-form-label">渠道名称：</label>
 						<div class="layui-input-block">
@@ -38,12 +38,13 @@
 			<div class="btns-right">
 
 				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/settings/chnl/queryPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-url="/sys/settings/chnl/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
 
-										<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">重置</span>
@@ -64,9 +65,12 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="渠道新增" ag-data-url="/views/chnl/chnlAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="渠道修改" ag-data-pk="chnlCode" ag-data-url="/views/chnl/chnlUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="chnlCode" ag-data-url="/sys/settings/chnl/del"><i class="layui-icon layui-icon-delete"></i></div>
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
+						 ag-win-title="渠道新增" ag-data-url="/views/chnl/chnlAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="渠道修改" ag-data-pk="chnlCode" ag-data-url="/views/chnl/chnlUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="chnlCode" ag-data-url="/sys/settings/chnl/del"><i
+							 class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
 				</div>
@@ -75,39 +79,39 @@
 
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
-			    [
-			      [
-			        {
-			          "type": "radio",
-			          "fixed": "left"
-			        },{
-			          "field": "id",
-			          "title": "主键"
-			        }, {
-			          "field": "tenantId",
-			          "title": "租户ID"
-			        }, {
-			          "field": "tenantName",
-			          "title": "租户名称"
-			        }, {
-			          "field": "noticeTitle",
-			          "title": "公告标题"
-			        }, {
-			          "field": "pubTime",
-			          "title": "发布时间"
-			        }, {
-			          "field": "pubNo",
-			          "title": "发布工号"
-			        }, {
-			          "field": "pubName",
-			          "title": "发布姓名"
-			        }, {
-			          "field": "stsDesc",
-			          "title": "状态"
-			        }
+				[
+				[
+				{
+				"type": "radio",
+				"fixed": "left"
+				} ,{
+				"field": "chnlCode",
+				"title": "渠道编码"
+				}, {
+				"field": "chnlName",
+				"title": "渠道名称"
+				}, {
+				"field": "sts",
+				"title": "渠道状态"
+				}, {
+				"field": "effectTime",
+				"title": "生效时间"
+				}, {
+				"field": "expireTime",
+				"title": "失效时间"
+				},  {
+				"field": "loginNo",
+				"title": "发布工号"
+				}, {
+				"field": "loginName",
+				"title": "发布姓名"
+				}, {
+				"field": "opTime",
+				"title": "发布时间"
+				}
 
-			      ]
-			    ]
+				]
+				]
 
 			</div>
 			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
@@ -115,7 +119,7 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>

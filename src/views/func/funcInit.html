@@ -101,8 +101,7 @@
 			        <div class="layui-inline ">
 			          <label class="layui-form-label">菜单编码：</label>
 			          <div class="layui-input-block">
-			            <input type="text" name="functionCode" ag-verify="required"  autocomplete="off" placeholder="菜单编码" class="layui-input ">
-						<input type="hidden" name="functionCodeOld" ag-verify="required" autocomplete="off" placeholder="菜单编码" class="layui-input ">
+			            <input type="text" name="functionCode" ag-verify="required" readonly="readonly"  autocomplete="off" placeholder="菜单编码" class="layui-input ">
 						
 					  </div>
 			        </div>
@@ -235,6 +234,13 @@
 				
 				var parNode =zTreeObj.getNodeByTId(treeNode.parentTId);
 				
+				if(parNode.functionCode.startsWith("new")){
+					
+					util.showDialog("父级菜单未保存!",0);
+					
+					return;
+				}
+				
 				refreashForm(parNode,treeNode);
 				
 				showForm();
@@ -260,13 +266,6 @@
 					
 					$(item).val(treeNode[$(item).attr("name")]);
 				});
-				
-				if(parNode.functionCode.startsWith("new")){
-					
-					$(".ag-form [name=functonCode]").val("");
-				}
-				
-				$(".ag-form [name=functionCodeOld]").val(treeNode.functionCode);
 				
 				$(".ag-form [name=parentCode]").val(parNode.functionCode);
 				
@@ -365,7 +364,7 @@
 						return false;
 					}
 					
-					zTreeObj.addNodes(treeNode, {id:"new"+new Date().getTime(), pId:treeNode.id, functionName:"新菜单" ,functionCode:"new"+new Date().getTime()});
+					zTreeObj.addNodes(treeNode, {id:"new"+new Date().getTime(), pId:treeNode.id, functionName:"新菜单" ,functionCode:"new"+util.randomWord(false,5)});
 					return false;
 				});
 			};
