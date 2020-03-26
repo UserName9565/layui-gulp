@@ -171,8 +171,8 @@ layui.define(["element", "jquery"], function (exports) {
            +'}'
                 
            
-            var version = common.IEVersion();
-            alert(version)
+            var version = common.IEVersion(); 
+      
             if(version==8||version==9||version==7){
                 // var domStyle = document.getElementById("layuimini-bg-color");
                 　 var cssStyle=document.createStyleSheet();  //兼容ie8
