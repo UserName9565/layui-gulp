@@ -1543,7 +1543,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 								$(agForm).find("input[name=" + name + "],textarea[name="+name+"]").val(val);
 							}
 					
-							if (name.endsWith("Opt")) {
+							if (name.endWith("Opt")) {
 					
 								var optArr = data[name];
 								var selectStr = "";

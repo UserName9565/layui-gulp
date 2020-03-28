@@ -110,7 +110,7 @@ util = {
 
 
 		if (parentObj.$("#top_tabs_box").length > 0) {
-			
+
 			return parentObj;
 		}
 
@@ -418,7 +418,7 @@ util = {
 	/*
 	 ** randomWord 产生任意长度随机字母数字组合
 	 ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
-	 ** 
+	 **
 	 */
 
 	randomWord: function(randomFlag, min, max) {
@@ -441,7 +441,7 @@ util = {
 	},
 	/**
 	 * 时间计算差
-	 * 
+	 *
 	 * @param {Object} timesData
 	 */
 	timeDiff: function(timesData) {
@@ -658,8 +658,8 @@ util = {
 	},
 
 	getToken: function() {
-		
-		
+
+
 		return util.getMainWin().$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val();
 
 		//return $.cookie('JSESSIONID_token');
@@ -796,7 +796,9 @@ util = {
 
 		return new Date(newdate).format(fmt);
 	}
+}
 
-
-
+String.prototype.endWith = function(str) {
+var reg = new RegExp(str + "$");
+return reg.test(this);
 }
