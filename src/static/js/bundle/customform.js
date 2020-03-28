@@ -403,6 +403,11 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		var form = $(".ag-form[ag-data-index=" + index + "]");
 		var url = $(this).attr("ag-data-url");
 		
+		var checkRet = checkForm.validateForm(form);
+		if (!checkRet) {
+			return false;
+		}
+		
 		initPage(index);
 		
 		var param = getFormJson($(".ag-form[ag-data-index=" + index + "]"));
@@ -1055,7 +1060,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						if (util.isNull(saveName)) {
 
-							showDialog("未上传,不能下载！", 0);
+							util.showDialog("未上传,不能下载！", 0);
 
 							return;
 						}
@@ -1236,7 +1241,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				if (data.result != 0) {
 
-					error(layFilter, data.desc);
+					error(layFilter, data.desc.length > 50 ? "上传失败!":data.desc);
 
 					return;
 				}
@@ -1259,7 +1264,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				} catch (e) {
 
 				}
-
+				
 
 				error(layFilter, msg);
 
@@ -1452,6 +1457,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			var condiCnt = 0;
 			var dataUrl = $(agForm).attr("ag-data-url");
+			
+			$.each($(agForm).find("[ag-select-func]"),function(i,item){
+				
+				form.on("select("+$(item).attr("lay-filter")+")",function(data){
+					
+					window[$(item).attr("ag-select-func")].call(item,data);
+				});
+				
+			});
 
 			if (!util.isNull(dataUrl)) {
 
@@ -1594,11 +1608,18 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function renderForm() {
 		var agDateArr = $(".ag-date");
 		$(agDateArr).each(function(idx, input) {
-			laydate.render({
 			
+			
+			var opt = {
 				elem: input,
 				type: $(input).attr("ag-date-format")
-			});
+			}
+			
+			
+			
+			console.log(opt);
+			
+			laydate.render(opt);
 		});
 			
 	}
