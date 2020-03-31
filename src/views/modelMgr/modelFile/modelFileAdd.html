@@ -33,7 +33,7 @@
                 <div class="layui-inline ">
                 	<label class="layui-form-label">模板名称：</label>
                 	<div class="layui-input-block">
-                		<input type="text"  id="modelFileName" name="modelFileName" ag-verify="required" autocomplete="off" placeholder="模板名称" class="layui-input">
+                		<input type="text"  id="modelFileName" name="modelFileName"  id="modelFileName" ag-verify="required" autocomplete="off" placeholder="模板名称" class="layui-input">
                 	</div>
                 </div>
               <div class="layui-inline ">
@@ -45,8 +45,10 @@
 				 <div class="layui-inline ">
 				   	<label class="layui-form-label">组织机构：</label>
 				   	<div class="layui-input-block">
-				   		<input type="text"  id="groupId"  name="groupId" ag-verify="required" autocomplete="off" placeholder="组织机构" class="layui-input">
-				   	</div>
+				   		<input type="text"  id="groupName"  name="groupName"   readonly="readonly" ag-verify="required" autocomplete="off" placeholder="组织机构" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
+				   	<input type="text"  id="groupId"  name="groupId" />  >
+
+            </div>
 				   </div>
 
            <div class="layui-inline ">
@@ -144,10 +146,10 @@
                             }
                 HWPostil1.HttpInit();
                 HWPostil1.HttpAddPostString("modelType.typeId", $('#typeId').val());
-                HWPostil1.HttpAddPostString("modelfileName", encodeURI($('#modelName').val()));
+                HWPostil1.HttpAddPostString("modelfileName", encodeURI($('#modelFileName').val()));
                 HWPostil1.HttpAddPostString("opCode", $('#opCode').val());
                 HWPostil1.HttpAddPostString("groupMsg.groupId", $('#groupId').val());
-                HWPostil1.HttpAddPostString("loginMsg.loginNoStr", $('#typeId').val());
+               // HWPostil1.HttpAddPostString("loginMsg.loginNoStr", $('#typeId').val());
                 HWPostil1.HttpAddPostString("validFlag", "C");
                 HWPostil1.HttpAddPostString("ifCheck", $('#ifCheck').val());
                 HWPostil1.HttpAddPostString("ifSpec",$('#ifSpec').val());
@@ -165,7 +167,6 @@
 
                 HWPostil1.HttpAddPostCurrFile("uploadFile");
                 var url = ctx+"/cfgmgr/cfg/modelFile/addModelFile";
-                alert(url);
                 var message = HWPostil1.HttpPost(url);
                 if ((message.trim()) != "success") {
                      util.error("文件增加失败！");
@@ -185,7 +186,6 @@
             }
         function checkChange(obj) {
             //业务底稿和协议都可以关联opcode
-              alert(obj);
             var op_code = obj.value;
             if (op_code != '0') {
                 $('#opCode').removeAttr('disabled');
@@ -194,7 +194,6 @@
             } else {
                 $('#opCode').attr('disabled', 'disabled').val('');
             }
-              alert(op_code);
             if (op_code == '2') {
                 $('#checkTable').show();
             } else {
@@ -213,7 +212,6 @@
                } else {
                    $('#opCode').attr('disabled', 'disabled').val('');
                }
-                 alert(op_code);
                if (op_code == '2') {
                    $('#checkTable').show();
                } else {

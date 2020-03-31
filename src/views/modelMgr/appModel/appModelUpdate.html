@@ -126,7 +126,7 @@
                $("#modelfileId").val(body.modelfileId);
               //授权认证
               var iframe = document.getElementById("AgObj1");
-              alert("加载模板...");
+             // alert("加载模板...");
               iframe.AddLicence(body.licence);
               //编辑模板状态
               iframe.Ag_InitFlag(true);
@@ -166,7 +166,7 @@ function updateSubmit(){
     var url = ctx+ "/cfgmgr/cfg/appModelFile/updateModelFile";
     //alert("保存中。。。");
 		var message = iframe.Ag_HttpPostUrl(url);
-     alert("保存中。。。");
+     //alert("保存中。。。");
    if(message== '0'){
      util.showDialog("修改成功！",1,function(){ util.closeWin();});
    }else{

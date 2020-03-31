@@ -20,7 +20,7 @@
         <form class="ag-form layui-form" ag-data-ctx="cfgmgr" ag-data-url="/cfg/appModelFile/addInit" ag-data-index="1">
 
 
-			
+
             <div class="layui-inline ">
               <label class="layui-form-label">模板类型：</label>
               <div class="layui-input-block">
@@ -46,8 +46,9 @@
             <div class="layui-inline ">
               <label class="layui-form-label">组织机构：</label>
               <div class="layui-input-block">
-                <input type="text" id="groupId" name="groupId" ag-verify="required" autocomplete="off" placeholder="组织机构"
-                  class="layui-input">
+                 <input type="hidden" id="groupId" name="groupId"/>
+                <input type="text" id="groupName" name="groupName" ag-verify="required" autocomplete="off" placeholder="组织机构"
+                  class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
               </div>
             </div>
 				<div class="layui-inline ">
@@ -68,8 +69,8 @@
 				  <label class="layui-form-label">上传附件：</label>
 				  <div class="ag-file"  ag-file-module="appModelFile" ag-file-multiple ='false' ag-file-max="4"  ag-file-submit-key ="fileId">
 				  </div>
-				</div> 
-			
+				</div>
+
         </form>
 
 

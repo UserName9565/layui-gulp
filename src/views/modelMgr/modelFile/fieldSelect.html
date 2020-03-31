@@ -333,8 +333,9 @@
             var font_color = document.all("FONT_COLOR").value;
             var edit_type = document.all("EDIT_TYPE").value;
             var rowkerning = document.all("ROWKERNING").value;//行间距需要优化
-            window.opener.modelFileEdit(modelement_code,type,border,halign,valign,font_family,font_size,font_color,edit_type,rowkerning);
-            window.close();
+            parent.modelFileEdit(modelement_code,type,border,halign,valign,font_family,font_size,font_color,edit_type,rowkerning);
+           // window.close();
+           util.closeWin();
         }
     }
 
