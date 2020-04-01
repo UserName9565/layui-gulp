@@ -88,7 +88,7 @@
 							<span class="btn-span-middle">取消</span>
 						</button>
 				</div>
-        <div id="show_HWPostil1" style="height: 200px;" >
+        <div id="show_HWPostil1" style="position: absolute;top:125px;bottom: 70px;left:0;right:0px" >
         <script language=javascript src="/static/js/ocx/LoadAip.js"></script>
         </div>
 
@@ -159,7 +159,8 @@ function NotifyLineAction(lPage,lStartPos,lEndPos){
     var lEndX = ((lEndPos<<16)>>16) & 0x0000ffff;
     argObj = {"page":lPage,"StartX":lStartX,"StartY":lStartY,"EndX":lEndX,"EndY":lEndY};
     var url= "/views/modelMgr/modelFile/fieldSelect.html";
-    openwin("", url);
+   // openwin("", url);
+    util.openWin(url,"选择元素",300,400,"");
 }
 function openwin(winName,url){
     if(winName==""){

@@ -19,8 +19,9 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="text" name="groupId" lay-verify="title" autocomplete="off" placeholder="组织机构" class="layui-input">
-						</div>
+							<input type="text" name="groupName" id="groupName" lay-verify="title" autocomplete="off" placeholder="组织机构" readonly="readonly" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
+              <input type="hidden" id="groupId" name="groupId" />
+              </div>
 					</div>
 				</div>
 
@@ -56,7 +57,7 @@
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
  		    <div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="新增" ag-data-url="/views/modelMgr/modelFile/modelFileAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
- 			  <div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelFile/modelFileUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+ 			 <!-- <div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelFile/modelFileUpdate.html"><i class="layui-icon layui-icon-edit"></i></div> -->
  			  <div class="ag-btn-delele layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
 		    <!-- 申请-->
         <div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-ok"></i></div>
@@ -102,7 +103,19 @@
 			        }, {
 			          "field": "validValue",
 			          "title": "状态描述"
-			        }
+			        } ,{
+			    			    			"width": 120,
+			    			    			"title": "操作",
+			    			    			"fixed": "right",
+			    			    			"btns": [
+												{
+													"className": "",
+													"openTitle":"修改",
+													"btnVal":"修改",
+													"url": "/views/modelMgr/modelFile/modelFileUpdate.html?modelfileId=@modelfileId@",
+													"openType": "2"
+													}]
+			    			    		}
 
 			      ]
 			    ]
@@ -205,6 +218,10 @@
              }
              }
            });
+      }
+      function openOrg(){
+        alert("222");
+        util.openWin("/views/modelMgr/modelFile/groupList.html", "选择组织机构", "300", "400");
       }
 		</script>
 	</body>

@@ -19,8 +19,9 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="text" name="groupId" lay-verify="title" autocomplete="off" placeholder="组织机构" class="layui-input">
-						</div>
+							<input type="text" name="groupName"  id="groupName" lay-verify="title" autocomplete="off" placeholder="组织机构" class="layui-input"  onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)" readonly="readonly">
+              <input type="hidden" name="groupId"  id="groupId"/>
+            </div>
 					</div>
 				</div>
 
@@ -119,7 +120,7 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>
