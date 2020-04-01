@@ -393,7 +393,8 @@
 			
 			var ie = util.IEVersion();
 			
-			if(isNaN(ie) && ie > 0  && ie < 9){
+			
+			if(!isNaN(ie) && ie > 0  && ie < 9){
 				
 				$(".page-right").height($(window).height()-40);
 				$(".page-right").width($(document.body).width()-360);
