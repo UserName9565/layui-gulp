@@ -26,21 +26,20 @@
 
 
 			</form>
- 			<div class="btns-right">
+			<div class="btns-right">
 
-				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelFile/queryCApplyListPages">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelFile/queryCApplyListPages">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
 
-										<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
-				</div>
- 
+
 
 			</div>
 
@@ -55,51 +54,53 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
- 					<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html"><i
+							 class="layui-icon layui-icon-edit"></i></div>
 
-          </div>
+					</div>
 				</div>
 			</div>
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
-			    [
-			      [
-			        {
-			          "type": "radio",
-			          "fixed": "left"
-			        }, {
-			          "field": "modelfileId",
-			          "title": "模板文件编码",
-			          "sort": true,
-			          "fixed": "left",
-                "hide": true
-			        }, {
-			          "field": "modelfileName",
-			          "title": "模板文件名称",
-			          "sort": true,
-			          "fixed": "left"
-			        }, {
-			          "field": "groupName",
-			          "title": "组织机构"
-			        }, {
-			          "field": "opTimeString",
-			          "title": "操作时间"
-			        }, {
-			          "field": "loginNo",
-			          "title": "操作工号"
-			        }, {
-			          "field": "typeName",
-			          "title": "模板类型"
-			        }, {
-			          "field": "opCode",
-			          "title": "操作代码"
-			        }, {
-			          "field": "validValue",
-			          "title": "状态描述"
-			        }
+				[
+				[
+				{
+				"type": "radio",
+				"fixed": "left"
+				}, {
+				"field": "modelfileId",
+				"title": "模板文件编码",
+				"sort": true,
+				"fixed": "left",
+				"hide": true
+				}, {
+				"field": "modelfileName",
+				"title": "模板文件名称",
+				"sort": true,
+				"fixed": "left"
+				}, {
+				"field": "groupName",
+				"title": "组织机构"
+				}, {
+				"field": "opTimeString",
+				"title": "操作时间"
+				}, {
+				"field": "loginNo",
+				"title": "操作工号"
+				}, {
+				"field": "typeName",
+				"title": "模板类型"
+				}, {
+				"field": "opCode",
+				"title": "操作代码"
+				}, {
+				"field": "validValue",
+				"title": "状态描述"
+				}
 
-			      ]
-			    ]
+				]
+				]
 
 			</div>
 			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
@@ -107,7 +108,7 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>

@@ -252,19 +252,24 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 					for (var z = 0; z < colModel[i][k].btns.length; z++) {
 
-						var item = colModel[i][k].btns[z];
 
+						var item = colModel[i][k].btns[z];
+						
+						
 						var realUrl = decorateTpl(item.url);
+						
+						
 
 						var lsnrStr = getHrefLsnr(item.openType);
+						
+						
 
-						var aFunc = lsnrStr + "('" + realUrl + "','" + item.openTitle + "',"+item.width+","+item.height+")";
+						var aFunc = lsnrStr + "(\"" + realUrl + "\",\"" + item.openTitle + "\","+item.width+","+item.height+")";
 
 						var a = "<a href='javascript:void(0)'  style='padding:0px 5px' class=' layui-table-link " + item.className +
-							"' onclick=" + aFunc + ">" + (item.btnVal ? item.btnVal : "操作") + "</a>";
+							"' onclick='" + aFunc + " '>" + (item.btnVal ? item.btnVal : "操作") + "</a>";
 
 						appendAHtml += a;
-
 
 
 					}
@@ -298,17 +303,19 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	}
 
 	function appendScript(id, a) {
-
+		
 		if ($("#" + id).length > 0) {
 
 			$("#" + id).remove();
 		}
-
-		var scr = $("<script type='text/html' id='" + id + "'></script>");
-
-		scr.append(a);
-
+		
+		
+		var scr = $("<script type='text/html' id='" + id + "'>"+a+"</script>");
+		
 		scr.appendTo($(document.body));
+		
+	
+		
 	}
 
 	/**
@@ -317,10 +324,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	 *
 	 */
 	function decorateTpl(inUrl, model) {
-
-		var url = inUrl.replace("&amp;", "&");
-
+		
+		
+		
+		var reg = new RegExp("&amp;","g");
+		var url = inUrl.replace(reg, "&");
 		var realUrl = url;
+		
+		
+		
 
 		if (url.indexOf("?") != -1) {
 
@@ -333,6 +345,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			var paramStr = tempArr[1];
 
 			var paramArr = paramStr.split("&");
+			
+			
+			
 
 			for (var k = 0; k < paramArr.length; k++) {
 
@@ -364,13 +379,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 					continue;
 
 				}
+				
 				var arr = pair[1].match(/@(\S*)@/g);
-
+				
 				if (arr != null) {
-
-					for (var kk in arr) {
-
-						pair[1] = pair[1].replace(arr[kk], "{{d." + arr[kk].substring(1, arr[kk].length - 1) + "}}");
+					
+					for (var i = 0 ;  i < arr.length ; i++){
+						
+						pair[1] = pair[1].replace(arr[i], "{{d." + arr[i].substring(1, arr[i].length - 1) + "}}");
 					}
 
 					realParam += pair[0] + "=" + pair[1] + "&";
@@ -380,6 +396,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 
 				realParam += paramArr[k] + "&";
+				
 
 			}
 
@@ -387,6 +404,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		}
 		
 		realUrl = realUrl.replace("@ctx@",ctx);
+		
 
 		return realUrl;
 
@@ -415,7 +433,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		url = ctx + "/" + agCtx + url;
 
 		util.ajaxJson("查询中,请稍后...", url, param, function(page) {
-
+			
 			var colsStr = $(".ag-table-header[ag-data-index=" + index + "]").html();
 
 			var cols = decorateData(colsStr);
@@ -424,6 +442,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			
 			for(var k in cols[0]){
 				
+				
 				if(!util.isNull(cols[0][k].width) ){
 					
 					allWidth += parseInt(cols[0][k].width);
@@ -431,13 +450,13 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 					continue;
 				}
 				
+				
 				allWidth += 120;
 				
 				
 			}
 			
 			var gdtWidth = $(document.body).width()  < allWidth ? 18 : 0 ;
-			
 			
 			
 			//执行一个 table 实例
@@ -1633,9 +1652,21 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			return;
 		}
 		
-		$(".ag-form").css("height","calc( 100vh - 140px)");
 		
 		$(".ag-form").css("overflow-y","auto");
+		
+		var ie = util.IEVersion();
+		
+		if(!isNaN(ie) && ie > 0  && ie < 9){
+			
+			$(".ag-form").css("height",$(window).height() - 140 +"px");
+			
+			return ;
+		}
+		
+		$(".ag-form").css("height","calc( 100vh - 140px)");
+		
+		
 		
 		
 	}
@@ -1667,13 +1698,12 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			sibHeight += ($($query[i]).outerHeight() + util.getMarginHeight($query[i]));
 
 		}
+		
+	
 
 		sibHeight += util.getRealityOrderHeight(agTable.parent());
-
-
-		agTable.parent().attr("style", "");
-
-		agTable.parent().css('height', 'calc( 100vh - ' + sibHeight + 'px)');
+			
+		var parentDiffHeight  = sibHeight;
 
 		//获取容器兄弟节点高度
 		$.each(agTable.siblings(":visible").not("script").not("iframe").not(".layui-form.layui-border-box.layui-table-view"),
@@ -1681,16 +1711,33 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				sibHeight += ($(t).outerHeight() + util.getMarginHeight($(t)));
 			});
-
+		
+		
+		var ie = util.IEVersion();
+		
+		
+		agTable.parent().attr("style", "");
+		
+		
+		if(!isNaN(ie) && ie > 0  && ie < 9){
+			
+			agTable.parent().css('height',  $(window).height() - parentDiffHeight +"px");
+			
+			agTable.css('height', $(window).height() - sibHeight +"px");
+			
+			return ;
+		}
+		
+		agTable.parent().css('height', 'calc( 100vh - ' + parentDiffHeight + 'px)');
+		
 		agTable.css('height', 'calc( 100vh - ' + sibHeight + 'px)');
 	}
 
 
 
-
-
+	
 	$(document).ready(function() {
-
+		
 		initBtnLsnr();
 
 		initForm();

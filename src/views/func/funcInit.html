@@ -373,6 +373,7 @@
 				$("#addBtn_"+treeNode.tId).unbind().remove();
 			};
 		$(document).ready(function(){
+			initFormAndZtree();
 			
 			var url = ctx+"/"+util.getAgCtx()+"/sys/func/queryList";
 			
@@ -387,6 +388,24 @@
 			});
 			
 		});
+		
+		function initFormAndZtree(){
+			
+			var ie = util.IEVersion();
+			
+			if(isNaN(ie) && ie > 0  && ie < 9){
+				
+				$(".page-right").height($(window).height()-40);
+				$(".page-right").width($(document.body).width()-360);
+				
+				$(".layui-card-body").attr("style","");
+				$(".layui-card-body").height($(window).height()- 130);
+				
+				$("#tree").attr("style","height:"+($(window).height() - 140)+"px;overflow-y:auto;");
+				
+			}
+			
+		}
 		//初始化节点树
 		
 		 function trimtest(str){

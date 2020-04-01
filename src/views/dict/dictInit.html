@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>layui</title>
+		<title>无纸化集中业务管理系统</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,12 +16,12 @@
 
 				<div class="param-left">
 
-          <div class="layui-inline ">
-          	<label class="layui-form-label">数据项编码：</label>
-          	<div class="layui-input-block">
-          		<input type="text" name="dataCode"  autocomplete="off" placeholder="数据项编码" class="layui-input">
-          	</div>
-          </div>
+					<div class="layui-inline ">
+						<label class="layui-form-label">数据项编码：</label>
+						<div class="layui-input-block">
+							<input type="text" name="dataCode" autocomplete="off" placeholder="数据项编码" class="layui-input">
+						</div>
+					</div>
 					<div class="layui-inline ">
 						<label class="layui-form-label">数据项名称：</label>
 						<div class="layui-input-block">
@@ -37,18 +37,17 @@
 			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
 			<div class="btns-right">
 
-				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/settings/dict/queryPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-url="/sys/settings/dict/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
 
-										<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
-				</div>
 
 
 			</div>
@@ -64,9 +63,12 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="数据字典新增" ag-data-url="/views/dict/dictAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="数据字典修改" ag-data-pk="id" ag-data-url="/views/dict/dictUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/sys/settings/dict/del"><i class="layui-icon layui-icon-delete"></i></div>
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
+						 ag-win-title="数据字典新增" ag-data-url="/views/dict/dictAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="数据字典修改" ag-data-pk="id" ag-data-url="/views/dict/dictUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/sys/settings/dict/del"><i
+							 class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
 				</div>
@@ -75,42 +77,42 @@
 
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
-			    [
-			      [
-			        {
-			          "type": "radio",
-			          "fixed": "left"
-			        }, {
-			          "field": "id",
-			          "title": "主键",
-			          "hide": true
-			        }, {
-			          "field": "dataCode",
-			          "title": "数据项编码",
-			          "sort": true,
-			          "fixed": "left"
-			        }, {
-			          "field": "dataName",
-			          "title": "数据项名称"
-			        }, {
-			          "field": "dictCode",
-			          "title": "字典编码"
-			        }, {
-			          "field": "dictName",
-			          "title": "字典名称"
-			        }, {
-			          "field": "opNo",
-			          "title": "操作工号"
-			        }, {
-			          "field": "opName",
-			          "title": "操作姓名"
-			        }, {
-			          "field": "opTime",
-			          "title": "操作时间"
-			        }
+				[
+				[
+				{
+				"type": "radio",
+				"fixed": "left"
+				}, {
+				"field": "id",
+				"title": "主键",
+				"hide": true
+				}, {
+				"field": "dataCode",
+				"title": "数据项编码",
+				"sort": true,
+				"fixed": "left"
+				}, {
+				"field": "dataName",
+				"title": "数据项名称"
+				}, {
+				"field": "dictCode",
+				"title": "字典编码"
+				}, {
+				"field": "dictName",
+				"title": "字典名称"
+				}, {
+				"field": "opNo",
+				"title": "操作工号"
+				}, {
+				"field": "opName",
+				"title": "操作姓名"
+				}, {
+				"field": "opTime",
+				"title": "操作时间"
+				}
 
-			      ]
-			    ]
+				]
+				]
 
 			</div>
 			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
@@ -118,7 +120,7 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>

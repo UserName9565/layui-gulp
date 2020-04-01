@@ -633,12 +633,18 @@ util = {
 	 */
 	getRealityOrderHeight: function(obj) {
 
-		return parseInt($(obj).css("margin-top").replace("px", "")) +
+		
+		var height = parseInt($(obj).css("margin-top").replace("px", "")) +
 			parseInt($(obj).css("margin-bottom").replace("px", "")) +
 			parseInt($(obj).css("padding-top").replace("px", "")) +
-			parseInt($(obj).css("padding-bottom").replace("px", "")) +
-			parseInt($(obj).css("border-top-width").replace("px", "")) +
-			parseInt($(obj).css("border-bottom-width").replace("px", ""))
+			parseInt($(obj).css("padding-bottom").replace("px", "")) ;
+		
+		var top  =parseInt($(obj).css("border-top-width").replace("px", "")) ;
+		
+		var bottom = parseInt($(obj).css("border-bottom-width").replace("px", ""));
+		
+		return height + (isNaN(top) ? 0 : top) + (isNaN(bottom) ? 0 : bottom);
+			
 
 	},
 
@@ -652,9 +658,9 @@ util = {
 
 		// 	obj.$("#top_tabs_box").append("<input type='hidden' name='agileauthtoken' value='' />");
 		// }
-		// obj.$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val($.cookie('JSESSIONID_token'));
+		// obj.$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val(util.getToken());
 
-		util.setSession("agileauthtoken",value);
+		util.setSession("agileauthtoken", value);
 	},
 
 	getToken: function() {
@@ -663,7 +669,7 @@ util = {
 		//return util.getMainWin().$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val();
 
 		return util.getAndSaveToken();
-		//return $.cookie('JSESSIONID_token');
+		//return util.getToken();
 	},
 	/**
 	 * 小于10的数字前加0
@@ -797,49 +803,83 @@ util = {
 
 		return new Date(newdate).format(fmt);
 	},
-	setSession:function(key,val){
-		sessionStorage.setItem(key,val);
+	setSession: function(key, val) {
+		sessionStorage.setItem(key, val);
 	},
-	getSessoin:function(key){
+	getSessoin: function(key) {
 		return sessionStorage.getItem(key);
 	},
-	delSession:function(key){
-		
+	delSession: function(key) {
+
 		sessionStorage.removeItem(key);
 	},
-	getAndSaveToken:function(){
+	getAndSaveToken: function() {
 		var token;
 		var searchStr = location.search;
-		if(!util.isNull(searchStr)){
+		if (!util.isNull(searchStr)) {
 			searchStr = searchStr.substr(1);
 			var arr = searchStr.split("&");
-			for(var i = 0;i < arr.length; i++){
+			for (var i = 0; i < arr.length; i++) {
 				var arr2 = arr[i].split("=");
-				if(arr2[0] == "agileauthtoken"){
+				if (arr2[0] == "agileauthtoken") {
 					token = arr2[1];
-					util.setSession("agileauthtoken",token);
+					util.setSession("agileauthtoken", token);
 					break;
 				}
 			}
 		}
-		
-		if(util.isNull(token)){
+
+		if (util.isNull(token)) {
 			token = util.getSessoin("agileauthtoken");
 		}
-		
+
 		return token;
+	},
+	/**
+	 * 判断ie版本
+	 * 
+	 */
+	IEVersion: function() {
+
+		var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+		var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+		var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+		var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+		if (isIE) {
+			var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+			reIE.test(userAgent);
+			var fIEVersion = parseFloat(RegExp["$1"]);
+			if (fIEVersion == 7) {
+				return 7;
+			} else if (fIEVersion == 8) {
+				return 8;
+			} else if (fIEVersion == 9) {
+				return 9;
+			} else if (fIEVersion == 10) {
+				return 10;
+			} else {
+				return 6; //IE版本<=7
+			}
+		} else if (isEdge) {
+			return -1; //edge
+		} else if (isIE11) {
+			return 11; //IE11  
+		} else {
+			return -1; //不是ie浏览器
+		}
+
 	}
 }
 
 String.prototype.endWith = function(str) {
-	
+
 	var reg = new RegExp(str + "$");
-	
+
 	return reg.test(this);
 }
 String.prototype.startWith = function(str) {
-	
+
 	var reg = new RegExp("^" + str);
-	
+
 	return reg.test(this);
 }

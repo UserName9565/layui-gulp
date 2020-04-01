@@ -5,12 +5,12 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		@@include('url-config.html')
-		<script  src="/static/js/plugins/nestable/jquery.nestable.js"></script>
+		<script src="/static/js/plugins/nestable/jquery.nestable.js"></script>
 	</head>
 	<style>
 
 
-	.border-info{
+		.border-info{
 
 		border: 1px solid #e1e4e3;
 	}
@@ -45,7 +45,7 @@
 
 					<div class="layui-col-sm4 " style="padding-right: 15px;">
 
-						<div class="layui-card border-info" >
+						<div class="layui-card border-info">
 
 							<div class="layui-card-header " style="font-weight: bold;">
 
@@ -58,14 +58,14 @@
 
 								<div class="dd" id="nestable">
 
-									</div>
+								</div>
 
 							</div>
 
 						</div>
 					</div>
 					<div class="layui-col-sm4 " style="">
-						<div class="layui-card border-info" >
+						<div class="layui-card border-info">
 
 							<div class="layui-card-header" style="font-weight: bold;">
 
@@ -74,7 +74,7 @@
 							<div class="layui-card-body" style="padding: 10px;">
 
 								<div class="dd" id="nestable1">
-									</div>
+								</div>
 
 							</div>
 
@@ -82,40 +82,41 @@
 					</div>
 
 
+				</div>
+
 			</div>
 
-		</div>
-
-		<input type="hidden" name ="chnlType" />
-		<input type="hidden" name ="chnlTypeName" />
-    <input type="hidden" name ="cfgType" />
-    <input type="hidden" name ="cfgTypeName" />
+			<input type="hidden" name="chnlType" />
+			<input type="hidden" name="chnlTypeName" />
+			<input type="hidden" name="cfgType" />
+			<input type="hidden" name="cfgTypeName" />
 	</body>
 
 	<script>
+		$(function() {
 
-
-		$(function(){
-
-			var url = ctx+"/cfgmgr/cfg/settings/cfgchnlacptfuncs/updateInit";
+			var url = ctx + "/cfgmgr/cfg/settings/cfgchnlacptfuncs/updateInit";
 
 			var param = util.getUrlParam();
 
 			$("input[name=chnlType]").val(param.chnlType);
 			$("input[name=chnlTypeName]").val(param.chnlTypeName);
-      $("input[name=cfgType]").val(param.cfgType);
-      $("input[name=cfgTypeName]").val(param.cfgTypeName);
+			$("input[name=cfgType]").val(param.cfgType);
+			$("input[name=cfgTypeName]").val(param.cfgTypeName);
 
 
-			util.ajaxJson("页面加载中，请稍后...",url,{"chnlType":param.chnlType,"cfgType":param.cfgType},function(data){
+			util.ajaxJson("页面加载中，请稍后...", url, {
+				"chnlType": param.chnlType,
+				"cfgType": param.cfgType
+			}, function(data) {
 
-				if(data.result != "0"){
+				if (data.result != "0") {
 
-					util.showDialog("页面加载失败!",0);
+					util.showDialog("页面加载失败!", 0);
 
 					console.log(data);
 
-					return ;
+					return;
 				}
 
 				var cfgPicFuncList = data.body.acceptFuncList;
@@ -124,23 +125,23 @@
 
 				$('#nestable').nestable({
 					group: 1,
-					maxDepth:1,
-					rmSourceItem:false,
-					itemKey:"funcCode",
-					itemName:'funcDesc',
-					data:cfgPicFuncList
+					maxDepth: 1,
+					rmSourceItem: false,
+					itemKey: "funcCode",
+					itemName: 'funcDesc',
+					data: cfgPicFuncList
 				});
 
 				$('#nestable1').nestable({
 					group: 1,
-					maxDepth:1,
-					dragFlag:false,//是否允许拖拽
-					addItemCloseBtn:true,//是否添加删除按钮
-					addItemQuickBtn:true,//是否添加快捷方式选择
-					itemKey:"funcCode",
-					itemName:'funcDesc',
-					quickKey:'quickFlag',//快捷方式 对应 bean的属性名
-					data:cfgChnlPicFuncYList
+					maxDepth: 1,
+					dragFlag: false, //是否允许拖拽
+					addItemCloseBtn: true, //是否添加删除按钮
+					addItemQuickBtn: true, //是否添加快捷方式选择
+					itemKey: "funcCode",
+					itemName: 'funcDesc',
+					quickKey: 'quickFlag', //快捷方式 对应 bean的属性名
+					data: cfgChnlPicFuncYList
 				});
 
 			});
@@ -148,46 +149,47 @@
 		});
 
 
-		function save(){
+		function save() {
 
-			var arr  = $('#nestable1').nestable('getItemData');
-			for(var i = 0 ; i < arr.length ; i++){
+			var arr = $('#nestable1').nestable('getItemData');
+			for (var i = 0; i < arr.length; i++) {
 				arr[i].chnlType = $("input[name=chnlType]").val();
 				arr[i].chnlTypeName = $("input[name=chnlTypeName]").val();
-        arr[i].cfgType = $("input[name=cfgType]").val();
-        arr[i].cfgTypeName = $("input[name=cfgTypeName]").val();
-				arr[i].outFlag="0";
-				arr[i].outFlagName="外部接入";
+				arr[i].cfgType = $("input[name=cfgType]").val();
+				arr[i].cfgTypeName = $("input[name=cfgTypeName]").val();
+				arr[i].outFlag = "0";
+				arr[i].outFlagName = "外部接入";
 
 
 			}
 
-      var array=arr;
-			var url = ctx+"/cfgmgr/cfg/settings/cfgchnlacptfuncs/update";
+			var array = arr;
+			var url = ctx + "/cfgmgr/cfg/settings/cfgchnlacptfuncs/update";
 
-			util.ajaxJson("保存中，请稍后···",url,{"chnlType":$("input[name=chnlType]").val(),"cfgType":$("input[name=cfgType]").val(),"chnlAcptFunccYList":array},function(data){
+			util.ajaxJson("保存中，请稍后···", url, {
+				"chnlType": $("input[name=chnlType]").val(),
+				"cfgType": $("input[name=cfgType]").val(),
+				"chnlAcptFunccYList": array
+			}, function(data) {
 
 
 				console.log(data);
 
-				if(data.result != "0"){
+				if (data.result != "0") {
 
 					util.error("保存失败!");
 
-				}else{
+				} else {
 
 					util.success("保存成功!");
-					
-					parent.refreshSts(array.length > 0 ? true :false );
+
+					parent.refreshSts(array.length > 0 ? true : false);
 				}
 			});
 		}
 
 
 
-		$(".dd").height($(window).height()-200);
-
-
-
+		$(".dd").height($(window).height() - 200);
 	</script>
 </html>

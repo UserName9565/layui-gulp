@@ -5,9 +5,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		@@include('url-config.html')
-		<link rel="stylesheet" href="/static/css/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
-		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.all.min.js" ></script>
-		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.exhide-3.5.js" ></script>
+		<link rel="stylesheet" href="/static/css/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css" />
+		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.all.min.js"></script>
+		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.exhide-3.5.js"></script>
 	</head>
 	<style>
 
@@ -19,21 +19,21 @@
 		<div class="layui-card  border-info">
 
 			<div class="layui-card-header   layui-card-header-bb-2" style="height: 55px;line-height: 20px; padding-left: 0;padding-right: 8px;padding-top: 15px;">
-					<div class="layui-input-inline" style="padding-left: 30px;">
-					  <input class="layui-input  " id="searchInput" value="" placeholder="输入关键字...">
-					</div>
-					<div class="layui-input-inline">
-					  <button class="layui-btn layui-btn-normal" id="search_btn" onclick="showcheck()">查询</button>
-					</div>
+				<div class="layui-input-inline" style="padding-left: 30px;">
+					<input class="layui-input  " id="searchInput" value="" placeholder="输入关键字...">
+				</div>
+				<div class="layui-input-inline">
+					<button class="layui-btn layui-btn-normal" id="search_btn" onclick="showcheck()">查询</button>
+				</div>
 
 
 			</div>
 
-			<div class="layui-card-body" >
+			<div class="layui-card-body">
 
-				<div class="layui-row" >
+				<div class="layui-row">
 
-					<ul id="tree"class="ztree"  style="height: calc( 100vh - 190px);overflow-y: auto;" ></ul>
+					<ul id="tree" class="ztree" style="height: calc( 100vh - 190px);overflow-y: auto;"></ul>
 
 				</div>
 
@@ -41,130 +41,136 @@
 
 			<div class="layui-card-footer">
 
-			  <button class=" layui-btn layui-btn-sm layui-btn-blue "  onclick="save()">
-			    <i class="layui-icon layui-icon-search "></i>
-			    <span class="btn-span-middle">确定</span>
-			  </button>
-			  <button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
-			    <i class="layui-icon layui-icon-search "></i>
-			    <span class="btn-span-middle">取消</span>
-			  </button>
+				<button class=" layui-btn layui-btn-sm layui-btn-blue " onclick="save()">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">确定</span>
+				</button>
+				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">取消</span>
+				</button>
 			</div>
 
 		</div>
 	</body>
 
 	<script>
-	  	var url = ctx+"/"+util.getAgCtx()+"/sys/groupmsg/getOrgTree";
- 	  	var zTreeObj,
-	  	setting = {
-      check: {
-        enable: true,
-        chkStyle: "radio",
-        radioType: "all"
-      },
-     async: {
-        enable: true,
-        url: url,
-        autoParam:["id=parentId"],
-        otherParam: {"agileauthtoken":util.getToken()},
-        headers:{"agileauthtoken":util.getToken()},
-        dataFilter: filter
-      },
-	  		data: {
+		var url = ctx + "/" + util.getAgCtx() + "/sys/groupmsg/getOrgTree";
+		var zTreeObj,
+			setting = {
+				check: {
+					enable: true,
+					chkStyle: "radio",
+					radioType: "all"
+				},
+				async: {
+					enable: true,
+					url: url,
+					autoParam: ["id=parentId"],
+					otherParam: {
+						"agileauthtoken": util.getToken()
+					},
+					headers: {
+						"agileauthtoken": util.getToken()
+					},
+					dataFilter: filter
+				},
+				data: {
 
-	  		 simpleData: {
-	  		          enable:true
-	  		        }
-	  	},
-	  	callback: {
-	  	}
+					simpleData: {
+						enable: true
+					}
+				},
+				callback: {}
 
-	  	};
-  //对返回数据进行处理
-  function filter(treeId, parentNode, childNodes) {
-    if (!childNodes) return null;
-    return childNodes;
-  }
-	  	$(document).ready(function(){
+			};
+		//对返回数据进行处理
+		function filter(treeId, parentNode, childNodes) {
+			if (!childNodes) return null;
+			return childNodes;
+		}
+		$(document).ready(function() {
 			//var param = {"parentId":1,"rootId":1,leaf:"true"};
-      zTreeObj = $.fn.zTree.init($("#tree"), setting);
-	  	});
-	  	//初始化节点树
+			zTreeObj = $.fn.zTree.init($("#tree"), setting);
+		});
+		//初始化节点树
 
-	  	 function trimtest(str){
-	  	         //   用正则表达式将前后空格
-	  	         //   用空字符串替代。
-	  	        return   str.replace(/(^\s*)|(\s*$)/g,"");
-	  	}
-	  	//将所有隐藏的节点显示出来。
-	      function refreashNodes() {
-	          nodes = zTreeObj.getNodesByParam("isHidden", true);
-	          zTreeObj.showNodes(nodes);
-	      }
-	      function save(){
-	  		refreashNodes();
+		function trimtest(str) {
+			//   用正则表达式将前后空格
+			//   用空字符串替代。
+			return str.replace(/(^\s*)|(\s*$)/g, "");
+		}
+		//将所有隐藏的节点显示出来。
+		function refreashNodes() {
+			nodes = zTreeObj.getNodesByParam("isHidden", true);
+			zTreeObj.showNodes(nodes);
+		}
 
-	  		var nodes = zTreeObj.getCheckedNodes(true);
-        if(nodes.length==0){
-           util.error("请选择节点！");
-           return ;
-        }
+		function save() {
+			refreashNodes();
 
-        var id= nodes[0].id ;
-        var name= nodes[0].name ;
-        parent.$("#groupId").val(id);
-        parent.$("#groupName").val(name);
-        util.closeWin();
-	  	}
+			var nodes = zTreeObj.getCheckedNodes(true);
+			if (nodes.length == 0) {
+				util.error("请选择节点！");
+				return;
+			}
 
-	    function showcheck(){
+			var id = nodes[0].id;
+			var name = nodes[0].name;
+			parent.$("#groupId").val(id);
+			parent.$("#groupName").val(name);
+			util.closeWin();
+		}
 
-	    	util.load('检索中请稍后!');
+		function showcheck() {
 
-	    	showSelected();
+			util.load('检索中请稍后!');
 
-
-	    	util.disLoad();
-	    }
-	    function showSelected(){
-
-	        var searchStr = $('#searchInput').val();//通过id获取页面输入的值
-	        if (searchStr=='') {
-	            refreashNodes();
-	            return ;
-	        }
-         loadTagNodes(searchStr);
-	    }
-	//AJAX 查询关键字匹配节点
-	function loadTagNodes(tag){
-		var treeId = $("#treeId").val();
-    var url = ctx+"/"+util.getAgCtx()+"/sys/groupmsg/treeSearchs";
- 		 $.ajax({
-	        url: url,
-	        type: "POST",
-	        async: false,
-	        data: {'tag':util.encode(tag)},
-	        dataType: "json",
-	        success: function(data){
-             console.info(data);
-	        	//zNodes =data.message;
-	        	//zNodes=eval(zNodes);
-	        	//console.info(zNodes);
-	        	//$.fn.zTree.init($("#treeDemo"),setting,null);
-           // console.info(zNodes);
-	        	$.fn.zTree.init($("#tree"),setting, data);
-	        }
-	     });
-	}
-	    function showValNode(obj){
-	    	var val = $(obj).val();
-	    	val =trimtest(val);
-	    	if(val==""){
-	    		refreashNodes();
-	    	}
-	    }
+			showSelected();
 
 
+			util.disLoad();
+		}
+
+		function showSelected() {
+
+			var searchStr = $('#searchInput').val(); //通过id获取页面输入的值
+			if (searchStr == '') {
+				refreashNodes();
+				return;
+			}
+			loadTagNodes(searchStr);
+		}
+		//AJAX 查询关键字匹配节点
+		function loadTagNodes(tag) {
+			var treeId = $("#treeId").val();
+			var url = ctx + "/" + util.getAgCtx() + "/sys/groupmsg/treeSearchs";
+			$.ajax({
+				url: url,
+				type: "POST",
+				async: false,
+				data: {
+					'tag': util.encode(tag)
+				},
+				dataType: "json",
+				success: function(data) {
+					console.info(data);
+					//zNodes =data.message;
+					//zNodes=eval(zNodes);
+					//console.info(zNodes);
+					//$.fn.zTree.init($("#treeDemo"),setting,null);
+					// console.info(zNodes);
+					$.fn.zTree.init($("#tree"), setting, data);
+				}
+			});
+		}
+
+		function showValNode(obj) {
+			var val = $(obj).val();
+			val = trimtest(val);
+			if (val == "") {
+				refreashNodes();
+			}
+		}
 	</script>
 </html>

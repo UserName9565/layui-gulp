@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    @@include('url-config.html')
-  </head>
-  <style>
+	<head>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+	</head>
+	<style>
 
 
-    .border-info{
+		.border-info{
 
 		border: 1px solid #e1e4e3;
 	}
@@ -34,121 +34,122 @@
     background-color: #0085E8;
   }
 	</style>
-  <body class="bg-info">
+	<body class="bg-info">
 
-    <div class="layui-card  border-info">
+		<div class="layui-card  border-info">
 
-      <div class="layui-card-header layui-card-header-bb-2" style="height: 70px;line-height: 20px; padding-left: 0;padding-right: 8px;">
-        <div style="float: left;line-height: 70px; padding-left: 20px;font-size: 15px;font-weight: bold;">
+			<div class="layui-card-header layui-card-header-bb-2" style="height: 70px;line-height: 20px; padding-left: 0;padding-right: 8px;">
+				<div style="float: left;line-height: 70px; padding-left: 20px;font-size: 15px;font-weight: bold;">
 
-          标准参数
-        </div>
+					标准参数
+				</div>
 
-        <div style="border-left: 2px solid #e1e4e3;float: right;margin: 5px;">
+				<div style="border-left: 2px solid #e1e4e3;float: right;margin: 5px;">
 
-          <div class="ag-btn-save card-btn" style="margin-left: 10px;" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/cfgParamMaps/saveUpdate" ag-back-func="parentExe()"  ag-data-index="1">
-            <div class="card-btn-img img-save"></div>
-            <div class="card-btn-desc">
-              保存
-            </div>
-          </div>
+					<div class="ag-btn-save card-btn" style="margin-left: 10px;" ag-data-ctx="cfgmgr" ag-data-url="/cfg/cfgParamMaps/saveUpdate"
+					 ag-back-func="parentExe()" ag-data-index="1">
+						<div class="card-btn-img img-save"></div>
+						<div class="card-btn-desc">
+							保存
+						</div>
+					</div>
 
-        </div>
-      </div>
+				</div>
+			</div>
 
-      <form class="ag-form" ag-data-url="/cfg/cfgParamMaps/updateInit" ag-data-index="1" ag-data-ctx="cfgmgr" ag-plugin-name="mapChooser">
+			<form class="ag-form" ag-data-url="/cfg/cfgParamMaps/updateInit" ag-data-index="1" ag-data-ctx="cfgmgr"
+			 ag-plugin-name="mapChooser">
 
-          <div class="layui-card-body">
+				<div class="layui-card-body">
 
-            <div class="layui-row">
+					<div class="layui-row">
 
-              <div class="layui-col-sm3 " style="padding-right: 10px;">
+						<div class="layui-col-sm3 " style="padding-right: 10px;">
 
-                <div class="layui-card border-info">
+							<div class="layui-card border-info">
 
-                  <div class="layui-card-header " style="font-weight: bold;">
+								<div class="layui-card-header " style="font-weight: bold;">
 
-                    标准参数
-                  </div>
-                  <div class="layui-card-body" style="padding: 10px;">
+									标准参数
+								</div>
+								<div class="layui-card-body" style="padding: 10px;">
 
-                    <div class="ag-map-left dd" id="nestable">
+									<div class="ag-map-left dd" id="nestable">
 
-                    </div>
+									</div>
 
-                  </div>
+								</div>
 
-                </div>
-              </div>
-              <div class="layui-col-sm3 " style=" padding-right: 10px;">
-                <div class="layui-card border-info">
+							</div>
+						</div>
+						<div class="layui-col-sm3 " style=" padding-right: 10px;">
+							<div class="layui-card border-info">
 
-                  <div class="layui-card-header" style="font-weight: bold;">
+								<div class="layui-card-header" style="font-weight: bold;">
 
-                    模板元素
-                  </div>
-                  <div class="layui-card-body" style="padding: 10px;">
+									模板元素
+								</div>
+								<div class="layui-card-body" style="padding: 10px;">
 
-                    <div class="ag-map-middle dd" id="nestable1">
-                    </div>
+									<div class="ag-map-middle dd" id="nestable1">
+									</div>
 
-                  </div>
+								</div>
 
-                </div>
-              </div>
+							</div>
+						</div>
 
-              <div class="layui-col-sm6 " style="padding-left: 40px;position: relative;">
-                 <div class="ag-map-btn-in left-move">
-                  <i class="layui-icon layui-icon-next"></i>
-                </div>
+						<div class="layui-col-sm6 " style="padding-left: 40px;position: relative;">
+							<div class="ag-map-btn-in left-move">
+								<i class="layui-icon layui-icon-next"></i>
+							</div>
 
-                <div class="layui-card border-info">
+							<div class="layui-card border-info">
 
-                  <div class="layui-card-header" style="font-weight: bold;">
+								<div class="layui-card-header" style="font-weight: bold;">
 
-                    映射关系
-                  </div>
-                  <div class="layui-card-body" style="padding: 10px;">
+									映射关系
+								</div>
+								<div class="layui-card-body" style="padding: 10px;">
 
-                    <div class="ag-map-right dd" id="nestable2">
-                    </div>
+									<div class="ag-map-right dd" id="nestable2">
+									</div>
 
-                  </div>
+								</div>
 
-                </div>
+							</div>
 
-              </div>
-            </div>
+						</div>
+					</div>
 
-            <input type="hidden" name="chnlType" />
-            <input type="hidden" name="chnlTypeName" />
-            <input type="hidden" name="frontBack" />
-            <input type="hidden" name="frontBackName" />
-            <input type="hidden" name="returnList" />
+					<input type="hidden" name="chnlType" />
+					<input type="hidden" name="chnlTypeName" />
+					<input type="hidden" name="frontBack" />
+					<input type="hidden" name="frontBackName" />
+					<input type="hidden" name="returnList" />
 
-          </div>
+				</div>
 
-      </div>
+		</div>
 
-    </form>
-  </body>
-  <script>
-	  
-      $(".dd").height($(window).height() - 200);
-	  
-	  function parentExe(){
-		  
-		 var val =  $(".ag-form input=[name=returnList] ").val();
-		 
-		 var flag = true;
-		 
-		if(util.isNull(val) || $.parseJSON(val).length == 0){
-			
-			flag =false;
+		</form>
+	</body>
+	<script>
+		$(".dd").height($(window).height() - 200);
+
+		function parentExe() {
+
+			var val = $(".ag-form input=[name=returnList] ").val();
+
+			var flag = true;
+
+			if (util.isNull(val) || $.parseJSON(val).length == 0) {
+
+				flag = false;
+			}
+
+			parent.refreshSts(flag);
+
 		}
-		
-		parent.refreshSts(flag);
-		  
-	  }
-  </script>
+	</script>
 </html>

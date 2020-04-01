@@ -115,6 +115,7 @@
             var  element = layui.element,
                 layer = layui.layer;
 				
+				
                 // var mmm = menu(JSON.parse(localStorage.getItem("menus")))
                 //     layuimini.init(mmm,true)
                 var obj = {
@@ -124,9 +125,10 @@
             
                 publicFun.ajax(obj,success)
                 function success(data){
+					
                     //data.functions
                     if(data.result=="-1"){
-                        window.location = '/views/login-1.html';
+                     
                     }else{
 						
                       

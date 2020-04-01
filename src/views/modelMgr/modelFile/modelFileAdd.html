@@ -2,99 +2,95 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>layui</title>
+		<title>无纸化集中业务管理系统</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="/static/layui/css/layui.css" />
-		<link rel="stylesheet" href="/static/css/bundle/temp.css" />
-		<script src="/static/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
-    @@include('url-config.html')
-  </head>
+		@@include('url-config.html')
+	</head>
 	<body class="bg-info">
 
 		<div class="layui-card layui-card-form">
 
-				<div class="layui-card-body">
+			<div class="layui-card-body">
 
-					<form  class="ag-form layui-form" ag-data-ctx = "cfgmgr"  ag-data-url="/cfg/modelFile/addInit" ag-data-index="1">
+				<form class="ag-form layui-form" ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelFile/addInit" ag-data-index="1">
 
 
+
+						<div class="layui-inline ">
+							<label class="layui-form-label">模板类型：</label>
+							<div class="layui-input-block">
+								<select name="typeId" id="typeId" lay-filter="typeId">
+								</select>
+							</div>
+						</div>
+
+						<div class="layui-inline ">
+							<label class="layui-form-label">模板名称：</label>
+							<div class="layui-input-block">
+								<input type="text" id="modelFileName" name="modelFileName" id="modelFileName" ag-verify="required" autocomplete="off"
+								 placeholder="模板名称" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline ">
+							<label class="layui-form-label">操作代码：</label>
+							<div class="layui-input-block">
+								<input type="text" id="opCode" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline ">
+							<label class="layui-form-label">组织机构：</label>
+							<div class="layui-input-block">
+								<input type="text" id="groupName" name="groupName" readonly="readonly" ag-verify="required" autocomplete="off"
+								 placeholder="组织机构" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
+								<input type="text" id="groupId" name="groupId" /> >
+
+							</div>
+						</div>
+
+						<div class="layui-inline ">
+							<label class="layui-form-label">选择附件：</label>
+							<div class="layui-input-block">
+								<input type="button" value="选择附件(word文件)" id="file" onclick="addAttachment()" name="files" class="b_text" />
+							</div>
+						</div>
+
+						<div id="checkTable" style="display: none;">
 							<div class="layui-inline ">
+								<label class="layui-form-label">是否必选：</label>
+								<div class="layui-input-block">
+									<input id="ifCheckBox" type="checkbox" value="1" name="" />必选
+									<input id="ifCheck" type="hidden" value="" name="ifCheck">
+								</div>
+							</div>
+							<div class="layui-inline ">
+								<label class="layui-form-label">是否特殊号码：</label>
+								<div class="layui-input-block">
+									<input id="ifSpecBox" type="checkbox" value="1" name="" />必选
+									<input id="ifSpec" type="hidden" value="" name="ifSpec">
+								</div>
+							</div>
 
-                <div class="layui-inline ">
-                				<label class="layui-form-label">模板类型：</label>
-                				<div class="layui-input-block">
-                					<select name="typeId" id="typeId" lay-filter="typeId">
-                					</select>
-                				</div>
-                 </div>
-
-                <div class="layui-inline ">
-                	<label class="layui-form-label">模板名称：</label>
-                	<div class="layui-input-block">
-                		<input type="text"  id="modelFileName" name="modelFileName"  id="modelFileName" ag-verify="required" autocomplete="off" placeholder="模板名称" class="layui-input">
-                	</div>
-                </div>
-              <div class="layui-inline ">
-                	<label class="layui-form-label">操作代码：</label>
-                	<div class="layui-input-block">
-                		<input type="text" id="opCode" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码" class="layui-input">
-                	</div>
-                </div>
-				 <div class="layui-inline ">
-				   	<label class="layui-form-label">组织机构：</label>
-				   	<div class="layui-input-block">
-				   		<input type="text"  id="groupName"  name="groupName"   readonly="readonly" ag-verify="required" autocomplete="off" placeholder="组织机构" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
-				   	<input type="text"  id="groupId"  name="groupId" />  >
-
-            </div>
-				   </div>
-
-           <div class="layui-inline ">
-               	<label class="layui-form-label">选择附件：</label>
-               	<div class="layui-input-block">
-               	 <input type="button" value="选择附件(word文件)" id="file" onclick="addAttachment()"
-               	                                                name="files" class="b_text"/>
-               	</div>
-           </div>
-
-           <div id="checkTable" style="display: none;">
-           <div class="layui-inline ">
-             	<label class="layui-form-label">是否必选：</label>
-             	<div class="layui-input-block">
-              <input id="ifCheckBox" type="checkbox" value="1" name=""/>必选
-              <input id="ifCheck" type="hidden" value="" name="ifCheck">
-               </div>
-             </div>
-             <div class="layui-inline ">
-               	<label class="layui-form-label">是否特殊号码：</label>
-               	<div class="layui-input-block">
-               	  <input id="ifSpecBox" type="checkbox" value="1" name=""/>必选
-               	  <input id="ifSpec" type="hidden" value="" name="ifSpec">
-               	</div>
-               </div>
-
-          </div>
-					</form>
+				</form>
 
 
-				</div>
+			</div>
 
-				<div class="layui-card-footer">
+			<div class="layui-card-footer">
 
-						<button class="layui-btn layui-btn-sm layui-btn-blue "    onclick="save()">
-							<i class="layui-icon layui-icon-search "></i>
-							<span class="btn-span-middle">保存</span>
-						</button>
-						<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
-							<i class="layui-icon layui-icon-search "></i>
-							<span class="btn-span-middle">取消</span>
-						</button>
-				</div>
-        <div id="show_HWPostil1">
-        <script language=javascript src="/static/js/ocx/LoadAip.js"></script>
-        </div>
+				<button class="layui-btn layui-btn-sm layui-btn-blue " onclick="save()">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">保存</span>
+				</button>
+				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">取消</span>
+				</button>
+			</div>
+			<div id="show_HWPostil1">
+				<script language=javascript src="/static/js/ocx/LoadAip.js"></script>
+			</div>
 
 
 		</div>
@@ -109,117 +105,119 @@
 			form.render();
 
 		});
-      function addAttachment() {
-                var result = HWPostil1.LoadFile("");
-                if (result == '1') {
-                      util.warning('文件加载成功!');
-                } else {
-                      util.warning('文件加载失败!');
-                }
-            }
-      function save() {
-                  if ($('#typeId').val() != "0") {
-                        if ($('#opCode').val() == "") {
-                            showDialog("请填写对应的opcode", 1);
-                            return;
-                        }
-                    }
 
-                    //增加上传文件字节数控制，上传文件通过控件压缩后不能大于100k
-                    var filesize = HWPostil1.GetCurrFileSize();
-                    if (filesize > 102400) {
-                        showDialog("上传文件字节过大, 请处理后再上传！", 0);
-                        return;
-                    }
-                 if ($('#typeId').val() == '2') {
-                                if ($('#ifCheckBox').is(":checked")) {
-                                    $('#ifCheck').val("1");
-                                } else {
-                                    $('#ifCheck').val("0");
-                                }
-                            }
+		function addAttachment() {
+			var result = HWPostil1.LoadFile("");
+			if (result == '1') {
+				util.warning('文件加载成功!');
+			} else {
+				util.warning('文件加载失败!');
+			}
+		}
 
-                           if ($('#ifSpecBox').is(":checked")){
-                                 $('#ifSpec').val("1");
-                             }else{
-                               $('#ifSpec').val("0");
-                            }
-                HWPostil1.HttpInit();
-                HWPostil1.HttpAddPostString("modelType.typeId", $('#typeId').val());
-                HWPostil1.HttpAddPostString("modelfileName", encodeURI($('#modelFileName').val()));
-                HWPostil1.HttpAddPostString("opCode", $('#opCode').val());
-                HWPostil1.HttpAddPostString("groupMsg.groupId", $('#groupId').val());
-               // HWPostil1.HttpAddPostString("loginMsg.loginNoStr", $('#typeId').val());
-                HWPostil1.HttpAddPostString("validFlag", "C");
-                HWPostil1.HttpAddPostString("ifCheck", $('#ifCheck').val());
-                HWPostil1.HttpAddPostString("ifSpec",$('#ifSpec').val());
+		function save() {
+			if ($('#typeId').val() != "0") {
+				if ($('#opCode').val() == "") {
+					showDialog("请填写对应的opcode", 1);
+					return;
+				}
+			}
 
-                var opCodes = $('#opCode').val();
-                if (opCodes != '') {
-                    var x = opCodes.split(',');
-                    for (var i = 0; i < x.length; i++) {
-                        if (!x) {
-                            continue;
-                        }
-                        HWPostil1.HttpAddPostString("modelFileOpcodes[" + i + "].opCode", x[i]);
-                    }
-                }
+			//增加上传文件字节数控制，上传文件通过控件压缩后不能大于100k
+			var filesize = HWPostil1.GetCurrFileSize();
+			if (filesize > 102400) {
+				showDialog("上传文件字节过大, 请处理后再上传！", 0);
+				return;
+			}
+			if ($('#typeId').val() == '2') {
+				if ($('#ifCheckBox').is(":checked")) {
+					$('#ifCheck').val("1");
+				} else {
+					$('#ifCheck').val("0");
+				}
+			}
 
-                HWPostil1.HttpAddPostCurrFile("uploadFile");
-                var url = ctx+"/cfgmgr/cfg/modelFile/addModelFile";
-                var message = HWPostil1.HttpPost(url);
-                if ((message.trim()) != "success") {
-                     util.error("文件增加失败！");
-                }else{
-                 util.success("文件增加成功！");
-                var queryBtn = layui.$(".ag-btn-query");
-                if(queryBtn.length > 0){
-                  $(queryBtn).click();
-                }
-                 var cancelBtn = layui.$(".aag-btn-cancel ");
-                 if(cancelBtn.length > 0){
-                   $(cancelBtn).click();
-                 }
+			if ($('#ifSpecBox').is(":checked")) {
+				$('#ifSpec').val("1");
+			} else {
+				$('#ifSpec').val("0");
+			}
+			HWPostil1.HttpInit();
+			HWPostil1.HttpAddPostString("modelType.typeId", $('#typeId').val());
+			HWPostil1.HttpAddPostString("modelfileName", encodeURI($('#modelFileName').val()));
+			HWPostil1.HttpAddPostString("opCode", $('#opCode').val());
+			HWPostil1.HttpAddPostString("groupMsg.groupId", $('#groupId').val());
+			// HWPostil1.HttpAddPostString("loginMsg.loginNoStr", $('#typeId').val());
+			HWPostil1.HttpAddPostString("validFlag", "C");
+			HWPostil1.HttpAddPostString("ifCheck", $('#ifCheck').val());
+			HWPostil1.HttpAddPostString("ifSpec", $('#ifSpec').val());
+
+			var opCodes = $('#opCode').val();
+			if (opCodes != '') {
+				var x = opCodes.split(',');
+				for (var i = 0; i < x.length; i++) {
+					if (!x) {
+						continue;
+					}
+					HWPostil1.HttpAddPostString("modelFileOpcodes[" + i + "].opCode", x[i]);
+				}
+			}
+
+			HWPostil1.HttpAddPostCurrFile("uploadFile");
+			var url = ctx + "/cfgmgr/cfg/modelFile/addModelFile";
+			var message = HWPostil1.HttpPost(url);
+			if ((message.trim()) != "success") {
+				util.error("文件增加失败！");
+			} else {
+				util.success("文件增加成功！");
+				var queryBtn = layui.$(".ag-btn-query");
+				if (queryBtn.length > 0) {
+					$(queryBtn).click();
+				}
+				var cancelBtn = layui.$(".aag-btn-cancel ");
+				if (cancelBtn.length > 0) {
+					$(cancelBtn).click();
+				}
 
 
-                }
-            }
-        function checkChange(obj) {
-            //业务底稿和协议都可以关联opcode
-            var op_code = obj.value;
-            if (op_code != '0') {
-                $('#opCode').removeAttr('disabled');
-                $('#ifCheckBox').removeAttr("checked");
-                $('#ifSpecBox').removeAttr("checked");
-            } else {
-                $('#opCode').attr('disabled', 'disabled').val('');
-            }
-            if (op_code == '2') {
-                $('#checkTable').show();
-            } else {
-                $('#checkTable').hide();
-            }
-        }
+			}
+		}
 
-        layui.use(['form'], function() {
-                 form=layui.form;
-        form.on('select(typeId)', function(data){
-          var op_code=data.value;
-               if (op_code != '0') {
-                   $('#opCode').removeAttr('disabled');
-                   $('#ifCheckBox').removeAttr("checked");
-                   $('#ifSpecBox').removeAttr("checked");
-               } else {
-                   $('#opCode').attr('disabled', 'disabled').val('');
-               }
-               if (op_code == '2') {
-                   $('#checkTable').show();
-               } else {
-                   $('#checkTable').hide();
-               }
-                 });
+		function checkChange(obj) {
+			//业务底稿和协议都可以关联opcode
+			var op_code = obj.value;
+			if (op_code != '0') {
+				$('#opCode').removeAttr('disabled');
+				$('#ifCheckBox').removeAttr("checked");
+				$('#ifSpecBox').removeAttr("checked");
+			} else {
+				$('#opCode').attr('disabled', 'disabled').val('');
+			}
+			if (op_code == '2') {
+				$('#checkTable').show();
+			} else {
+				$('#checkTable').hide();
+			}
+		}
 
-                });
+		layui.use(['form'], function() {
+			form = layui.form;
+			form.on('select(typeId)', function(data) {
+				var op_code = data.value;
+				if (op_code != '0') {
+					$('#opCode').removeAttr('disabled');
+					$('#ifCheckBox').removeAttr("checked");
+					$('#ifSpecBox').removeAttr("checked");
+				} else {
+					$('#opCode').attr('disabled', 'disabled').val('');
+				}
+				if (op_code == '2') {
+					$('#checkTable').show();
+				} else {
+					$('#checkTable').hide();
+				}
+			});
 
+		});
 	</script>
 </html>

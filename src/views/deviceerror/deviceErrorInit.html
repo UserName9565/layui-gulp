@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>layui</title>
+		<title>无纸化集中业务管理系统</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,28 +16,28 @@
 
 				<div class="param-left">
 
-          <div class="layui-inline ">
-          	<label class="layui-form-label">渠道编码：</label>
-          	<div class="layui-input-block">
-          		<input type="text" name="channelCode"  autocomplete="off" placeholder="渠道编码" class="layui-input">
-          	</div>
-          </div>
+					<div class="layui-inline ">
+						<label class="layui-form-label">渠道编码：</label>
+						<div class="layui-input-block">
+							<input type="text" name="channelCode" autocomplete="off" placeholder="渠道编码" class="layui-input">
+						</div>
+					</div>
 					<div class="layui-inline ">
 						<label class="layui-form-label">渠道名称：</label>
 						<div class="layui-input-block">
 							<input type="text" name="channelName" autocomplete="off" placeholder="渠道名称" class="layui-input">
 						</div>
 					</div>
-          <div class="layui-inline ">
-          	<label class="layui-form-label">处理状态：</label>
-          	<div class="layui-input-block">
-                <select name="sts">
-                    <option value="">-请选择-</option>
-                    <option value="0">待处理</option>
-                    <option value="1">已处理</option>
-                </select>
-          	</div>
-          </div>
+					<div class="layui-inline ">
+						<label class="layui-form-label">处理状态：</label>
+						<div class="layui-input-block">
+							<select name="sts">
+								<option value="">-请选择-</option>
+								<option value="0">待处理</option>
+								<option value="1">已处理</option>
+							</select>
+						</div>
+					</div>
 
 				</div>
 
@@ -47,18 +47,17 @@
 			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
 			<div class="btns-right">
 
-				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/monitor/device/queryPage">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-url="/sys/monitor/device/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
 
-										<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
-				</div>
 
 
 			</div>
@@ -74,7 +73,9 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="设备异常处理" ag-data-pk="id" ag-data-url="/views/deviceerror/deviceErrorUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="设备异常处理" ag-data-pk="id" ag-data-url="/views/deviceerror/deviceErrorUpdate.html"><i
+							 class="layui-icon layui-icon-edit"></i></div>
 					</div>
 
 				</div>
@@ -83,57 +84,57 @@
 
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
-			    [
-			      [
-			        {
-			          "type": "radio",
-			          "fixed": "left"
-			        },{
-			          "field": "id",
-			          "title": "主键",
-			          "hide": true
-			        },{
-			          "field": "tenantId",
-			          "title": "租户ID",
-			          "sort": true,
-			          "fixed": "left"
-			        }, {
-			          "field": "regionName",
-			          "title": "地市名称"
-			        }, {
-			          "field": "channelName",
-			          "title": "渠道名称"
-			        }, {
-			          "field": "workNo",
-			          "title": "营业员工号"
-			        }, {
-			          "field": "workName",
-			          "title": "营业员姓名"
-			        }, {
-			          "field": "errCode",
-			          "title": "错误编码"
-			        }, {
-			          "field": "errMsg",
-			          "title": "错误信息"
-			        }, {
-			          "field": "errTime",
-			          "title": "产生时间"
-			        }, {
-			          "field": "clientIp",
-			          "title": "客户端IP"
-			        }, {
-			          "field": "dealNo",
-			          "title": "处理工号"
-			        }, {
-			          "field": "dealName",
-			          "title": "处理姓名"
-			        }, {
-			          "field": "dealTime",
-			          "title": "处理时间"
-			        }
+				[
+				[
+				{
+				"type": "radio",
+				"fixed": "left"
+				},{
+				"field": "id",
+				"title": "主键",
+				"hide": true
+				},{
+				"field": "tenantId",
+				"title": "租户ID",
+				"sort": true,
+				"fixed": "left"
+				}, {
+				"field": "regionName",
+				"title": "地市名称"
+				}, {
+				"field": "channelName",
+				"title": "渠道名称"
+				}, {
+				"field": "workNo",
+				"title": "营业员工号"
+				}, {
+				"field": "workName",
+				"title": "营业员姓名"
+				}, {
+				"field": "errCode",
+				"title": "错误编码"
+				}, {
+				"field": "errMsg",
+				"title": "错误信息"
+				}, {
+				"field": "errTime",
+				"title": "产生时间"
+				}, {
+				"field": "clientIp",
+				"title": "客户端IP"
+				}, {
+				"field": "dealNo",
+				"title": "处理工号"
+				}, {
+				"field": "dealName",
+				"title": "处理姓名"
+				}, {
+				"field": "dealTime",
+				"title": "处理时间"
+				}
 
-			      ]
-			    ]
+				]
+				]
 
 			</div>
 			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
@@ -141,7 +142,7 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>

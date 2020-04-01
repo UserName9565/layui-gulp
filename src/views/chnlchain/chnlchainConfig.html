@@ -5,12 +5,12 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		@@include('url-config.html')
-		<script  src="/static/js/plugins/nestable/jquery.nestable.js"></script>
+		<script src="/static/js/plugins/nestable/jquery.nestable.js"></script>
 	</head>
 	<style>
 
 
-	.border-info{
+		.border-info{
 
 		border: 1px solid #e1e4e3;
 	}
@@ -45,7 +45,7 @@
 
 					<div class="layui-col-sm4 " style="padding-right: 15px;">
 
-						<div class="layui-card border-info" >
+						<div class="layui-card border-info">
 
 							<div class="layui-card-header " style="font-weight: bold;">
 
@@ -58,13 +58,13 @@
 
 								<div class="dd" id="chnlChain1" style="overflow-y: auto;">
 
-									</div>
+								</div>
 							</div>
 
 						</div>
 					</div>
 					<div class="layui-col-sm4 " style="">
-						<div class="layui-card border-info" >
+						<div class="layui-card border-info">
 
 							<div class="layui-card-header" style="font-weight: bold;">
 
@@ -82,16 +82,14 @@
 
 		</div>
 
-		<input type="hidden" name ="chnlType" />
-		<input type="hidden" name ="chnlTypeName" />
+		<input type="hidden" name="chnlType" />
+		<input type="hidden" name="chnlTypeName" />
 	</body>
 
 	<script>
+		$(function() {
 
-
-		$(function(){
-
-			var url = ctx+"/cfgmgr/cfg/settings/chnlchains/updateInit";
+			var url = ctx + "/cfgmgr/cfg/settings/chnlchains/updateInit";
 
 			var param = util.getUrlParam();
 
@@ -99,13 +97,15 @@
 
 			$("input[name=chnlTypeName]").val(param.chnlTypeName);
 
-			util.ajaxJson("页面加载中，请稍后...",url,{"chnlType":param.chnlType},function(data){
+			util.ajaxJson("页面加载中，请稍后...", url, {
+				"chnlType": param.chnlType
+			}, function(data) {
 
-				if(data.result != "0"){
+				if (data.result != "0") {
 
-					util.showDialog("页面加载失败!",0);
+					util.showDialog("页面加载失败!", 0);
 
-					return ;
+					return;
 				}
 
 				var chainComponentList = data.body.chainComponentList;
@@ -115,21 +115,21 @@
 
 				$('#chnlChain1').nestable({
 					group: 1,
-					maxDepth:1,
-					rmSourceItem:false,
-					itemKey:"compName",
-					itemName:'compNameCn',
-					data:chainComponentList
+					maxDepth: 1,
+					rmSourceItem: false,
+					itemKey: "compName",
+					itemName: 'compNameCn',
+					data: chainComponentList
 				});
 
 				$('#chnlChain2').nestable({
 					group: 1,
-					maxDepth:1,
-					dragFlag:true,//是否允许拖拽
-					addItemCloseBtn:true,//是否添加删除按钮
-					itemKey:"compName",
-					itemName:'compNameCn',
-					data:cfgChnlChainList
+					maxDepth: 1,
+					dragFlag: true, //是否允许拖拽
+					addItemCloseBtn: true, //是否添加删除按钮
+					itemKey: "compName",
+					itemName: 'compNameCn',
+					data: cfgChnlChainList
 				});
 			});
 		});
@@ -137,34 +137,37 @@
 
 
 
-		function save(){
+		function save() {
 
-			var arr  = $('#chnlChain2').nestable('getItemData');
+			var arr = $('#chnlChain2').nestable('getItemData');
 
-			for(var i = 0 ; i < arr.length ; i++){
+			for (var i = 0; i < arr.length; i++) {
 
 				arr[i].chnlType = $("input[name=chnlType]").val();
 				arr[i].chnlTypeName = $("input[name=chnlTypeName]").val();
-				arr[i].outFlag="0";
-				arr[i].outFlagName="外部接入";
+				arr[i].outFlag = "0";
+				arr[i].outFlagName = "外部接入";
 			}
 
 			var array = arr;
-			
-			var url = ctx+"/cfgmgr/cfg/settings/chnlchains/update";
+
+			var url = ctx + "/cfgmgr/cfg/settings/chnlchains/update";
 
 
-			util.ajaxJson("保存中，请稍后···",url,{"chnlType":$("input[name=chnlType]").val(),"cfgChnlChainList":array},function(data){
+			util.ajaxJson("保存中，请稍后···", url, {
+				"chnlType": $("input[name=chnlType]").val(),
+				"cfgChnlChainList": array
+			}, function(data) {
 
-				if(data.result != "0"){
+				if (data.result != "0") {
 
 					util.error("保存失败!");
 
-				}else{
+				} else {
 
 					util.success("保存成功!");
-					
-					parent.refreshSts(array.length > 0 ? true :false );
+
+					parent.refreshSts(array.length > 0 ? true : false);
 
 				}
 
@@ -175,9 +178,6 @@
 
 
 
-		$(".dd").height($(window).height()-200);
-
-
-
+		$(".dd").height($(window).height() - 200);
 	</script>
 </html>

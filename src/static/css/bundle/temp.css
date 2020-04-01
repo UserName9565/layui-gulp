@@ -1006,6 +1006,15 @@ body {
   	color: #d2d2d2!important;
   	cursor: not-allowed!important;
   }
+  
+  
+  .layui-inline{
+  	
+  	*display:inline;
+  	zoom: 1;
+  	width:300px;
+  }
+  
   /*******ztree 样式bug修改*********/
   .ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
   
