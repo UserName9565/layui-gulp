@@ -642,26 +642,27 @@ util = {
 
 	},
 
-	addToken: function() {
+	addToken: function(value) {
 
-		var obj = util.getMainWin();
+		// var obj = util.getMainWin();
 
-		var auth = $("input[type=hidden][name=agileauthtoken]", obj.$("#top_tabs_box"));
+		// var auth = $("input[type=hidden][name=agileauthtoken]", obj.$("#top_tabs_box"));
 
-		if (auth.length == 0) {
+		// if (auth.length == 0) {
 
-			obj.$("#top_tabs_box").append("<input type='hidden' name='agileauthtoken' value='' />");
-		}
-		obj.$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val($.cookie('JSESSIONID_token'));
+		// 	obj.$("#top_tabs_box").append("<input type='hidden' name='agileauthtoken' value='' />");
+		// }
+		// obj.$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val($.cookie('JSESSIONID_token'));
 
-
+		util.setSession("agileauthtoken",value);
 	},
 
 	getToken: function() {
 
 
-		return util.getMainWin().$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val();
+		//return util.getMainWin().$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val();
 
+		return util.getAndSaveToken();
 		//return $.cookie('JSESSIONID_token');
 	},
 	/**
@@ -795,10 +796,50 @@ util = {
 		}
 
 		return new Date(newdate).format(fmt);
+	},
+	setSession:function(key,val){
+		sessionStorage.setItem(key,val);
+	},
+	getSessoin:function(key){
+		return sessionStorage.getItem(key);
+	},
+	delSession:function(key){
+		
+		sessionStorage.removeItem(key);
+	},
+	getAndSaveToken:function(){
+		var token;
+		var searchStr = location.search;
+		if(!util.isNull(searchStr)){
+			searchStr = searchStr.substr(1);
+			var arr = searchStr.split("&");
+			for(var i = 0;i < arr.length; i++){
+				var arr2 = arr[i].split("=");
+				if(arr2[0] == "agileauthtoken"){
+					token = arr2[1];
+					util.setSession("agileauthtoken",token);
+					break;
+				}
+			}
+		}
+		
+		if(util.isNull(token)){
+			token = util.getSessoin("agileauthtoken");
+		}
+		
+		return token;
 	}
 }
 
 String.prototype.endWith = function(str) {
-var reg = new RegExp(str + "$");
-return reg.test(this);
+	
+	var reg = new RegExp(str + "$");
+	
+	return reg.test(this);
+}
+String.prototype.startWith = function(str) {
+	
+	var reg = new RegExp("^" + str);
+	
+	return reg.test(this);
 }

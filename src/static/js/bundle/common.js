@@ -358,17 +358,12 @@ var publicFun = {
 
     }
 
-    var accessToken = common.getString("JSESSIONID");
-    if (accessToken != null) {
-      $.cookie('JSESSIONID_token', accessToken, { path: '/' });
-    }
     if(pObj.type=="get"){
         var req = pObj.data;
     }else{
 
       var req = JSON.stringify(pObj.data);
     }
-    pObj.data['X-Token']= $.cookie('JSESSIONID_token')
     var url = ''
     if(pObj.url.indexOf("?")!=-1){
       url= pObj.url + "&t=" + Math.random()
@@ -383,7 +378,7 @@ var publicFun = {
       cache: false,
       async: true,
       headers: {
-        'X-Token': $.cookie('JSESSIONID_token')
+        'agileauthtoken': util.getToken()
      },
        
       contentType: "application/json; charset=utf-8",

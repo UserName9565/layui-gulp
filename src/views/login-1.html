@@ -102,6 +102,7 @@
             //     lineColor:'#448fff'
             // });
         });
+		
 
         // 进行登录操作
         form.on('submit(login)', function (request) {
@@ -136,15 +137,14 @@
                
                 // modelInit(data.data);
                 // localStorage.setItem("menus",JSON.stringify(data.functions))
-                $.cookie("JSESSIONID_token", data.token, {
-                  path: '/'
-                })
+                // $.cookie("JSESSIONID_token", data.token, {
+                //   path: '/'
+                // })
                  
+				 util.addToken(data.token);
                
                 // return false;
-              //  window.location = '../index.html';
-				
-				location.href = "/index.html"
+                window.location = '../index.html';
             }
             // layer.msg('登录成功', function () {
             //     window.location = '/index.html';
