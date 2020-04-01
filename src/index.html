@@ -183,7 +183,7 @@
 						
 						if(!util.isNull(o.moduleName)){
 							
-							 obj1.href = ctx+"/"+o.moduleName+o.jspUrl+"?agileauthtoken="+ $.cookie('JSESSIONID_token');
+							 obj1.href = ctx+"/"+o.moduleName+o.jspUrl+"?agileauthtoken="+ util.getToken();
 							 
 						}
 						 
