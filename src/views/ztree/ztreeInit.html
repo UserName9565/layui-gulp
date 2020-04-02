@@ -96,7 +96,12 @@
 					},
 			
 					view: {
-						selectedMulti: false
+						dblClickExpand: true, //双击节点时，是否自动展开父节点的标识
+						showLine: false, //设置 zTree 是否显示节点之间的连线。
+						selectedMulti: false, //设置是否允许同时选中多个节点。
+						autoCancelSelected: false, //禁止按住ctrl多选
+						showTitle: true, //设置显示提示信息
+						txtSelectedEnable: true //设置可以选择节点名称
 					},
 					data: {
 						key: {
@@ -172,6 +177,13 @@
 				setting.data.simpleData.pIdKey = parentOpt["ag-tree-return-parent-key"];
 				
 				setting.check.chkStyle = parentOpt["ag-tree-type"];
+				
+				if(parentOpt["ag-tree-type"] == "radio"){
+					
+					setting.check.radioType = "all";
+					
+				}
+				
 				
 				setting.async.url = ctx + "/" + parentOpt["ag-data-ctx"] + parentOpt["ag-tree-url"];
 				
@@ -304,6 +316,14 @@
 					return ;
 					
 				}else if (parentOpt["ag-tree-type"] == "radio"){ 
+					
+					
+					if(nodes[0].isAjaxing == true){
+						
+						util.error("正在加载子节点，请稍后！");
+						
+						return ;
+					}
 					
 					keyVal = nodes[0][parentOpt["ag-tree-return-key"]];
 					
