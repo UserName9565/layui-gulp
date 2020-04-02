@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+		<link rel="stylesheet" href="/static/css/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css" />
+		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.all-3.5.js"></script>
+		<script type="text/javascript" src="/static/js/plugins/ztree/js/jquery.ztree.exhide-3.5.js"></script>
+	</head>
+	<style>
+
+
+
+	</style>
+	<body class="bg-info">
+
+		<div class="layui-card  border-info">
+
+			<div class="layui-card-header   layui-card-header-bb-2" style="height: 55px;line-height: 20px; padding-left: 0;padding-right: 8px;padding-top: 15px;">
+				<div class="layui-input-inline" style="padding-left: 30px;">
+					<input class="layui-input  " id="searchInput" value="" placeholder="输入查询内容...">
+				</div>
+				<div class="layui-input-inline">
+					<button class="layui-btn layui-btn-normal" id="search_btn" onclick="showcheck()">查询</button>
+				</div>
+
+
+			</div>
+
+			<div class="layui-card-body">
+
+				<div class="layui-row">
+
+					<ul id="tree" class="ztree" style="height: calc( 100vh - 190px);overflow-y: auto;"></ul>
+
+				</div>
+
+			</div>
+
+			<div class="layui-card-footer">
+
+				<button class=" layui-btn layui-btn-sm layui-btn-blue  ztreeSave" >
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">确定</span>
+				</button>
+				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">取消</span>
+				</button>
+			</div>
+
+		</div>
+
+		<input type="hidden" name='roleCode' />
+
+		<input type="hidden" name="roleName" />
+
+	</body>
+
+	<script>
+		
+		
+		
+		layui.use(['element', 'form'], function() {
+			
+			var layer = layui.layer;
+			
+			var zTreeObj,
+				setting = {
+					check: {
+						enable: true,
+						chkboxType: {
+							"Y": "ps",
+							"N": "s"
+						},
+						chkStyle:"radio"
+						
+					},
+					async: {
+						enable: true,
+					    contentType: "application/json",
+						url: "",
+						dataType: "JSON",
+						autoParam: [],
+						headers :{"agileauthtoken":util.getToken()},
+						type: "post",
+						
+						dataFilter:function filter(treeId, parentNode, childNodes) {
+							
+							if (!childNodes) return null;
+							
+							return childNodes;
+						}
+					},
+			
+					view: {
+						selectedMulti: false
+					},
+					data: {
+						key: {
+							name: ""
+						},
+						simpleData: {
+							enable: true,
+							idKey: "",
+							pIdKey: "",
+							rootPId: "0"
+						}
+					},
+					callback: {
+						//点击节点开始时执行
+						beforeClick: function(treeId, treeNode) {
+								
+								treeNode.isParent = true;
+								
+								zTreeObj.reAsyncChildNodes(treeNode ,"refresh");
+								
+								
+								
+						},
+						onCheck:function(event, treeId, treeNode){
+							
+							if(treeNode.checked){
+								
+								treeNode.isParent = true;
+								
+								zTreeObj.reAsyncChildNodes(treeNode ,"refresh");
+								
+							}
+						},
+						beforeAsync: function(treeId, treeNode){
+							
+								
+						},
+						onAsyncError: function(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown){
+							
+							treeNode.isParent = false;
+							
+							zTreeObj.removeChildNodes(treeNode);
+							
+						},
+						onAsyncSuccess: function(event, treeId, treeNode, msg){
+							
+						}
+					}
+			
+				};
+			
+			
+			var parentOpt = {
+				"id":"",
+				"ag-tree-key":"",
+				"ag-tree-parent-key":"",
+				"ag-tree-return-parent-key":"parentCode",
+				"ag-tree-return-key":"optCode",
+				"ag-tree-return-name":"optName",
+				"ag-tree-name":"",
+				"ag-tree-url":"",
+				"ag-tree-type":"radio",
+				"ag-data-ctx":"sysmgr",
+				"ag-tree-data":[]
+			}
+			
+			function initSetting(){
+				
+				setting.data.key.name = parentOpt["ag-tree-return-name"];
+				
+				setting.data.simpleData.idKey = parentOpt["ag-tree-return-key"];
+				
+				setting.data.simpleData.pIdKey = parentOpt["ag-tree-return-parent-key"];
+				
+				setting.check.chkStyle = parentOpt["ag-tree-type"];
+				
+				setting.async.url = ctx + "/" + parentOpt["ag-data-ctx"] + parentOpt["ag-tree-url"];
+				
+				var autoArr = [];
+				
+				autoArr.push(parentOpt["ag-tree-return-key"]+"="+parentOpt["ag-tree-parent-key"]);
+				
+				//autoArr.push(parentOpt["ag-tree-return-name"]+"="+parentOpt["ag-tree-name"]);
+				
+				//autoArr.push(parentOpt["ag-tree-return-parent-key"]+"="+parentOpt["ag-tree-parent-key"]);
+				
+				setting.async.autoParam = autoArr;
+				
+			}
+			
+			function initOpt(){
+				
+				var param = util.getUrlParam();
+				
+				id = param.id;
+				
+				var errorMsg = "";
+				
+				var parentObj = parent.$("#"+id);
+				
+				if(parentObj.length == 0){
+					
+					util.error("id不存在！");
+					
+					return false;
+				}
+				
+				for(var key in parentOpt){
+					
+					var val  = parentObj.attr(key)  ;
+					
+					if(!util.isNull(val)){
+						
+						parentOpt[key] = val;
+					}
+					
+					
+					if( key ==  "ag-tree-data"  ){
+						
+						val =  parent.$("[name="+parentOpt["ag-tree-key"]+"]").data(key);
+						
+						if(!util.isNull(val)){
+							
+							parentOpt[key] = val;
+						}
+						
+						continue;
+					}
+					
+					if(util.isNull(parentOpt[key])){
+						
+						
+						
+						errorMsg +="["+key+"]属性未配置,"
+					}
+					
+				}
+				
+				if(!util.isNull(errorMsg)){
+					
+					util.error(errorMsg);
+					
+					return false;
+					
+				}
+				
+				return true;
+			}
+			
+			
+			
+			
+			$(document).ready(function() {
+			
+				
+				if(!initOpt()){
+					
+					return ;
+				}
+				
+				initSetting();
+				
+				zTreeObj = $.fn.zTree.init($("#tree"),setting,parentOpt["ag-tree-data"]);
+				
+				
+				$(".ztreeSave").click(function(){
+					
+					save();
+				})
+			});
+			//初始化节点树
+			
+			function trimtest(str) {
+				//   用正则表达式将前后空格
+				//   用空字符串替代。
+				return str.replace(/(^\s*)|(\s*$)/g, "");
+			}
+			//将所有隐藏的节点显示出来。
+			function refreashNodes() {
+				nodes = zTreeObj.getNodesByParam("isHidden", true);
+				zTreeObj.showNodes(nodes);
+			}
+			
+			function save() {
+				
+				refreashNodes();
+			
+				var nodes = zTreeObj.getCheckedNodes(true);
+				
+				if(nodes.length == 0){
+					
+					util.error("请选中渠道！");
+					
+					return ;
+				}
+				
+				var keyVal = "";
+				
+				var nameVal ="";
+				
+				if(parentOpt["ag-tree-type"] == "checkbox"){
+					
+					util.error("待开发...");
+					
+					return ;
+					
+				}else if (parentOpt["ag-tree-type"] == "radio"){ 
+					
+					keyVal = nodes[0][parentOpt["ag-tree-return-key"]];
+					
+					nameVal = nodes[0][parentOpt["ag-tree-return-name"]];
+					
+				}else{
+					
+					util.error("类型配置不正确:"+parentOpt["ag-tree-type"]);
+					
+					return ;
+				}
+				
+				parent.$("[name="+parentOpt["ag-tree-key"]+"]").val(keyVal);
+				
+				parent.$("[name="+parentOpt["ag-tree-name"]+"]").val(nameVal);
+				
+				parent.util.closeAll();
+				
+			}
+			
+			function showcheck() {
+			
+				util.load('检索中请稍后!');
+			
+				showSelected();
+			
+			
+				util.disLoad();
+			}
+			
+			function showSelected() {
+			
+				var searchStr = $('#searchInput').val(); //通过id获取页面输入的值
+				if (searchStr == '') {
+					refreashNodes();
+					return;
+				}
+			
+				var allNodes = zTreeObj.transformToArray(zTreeObj.getNodes());
+			
+				zTreeObj.hideNodes(allNodes); //隐藏所有节点
+				// var nodes = zTreeObj.getNodesByFilter(filter); // 查找节点集合 两种方式
+			
+				var nodes = zTreeObj.getNodesByParamFuzzy("functionName", searchStr);
+			
+				if (nodes.length == 0) {
+					return;
+				}
+			
+				var resultNodes = new Array();
+				$.each(nodes, function(i, n) {
+					var tempNode = n;
+					for (var i = 0; i < n.level; i++) {
+						tempNode = tempNode.getParentNode(); //获取当前被选中的节点的父节点
+						if (tempNode != null && tempNode != "") {
+							resultNodes.push(tempNode);
+						}
+					}
+				});
+				resultNodes = resultNodes.concat(nodes); //concat() 方法用于连接两个或多个数组。该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。
+				zTreeObj.showNodes(resultNodes);
+				zTreeObj.expandAll(true);
+			
+			}
+			
+			function showValNode(obj) {
+				var val = $(obj).val();
+				val = trimtest(val);
+				if (val == "") {
+					refreashNodes();
+				}
+			}
+			
+		});
+		
+		
+		
+	</script>
+</html>

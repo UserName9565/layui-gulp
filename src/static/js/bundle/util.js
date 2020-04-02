@@ -633,18 +633,18 @@ util = {
 	 */
 	getRealityOrderHeight: function(obj) {
 
-		
+
 		var height = parseInt($(obj).css("margin-top").replace("px", "")) +
 			parseInt($(obj).css("margin-bottom").replace("px", "")) +
 			parseInt($(obj).css("padding-top").replace("px", "")) +
-			parseInt($(obj).css("padding-bottom").replace("px", "")) ;
-		
-		var top  =parseInt($(obj).css("border-top-width").replace("px", "")) ;
-		
+			parseInt($(obj).css("padding-bottom").replace("px", ""));
+
+		var top = parseInt($(obj).css("border-top-width").replace("px", ""));
+
 		var bottom = parseInt($(obj).css("border-bottom-width").replace("px", ""));
-		
+
 		return height + (isNaN(top) ? 0 : top) + (isNaN(bottom) ? 0 : bottom);
-			
+
 
 	},
 
@@ -683,126 +683,7 @@ util = {
 		return newnum
 	},
 
-	/**
-	 * 处理加减月时，当日大于28时，将新的日在新的月份中合理化
-	 * @param {Object} newyear
-	 * @param {Object} newmonth
-	 * @param {Object} newday
-	 */
-	adjustNewDay: function(newyear, newmonth, newday) {
 
-		var monthbs = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1] // 定义月份的大小
-
-		var newAdjustedDay = newday;
-		if (monthbs[newmonth - 1] < 1 && newday > 28) { // 将新的日在新的月份中合理化
-			if (newmonth != 2) { // 不是二月时
-				newAdjustedDay = 30
-			} else {
-				if ((newyear % 4 == 0) && (newyear % 100 != 0 || newyear % 400 == 0)) { // 二月时判断是否为闰年
-					newAdjustedDay = 29
-				} else {
-					newAdjustedDay = 28
-				}
-			}
-		}
-		return newAdjustedDay;
-	},
-	/**
-	 * 获取当月份最大天数
-	 * @param {Object} newyear
-	 * @param {Object} month
-	 */
-	getMonthMaxDays: function(newyear, month) {
-
-		var monthbs = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1] // 定义月份的大小
-		var newmonthdays = 31;
-		if (monthbs[month - 1] < 1) {
-			if (month != 2) {
-				newmonthdays = 30
-			} else {
-				if ((newyear % 4 == 0) && (newyear % 100 != 0 || newyear % 400 == 0)) { // 二月时判断是否为闰年
-					newmonthdays = 29
-				} else {
-					newmonthdays = 28
-				}
-			}
-		}
-		return newmonthdays;
-	},
-	/**
-	 * 用来计算增减天数的递归
-	 * @param {Object} year
-	 * @param {Object} month
-	 * @param {Object} day
-	 * @param {Object} delayTime
-	 */
-	recursionDays: function(year, month, day, delayTime) {
-		var newyear = year;
-		var newmonth = month;
-		var newday = day + delayTime;
-		var newmonthdays = util.getMonthMaxDays(year, month);
-		if (newday <= newmonthdays) {
-			newmonth = util.formatSmallNum(newmonth)
-			newday = util.formatSmallNum(newday)
-			return newyear + "" + newmonth + "" + newday
-		} else {
-			newmonthdays = util.getMonthMaxDays(year, month); // 目标月最大天数
-			newmonth = month + 1;
-			newdelay = newday - newmonthdays;
-			newday = 0;
-			if (newmonth > 12) {
-				newyear = newyear + 1;
-				newmonth = newmonth - 12;
-			}
-			return util.recursionDays(newyear, newmonth, newday, newdelay)
-		}
-	},
-	addTodayTime: function(offset, fmt) {
-
-		return util.addTime(new Date().toString(), offset, fmt);
-	},
-	addTime: function(date, delay, fmt) {
-
-		date = new Date(date);
-
-		var year = date.getFullYear(); // 获取年
-
-		var month = date.getMonth(); // 获取月
-
-		var day = date.getDay(); // 获取日
-
-		var newdate;
-
-		if (delay.endWith("M")) { // 处理月份加
-			delayTime = parseInt(delay.substring(0, delay.length - 1)) // 获取要加的月数
-			var newyear = year
-			var newmonth = month + delayTime;
-			var newday = day;
-			if (newmonth > 12) { // 月份加后大于12
-				var newyear = newyear + 1;
-				var newmonth = newmonth - 12;
-			}
-			newday = util.adjustNewDay(newyear, newmonth, newday);
-			newmonth = util.formatSmallNum(newmonth);
-			newday = util.formatSmallNum(newday);
-			newdate = newyear + "" + newmonth + "" + newday; // 组装新日期
-		}
-		if (delay.endWith("D")) { // 处理天数加
-			delayTime = parseInt(delay.substring(0, delay.length - 1)) // 获取要加的天数
-			newdate = util.recursionDays(year, month, day, delayTime); // 通过递归方式计算delayTime天后的日期
-		}
-
-		if (delay.endWith("Y")) { // 处理年数加
-
-			delayTime = parseInt(delay.substring(0, delay.length - 1)) // 获取要加的天数
-
-			newyear = year + delayTime;
-
-			newdate = newyear + "" + newmonth + "" + newday; // 组装新日期
-		}
-
-		return new Date(newdate).format(fmt);
-	},
 	setSession: function(key, val) {
 		sessionStorage.setItem(key, val);
 	},
@@ -868,6 +749,102 @@ util = {
 			return -1; //不是ie浏览器
 		}
 
+	},
+
+	addTodayDate: function(interval, number, d) {
+
+		return util.getTime(undefined, util.dateAdd(interval, number, d || new Date()));
+	},
+
+	dateAdd: function(interval, number, date) {
+		switch (interval) {
+			case "y":
+				{
+					//年
+					date.setFullYear(date.getFullYear() + number);
+					return date;
+					break;
+				}
+			case "q":
+				{
+					//季度
+					date.setMonth(date.getMonth() + number * 3);
+					return date;
+					break;
+				}
+			case "M":
+				{
+					//月份
+					date.setMonth(date.getMonth() + number);
+					return date;
+					break;
+				}
+			case "w":
+				{
+
+					//周
+					date.setDate(date.getDate() + number * 7);
+					return date;
+					break;
+				}
+			case "d":
+				{
+
+					//日
+					date.setDate(date.getDate() + number);
+					return date;
+					break;
+				}
+			case "h":
+				{
+					//小时
+					date.setHours(date.getHours() + number);
+					return date;
+					break;
+				}
+			case "m":
+				{
+
+					//分钟
+					date.setMinutes(date.getMinutes() + number);
+					return date;
+					break;
+				}
+			case "s":
+				{
+
+					//秒
+					date.setSeconds(date.getSeconds() + number);
+					return date;
+					break;
+				}
+			default:
+				{
+					//日
+					date.setDate(d.getDate() + number);
+					return date;
+					break;
+				}
+		}
+	},
+	//获取随机数
+	generateMixed : function() {
+	var chars = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
+			'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ];
+	var res = "";
+	for (var i = 0; i < 7; i++) {
+		var id = Math.ceil(Math.random() * 35);
+		res += chars[id];
+	}
+	return res;
+	},/**
+	 * 获取毫秒数
+	 */
+	getMSecond:function(){
+		
+		return new Date().getTime();
+		
 	}
 }
 

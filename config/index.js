@@ -15,7 +15,7 @@ module.exports = {
     html:  [resolveDev('/**/*.html'), '!./src/include/**/*'],
     allhtml: resolveDev('/**/*.html'),
     styles: resolveDev('static/css/**/*.{scss,css}'),
-    script: resolveDev('static/js/**/*.js'),
+    script: resolveDev('static/js/**/*'),
     images: resolveDev('static/images/**/*.{png,jpg,gif,svg}'),
     layer: resolveDev('static/layui/**/*')
   },

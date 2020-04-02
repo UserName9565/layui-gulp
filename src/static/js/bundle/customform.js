@@ -137,6 +137,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		$(".ag-btn-del").on("click", del);
 
 		$(".ag-btn-reset").on("click",resetForm);
+		
+		$(".ag-data-tree").on("click",initAgZtree);
+		
 	};
 	
 	function resetForm(){
@@ -1591,6 +1594,16 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 								$(selObj).html(selectStr);
 								form.render('select');
 							}
+							
+							if(name.endWith("Tree")){
+								
+								var treeObj = $("[name=" + name.substr(0, name.length - 4) + "]");
+								
+								
+								treeObj.data("ag-tree-data",data[name]);
+								
+								
+							}
 					
 						}
 					
@@ -1732,7 +1745,31 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		
 		agTable.css('height', 'calc( 100vh - ' + sibHeight + 'px)');
 	}
-
+	
+	
+	function initAgZtree(){
+		
+		var id = $(this).attr("id");
+		
+		if(util.isNull(id)){
+			
+			id = util.getMSecond();
+			
+			$(this).attr("id",id);
+		}
+		
+		var title = $(this).attr("ag-tree-title");
+		
+		if(util.isNull(title)){
+			
+			util.error("请设置ag-tree-title属性");
+			
+			return ;
+		}
+		
+		util.openWin("/views/ztree/ztreeInit.html?id="+id,title,800,600);
+		
+	}
 
 
 	

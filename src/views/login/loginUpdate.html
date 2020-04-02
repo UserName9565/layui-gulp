@@ -38,8 +38,9 @@
             <div class="layui-inline ">
               <label class="layui-form-label">渠道：</label>
               <div class="layui-input-block">
-                    <input type="hidden" name="groupId" ag-verify="required" autocomplete="off" placeholder="姓名" class="layui-input">
-                    <input type="text" name="groupName" ag-verify="required" autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"  ag-tree-key="" ag-tree-parent-key=""  ag-tree-name="" ag-tree-url="" ag-tree-type="radio">
+					<input type="hidden" name="groupId" ag-verify="required" autocomplete="off"  class="layui-input">
+					<input type="text" name="groupName" ag-tree-title="渠道选取" ag-verify="required" autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+										
               </div>
             </div>
 
