@@ -845,6 +845,14 @@ util = {
 		
 		return new Date().getTime();
 		
+	},
+	
+	hasClass:function(elem, c){
+		
+		function classReg(className) {
+			return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+		}
+		return classReg(c).test(elem.className);
 	}
 }
 
