@@ -1348,11 +1348,18 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				data.fileName = obj.name;
 
-				data.fileSize = Math.ceil(obj.size / 1000);
+				data.fileSize = Math.ceil(obj.size / 1024);
 
 				data.file = obj;
 
 				data.opTime = util.getTime();
+				
+				if(data.fileSize/1024 > 20){
+					
+					util.error("最大上传文件大小20M!");
+					
+					return ;
+				}
 
 			} else {
 
@@ -1360,7 +1367,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				data.fileType = file_types[obj.fileType] ? file_types[obj.fileType] : "default";
 
-				data.fileSize = Math.ceil(data.fileSize / 1000);
+				data.fileSize = Math.ceil(data.fileSize / 1024);
 			}
 
 			/**
@@ -1802,10 +1809,19 @@ function _listHrefDownloadFile(url) {
 
 function _doRealDownLoad(url) {
 
+	if ($("[name=downloadHidenFr1").length == 0) {
+	
+		var iframe = $("<iframe name='downloadHidenFr1' class='layui-hide'></iframe>");
+	
+		iframe.appendTo('body');
+	}
+	
 	var action = url;
 	var form = $("<form></form>").attr("action", action).attr("method", "post");
-	form[0].target = "downloadHidenFr";
+	form[0].target = "downloadHidenFr1";
 	form.appendTo('body').submit().remove();
+	
+	
 
 }
 

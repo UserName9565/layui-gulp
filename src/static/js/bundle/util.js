@@ -846,6 +846,15 @@ util = {
 		return new Date().getTime();
 		
 	},
+	
+	hasClass:function(elem, c){
+		
+		function classReg(className) {
+			return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+		}
+		return classReg(c).test(elem.className);
+	
+	},
   encode64:function (input) {  
   	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv"  
               + "wxyz0123456789+/" + "=";
