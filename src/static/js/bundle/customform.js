@@ -1576,18 +1576,18 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 					
 									selectStr += "<option value=''>-请选择-</option>"
 								}
-					
-								for (var i = 0; i < optArr.length; i++) {
-									var selectedStr = optArr[i].selected;
-									if (util.isNull(selectedStr)) {
-										selectedStr = "";
-									}
-					
-									var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
-										"</option>";
-									selectStr = selectStr + optBean;
-								}
-					
+                if(optArr!=null){
+                    for (var i = 0; i < optArr.length; i++) {
+                      var selectedStr = optArr[i].selected;
+                      if (util.isNull(selectedStr)) {
+                        selectedStr = "";
+                      }
+              
+                      var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
+                        "</option>";
+                      selectStr = selectStr + optBean;
+                    }
+                }
 					
 					
 					
