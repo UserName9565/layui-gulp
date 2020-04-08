@@ -94,7 +94,6 @@
 			
 			    <form class="ag-form layui-form layui-hide " ag-data-index="1"  style="padding-top: 10px;">
 			
-			      <div class="layui-inline ">
 					  
 					  <input type="hidden" name="tId"  value="" />
 			
@@ -234,7 +233,7 @@
 				
 				var parNode =zTreeObj.getNodeByTId(treeNode.parentTId);
 				
-				if(parNode.functionCode.startsWith("new")){
+				if(parNode.functionCode.startWith("new")){
 					
 					util.showDialog("父级菜单未保存!",0);
 					
@@ -298,7 +297,7 @@
 			//删除操作之后回调
 			function onRemove(e, treeId, treeNode) {
 				
-				if(treeNode.functionCode==undefined || treeNode.functionCode.startsWith("new")){
+				if(treeNode.functionCode==undefined || treeNode.functionCode.startWith("new")){
 					
 					return false;
 				}
@@ -357,7 +356,7 @@
 				var btn = $("#addBtn_"+treeNode.tId);
 				if (btn) btn.bind("click", function(){
 					
-					if(treeNode.functionCode.startsWith("new")){
+					if(treeNode.functionCode.startWith("new")){
 						
 						util.showDialog("父菜单未保存!",0);
 						

@@ -48,7 +48,7 @@
 <body>
 <div class="layui-container">
     <div class="admin-login-background">
-    <input type="hidden" id="code" />
+    <input type="hidden" id="captchaCode" />
         <div class="admin-login-background-left"></div>
         <div class="admin-login-background-right">
             <div class="layui-form login-form">
@@ -106,7 +106,7 @@
         form.on('submit(login)', function (request) {
             request = request.field;
             request.selfIp = ''
-            var code=$("#code").val();
+            var code=$("#captchaCode").val();
             if (request.loginNoStr == '') {
                 layer.msg('用户名不能为空');
                 return false;
@@ -123,7 +123,6 @@
                 layer.msg("验码码错误!", 0);
                 return false;
                }
-                console.info(util.encode64(request.loginNoStr));
 
              //$("#loginNoStr").val(util.encode64(request.loginNoStr));
              //$("#loginPasswd").val(util.encode64(request.loginPasswd));
@@ -171,7 +170,13 @@
     });
 </script>
 <script>
-getCaptcha();
+	$(function(){
+		
+		$("#captchaCode").val("");
+		
+		getCaptcha();
+		
+	});
 function getCaptcha() {
   var url = ctx+"/sysmgr/sys/login/auth/captcha";
   $.ajax({
@@ -182,7 +187,7 @@ function getCaptcha() {
     dataType:"json",
     success : function(data) {
     	var random=data.desc;
-    	$("#code").val(random);
+    	$("#captchaCode").val(random);
         var verify = document.getElementById('captchaPic');
         var base64=data.body;
         base64=base64.replace(/\"/g,"");

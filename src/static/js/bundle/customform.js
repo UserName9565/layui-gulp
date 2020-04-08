@@ -486,7 +486,22 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 
 	function initPage(idx) {
-
+		
+		
+		
+		if ($(".ag-form[ag-data-index=" + idx + "] > input[name=page]").length == 0  ){
+			
+			var input = $("<input type='hidden' name='page' value=''>");
+			
+			$(".ag-form[ag-data-index=" + idx + "]").append(input);
+			
+		}
+		
+		if(util.isNull($(".ag-form[ag-data-index=" + idx + "] > input[name=page]").val())){
+			
+			$(".ag-form[ag-data-index=" + idx + "] > input[name=page]").val('{"pageNo":"1","pageSize":"20"}');
+			
+		}
 
 		var pager = $(".ag-table[ag-data-index=" + idx + "] ").siblings(".ag-area-page");
 		
@@ -504,16 +519,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		
 		pager.empty();
 		
-		var pageInput = $(".ag-form[ag-data-index=" + idx + "] > input[name=page]");
 		
-		if (pageInput.length == 0) {
-			
-			var input = $("<input type='hidden' name='page' value=''>");
-			
-			$(".ag-form[ag-data-index=" + idx + "]").append(input);
-			
-			$(input).val('{"pageNo":"1","pageSize":"20"}');
-		}
 		
 		var pageSize  = $.parseJSON($(".ag-form[ag-data-index=" + idx + "] > input[name=page]").val()).pageSize;
 
@@ -1342,7 +1348,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			var data = {};
 
-			if (obj.__proto__.constructor && obj.__proto__.constructor.name == "File") {
+			if (obj instanceof File) {
 				
 				data.fileType = file_types[obj.type] ? file_types[obj.type] : "default";
 
@@ -1575,6 +1581,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 							if (name.endWith("Opt")) {
 					
 								var optArr = data[name];
+								
+								optArr = util.isNull(optArr) ? [] : optArr;
+								
 								var selectStr = "";
 					
 								var selObj = $("select[name=" + name.substr(0, name.length - 3) + "]");
