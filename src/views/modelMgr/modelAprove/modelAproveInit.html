@@ -19,8 +19,11 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="text" name="groupId" lay-verify="title" autocomplete="off" placeholder="组织机构" class="layui-input">
-						</div>
+ 						 <input type="text" name="groupName" id="groupName" lay-verify="title" autocomplete="off" placeholder="组织机构"
+						 readonly="readonly" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
+						<input type="hidden" id="groupId" name="groupId" />
+
+            </div>
 					</div>
 				</div>
 
@@ -54,8 +57,8 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
-						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
-						 ag-win-height="600" ag-win-title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html"><i
+						<div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html" ><i
 							 class="layui-icon layui-icon-edit"></i></div>
 
 					</div>
@@ -114,6 +117,42 @@
 		</div>
 
 		<script>
+
+      $('.ag-btn-apply').click(function(e) {
+      	var index = $(this).attr("ag-data-index");
+      	var tableId = $("table[ag-data-index=" + index + "]").attr("id");
+      	var checkStatus = table.checkStatus(tableId);
+      	var data = checkStatus.data; //获取选中行数据
+       	if (data.length == 0) {
+      		util.warning('请选择一条数据库记录!');
+      		return;
+      	}
+      	var pkCol = $(this).attr("ag-data-pk");
+      	var pkVal = data[0][pkCol];
+      	var validFlag = data[0]['validFlag'];
+       	if (validFlag== 'Y') {
+      		util.warning("此工单已经审批通过！");
+      		return ;
+      	}
+        var agCtx = util.getAgCtx(this);
+		     var url = $(this).attr("ag-data-url");
+
+         if (url.indexOf("?") == -1) {
+        	url = url + "?" + pkCol + "=" + pkVal;
+        } else {
+        	url = url + "&" + pkCol + "=" + pkVal;
+        }
+        var opts = {
+        	"winId": winId
+        }
+
+        var winId = $(this).attr("ag-win-id");
+        var winW = $(this).attr("ag-win-width");
+        var winH = $(this).attr("ag-win-height");
+        var title = $(this).attr("ag-win-title");
+
+        util.openWin(url, title, winW, winH, opts);
+      });
 
 		</script>
 	</body>
