@@ -830,10 +830,10 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		var agCtx = util.getAgCtx(this);
 
 		var url = ctx + "/" + agCtx + $(this).attr("ag-data-url");
+		
 		var param = getFormJson(form);
 
 		var that = this;
-
 
 		util.ajaxJson("保存中,请稍后....",url,param,function(data){
 

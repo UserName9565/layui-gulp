@@ -179,7 +179,7 @@ util = {
 			//url  = url +"?_agileauthtoken="+$.getAndSaveToken();
 		}
 		
-		$("object").hide();
+		$("object.hideObject").hide();
 		
 		var layIndex = layer.open({
 			type: 2,
@@ -207,7 +207,7 @@ util = {
 			},
 			end: function() {
 				
-				$("object").show();
+				$("object.hideObject").show();
 
 				//var body = layer.getChildFrame('body', layIndex);
 
@@ -245,7 +245,7 @@ util = {
 
 		var off = [(winH / 2 - 72) + 'px', (winW / 2 - 181) + 'px'];
 		
-		$("object").hide();
+		$("object.hideObject").hide();
 		
 		if (type == 2) {
 			layer.alert(retMsg, {
@@ -255,18 +255,18 @@ util = {
 				closeBtn: 0
 			}, function(index) {
 				
-				$("object").show();
+				$("object.hideObject").show();
 
 				layer.close(index);
 				if (opts != undefined && opts.closeParent == 1) {
 					util.closeWin();
 				}
 
-				if (util.isNull(callBack)) {
+				if (util.isNull(callBack) || callBack == "no") {
 
 					return;
 				}
-
+				
 				if ($.isFunction(callBack)) {
 
 					callBack.call(this);
@@ -287,11 +287,11 @@ util = {
 				closeBtn: 0
 			}, function(index) {
 				
-				$("object").show();
+				$("object.hideObject").show();
 
 				layer.close(index);
 
-				if (util.isNull(callBack)) {
+				if (util.isNull(callBack) || callBack == "no") {
 
 					return;
 				}
@@ -316,11 +316,11 @@ util = {
 				closeBtn: 0
 			}, function(index) {
 				
-				$("object").show();
+				$("object.hideObject").show();
 				
 				layer.close(index);
 
-				if (util.isNull(callBack)) {
+				if (util.isNull(callBack) || callBack == "no") {
 
 					return;
 				}
@@ -345,11 +345,11 @@ util = {
 				title: ['\u63d0\u793a\u4fe1\u606f', true],
 				yes: function(index) {
 					
-					$("object").show();
+					$("object.hideObject").show();
 					
 					layer.close(index);
 
-					if (util.isNull(callBack)) {
+				   if (util.isNull(callBack) || callBack == "no") {
 
 						return;
 					}
@@ -374,10 +374,14 @@ util = {
 			}, function(index) {
 				
 				
-				$("object").show();
+				$("object.hideObject").show();
 				
 				layer.close(index);
-
+				
+				if (util.isNull(callBack) || callBack == "no") {
+				
+					return;
+				}
 
 				if (callBack && callBack.split(";").length > 1) {
 
@@ -388,7 +392,7 @@ util = {
 
 			}, function(index) {
 				
-				$("object").show();
+				$("object.hideObject").show();
 				
 				layer.close(index);
 
