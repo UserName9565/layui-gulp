@@ -1714,7 +1714,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 		if (agTable.length == 0) {
 
-			return;SO
+			return;
 		}
 
 		var sibHeight = -15;
