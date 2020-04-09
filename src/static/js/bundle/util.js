@@ -178,7 +178,9 @@ util = {
 
 			//url  = url +"?_agileauthtoken="+$.getAndSaveToken();
 		}
-
+		
+		$("object").hide();
+		
 		var layIndex = layer.open({
 			type: 2,
 			area: [w + 'px', h + 'px'],
@@ -203,7 +205,9 @@ util = {
 			min: function() {
 
 			},
-			restore: function() {
+			end: function() {
+				
+				$("object").show();
 
 				//var body = layer.getChildFrame('body', layIndex);
 
