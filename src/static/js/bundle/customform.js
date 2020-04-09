@@ -61,9 +61,19 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		for (var i = 0; i < arr2.length; i++) {
 
 			paramJson[arr2[i].name] = $(arr2[i]).val();
-			var nameKey = $(arr2[i]).attr("ag-sel-name");
-			var text = $(arr2[i]).find("option:selected").text();
-			paramJson[nameKey] = text;
+			
+			
+			
+			if(!util.isNull(paramJson[arr2[i].name])){
+				
+				var nameKey = $(arr2[i]).attr("ag-sel-name");
+				
+				var text = $(arr2[i]).find("option:selected").text();
+				
+				paramJson[nameKey] = text;
+			}
+			
+		
 		}
 
 		//复选框
@@ -1704,7 +1714,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 		if (agTable.length == 0) {
 
-			return;
+			return;SO
 		}
 
 		var sibHeight = -15;
