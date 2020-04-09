@@ -59,7 +59,7 @@
 						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
 						 ag-win-title="新增" title="新增" ag-data-url="/views/modelMgr/modelFile/modelFileAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
 						<!-- <div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelFile/modelFileUpdate.html"><i class="layui-icon layui-icon-edit"></i></div> -->
-						<div class="ag-btn-delele layui-inline" title="修改" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						<div class="ag-btn-delele layui-inline" title="删除" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
 						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
 						<!-- 申请-->
 						<div class="ag-btn-apply layui-inline" title="申请" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
@@ -161,13 +161,11 @@
 				
 				var opts = {};
 				
-				
 				opts.modelfileId = pkVal;
 				
 				opts.validFlag = validFlag;
 				
 				opts.url = ctx + "/cfgmgr/cfg/modelFile/deleteAjax";
-				
 				
 				util.showDialog("您确定要删除选中记录么?", 3, executeFunc, opts);
 				
@@ -179,7 +177,6 @@
 				
 				util.ajaxJson("处理中....",opts.url,opts,function(data){
 					
-					alert(opts.url);
 					var result = data.result;
 					
 					var desc = data.desc;
@@ -187,7 +184,8 @@
 					if (result == 0) {
 					
 						util.success(desc);
-					
+						
+						$(".ag-btn-query").click();
 					}
 					
 				},undefined,true);
@@ -260,9 +258,6 @@
 
 			
 
-			function openOrg() {
-				util.openWin("/views/modelMgr/modelFile/groupList.html", "选择组织机构", "300", "400");
-			}
 		</script>
 	</body>
 </html>

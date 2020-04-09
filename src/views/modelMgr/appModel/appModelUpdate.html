@@ -59,13 +59,13 @@
 						</div>
 
 						<div class="layui-inline ">
-							<label class="layui-form-label">是否为可选协议：</label>
+							<label class="layui-form-label">可选协议：</label>
 							<div class="layui-input-block">
 								<select name="modelSelect" id="modelSelect">
 								</select>
 							</div>
 						</div>
-						<div>
+						<div style="margin-top: 80px;">
 							<OBJECT id="AgObj1" name="AgObj1" classid="clsid:FE687895-F413-4D10-8740-D584DA23C74F" style="HEIGHT: 500px; WIDTH: 100%"></OBJECT>
 						</div>
 				</form>
@@ -94,58 +94,44 @@
 </script>
 <script>
 	var base64Str = "";
-
+	
+	$("object").addClass("hideObject");
+	
 	function givePower_onclick() {
+		
 		var url = ctx + "/cfgmgr/cfg/appModelFile/updateAjax";
 		var param = {
-			"modelfileId": getQueryString("modelfileId")
+			"modelfileId": util.getUrlParam().modelfileId
 		};
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: JSON.stringify(param),
-			contentType: "application/json",
-			xhrFields: {
-				withCredentials: false //跨域session保持
-			},
-			async: true,
-			dataType: "json",
-			success: function(data) {
-				var body = data.body;
-				$("#typeName").val(body.modelType.typeName);
-				$("#modelfileName").val(body.modelfileName);
-				$("#loginNo").val(body.loginNo);
-				$("#opTime").val(body.opTime);
-				$("#opCode").val(body.opCode);
-
-				$("#modelfileId").val(body.modelfileId);
-				//授权认证
-				var iframe = document.getElementById("AgObj1");
-				// alert("加载模板...");
-				iframe.AddLicence(body.licence);
-				//编辑模板状态
-				iframe.Ag_InitFlag(true);
-				//设置模板元素
-				iframe.Ag_InitElement(body.elements, ",", ":");
-				//打开模板文件BILL.PDF
-				var modelfileId = getQueryString("modelfileId");
-				var url = ctx + "/cfgmgr/cfg/appModelFile/downloadFile?modelfileId=" + modelfileId;
-				var fileLocal = body.fileLocal;
-				var ret = iframe.Ag_DownLoadFromHTTP(url, fileLocal + "appmodel.pdf");
-				iframe.Ag_OpenTempleteFile(fileLocal + "appmodel.pdf", true);
-			}
-		});
+		
+		util.ajaxJson("页面加载中...",url,param,function(data){
+			
+			var body = data.body;
+			$("#typeName").val(body.modelType.typeName);
+			$("#modelfileName").val(body.modelfileName);
+			$("#loginNo").val(body.loginNo);
+			$("#opTime").val(body.opTime);
+			$("#opCode").val(body.opCode);
+			
+			$("#modelfileId").val(body.modelfileId);
+			//授权认证
+			var iframe = document.getElementById("AgObj1");
+			// alert("加载模板...");
+			iframe.AddLicence(body.licence);
+			//编辑模板状态
+			iframe.Ag_InitFlag(true);
+			//设置模板元素
+			iframe.Ag_InitElement(body.elements, ",", ":");
+			//打开模板文件BILL.PDF
+			var url = ctx + "/cfgmgr/cfg/appModelFile/downloadFile?modelfileId=" + param.modelfileId;
+			var fileLocal = body.fileLocal;
+			var ret = iframe.Ag_DownLoadFromHTTP(url, fileLocal + "appmodel.pdf");
+			iframe.Ag_OpenTempleteFile(fileLocal + "appmodel.pdf", true);
+		},undefined,true);
 	}
 
 
 
-
-	function getQueryString(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-		var r = window.location.search.substr(1).match(reg);
-		if (r != null) return unescape(r[2]);
-		return null;
-	}
 	$(".ag-btn-save").bind("click", function() {
 		util.showDialog("您确定要修改么?", 3, updateSubmit);
 	})

@@ -50,13 +50,13 @@
                 <div class="layui-inline ">
                 	<label class="layui-form-label">模板名称：</label>
                 	<div class="layui-input-block">
-                		<input type="text"  id="modelfileName" name="modelfileName" ag-verify="required" autocomplete="off" placeholder="模板名称" class="layui-input">
+                		<input type="text"  id="modelfileName" name="modelfileName" readonly="readonly" ag-verify="required" autocomplete="off" placeholder="模板名称" class="layui-input">
                 	</div>
                 </div>
               <div class="layui-inline " id="opCodeTR">
                 	<label class="layui-form-label">操作代码：</label>
                 	<div class="layui-input-block">
-                		<input type="text" id="opCode" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码" class="layui-input">
+                		<input type="text" id="opCode" name="opCode" ag-verify="required" readonly="readonly" autocomplete="off" placeholder="操作代码" class="layui-input">
                 	</div>
                 </div>
         <div class="layui-inline " id="opCodeTR">
@@ -102,6 +102,8 @@
 			var form = layui.form;
 
 			form.render();
+			
+			$("object").addClass("hideObject");
 
 		});
 </script>

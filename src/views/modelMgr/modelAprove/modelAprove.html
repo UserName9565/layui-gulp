@@ -14,8 +14,7 @@
 
 			<div class="layui-card-body">
 
-				<form class="ag-form layui-form" ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelFile/updateInit" ag-data-index="1">
-					<input type="hidden" name="modelfileId" />
+				<form class="ag-form layui-form" ag-data-index="1" >
 					<input type="hidden" name="message" id="message" />
 					<input type="hidden" name="typeId" id="typeId" />
 					<input type="hidden" name="modelfileId" id="modelfileId" />
@@ -23,7 +22,7 @@
 						<div class="layui-inline ">
 							<label class="layui-form-label">操作代码：</label>
 							<div class="layui-input-block">
-								<input type="text" readonly="readonly" name="opCode"  autocomplete="off" placeholder="操作代码" class="layui-input">
+								<input type="text" readonly="readonly" name="opCode" id="opCode"  autocomplete="off" placeholder="操作代码" class="layui-input">
 							</div>
 						</div>
 
@@ -56,17 +55,17 @@
 							</div>
 						</div>
 						
-						<div id="show_HWPostil1" style="height: 300px;">
 						
-							<script language=javascript src="/static/js/ocx/LoadAip.js"></script>
-						</div>
 						
 				</form>
 
 
 			</div>
 			
-
+			<div id="show_HWPostil1" style="position: absolute;top:210px;left:30px;right:30px;bottom: 70px;">
+			
+				<script language="javascript" src="/static/js/ocx/LoadAip.js"></script>
+			</div>
 			<div class="layui-card-footer">
 
 				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelFile/updates?validFlag=Y"
@@ -96,6 +95,9 @@
 			var form = layui.form;
 
 			form.render();
+			
+			
+			$("object").addClass("hideObject");
 
 		});
 	</script>
@@ -192,41 +194,32 @@
 		function getModelInfo() {
 			var url = ctx + "/cfgmgr/cfg/modelFile/updateAjax";
 			var param = {
-				"modelfileId": getQueryString("modelfileId")
+				"modelfileId": util.getUrlParam().modelfileId
 			};
-			$.ajax({
-				type: "POST",
-				url: url,
-				data: JSON.stringify(param),
-				contentType: "application/json",
-				xhrFields: {
-					withCredentials: false //跨域session保持
-				},
-				async: true,
-				dataType: "json",
-				success: function(data) {
-					var body = data.body;
-					HWPostil1.LoadFileBase64(body.message);
-					$("#typeName").val(body.typeName);
-					$("#modelfileName").val(body.modelfileName);
-					$("#opCode").val(body.opCode);
-					$("#loginNo").val(body.loginNo);
-					$("#opTime").val(body.opTime);
-					$("#modelfileId").val(body.modelfileId);
-					$("#typeId").val(body.modelType.typeId);
-					$("#groupId").val(body.groupMsg.groupId);
-				}
-			});
+			
+			
+			util.ajaxJson("页面加载中..",url,param,function(data){
+				
+				
+				
+				var body = data.body;
+				
+				
+				HWPostil1.LoadFileBase64(body.message);
+				$("#typeName").val(body.typeName);
+				$("#modelfileName").val(body.modelfileName);
+				$("#opCode").val(body.opCode);
+				$("#loginNo").val(body.loginNo);
+				$("#opTime").val(body.opTime);
+				$("#modelfileId").val(body.modelfileId);
+				$("#typeId").val(body.modelType.typeId);
+				$("#groupId").val(body.groupMsg.groupId);
+				
+			},undefined,true);
 		}
 
 
 
 
-		function getQueryString(name) {
-			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-			var r = window.location.search.substr(1).match(reg);
-			if (r != null) return unescape(r[2]);
-			return null;
-		}
 	</script>
 </html>

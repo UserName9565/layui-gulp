@@ -45,6 +45,10 @@
 					<i class="layui-icon layui-icon-search "></i>
 					<span class="btn-span-middle">确定</span>
 				</button>
+				<button class=" layui-btn layui-btn-sm layui-btn-blue  parentClear " >
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">清空</span>
+				</button>
 				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
 					<i class="layui-icon layui-icon-search "></i>
 					<span class="btn-span-middle">取消</span>
@@ -285,6 +289,13 @@
 					
 					check();
 				});
+				
+				$(".parentClear").click(function(){
+					
+					parentClear();
+				});
+				
+				
 			});
 			//初始化节点树
 			
@@ -297,6 +308,14 @@
 			function refreashNodes() {
 				nodes = zTreeObj.getNodesByParam("isHidden", true);
 				zTreeObj.showNodes(nodes);
+			}
+			
+			function parentClear(){
+				
+				
+				parent.$("[name="+parentOpt["ag-tree-key"]+"]").val("");
+				
+				parent.$("[name="+parentOpt["ag-tree-name"]+"]").val("");
 			}
 			
 			function save() {

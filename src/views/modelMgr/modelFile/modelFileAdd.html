@@ -21,7 +21,7 @@
 						<div class="layui-inline ">
 							<label class="layui-form-label">模板类型：</label>
 							<div class="layui-input-block">
-								<select name="typeId" id="typeId" lay-filter="typeId">
+								<select name="typeId" id="typeId" ag-verify="required" lay-filter="typeId">
 								</select>
 							</div>
 						</div>
@@ -36,15 +36,15 @@
 						<div class="layui-inline ">
 							<label class="layui-form-label">操作代码：</label>
 							<div class="layui-input-block">
-								<input type="text" id="opCode" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码" class="layui-input">
+								<input type="text" id="opCode" name="opCode"  autocomplete="off" placeholder="操作代码" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-inline ">
 							<label class="layui-form-label">组织机构：</label>
 							<div class="layui-input-block">
-								<input type="text" id="groupName" name="groupName" readonly="readonly" ag-verify="required" autocomplete="off"
-								 placeholder="组织机构" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
-								<input type="hidden" id="groupId" name="groupId" /> 
+								<input type="hidden"id="groupId" name="groupId" ag-verify="required"  autocomplete="off"  class="layui-input">
+								<input type="text" name="groupName" ag-verify="required" ag-tree-title="渠道选取"  autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+								
 
 							</div>
 						</div>
@@ -89,7 +89,7 @@
 				</button>
 			</div>
 			<div id="show_HWPostil1">
-				<script language=javascript src="/static/js/ocx/LoadAip.js"></script>
+				<script language="javascript" src="/static/js/ocx/LoadAip.js"></script>
 			</div>
 
 
@@ -103,6 +103,10 @@
 			var form = layui.form;
 
 			form.render();
+			
+			$("object").addClass("hideObject");
+			$("object").hide();
+			$("object").attr("style","display:none;width:0;height:0");
 
 		});
 
@@ -116,11 +120,19 @@
 		}
 
 		function save() {
+			
+			
+			
 			if ($('#typeId').val() != "0") {
 				if ($('#opCode').val() == "") {
 					util.warning("请填写对应的opcode");
 					return;
 				}
+			}
+			
+			var checkRet = checkForm.validateForm($(".ag-form"));
+			if (!checkRet) {
+				return false;
 			}
 
 			//增加上传文件字节数控制，上传文件通过控件压缩后不能大于100k
@@ -151,7 +163,9 @@
 			HWPostil1.HttpAddPostString("validFlag", "C");
 			HWPostil1.HttpAddPostString("ifCheck", $('#ifCheck').val());
 			HWPostil1.HttpAddPostString("ifSpec", $('#ifSpec').val());
-
+			
+			HWPostil1.HttpAddPostString("agileauthtoken", util.getToken());
+		
 			var opCodes = $('#opCode').val();
 			if (opCodes != '') {
 				var x = opCodes.split(',');
@@ -166,18 +180,24 @@
 			HWPostil1.HttpAddPostCurrFile("uploadFile");
 			var url = ctx + "/cfgmgr/cfg/modelFile/addModelFile";
 			var message = HWPostil1.HttpPost(url);
-			if ((message.trim()) != "success") {
+			
+			if (message != "success") {
+				
 				util.error("文件增加失败！");
+				
 			} else {
-				util.success("文件增加成功！");
-				var queryBtn = layui.$(".ag-btn-query");
+				
+				var queryBtn = parent.$(".ag-btn-query");
 				if (queryBtn.length > 0) {
 					$(queryBtn).click();
 				}
-				var cancelBtn = layui.$(".aag-btn-cancel ");
-				if (cancelBtn.length > 0) {
-					$(cancelBtn).click();
-				}
+				
+				util.success("文件增加成功");
+				
+				
+				
+				
+				
 
 
 			}

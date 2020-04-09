@@ -155,9 +155,38 @@
 			util.warning("此工单状态不可删除");
 			return false;
 		}
-		var url = ctx + "/cfgmgr/cfg/appModelFile/deleteAjax";
-		modelAjax(url, pkVal, validFlag);
+		
+		var opts = {};
+		
+		opts.modelfileId = pkVal;
+		
+		opts.validFlag = validFlag;
+		
+		opts.url =  ctx + "/cfgmgr/cfg/appModelFile/deleteAjax";
+		
+		util.showDialog("您确定要删除选中记录么?", 3, executeFunc, opts);
+		
 	});
+	
+	
+	function executeFunc(opts){
+		
+		util.ajaxJson("处理中....",opts.url,opts,function(data){
+			
+			var result = data.result;
+			
+			var desc = data.desc;
+			
+			if (result == 0) {
+			
+				util.success(desc);
+				
+				$(".ag-btn-query").click();
+			}
+			
+		},undefined,true);
+		
+	}
 	//发布
 	$('.ag-btn-apply').click(function(e) {
 		var index = $(this).attr("ag-data-index");
@@ -172,13 +201,20 @@
 		var pkCol = $(this).attr("ag-data-pk");
 		var pkVal = data[0][pkCol];
 		var validFlag = data[0]['validFlag'];
-		alert(validFlag);
 		if ((validFlag.indexOf("Y") >= 0)) {
 			util.warning("此状态不可发布");
 			return false;
 		}
-		var url = ctx + "/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
-		modelAjax(url, pkVal, "Y");
+		
+		var opts = {};
+		
+		opts.modelfileId = pkVal;
+		
+		opts.validFlag = "Y";
+		
+		opts.url =  ctx + "/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
+		
+		util.showDialog("您确定要提交申请么?", 3, executeFunc, opts);
 	});
 	//取销发布
 	$('.ag-btn-abolish').click(function(e) {
@@ -199,32 +235,17 @@
 			util.warning("此工单状态不可取消发布");
 			return false;
 		}
-		var url = ctx + "/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
-		modelAjax(url, pkVal, "C");
+		
+		var opts = {};
+		
+		opts.modelfileId = pkVal;
+		
+		opts.validFlag = "C";
+		
+		opts.url =  ctx + "/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
+		
+		util.showDialog("您确定要作废申请么?", 3, executeFunc, opts);
 	});
 
-	function modelAjax(url, id, validFlag) {
-		var param = {
-			"modelfileId": id,
-			"validFlag": validFlag
-		};
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: JSON.stringify(param),
-			contentType: "application/json",
-			xhrFields: {
-				withCredentials: false //跨域session保持
-			},
-			async: true,
-			dataType: "json",
-			success: function(data) {
-				var result = data.result;
-				var desc = data.desc;
-				if (result == 0) {
-					util.success(desc);
-				}
-			}
-		});
-	}
+	
 </script>
