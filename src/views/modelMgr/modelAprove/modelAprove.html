@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		@@include('url-config.html')
 	</head>
-	<body class="bg-info">
+	<body class="bg-info" style="position: relative;">
 
 		<div class="layui-card layui-card-form">
 
@@ -23,55 +23,60 @@
 						<div class="layui-inline ">
 							<label class="layui-form-label">操作代码：</label>
 							<div class="layui-input-block">
-								<input type="text" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码" class="layui-input">
+								<input type="text" readonly="readonly" name="opCode"  autocomplete="off" placeholder="操作代码" class="layui-input">
 							</div>
 						</div>
 
 						<div class="layui-inline ">
 							<label class="layui-form-label">模板名称：</label>
 							<div class="layui-input-block">
-								<input type="text" id="modelfileName" name="modelfileName" ag-verify="required" autocomplete="off" placeholder="模板名称"
+								<input type="text" id="modelfileName"  readonly="readonly" name="modelfileName" ag-verify="required" autocomplete="off" placeholder="模板名称"
 								 class="layui-input">
 							</div>
 						</div>
 						<div class="layui-inline ">
 							<label class="layui-form-label">操作人：</label>
 							<div class="layui-input-block">
-								<input type="text" id="loginNo" name="loginNo" ag-verify="required" autocomplete="off" placeholder="操作人" class="layui-input">
+								<input type="text" id="loginNo" name="loginNo"  readonly="readonly" ag-verify="required" autocomplete="off" placeholder="操作人" class="layui-input">
 							</div>
 						</div>
 
 						<div class="layui-inline ">
 							<label class="layui-form-label">操作时间：</label>
 							<div class="layui-input-block">
-								<input type="text" id="opTime" name="opTimeString" ag-verify="required" autocomplete="off" placeholder="操作时间"
+								<input type="text" id="opTime" name="opTimeString"  readonly="readonly" ag-verify="required" autocomplete="off" placeholder="操作时间"
 								 class="layui-input">
 							</div>
 						</div>
 						<div class="layui-inline ">
 							<label class="layui-form-label">模板类型：</label>
 							<div class="layui-input-block">
-								<input type="text" id="typeName" name="typeName" ag-verify="required" autocomplete="off" placeholder="模板类型"
+								<input type="text" id="typeName" name="typeName"  readonly="readonly"  ag-verify="required" autocomplete="off" placeholder="模板类型"
 								 class="layui-input">
 							</div>
 						</div>
-
-
+						
+						<div id="show_HWPostil1" style="height: 300px;">
+						
+							<script language=javascript src="/static/js/ocx/LoadAip.js"></script>
+						</div>
+						
 				</form>
 
 
 			</div>
+			
 
 			<div class="layui-card-footer">
 
 				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelFile/updates?validFlag=Y"
 				 ag-data-index="1">
-					<i class="layui-icon layui-icon-search "></i>
+					<i class="layui-icon layui-icon-ok-circle "></i>
 					<span class="btn-span-middle">审批通过</span>
 				</button>
 				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelFile/updates?validFlag=N"
 				 ag-data-index="1">
-					<i class="layui-icon layui-icon-search "></i>
+					<i class="layui-icon layui-icon-close-fill "></i>
 					<span class="btn-span-middle">审批不通过</span>
 				</button>
 			</div>
@@ -82,10 +87,7 @@
 
 
 
-		<div id="show_HWPostil1" style="height: 300px;">
-
-			<script language=javascript src="/static/js/ocx/LoadAip.js"></script>
-		</div>
+		
 	</body>
 
 	<script>

@@ -12,12 +12,12 @@
 
 		<div class="layui-card layui-card-form" style="padding: 0;">
 
-			<div class="layui-card-body" style="height: calc( 100vh - 50px);">
+			<div class="layui-card-body" >
 
-				<form class="ag-form layui-form" ag-data-index="1">
+				<form class=" layui-form" ag-data-index="1">
 					<blockquote class="layui-elem-quote">注意：此图片仅限查看。</blockquote>
 
-					<div class="layui-upload-drag" style="width: calc( 100vw - 120px); height: calc( 100vh - 175px) ;">
+					<div class="layui-upload-drag" >
 
 						<img src="" height="100%" width="100%" id="imageBase64" />
 					</div>
@@ -32,21 +32,39 @@
 	</body>
 
 	<script>
-		var param = util.getUrlParam();
-
-		util.ajaxJson("加载中，请稍后...", ctx + "/realnameMgr/realname/cRealCust/showFile", {
-			"id": param.id
-		}, function(data) {
-
-			if (data.result != "0") {
-
-				util.showDialog("预览失败!", 0);
-
-				return;
-			}
-			$("#imageBase64").attr("src", data.body);
-
-		});
+		
+		
+		$(function(){
+			
+			initHeight();
+			
+			var param = util.getUrlParam();
+			
+			util.ajaxJson("加载中，请稍后...", ctx + "/realnameMgr/realname/cRealCust/showFile", {
+				"id": param.id
+			}, function(data) {
+			
+				if (data.result != "0") {
+			
+					util.showDialog("预览失败!", 0);
+			
+					return;
+				}
+				$("#imageBase64").attr("src", data.body);
+			
+			});
+			
+		})
+		
+		function initHeight(){
+			
+			$(".layui-card-body").height($(window).height() - 50);
+			
+			$(".layui-upload-drag").width($(window).width() - 150 ).height($(window).height() - 175)
+		}
+		
+		
+		
 	</script>
 
 </html>

@@ -20,7 +20,7 @@
 						<div class="layui-inline ">
 							<label class="layui-form-label">元素代码：</label>
 							<div class="layui-input-block">
-								<input type="text" name="modelementCode" ag-verify="required" autocomplete="off" placeholder="元素代码" class="layui-input">
+								<input type="text" name="modelementCode" readonly="readonly" ag-verify="required" autocomplete="off" placeholder="元素代码" class="layui-input">
 							</div>
 						</div>
 
@@ -49,13 +49,13 @@
 
 				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelment/updateCModelments"
 				 ag-data-index="1">
-					<i class="layui-icon layui-icon-search "></i>
-					<span class="btn-span-middle">保存</span>
-				</button>
-				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
-					<i class="layui-icon layui-icon-search "></i>
-					<span class="btn-span-middle">取消</span>
-				</button>
+					<i class="layui-icon layui-icon-ok-circle  "></i>
+						<span class="btn-span-middle">保存</span>
+					</button>
+					<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+						<i class="layui-icon layui-icon-close "></i>
+						<span class="btn-span-middle">取消</span>
+					</button>
 			</div>
 
 		</div>

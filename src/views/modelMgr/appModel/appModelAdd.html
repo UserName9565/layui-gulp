@@ -42,9 +42,9 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="hidden" id="groupId" name="groupId" />
-							<input type="text" id="groupName" name="groupName" ag-verify="required" autocomplete="off" placeholder="组织机构"
-							 class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
+							<input type="hidden" name="groupId" ag-verify="required" autocomplete="off"  class="layui-input">
+							<input type="text" name="groupName" ag-tree-title="渠道选取" ag-verify="required" autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+							
 						</div>
 					</div>
 					<div class="layui-inline ">

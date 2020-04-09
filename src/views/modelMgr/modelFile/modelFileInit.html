@@ -19,9 +19,9 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="text" name="groupName" id="groupName" lay-verify="title" autocomplete="off" placeholder="组织机构"
-							 readonly="readonly" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
-							<input type="hidden" id="groupId" name="groupId" />
+							<input type="hidden" name="groupId"  autocomplete="off"  class="layui-input">
+							<input type="text" name="groupName" ag-tree-title="渠道选取"  autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+							
 						</div>
 					</div>
 				</div>
@@ -57,15 +57,15 @@
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
 						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
-						 ag-win-title="新增" ag-data-url="/views/modelMgr/modelFile/modelFileAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						 ag-win-title="新增" title="新增" ag-data-url="/views/modelMgr/modelFile/modelFileAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
 						<!-- <div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelFile/modelFileUpdate.html"><i class="layui-icon layui-icon-edit"></i></div> -->
-						<div class="ag-btn-delele layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						<div class="ag-btn-delele layui-inline" title="修改" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
 						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
 						<!-- 申请-->
-						<div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						<div class="ag-btn-apply layui-inline" title="申请" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
 						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-ok"></i></div>
 						<!-- 作废-->
-						<div class="ag-btn-abolish layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						<div class="ag-btn-abolish layui-inline"  title="作废" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
 						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-close"></i></div>
 
 					</div>
@@ -154,11 +154,47 @@
 				if ((validFlag.indexOf("Z") >= 0) || (validFlag.indexOf("M") >= 0) || (validFlag.indexOf("N") >= 0) || (validFlag
 						.indexOf("Y") >= 0)) {
 					util.warning("此工单状态不可删除");
-					//return false;
+					
+					return false;
 				}
-				var url = ctx + "/cfgmgr/cfg/modelFile/deleteAjax";
-				modelAjax(url, pkVal, validFlag);
+				
+				
+				var opts = {};
+				
+				
+				opts.modelfileId = pkVal;
+				
+				opts.validFlag = validFlag;
+				
+				opts.url = ctx + "/cfgmgr/cfg/modelFile/deleteAjax";
+				
+				
+				util.showDialog("您确定要删除选中记录么?", 3, executeFunc, opts);
+				
+				
+				
 			});
+			
+			function executeFunc(opts){
+				
+				util.ajaxJson("处理中....",opts.url,opts,function(data){
+					
+					alert(opts.url);
+					var result = data.result;
+					
+					var desc = data.desc;
+					
+					if (result == 0) {
+					
+						util.success(desc);
+					
+					}
+					
+				},undefined,true);
+				
+			}
+			
+			
 			//申请
 			$('.ag-btn-apply').click(function(e) {
 				var index = $(this).attr("ag-data-index");
@@ -179,8 +215,15 @@
 					util.warning("此工单状态不可申请");
 					return false;
 				}
-				var url = ctx + "/cfgmgr/cfg/modelFile/updateValidFlagAjax";
-				modelAjax(url, pkVal, "Z");
+				
+				var opts = {};
+				
+				opts.modelfileId = pkVal;				
+				opts.validFlag = "Z";
+				
+				opts.url = ctx + "/cfgmgr/cfg/modelFile/updateValidFlagAjax";
+				
+				util.showDialog("您确定提交申请么?", 3, executeFunc, opts);
 			});
 			//作废
 			$('.ag-btn-abolish').click(function(e) {
@@ -202,37 +245,22 @@
 					util.warning("此工单状态不可作废");
 					return false;
 				}
-				var url = ctx + "/cfgmgr/cfg/modelFile/updateValidFlagAjax";
-				modelAjax(url, pkVal, "M");
+				
+				var opts = {};
+				
+				opts.modelfileId = pkVal;				
+				
+				opts.validFlag = "M";
+				
+				opts.url = ctx + "/cfgmgr/cfg/modelFile/updateValidFlagAjax";
+				
+				util.showDialog("您确定作废么?", 3, executeFunc, opts);
+				
 			});
 
-			function modelAjax(url, id, validFlag) {
-				var param = {
-					"modelfileId": id,
-					"validFlag": validFlag
-				};
-				$.ajax({
-					type: "POST",
-					url: url,
-					data: JSON.stringify(param),
-					contentType: "application/json",
-					xhrFields: {
-						withCredentials: false //跨域session保持
-					},
-					async: true,
-					dataType: "json",
-					success: function(data) {
-						var result = data.result;
-						var desc = data.desc;
-						if (result == 0) {
-							util.success(desc);
-						}
-					}
-				});
-			}
+			
 
 			function openOrg() {
-				alert("222");
 				util.openWin("/views/modelMgr/modelFile/groupList.html", "选择组织机构", "300", "400");
 			}
 		</script>

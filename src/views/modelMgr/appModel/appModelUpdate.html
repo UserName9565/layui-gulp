@@ -20,20 +20,20 @@
 						<div class="layui-inline ">
 							<label class="layui-form-label">模板类型：</label>
 							<div class="layui-input-block">
-								<input type="text" name="typeName" id="typeName" />
+								<input type="text" name="typeName" id="typeName" readonly="readonly" class="layui-input" />
 							</div>
 						</div>
 
 						<div class="layui-inline ">
 							<label class="layui-form-label">模板名称：</label>
 							<div class="layui-input-block">
-								<input type="text" id="modelfileName" name="modelfileName">
+								<input type="text" id="modelfileName" name="modelfileName" readonly="readonly" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-inline ">
 							<label class="layui-form-label">操作代码：</label>
 							<div class="layui-input-block">
-								<input type="text" id="opCode" name="opCode" autocomplete="off" placeholder="操作代码" class="layui-input">
+								<input type="text" id="opCode" name="opCode" autocomplete="off" readonly="readonly" placeholder="操作代码" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-inline ">
@@ -65,6 +65,9 @@
 								</select>
 							</div>
 						</div>
+						<div>
+							<OBJECT id="AgObj1" name="AgObj1" classid="clsid:FE687895-F413-4D10-8740-D584DA23C74F" style="HEIGHT: 500px; WIDTH: 100%"></OBJECT>
+						</div>
 				</form>
 
 
@@ -72,7 +75,7 @@
 
 			<div class="layui-card-footer">
 
-				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-ctx="cfgmgr" ag-data-index="1" onclick="updateSubmit()">
+				<button class=" layui-btn layui-btn-sm layui-btn-blue "  onclick="updateSubmit()">
 					<i class="layui-icon layui-icon-search "></i>
 					<span class="btn-span-middle">保存</span>
 				</button>
@@ -82,7 +85,7 @@
 				</button>
 			</div>
 		</div>
-		<OBJECT id="AgObj1" name="AgObj1" classid="clsid:FE687895-F413-4D10-8740-D584DA23C74F" style="HEIGHT: 500px; WIDTH: 100%"></OBJECT>
+		
 	</body>
 </html>
 <script>

@@ -19,10 +19,9 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="text" name="groupName" id="groupName" lay-verify="title" autocomplete="off" placeholder="组织机构"
-							 class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)"
-							 readonly="readonly">
-							<input type="hidden" name="groupId" id="groupId" />
+							<input type="hidden" name="groupId"  autocomplete="off"  class="layui-input">
+							<input type="text" name="groupName" ag-tree-title="渠道选取"  autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+							
 						</div>
 					</div>
 				</div>
@@ -58,17 +57,17 @@
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
 						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
-						 ag-win-title="新增" ag-data-url="/views/modelMgr/appModel/appModelAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						 ag-win-title="新增" title="新增" ag-data-url="/views/modelMgr/appModel/appModelAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
 						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
-						 ag-win-height="600" ag-win-title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/appModel/AppModelUpdate.html"><i
+						 ag-win-height="600" ag-win-title="修改" title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/appModel/AppModelUpdate.html"><i
 							 class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-delele layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						<div class="ag-btn-delele layui-inline"  title="删除" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
 						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
 						<!-- 申请-->
-						<div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						<div class="ag-btn-apply layui-inline" title="申请" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
 						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-ok"></i></div>
 						<!-- 作废-->
-						<div class="ag-btn-abolish layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						<div class="ag-btn-abolish layui-inline" title="作废" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
 						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-close"></i></div>
 
 					</div>

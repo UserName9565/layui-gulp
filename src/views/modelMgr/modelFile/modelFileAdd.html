@@ -118,7 +118,7 @@
 		function save() {
 			if ($('#typeId').val() != "0") {
 				if ($('#opCode').val() == "") {
-					showDialog("请填写对应的opcode", 1);
+					util.warning("请填写对应的opcode");
 					return;
 				}
 			}
@@ -126,7 +126,7 @@
 			//增加上传文件字节数控制，上传文件通过控件压缩后不能大于100k
 			var filesize = HWPostil1.GetCurrFileSize();
 			if (filesize > 102400) {
-				showDialog("上传文件字节过大, 请处理后再上传！", 0);
+				util.warning("上传文件字节过大, 请处理后再上传！", 0);
 				return;
 			}
 			if ($('#typeId').val() == '2') {
