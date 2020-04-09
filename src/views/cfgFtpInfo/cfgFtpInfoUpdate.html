@@ -16,8 +16,12 @@
 
 				<form class="ag-form layui-form" ag-data-index="1" ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/cfgFtpinfo/query">
 
-					<input type="hidden" name="id" />
-
+						<div class="layui-inline ">
+							<label class="layui-form-label">ftp编码：</label>
+							<div class="layui-input-block">
+								<input type="text" name="id" ag-verify="required" readonly="readonly" autocomplete="off" placeholder="ftp编码" class="layui-input">
+							</div>
+						</div>
 						<div class="layui-inline ">
 							<label class="layui-form-label">ftp名称：</label>
 							<div class="layui-input-block">
