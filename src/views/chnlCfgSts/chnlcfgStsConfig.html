@@ -13,37 +13,37 @@
 
 		border: 1px solid #e1e4e3;
 	}
-	
+
 	.dd-handle{
-		
+
 		font-size: 13px;
 		text-indent:10px;
 		letter-spacing:3px;
 	}
-	
+
 	.dd-handle.dd-default {
 	       color: #01AAED;
 	       /* border: 1px dashed  #adc6fc; */
 	       background: #ecf3ff;
 	}
-	
+
 	.dd-handle.dd-default:hover{
-		
+
 		color: white;
 		border: 1px dashed  #01AAED;
 		background: #01AAED;
-		
+
 	}
-	
-	
+
+
 	.dd-handle.dd-succ {
 	      color: #7cc763;
 	      /* border: 1px dashed #5FB878; */
 	      background: #f3faf8;
 	}
-	
+
 	.dd-handle.dd-succ:hover{
-		
+
 		color: white;
 		border: 1px dashed #7cc763;
 		background: #7cc763;
@@ -59,16 +59,7 @@
 					接入类型业务配置
 				</div>
 
-				<div style="border-left: 2px solid #e1e4e3;float: right;margin: 5px;">
 
-					<div class="card-btn" style="margin-left: 10px;" onclick="save()">
-						<div class="card-btn-img img-save"></div>
-						<div class="card-btn-desc">
-							保存
-						</div>
-					</div>
-
-				</div>
 
 
 			</div>
@@ -202,12 +193,12 @@
 
 				"001": {
 					"cfgKey": "001",
-					"cfgName": '证件采集',
+					"cfgName": '采集按钮',
 					'url': '/views/cert/functionConfig.html?chnlType=@chnlType@&chnlTypeName=@chnlTypeName@&cfgType=0&cfgTypeName=证件采集'
 				},
 				"002": {
 					"cfgKey": "002",
-					"cfgName": '人证比对',
+					"cfgName": '人证按钮',
 					'url': '/views/cert/functionConfig.html?chnlType=@chnlType@&chnlTypeName=@chnlTypeName@&cfgType=1&cfgTypeName=人证比对'
 				},
 				"003": {
@@ -234,6 +225,11 @@
 					"cfgKey": "007",
 					"cfgName": '格式转换',
 					'url': '/views/paramFmt/paramFmtConfig.html?chnlType=@chnlType@&chnlTypeName=@chnlTypeName@'
+				},
+				"008": {
+					"cfgKey": "008",
+					"cfgName": '采集接入',
+					'url': '/views/chnlCompare/chnlCompareConfig.html?chnlType=@chnlType@&chnlTypeName=@chnlTypeName@'
 				}
 
 			}

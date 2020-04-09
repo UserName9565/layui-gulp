@@ -21,7 +21,7 @@
 						<div class="layui-inline ">
 							<label class="layui-form-label">租户ID：</label>
 							<div class="layui-input-block">
-								<input type="text" name="tenantId" ag-verify="required" autocomplete="off" placeholder="租户ID" class="layui-input">
+								<input readonly="readonly"  type="text" name="tenantId" ag-verify="required" autocomplete="off" placeholder="租户ID" class="layui-input">
 							</div>
 						</div>
 
@@ -66,11 +66,11 @@
 			<div class="layui-card-footer">
 
 				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-url="/sys/tenants/update" ag-data-index="1">
-					<i class="layui-icon layui-icon-search "></i>
+					<i class="layui-icon layui-icon-ok-circle "></i>
 					<span class="btn-span-middle">保存</span>
 				</button>
 				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
-					<i class="layui-icon layui-icon-search "></i>
+					<i class="layui-icon layui-icon-close "></i>
 					<span class="btn-span-middle">取消</span>
 				</button>
 			</div>
