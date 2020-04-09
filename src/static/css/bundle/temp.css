@@ -999,6 +999,12 @@ body {
    * 拖拽组件 end 2020年2月21日17:03:58 姜永
    */
   
+  .ag-area-page  .layui-table-page {
+	  
+	  border-top: #e6e6e6 1px solid !important;
+	  height: 30px !important;
+	  z-index: 555;
+  }
   
   .layui-input-block>input[readonly=readonly].layui-input{
   	

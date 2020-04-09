@@ -17,7 +17,7 @@
         //HWPostil1.ShowScrollBarButton = 1;
         //HWPostil1.SilentMode=1;//设置为安静模式
         HWPostil1.ShowToolBar = 0;//隐藏工具栏
-        getModelInfo();
+        
     </script>
 
 		<SCRIPT LANGUAGE=javascript FOR=HWPostil1 EVENT=NotifyLineAction(lPage,lStartPos,lEndPos)>
@@ -74,20 +74,20 @@
 				</form>
 			</div>
 			<div class="layui-card-footer">
-				<button class="layui-btn layui-btn-sm layui-btn-blue " onclick="addField();">
+				<button class="layui-btn layui-btn-sm layui-btn-blue addField" >
 					<i class="layui-icon layui-icon-search "></i>
 					<span class="btn-span-middle">添加区域</span>
 				</button>
-				<button class="layui-btn layui-btn-sm layui-btn-blue " onclick="update()">
+				<button class="layui-btn layui-btn-sm layui-btn-blue update" >
 					<i class="layui-icon layui-icon-search "></i>
 					<span class="btn-span-middle">修改</span>
 				</button>
-				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue" onclick="util.removeTab()">
 					<i class="layui-icon layui-icon-search "></i>
 					<span class="btn-span-middle">取消</span>
 				</button>
 			</div>
-			<div id="show_HWPostil1" style="position: absolute;top:125px;bottom: 70px;left:0;right:0px">
+			<div id="show_HWPostil1" style="position: absolute;top:155px;bottom: 70px;left:0;right:0px">
 				<script language=javascript src="/static/js/ocx/LoadAip.js"></script>
 			</div>
 
@@ -97,15 +97,22 @@
 	</body>
 
 	<script>
+		
 		layui.use('form', function() {
-
-			var form = layui.form;
-
-			form.render();
-
+			
+			
+		$(".addField").click(function(){
+			
+			addField();
 		});
-	</script>
-	<script>
+			
+		$(".update").click(function(){
+			
+			update();
+		});
+		
+		getModelInfo();
+		
 		var argObj = null;
 
 		function addField() {
@@ -170,7 +177,7 @@
 			};
 			var url = "/views/modelMgr/modelFile/fieldSelect.html";
 			// openwin("", url);
-			util.openWin(url, "选择元素", 300, 400, "");
+			util.openWin(url, "选择元素", 800, 600, "");
 		}
 
 		function openwin(winName, url) {
@@ -220,7 +227,8 @@
 			var messages = HWPostil1.HttpPost(url);
 			if (messages == 'success') {
 				util.showDialog("修改成功！", 1, function() {
-					util.closeWin();
+					
+					util.removeTab();
 				});
 			} else {
 				util.error("文件保存失败！");
@@ -239,9 +247,8 @@
 			}
 			return str;
 		}
-	</script>
-
-	<script>
+		
+		
 		function getModelInfo() {
 			var url = ctx + "/cfgmgr/cfg/modelFile/updateAjax";
 			var param = {
@@ -272,14 +279,16 @@
 			});
 		}
 
-
-
-
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 			var r = window.location.search.substr(1).match(reg);
 			if (r != null) return unescape(r[2]);
 			return null;
 		}
+		
+		var form = layui.form;
+		
+		
+		});
 	</script>
 </html>

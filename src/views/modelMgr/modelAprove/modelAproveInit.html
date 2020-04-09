@@ -19,9 +19,11 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
- 						 <input type="text" name="groupName" id="groupName" lay-verify="title" autocomplete="off" placeholder="组织机构"
-						 readonly="readonly" class="layui-input" onclick="_listHrefWindow('/views/modelMgr/modelFile/groupList.html','机构管理',400,600)">
-						<input type="hidden" id="groupId" name="groupId" />
+ 						 <input type="hidden" name="groupId"  autocomplete="off"  class="layui-input">
+ 						 <input type="text" name="groupName" ag-tree-title="渠道选取"  readonly="readonly" autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+ 						 
+						
+						
 
             </div>
 					</div>
@@ -39,7 +41,7 @@
 
 					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
-						<i class="layui-icon layui-icon-search "></i>
+						<i class="layui-icon layui-icon-refresh "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
 
@@ -58,7 +60,7 @@
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
 						<div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
-						 ag-win-height="600" ag-win-title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html" ><i
+						 ag-win-height="600" ag-win-title="调阅审批" title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html" ><i
 							 class="layui-icon layui-icon-edit"></i></div>
 
 					</div>
@@ -130,8 +132,9 @@
       	var pkCol = $(this).attr("ag-data-pk");
       	var pkVal = data[0][pkCol];
       	var validFlag = data[0]['validFlag'];
-       	if (validFlag== 'Y') {
-      		util.warning("此工单已经审批通过！");
+		
+       	if (validFlag != 'C') {
+      		util.warning("此工单已经处理！");
       		return ;
       	}
         var agCtx = util.getAgCtx(this);

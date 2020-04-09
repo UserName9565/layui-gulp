@@ -385,6 +385,17 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				
 				var arr = pair[1].match(/@(\S*)@/g);
 				
+				 arr = arr == null ? [] :arr;
+				 
+				var arr1 = pair[1].match(/#(\S*)#/g);
+				
+				arr1 = arr1 == null ? [] :arr1;
+				
+				for( var i = 0 ; i < arr1.length ; i++){
+					
+					arr.push(arr1[i]);
+				}
+				
 				if (arr != null) {
 					
 					for (var i = 0 ;  i < arr.length ; i++){
@@ -459,13 +470,12 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				
 			}
 			
-			var gdtWidth = $(document.body).width()  < allWidth ? 18 : 0 ;
 			
 			
 			//执行一个 table 实例
 			table.render({
 				elem: $(".ag-table[ag-data-index=" + index + "]"),
-				height: $(".ag-table").height()-35 - gdtWidth,
+				height: $(".ag-table[ag-data-index=" + index + "]").height()-38 ,
 				data: page.data, //数据接口
 				title: '用户表',
 				page: false, //开启分页

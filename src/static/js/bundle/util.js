@@ -103,6 +103,16 @@ util = {
 		parentObj.layuimini.changeTab(tabId);
 
 	},
+	
+	removeTab:function(){
+		
+		var parentObj = util.getMainWin();
+		
+		var tabId = parentObj.$(".layui-tab-title li.layui-this").attr('lay-id');
+		
+		parentObj.layuimini.delTab(tabId);
+		
+	},
 
 	getMainWin: function(obj) {
 
@@ -230,6 +240,9 @@ util = {
 		var winH = $(window).height() == 0 ? $(document).height() : $(window).height();
 
 		var off = [(winH / 2 - 72) + 'px', (winW / 2 - 181) + 'px'];
+		
+		$("object").hide();
+		
 		if (type == 2) {
 			layer.alert(retMsg, {
 				offset: off,
@@ -237,6 +250,8 @@ util = {
 				icon: 1,
 				closeBtn: 0
 			}, function(index) {
+				
+				$("object").show();
 
 				layer.close(index);
 				if (opts != undefined && opts.closeParent == 1) {
@@ -267,6 +282,8 @@ util = {
 				icon: 0,
 				closeBtn: 0
 			}, function(index) {
+				
+				$("object").show();
 
 				layer.close(index);
 
@@ -294,7 +311,9 @@ util = {
 				icon: 2,
 				closeBtn: 0
 			}, function(index) {
-
+				
+				$("object").show();
+				
 				layer.close(index);
 
 				if (util.isNull(callBack)) {
@@ -321,7 +340,9 @@ util = {
 				closeBtn: 0,
 				title: ['\u63d0\u793a\u4fe1\u606f', true],
 				yes: function(index) {
-
+					
+					$("object").show();
+					
 					layer.close(index);
 
 					if (util.isNull(callBack)) {
@@ -347,6 +368,10 @@ util = {
 					}
 				}
 			}, function(index) {
+				
+				
+				$("object").show();
+				
 				layer.close(index);
 
 
@@ -358,6 +383,9 @@ util = {
 				}
 
 			}, function(index) {
+				
+				$("object").show();
+				
 				layer.close(index);
 
 			});
@@ -557,8 +585,10 @@ util = {
 
 			},
 			error: function() {
-
+				
 				util.disLoad();
+				
+				util.error("系统异常!");
 			}
 		});
 
@@ -611,6 +641,8 @@ util = {
 			error: function(data) {
 
 				util.disLoad();
+				
+				util.error("系统异常!");
 
 				if ($.isFunction(errorFunc)) {
 
