@@ -16,18 +16,20 @@
 
 				<div class="param-left">
 
-					<div class="layui-inline ">
-						<label class="layui-form-label">租户ID：</label>
-						<div class="layui-input-block">
-							<input type="text" name="tenantId" lay-verify="title" autocomplete="off" placeholder="租户ID" class="layui-input">
-						</div>
-					</div>
+
 					<div class="layui-inline ">
 						<label class="layui-form-label">租户名称：</label>
 						<div class="layui-input-block">
 							<input type="text" name="tenantName" lay-verify="title" autocomplete="off" placeholder="租户名称" class="layui-input">
 						</div>
 					</div>
+
+          <div class="layui-inline ">
+          	<label class="layui-form-label">业务编码：</label>
+          	<div class="layui-input-block">
+          		<input type="text" name="opCode" lay-verify="title" autocomplete="off" placeholder="业务编码" class="layui-input">
+          	</div>
+          </div>
 
 				</div>
 
@@ -95,6 +97,13 @@
 				"field": "tenantName",
 				"title": "租户名称"
 				}, {
+				"field": "regionCode",
+				"title": "地市编码",
+				"sort": true
+				}, {
+				"field": "regionName",
+				"title": "地市名称"
+				}, {
 				"field": "opCode",
 				"title": "业务代码"
 				}, {
@@ -115,6 +124,9 @@
 				}, {
 				"field": "workName",
 				"title": "配置姓名"
+				}, {
+				"field": "picCnt",
+				"title": "图片数量"
 				}
 
 				]
