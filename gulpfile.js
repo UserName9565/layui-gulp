@@ -117,6 +117,8 @@ gulp.task('styles', () => {
     .pipe(sass())
     .pipe(gulpif(condition, cleanCSS({debug: true})))
     .pipe(postcss('./.postcssrc.js'))
+	.pipe(replace('/static', pathed))
+	.pipe(replace('/views', pathed2))
     .pipe(gulp.dest(config.build.styles))
 })
 
