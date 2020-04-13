@@ -1004,6 +1004,7 @@ body {
 	  border-top: #e6e6e6 1px solid !important;
 	  height: 30px !important;
 	  z-index: 555;
+	  padding:4px 7px 3px 7px;
   }
   
   .layui-input-block>input[readonly=readonly].layui-input{
