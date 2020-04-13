@@ -24,9 +24,6 @@ layui.define(['jquery', 'form'], function(exports) {
 				required: [
 					/[\S]+/, '必填项不能为空'
 				],
-				requiredFile: [
-					/[\S]+/, '请上传附件'
-				],
 				phone: [
 					/^1\d{10}$/, '请输入正确的手机号'
 				],
@@ -74,6 +71,45 @@ layui.define(['jquery', 'form'], function(exports) {
 				identity: [
 					/(^\d{15}$)|(^\d{17}(x|X|\d)$)/, '请输入正确的身份证号'
 				],
+				len:function(value,obj){
+					
+					var min = $(obj).attr("ag-len-min");
+					
+					var max = $(obj).attr("ag-len-max");
+					
+					if(util.isNull(min) && util.isNull(max)){
+						
+						return null;
+					}
+					
+					
+					if(!util.isNull(min) && !isNaN(min) && (!value || value.length < min)){
+						
+						return "请输入最少"+min+"个字!";
+						
+					}
+					
+					if(!util.isNull(max) && !isNaN(max) && !util.isNull(value) && value.length > max ){
+						
+						return "请输入最多"+max+"个字!";
+						
+					}
+					
+					return null;
+					
+				},
+				requiredFile:function(value,othis){
+					
+					if( util.hasClass(othis,"ag-file")){
+						
+						var lis = $(othis).find(".ag-file-item-li");
+						
+						return lis.length == 0 ? "请上传附件!" : util.isNull($(lis[0]).data("ag-file-name-savename"))? "请上传附件!":null;
+					}
+					
+					return null;
+					
+				},
 				radio_required: function(value, obj) {
 
 					var name = obj.name;
@@ -165,15 +201,14 @@ layui.define(['jquery', 'form'], function(exports) {
 
 					var isTrue = isFn ? errorText = verify[thisVer](value, item) : !verify[thisVer][0].test(value);
 					
-					
-					if("requiredFile" ==  thisVer  && util.hasClass(othis[0],"ag-file")){
-						
-						var lis = othis.find(".ag-file-item-li");
-						
-						isTrue = lis.length == 0 ? true : util.isNull($(lis[0]).data("ag-file-name-savename"))? true:false;
-					}
+					var verMsg = $(item).attr("ag-verify-msg");
 					
 					errorText = errorText || verify[thisVer][1];
+					
+					if(!util.isNull(verMsg)){
+						
+						errorText = verMsg;
+					}
 
 					//如果是必填项或者非空命中校验，则阻止提交，弹出提示
 					if (isTrue) {

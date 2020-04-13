@@ -1,3 +1,4 @@
+
 /**
  *
  * 工具类
@@ -88,29 +89,27 @@ util = {
 	 */
 	addTab: function(href, title) {
 
-		var parentObj = util.getMainWin();
 
 		var tabId = href.split("?")[0];
 
-		if (parentObj.layuimini.checkTab(tabId, true)) {
+		if (window.top.layuimini.checkTab(tabId, true)) {
 
-			parentObj.layuimini.delTab(tabId);
+			window.top.layuimini.delTab(tabId);
 
 		}
 
-		parentObj.layuimini.addTab(tabId, href, title, true);
+		window.top.layuimini.addTab(tabId, href, title, true);
 
-		parentObj.layuimini.changeTab(tabId);
+		window.top.layuimini.changeTab(tabId);
 
 	},
 	
 	removeTab:function(){
 		
-		var parentObj = util.getMainWin();
 		
-		var tabId = parentObj.$(".layui-tab-title li.layui-this").attr('lay-id');
+		var tabId = window.top.$(".layui-tab-title li.layui-this").attr('lay-id');
 		
-		parentObj.layuimini.delTab(tabId);
+		window.top.layuimini.delTab(tabId);
 		
 	},
 
@@ -230,7 +229,14 @@ util = {
 	closeAll: function() {
 		layer.closeAll();
 	},
-
+	call:function(func,param){
+		var fn = window[func];
+		return fn.call(null,param)
+	},
+	apply:function(func,param){
+		var fn = window[func];
+		return fn.apply(null,param);
+	},
 	/**
 	 * @param {Object} retMsg
 	 * @param {Object} type
@@ -366,7 +372,6 @@ util = {
 
 						arr = arr.substring(arr.indexOf("=") + 1);
 
-						console.log(arr);
 
 						eval(arr);
 					}
@@ -552,6 +557,97 @@ util = {
 		}
 		return retStr;
 	},
+	urlToArr: function(url) {
+	
+		var paramJson = {};
+	
+		if(!util.isNull(url) && url.indexOf("?") != -1) {
+	
+			var arr = url.split("?")[1].split("&");
+	
+			for(var i = 0; i < arr.length; i++) {
+	
+				var arr2 = arr[i].split("=");
+	
+				if(arr2.length != 2) {
+	
+					continue;
+				}
+	
+				paramJson[arr2[0]] = util.decode(arr2[1]);
+	
+			}
+		}
+	
+		return paramJson;
+	
+	},
+	
+		/**
+		 * 动态加载 css.js
+		 * @param filename
+		 * @param filetype
+		 */	
+		loadJsCssfile:function(filename, filetype){
+	    	
+				var fileref  = undefined;
+				
+	    	   if (filetype=="js"){
+	
+	    		    fileref = document.createElement('script');
+	
+		    		fileref.setAttribute("type","text/javascript")
+		
+		    		fileref.setAttribute("src",filename);
+	
+	    		}else if (filetype=="css"){
+	
+	    		    fileref = document.createElement("link");
+		
+		    		fileref.setAttribute("rel","stylesheet");
+		
+		    		fileref.setAttribute("type","text/css");
+		
+		    		fileref.setAttribute("href",filename);
+	
+	    		}
+	
+	    		if (typeof fileref!="undefined"){
+					
+					document.getElementsByTagName("head")[0].appendChild(fileref);
+
+	
+	    		}
+	    },
+	    /**
+	     * 移出已经加载过的js/css
+	     * @param fileName
+	     * @param fileType
+	     */
+	    removeJsCssfile:function(filename,filetype){
+	    	
+	    		var  targetelement= (filetype=="js")? "script" :(filetype=="css")? "link" : "none" ;
+	
+	    		var targetattr = (filetype=="js")?"src" : (filetype=="css")? "href" :"none" ;
+	
+	    		var allsuspects=document.getElementsByTagName(targetelement);
+	
+	    		for (var i=allsuspects.length; i>=0;i--){
+	
+	    			
+	    			if (allsuspects[i] &&allsuspects[i].getAttribute(targetattr)!=null ){
+	
+	    				if(allsuspects[i].getAttribute(targetattr).indexOf(filename)!=-1){
+	    					
+	    					allsuspects[i].parentNode.removeChild(allsuspects[i]);
+	    					
+	    				}
+	    				
+	    				
+	    		  
+	    			}
+	    		}
+	    },
 	ajaxJson: function(msg, url, param, callBack, beforeSend, async) {
 
 		if (!util.isNull(msg)) {
@@ -559,12 +655,15 @@ util = {
 			util.load(msg);
 
 		}
-
+		
+		var urlParam = util.urlToArr(url);
+		
+		$.extend(urlParam,param);
 
 		$.ajax({
 			type: "POST",
 			url: url,
-			data: JSON.stringify(param),
+			data: JSON.stringify(urlParam),
 			contentType: "application/json;charset=UTF-8",
 			beforeSend: function(req) {
 
@@ -592,7 +691,7 @@ util = {
 				}
 
 			},
-			error: function() {
+			error: function(xhr, textStatus, errorThrow) {
 				
 				util.disLoad();
 				

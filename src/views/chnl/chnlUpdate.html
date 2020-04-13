@@ -22,14 +22,14 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">渠道编码：</label>
 						<div class="layui-input-block">
-							<input type="text" name="chnlCode" ag-verify="required" autocomplete="off" placeholder="渠道编码" class="layui-input">
+							<input type="text" name="chnlCode" readonly="readonly" ag-verify="required" autocomplete="off" placeholder="渠道编码" class="layui-input">
 						</div>
 					</div>
 
 					<div class="layui-inline ">
 						<label class="layui-form-label">渠道名称：</label>
 						<div class="layui-input-block">
-							<input type="text" name="chnlName" ag-verify="required" autocomplete="off" placeholder="渠道名称" class="layui-input">
+							<input type="text" name="chnlName" readonly="readonly" ag-verify="required" autocomplete="off" placeholder="渠道名称" class="layui-input">
 						</div>
 					</div>
 
@@ -67,12 +67,12 @@
 
 			<div class="layui-card-footer">
 
-				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-blue " ag-data-url="/sys/settings/chnls/update"
+				<button class="ag-btn-save layui-btn layui-btn-sm layui-btn-normal " ag-data-url="/sys/settings/chnls/update"
 				 ag-data-index="1">
 					<i class="layui-icon layui-icon-ok-circle "></i>
 					<span class="btn-span-middle">保存</span>
 				</button>
-				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+				<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-normal">
 					<i class="layui-icon layui-icon-close "></i>
 					<span class="btn-span-middle">取消</span>
 				</button>

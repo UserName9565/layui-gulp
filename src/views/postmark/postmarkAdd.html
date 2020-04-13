@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>无纸化管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @@include('url-config.html')
+  </head>
+  <body class="bg-info">
+
+    <div class="layui-card layui-card-form">
+
+      <div class="layui-card-body">
+
+        <form class="ag-form layui-form"  ag-data-ctx="cfgmgr" ag-data-url="/cfg/postMaskInfos/queryInit" ag-data-index='1' ag-form-callBack ="updateInitCall">
+			
+			<input type="hidden" id="postmarkContent" name="postmarkContent" value="1" ag-verify="required" ag-verify-msg = "请选择印模文件！"/>
+			<input type="hidden" name="isCmca"  />
+			<input type="hidden" id="sealId" name="sealId"/>
+            <div class="layui-inline ">
+            	<label class="layui-form-label">印章名称：</label>
+            	<div class="layui-input-block">
+            		<input type="text" name="postmarkName"  ag-verify="required" autocomplete="off" placeholder="印章名称" class="layui-input">
+            	</div>
+            </div>
+			<div class="layui-inline ">
+				<label class="layui-form-label">印章类型：</label>
+				<div class="layui-input-block">
+					<select id="postmarkType" name="postmarkType"  ag-verify="required" class="layui-input" >
+					</select>
+				</div>
+			</div>
+            <div class="layui-inline ">
+            	<label class="layui-form-label">组织机构：</label>
+            	<div class="layui-input-block">
+            		<input type="hidden" name="groupIdStr" ag-verify="required"  autocomplete="off"  class="layui-input">
+            		<input type="text" name="groupName" ag-tree-title="渠道选取" ag-verify="required"  autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupIdStr"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+            		
+            	</div>
+            </div>	
+            <div class="layui-inline ">
+            	<label class="layui-form-label">印章高：</label>
+            	<div class="layui-input-block">
+            		<input type="text" id="postmarkHigh" name="postmarkHigh" readonly="readonly" ag-verify="required" value="1"  autocomplete="off" placeholder="印章高" class="layui-input">
+            	</div>
+            </div>
+			<div class="layui-inline ">
+				<label class="layui-form-label">印章宽：</label>
+				<div class="layui-input-block">
+					<input type="text" id="postmarkWidth" name="postmarkWidth" readonly="readonly" ag-verify="required" value="1" autocomplete="off" placeholder="印章宽" class="layui-input">
+				</div>
+			</div>
+
+        </form>
+
+
+      </div>
+
+      <div class="layui-card-footer">
+		
+		<button class=" layui-btn layui-btn-sm layui-btn-normal " onclick="selBMPFile_onclick()" >
+		  <i class="layui-icon layui-icon-picture-fine "></i>
+		  <span class="btn-span-middle">选择印模文件</span>
+		</button>
+        <button class=" ag-btn-save  layui-btn layui-btn-sm layui-btn-normal " ag-data-ctx="cfgmgr" ag-data-url="/cfg/postMaskInfos/add"  ag-data-index="1">
+          <i class="layui-icon layui-icon-ok-circle "></i>
+          <span class="btn-span-middle">提交</span>
+        </button>
+        <button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-normal">
+          <i class="layui-icon layui-icon-close "></i>
+          <span class="btn-span-middle">取消</span>
+        </button>
+      </div>
+
+    </div>
+  </body>
+  
+  <script>
+	  
+	  
+	  
+	  function updateInitCall(data){
+		  
+		  if("1"==data.isCmca){
+			  
+			  var s = "<div>";
+			  s += "<OBJECT style='display: none' ID='DLO' width=20px;height=20px CLASSID='CLSID:833DAB42-2C3D-4524-8C7E-26E4FF1EF859' CODEBASE='/static/js/ocx/downfileocx.cab#version=1,0,0,2' >";
+			  s += "</OBJECT>";
+			  s += "<OBJECT id='MakeSeal' height='200px' width='300px' classid='clsid:891FCEBB-6649-449A-A88D-E50756748EEE' codebase='/static/js/ocx/MakeSeal.ocx#version=1,0,0,4' >";
+			  s += "</OBJECT></div>";
+			  	
+				
+				$(".ag-form").append(s);
+				
+			  return ;
+		  }
+		  
+		  
+		  var s = "<div>";
+		  s += "<OBJECT id='DMakeSealV61' classid='clsid:3F1A0364-AD32-4E2F-B550-14B878E2ECB1' VIEWASTEXT width=250 height=200 codebase='/static/js/ocx/MakeSealV6.cab#version=1,0,3,2' >"
+		  s +="     <PARAM NAME='_Version' VALUE='65536'> "
+		  s +="     <PARAM NAME='_ExtentX' VALUE='2646'> "
+		  s +="     <PARAM NAME='_ExtentY' VALUE='1323'> "
+		  s +="     <PARAM NAME='_StockProps' VALUE='0'> "
+		  s +=" </OBJECT></div>"
+		 
+		  
+		  $(".ag-form").append(s);
+		  
+	  }
+	  
+	  function selBMPFile_onclick(){
+		  
+	      var url = "/views/seal/sealInitVaild.html";
+		  
+		 util.openWin(url,"选择印模",800,600);
+		  
+	  }
+	  
+	 
+	  
+	  function setSealValue1(b){
+		  
+		util.closeAll();
+	  	
+	  	util.ajaxJson("",ctx+"/cfgmgr/cfg/seals/loadSealIdById",{"sealId":b['sealId']},function(data){
+	  				  
+	  				  if(data.result == "0"){
+						  
+						  
+	  					  
+	  					  DMakeSealV61.SetEncBmp(data.body);
+	  					  
+	  					  DMakeSealV61.fSealWidthMM =b['sealWidth'];
+	  					  
+	  					  DMakeSealV61.fSealHeightMM =b['sealHigh'];
+	  					  
+	  					  DMakeSealV61.strSealID = b['sealId'] ;
+	  					  
+	  					  DMakeSealV61.NewSealStart();
+	  					 
+	  					  if(0 != DMakeSealV61.NewSealEnd()){
+	  						  
+	  					  	util.error("载入印模失败");
+	  						
+	  					  	return false;
+	  						
+	  					  }
+						  
+						  $('#sealId').val(b['sealId']);
+						  
+						  $('#postmarkHigh').val(b['sealHigh']);
+						  
+						  $('#postmarkWidth').val(b['sealWidth']);
+	  					  //alert(DMakeSealV61.SaveData());
+	  					  $("#postmarkContent").val(DMakeSealV61.SaveData());
+	  					
+	  					return ;  
+	  				  }
+	  				  
+	  				  util.error("获取印章信息失败！");
+	  				 
+	  				  
+	  				  
+	  	},undefined,true);
+	  }
+	  
+	 
+  </script>
+
+</html>

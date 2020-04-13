@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>无纸化集中业务管理系统</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		@@include('url-config.html')
+	</head>
+	<body class="bg-info" >
+
+		<div class="layui-card layui-card-margin ">
+
+			<form class="ag-form layui-form" ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/postMaskInfos/queryInit">
+
+				<div class="param-left">
+					<input type="hidden" name = "validFlag" value="('C','Z','N','Y','R')"/>
+					<div class="layui-inline ">
+						<label class="layui-form-label">组织机构：</label>
+						<div class="layui-input-block">
+							<input type="hidden" name="groupIdStr"  autocomplete="off"  class="layui-input">
+							<input type="text" name="groupNameStr" ag-tree-title="渠道选取"  autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupIdStr"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+							
+						</div>
+					</div>	
+
+				</div>
+
+
+			</form>
+
+			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
+			<div class="btns-right">
+
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" 
+					 ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/postMaskInfos/queryPageList">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">查询</span>
+					</button>
+
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-normal" ag-data-index="0" type="reset" >
+						<i class="layui-icon layui-icon-refresh "></i>
+						<span class="btn-span-middle">重置</span>
+					</button>
+
+
+			</div>
+
+		</div>
+
+
+
+
+		<div class=" layui-card  layui-card-list" >
+
+			<div class="layui-border-box ">
+			
+				<div class="layui-table-tool">
+					<div class="layui-table-tool-temp">
+							<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
+							 ag-win-title="印章新增" title="印章新增" ag-data-url="/views/postmark/postmarkAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+							<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+							 ag-win-height="600" title="印章修改"  ag-win-check="checkUpdate" ag-win-title="印章修改" ag-data-pk="postmarkId" ag-data-url="/views/postmark/postmarkUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+							<div class="ag-btn-del layui-inline" title="印章删除" lay-event  ag-win-check="checkDel" ag-data-index="0" ag-data-pk="postmarkId,validFlag" ag-data-ctx="cfgmgr" ag-data-url="/cfg/postMaskInfos/del"><i
+								 class="layui-icon layui-icon-delete"></i></div>
+					</div>
+			
+				</div>
+			
+			</div>
+
+			<div style="display:none" class="ag-table-header" ag-data-index="0">
+
+				[
+				[
+				{
+				"type": "radio",
+				"fixed": "left"
+				},{
+				"field": "postmarkId",
+				"title": "编号",
+				"hide":true
+				},{
+				"field": "validFlag",
+				"title": "印章状态CODE",
+				"hide":true
+				}, {
+				"field": "postmarkName",
+				"title": "印章名称"
+				}, {
+				"field": "groupNameStr",
+				"title": "所属部门"
+				}, {
+				"field": "postmarkHigh",
+				"title": "印章高"
+				}, {
+				"field": "postmarkWidth",
+				"title": "印章宽"
+				}, {
+				"field": "validFlagString",
+				"title": "印章状态"
+				}, {
+				"field": "actLoginNo",
+				"title": "操作工号"
+				},{
+					
+					"width": 200,
+					"title": "操作",
+					"fixed": "right",
+					"btns": [
+					{
+					"className": "",
+					"openTitle":"确定提交审批吗？",
+					"btnVal":"提交",
+					"url": "@ctx@/cfgmgr/cfg/postMaskInfos/updateValidFlag?postmarkId=@postmarkId@&validFlag=@validFlag@&validFlagNew=Z",
+					"openType": "3",
+					"refresh":true
+					},
+					{
+					"className": "",
+					"openTitle":"确定要作废该条数据吗？",
+					"btnVal":"作废",
+					"url": "@ctx@/cfgmgr/cfg/postMaskInfos/updateValidFlag?postmarkId=@postmarkId@&validFlag=@validFlag@&validFlagNew=M",
+					"openType": "3",
+					"refresh":true
+					}]
+					
+				}
+
+				]
+				]
+
+			</div>
+			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+			</table>
+
+			<div class="pagging ag-area-page">
+				   
+			</div>
+
+		</div>
+
+	</body>
+	
+	<script type="text/javascript">
+		
+		function checkUpdate(opt){
+			
+			if( "C" !=opt.data[0].validFlag && 'N' != opt.data[0].validFlag) {
+				
+				util.error("此印章在当前状态不可修改！");
+				
+				return false;
+				
+			}
+			
+			return true;
+		}
+		
+		
+		function checkDel(opt){
+			
+			
+			if( "C" !=opt.data[0].validFlag) {
+				
+				util.error("此印章状态不可以删除！");
+				
+				return false;
+				
+			}
+			
+			return true;
+		}
+	</script>
+</html>

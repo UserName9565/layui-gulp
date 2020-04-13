@@ -9,6 +9,7 @@
  */
 
 
+
 layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], function() {
 
 	var form = layui.form,
@@ -17,8 +18,11 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	table = layui.table;
 
 	checkForm = layui.checkForm;
+	
 	laydate = layui.laydate;
+	
 	mapChooser = layui.mapChooser;
+	
 	//自定义插件
 	var customPlugins = {};
 	customPlugins["mapChooser"] = mapChooser;
@@ -271,13 +275,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						var realUrl = decorateTpl(item.url);
 
-
-
 						var lsnrStr = getHrefLsnr(item.openType);
+						
+						var opts = {"ag-data-url":realUrl,
+									"ag-win-title":item.openTitle,
+									"ag-win-width":item.width,
+									"ag-win-height":item.height,
+									"ag-data-refresh":item.refresh}
 
-
-
-						var aFunc = lsnrStr + "(\"" + realUrl + "\",\"" + item.openTitle + "\","+item.width+","+item.height+")";
+						var aFunc = lsnrStr + "("+JSON.stringify(opts)+")";
 
 						var a = "<a href='javascript:void(0)'  style='padding:0px 5px' class=' layui-table-link " + item.className +
 							"' onclick='" + aFunc + " '>" + (item.btnVal ? item.btnVal : "操作") + "</a>";
@@ -310,6 +316,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			"openType0": "_listHrefDownloadFile",
 			"openType1": "_listHrefWindow",
 			"openType2": "_listHrefTab",
+			"openType3":"_listHrefPost",
 		};
 		var funcName = hrefLsnr["openType" + openType];
 		return funcName;
@@ -446,14 +453,42 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		var url = $(this).attr("ag-data-url");
 
 		var checkRet = checkForm.validateForm(form);
+		
 		if (!checkRet) {
+			
 			return false;
 		}
 
 		initPage(index);
 
 		var param = getFormJson($(".ag-form[ag-data-index=" + index + "]"));
+		
+		var queryParams = $(this).data("query-params");
+		
+		if(!util.isNull(queryParams)){
+			
+			var queryJson  = $.parseJSON(queryParams);
+			
+			delete queryJson.page;
+			
+			var checkParam = $.extend({},param);
+			
+			delete checkParam.page;
+			
+			if(JSON.stringify(queryJson) != JSON.stringify(checkParam)){
+				
+				$(" input[name=page]",form).val('{"pageNo":"1","pageSize":"20"}');
+				
+				param.page = '{"pageNo":"1","pageSize":"20"}';
+				
+			}
+			
+		}
+		
+		$(this).data("query-params",JSON.stringify(param));
+		
 		var agCtx = util.getAgCtx(this);
+		
 		url = ctx + "/" + agCtx + url;
 
 		util.ajaxJson("查询中,请稍后...", url, param, function(page) {
@@ -462,11 +497,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			var cols = decorateData(colsStr);
 
-			
-
-
 			//执行一个 table 实例
 			table.render({
+				
 				elem: $(".ag-table[ag-data-index=" + index + "]"),
 				height: $(".ag-table[ag-data-index=" + index + "]").height()-35 ,
 				data: page.data, //数据接口
@@ -745,6 +778,79 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 	}
 
+
+	var btnOpt={
+		"ag-data-index":"",
+		"ag-win-check":"",
+		"ag-data-url":"",
+		"ag-win-id":"0",
+		"ag-data-pk":"id",
+		"ag-win-width":"800",
+		"ag-win-height":"600",
+		"ag-win-title":"",
+		"ag-win-type":"1",
+		"data":"",
+		"ag-data-ctx":"sysmgr",
+		"ag-data-refresh":""
+		
+	}
+	
+	function buildBtnOpt(obj){
+		
+		var opt = $.extend({},btnOpt);
+		
+		for(var key in btnOpt){
+			
+			var val =  $(obj).attr(key);
+			
+			if(!util.isNull(val)){
+				
+				opt[key] = val;
+			}
+			
+		}
+		
+		var tableId = $("table[ag-data-index=" + opt["ag-data-index"] + "]").attr("id");
+		
+		var checkStatus = table.checkStatus(tableId);
+		
+		opt.data = checkStatus.data; //获取选中行数据
+		
+		var appendUrl = "";
+		
+		
+		if(!util.isNull(opt.data) && $.isArray(opt.data) && opt.data.length > 0){
+			
+			$.each(opt["ag-data-pk"].split(","),function(i,t){
+					
+					appendUrl = appendUrl + t +"=" + opt.data[0][t] +"&";
+				
+			})
+			
+			var url = opt["ag-data-url"];
+			
+			if(!util.isNull(url)){
+				
+				if (url.indexOf("?") == -1) {
+					
+					url = url + "?" + appendUrl;
+				
+				} else {
+					
+					url = url + "&" + appendUrl;
+				}
+				
+				opt["ag-data-url"] = url;
+			}
+			
+		}
+		
+		
+		
+		
+		
+		return opt;
+	}
 	/**
 	 *
 	 * 修改初始化方法
@@ -752,44 +858,24 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	 ***/
 	function updateInit() {
 
-		var index = $(this).attr("ag-data-index");
-		var tableId = $("table[ag-data-index=" + index + "]").attr("id");
-		var checkStatus = table.checkStatus(tableId);
-		var data = checkStatus.data; //获取选中行数据
-		if (data.length == 0) {
+		
+		var opt  = buildBtnOpt(this);
+		
+		if (opt.data.length == 0) {
 
 			util.warning('请选择一条数据库记录!');
+			
 			return;
 		}
-
-		var pkCol = $(this).attr("ag-data-pk");
-		if (util.isNull(pkCol)) {
-			pkCol = "id";
+		
+		if(!util.isNull(opt["ag-win-check"]) && !util.call(opt["ag-win-check"],opt)){
+			
+			
+			return ;
 		}
-
-		var pkVal = data[0][pkCol];
-
-
-		var index = $(this).attr("ag-data-index");
-		var url = $(this).attr("ag-data-url");
-		var winId = $(this).attr("ag-win-id");
-		var winW = $(this).attr("ag-win-width");
-		var winH = $(this).attr("ag-win-height");
-		var title = $(this).attr("ag-win-title");
-
-		var agCtx = util.getAgCtx(this);
-
-		//url = apiConfig[agCtx + "_web"] + url;
-		if (url.indexOf("?") == -1) {
-			url = url + "?" + pkCol + "=" + pkVal;
-		} else {
-			url = url + "&" + pkCol + "=" + pkVal;
-		}
-
-		var opts = {
-			"winId": winId
-		}
-		util.openWin(url, title, winW, winH, opts);
+		
+		util.call(getHrefLsnr(opt["ag-win-type"]),opt);
+		
 
 	};
 
@@ -803,24 +889,16 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	 *
 	 ***/
 	function addInit() {
-
-		var index = $(this).attr("ag-data-index");
-		var url = $(this).attr("ag-data-url");
-		var winId = $(this).attr("ag-win-id");
-		var winW = $(this).attr("ag-win-width");
-		var winH = $(this).attr("ag-win-height");
-		var title = $(this).attr("ag-win-title");
-
-		var opts = {
-			"winId": winId
+		
+		var opt  = buildBtnOpt(this);
+		if(!util.isNull(opt["ag-win-check"]) && !util.call(opt["ag-win-check"],opt)){
+			
+			
+			return ;
 		}
-
-		var agCtx = util.getAgCtx(this);
-
-		//url = apiConfig[agCtx + "_web"] + url;
-
-		util.openWin(url, title, winW, winH, opts);
-
+		
+		util.call(getHrefLsnr(opt["ag-win-type"]),opt);
+		
 	};
 
 	/***
@@ -830,6 +908,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function save() {
 
 		var index = $(this).attr("ag-data-index");
+		
 		var form = $(".ag-form[ag-data-index=" + index + "]");
 
 		var checkRet = checkForm.validateForm(form);
@@ -887,62 +966,45 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	};
 
 	function del() {
-
-		var index = $(this).attr("ag-data-index");
-		var tableId = $("table[ag-data-index=" + index + "]").attr("id");
-		var checkStatus = table.checkStatus(tableId);
-		var data = checkStatus.data; //获取选中行数据
-		if (data.length == 0) {
-
+		
+		var opt  = buildBtnOpt(this);
+		
+		if (opt.data.length == 0) {
+		
 			util.warning('请选择一条数据库记录!');
+			
 			return;
 		}
-
-		var pkCol = $(this).attr("ag-data-pk");
-		if (util.isNull(pkCol)) {
-			pkCol = "id";
+		
+		if(!util.isNull(opt["ag-win-check"]) && !util.call(opt["ag-win-check"],opt)){
+			
+			return ;
 		}
-
-		var pkVal = data[0][pkCol];
-		var opts = {
-			"index": index
-		};
-
-		util.showDialog("您确定要删除选中记录么?", 3, doDel, opts);
+		
+	
+		util.showDialog("您确定要删除选中记录么?", 3, doDel, opt);
 
 	}
 
-	function doDel(opts) {
+	function doDel(opt) {
+		
 
-		var index = opts.index;
-		var tableId = $("table[ag-data-index=" + index + "]").attr("id");
-		var checkStatus = table.checkStatus(tableId);
-		var data = checkStatus.data; //获取选中行数据
-
-		var btn = $(".ag-btn-del[ag-data-index=" + index + "]")
-		var pkCol = $(btn).attr("ag-data-pk");
-		if (util.isNull(pkCol)) {
-			pkCol = "id";
-		}
-
-		var pkVal = data[0][pkCol];
-
-		var param = {};
-		param[pkCol] = pkVal;
-
-		var url = ctx + "/" + util.getAgCtx(btn) + $(btn).attr("ag-data-url");
+		var url = ctx + "/" + opt["ag-data-ctx"]  + opt["ag-data-url"];
 
 
-		util.ajaxJson("删除中,请稍后!", url, param, function(data) {
-
+		util.ajaxJson("删除中,请稍后!", url, {}, function(data) {
+			
 			var result = data.result;
 			var desc = data.desc;
 
 			if (result == 0) {
+				
 				util.success(desc);
 
 				var queryBtn = layui.$(".ag-btn-query");
+				
 				if (queryBtn.length > 0) {
+					
 					$(queryBtn).click();
 				}
 
@@ -1523,7 +1585,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				//加载数据并补充初始化表单
 				var url = ctx + "/" + util.getAgCtx($(agForm)) + dataUrl;
 
-				util.ajaxJson("",url,formParam,function(data){
+				util.ajaxJson("页面加载ing...",url,formParam,function(data){
 
 						/**
 						 * 复选框
@@ -1597,18 +1659,18 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 									selectStr += "<option value=''>-请选择-</option>"
 								}
-                if(optArr!=null){
-                    for (var i = 0; i < optArr.length; i++) {
-                      var selectedStr = optArr[i].selected;
-                      if (util.isNull(selectedStr)) {
-                        selectedStr = "";
-                      }
+							if(optArr!=null){
+								for (var i = 0; i < optArr.length; i++) {
+								  var selectedStr = optArr[i].selected;
+								  if (util.isNull(selectedStr)) {
+									selectedStr = "";
+								  }
 
-                      var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
-                        "</option>";
-                      selectStr = selectStr + optBean;
-                    }
-                }
+								  var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
+									"</option>";
+								  selectStr = selectStr + optBean;
+								}
+							}
 
 
 
@@ -1635,9 +1697,13 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 							//init参数根据需要在扩展
 							customPlugins[pluginName].init(data);
 						}
+						
+						var agCallBack = $(agForm).attr("ag-form-callBack");
 
-
-
+						if (!util.isNull(agCallBack)) {
+							
+							util.call(agCallBack,data);
+						}
 
 				}) ;
 
@@ -1667,11 +1733,6 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				elem: input,
 				type: $(input).attr("ag-date-format")
 			}
-
-
-
-			console.log(opt);
-
 			laydate.render(opt);
 		});
 
@@ -1717,22 +1778,25 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			return;
 		}
 
-		var sibHeight = -15;
+		var sibHeight = 0;
 
 		//获取容器父级--父级所有兄弟节点
-		var $query = agTable.parent().siblings(":visible").not("script").not("iframe");
-
+		var $query = agTable.parent().siblings(":visible").not("script").not("iframe").not(".datagrid-mask,.datagrid-mask-msg");
+		
+		
+		
 		for (var i = 0; i < $query.length; i++) {
 
 			if (!$($query[i]).attr("class") || $($query[i]).attr("class").indexOf("layui-layer") != -1) {
 
 				continue;
 			}
-
+			
+			
 			sibHeight += ($($query[i]).outerHeight() + util.getMarginHeight($query[i]));
 
 		}
-
+		
 
 
 		sibHeight += util.getRealityOrderHeight(agTable.parent());
@@ -1761,7 +1825,6 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			return ;
 		}
-
 		agTable.parent().css('height', 'calc( 100vh - ' + parentDiffHeight + 'px)');
 
 		agTable.css('height', 'calc( 100vh - ' + sibHeight + 'px)');
@@ -1809,14 +1872,55 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 });
 
+/**
+ * 列表链接,post请求
+ * 
+ * @param {Object} url
+ */
+function _listHrefPost(opt){
+	
+	util.showDialog(opt["ag-win-title"], 3, "retT=_post('"+opt["ag-data-url"]+"',"+opt["ag-data-refresh"]+")");
+
+}
+
+
+
+function _post(url,refresh){
+	
+	util.ajaxJson("处理中...",url,{},function(data){
+		
+		if(data){
+			
+			if("0" == data.result){
+			
+				util.showDialog(data.desc? data.desc:"成功",2,"ret=refresh("+refresh+")");
+			
+			}else if( "1" ==  data.result){
+				
+				util.showDialog(data.desc? data.desc:"失败",0,"ret=refresh("+refresh+")");
+			}
+			
+			
+		}
+		
+	},"json");
+}
+
+function refresh(refresh){
+	
+	if(refresh){
+			
+		$(".ag-btn-query").click();
+	}
+}
 	/**
 	 * 列表链接，下载文件
 	 *
 	 * @param {Object} url
 	 */
-function _listHrefDownloadFile(url) {
+function _listHrefDownloadFile(opt) {
 
-		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('" + url + "')");
+		util.showDialog("确定下载文件么?", 3, "ret=_doRealDownLoad('" + opt["ag-data-url"] + "')");
 
 
 }
@@ -1830,8 +1934,7 @@ function _doRealDownLoad(url) {
 		iframe.appendTo('body');
 	}
 
-	var action = url;
-	var form = $("<form></form>").attr("action", action).attr("method", "post");
+	var form = $("<form></form>").attr("action", url).attr("method", "post");
 	form[0].target = "downloadHidenFr1";
 	form.appendTo('body').submit().remove();
 
@@ -1840,19 +1943,20 @@ function _doRealDownLoad(url) {
 }
 
 
-function _listHrefWindow(url, title,width,height) {
+function _listHrefWindow(opt) {
+	
+	
+	var opts = {
+		"winId": opt["ag-win-id"]
+	}
 
-	width =  width || 1000;
-
-	height = height ||1000;
-
-	util.openWin(util.decode(url), title, width, height);
+	util.openWin(util.decode(opt["ag-data-url"]), opt["ag-win-title"], opt["ag-win-width"], opt["ag-win-height"],opts);
 }
 
 
-function _listHrefTab(url, title) {
+function _listHrefTab(opt) {
 
 
-	util.addTab(url, title);
+	util.addTab(opt["ag-data-url"], opt["ag-win-title"]);
 
 }

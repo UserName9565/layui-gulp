@@ -179,21 +179,16 @@
 	});
 function getCaptcha() {
   var url = ctx+"/sysmgr/sys/login/auth/captcha";
-  $.ajax({
-    url : url,
-    type : "POST",
-    async : false,
-    data : {},
-    dataType:"json",
-    success : function(data) {
-    	var random=data.desc;
-    	$("#captchaCode").val(random);
-        var verify = document.getElementById('captchaPic');
-        var base64=data.body;
-        base64=base64.replace(/\"/g,"");
-        base64=base64.replace(/\\r\\n/g,"");
-        verify.setAttribute('src', 'data:image/jpeg;base64,'+base64);
-    }
+  
+  util.ajaxJson("",url,{},function(data){
+	  
+	  var random=data.desc;
+	  $("#captchaCode").val(random);
+	  var verify = document.getElementById('captchaPic');
+	  var base64=data.body;
+	  base64=base64.replace(/\"/g,"");
+	  base64=base64.replace(/\\r\\n/g,"");
+	  verify.setAttribute('src', 'data:image/jpeg;base64,'+base64);
   });
 
 }

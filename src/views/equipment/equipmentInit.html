@@ -42,13 +42,13 @@
 			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
 			<div class="btns-right">
 
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" 
 					 ag-data-index="0" ag-data-ctx="sysmgr"  ag-data-url="/sys/equipment/dequipmentmodels/queryPage">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
 
-					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-normal" ag-data-index="0" type="reset" >
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
@@ -88,37 +88,29 @@
 						"fixed": "left"
 					},  {
 						"field": "typeCode",
-						"width": 120,
 						"title": "设备类型编码",
 						"hide":true
 					}, {
 						"field": "typeName",
-						"width": 120,
 						"title": "设备类型"
 					}, {
 						"field": "companyId",
-						"width": 120,
 						"title": "设备厂商编码",
 						"hide":true
 					}, {
 						"field": "companyName",
-						"width": 120,
 						"title": "设备厂商"
 					}, {
 						"field": "modelCode",
-						"width": 120,
 						"title": "设备型号"
 					}, {
 						"field": "opTime",
-						"width": 120,
 						"title": "创建时间"
 					}, {
 						"field": "loginNo",
-						"width": 120,
 						"title": "创建人"
 					}, {
 						"field": "opType",
-						"width": 120,
 						"title": "操作类型"
 					}]
 				]
