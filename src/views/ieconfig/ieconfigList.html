@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>layui</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<link charset="utf-8" rel="shortcut icon" href="/static/images/index/logo.png" type="image/x-icon">
+<link charset="utf-8" rel="stylesheet" href="/static/layui/css/layui.css?v=1.0.0">
+<link charset="utf-8" rel="stylesheet" href="/static/css/bundle/main.css?v=1.0.0">
+<link charset="utf-8" rel="stylesheet" href="/static/css/bundle/common.css?v=1.0.0">
+<link charset="utf-8" rel="stylesheet" href="/static/css/libs/admin.css?v=1.0.0">
+<link rel="stylesheet" href="/static/css/bundle/layuimini.css" media="all">
+<link rel="stylesheet" href="/static/layui/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+<link rel="stylesheet" href="/static/css/bundle/temp.css" media="all">
+<style id="agile-color">
+
+</style>
+<script src="/static/js/libs/jquery-1.8.2.min.js?v=1.0.0"></script>
+
+<!--[if IE]>
+    <script src="/static/js/libs/html5.min.js"></script>
+ <script src="/static/js/libs/respond.min.js"></script>
+    <script src="/static/js/plugins/PIE.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/jq-placehoder.js?v=1.0.0"></script>
+
+<![endif]-->
+<script src="/static/js/plugins/jquery.xdomainrequest.min.js?v=1.0.0"></script>
+<!-- <script src="/static/js/plugins/jquery-form.js?v=1.0.0"></script> -->
+<script src="/static/layui/layui.js?v=1.0.0"></script>
+<script src="/static/js/plugins/jquery.cookie.js?v=1.0.0"></script>
+<script>
+    var ht = location.pathname;
+
+    if(ht.indexOf("/login-1.html")==-1){
+        var token = $.cookie('JSESSIONID_token');
+
+
+        if(!token){
+
+            location.href = "/views/login-1.html"
+        }
+    }
+</script>
+<script src="/static/js/api.config.js"></script>
+<script src="/static/js/bundle/common.js?v=1.0.0"></script>
+<script src="/static/js/bundle/util.js?v=1.0.0"></script>
+<script src="/static/js/bundle/customform.js?v=1.0.0"></script>
+<script src="/static/js/bundle/url.js?v=1.0.0"></script>
+<script src="/static/layui/lay/lay-config.js?v=1.0.0"></script>
+
+	</head>
+	<body class="bg-info">
+
+		<div class="layui-card layui-card-margin ">
+
+			<form class="ag-form layui-form" ag-data-index="0">
+     
+				<div class="param-left">
+        <div class="layui-inline ">
+          	<label class="layui-form-label">ie选项</label>
+          	<div class="layui-input-block">
+          		<input type="text" name="tabname" autocomplete="off" placeholder="ie选项" class="layui-input">
+          	</div>
+          </div>
+
+        <div class="layui-inline ">
+          	<label class="layui-form-label">站点</label>
+          	<div class="layui-input-block">
+          		<input type="text" name="http" autocomplete="off" placeholder="站点" class="layui-input">
+          	</div>
+          </div>
+        </div>
+
+
+			</form>
+
+			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
+			<div class="btns-right">
+
+				<div class="layui-inline">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-url="/sys/ieconfig/queryAllItems">
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">查询</span>
+					</button>
+						<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+						<i class="layui-icon layui-icon-search "></i>
+						<span class="btn-span-middle">重置</span>
+					</button>
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+
+
+		<div class=" layui-card  layui-card-list" >
+
+			<div class="layui-border-box ">
+
+				<div class="layui-table-tool">
+					<div class="layui-table-tool-temp">
+            <div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="新增" ag-data-url="/views/ieconfig/ieconfigAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+            <div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="新增" ag-data-url="/views/ieconfig/ieconfigGaoJi.html"><i class="layui-icon layui-icon-add-1"></i></div>
+             <div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="新增" ag-data-url="/views/ieconfig/ieconfigAnQuan.html"><i class="layui-icon layui-icon-add-1"></i></div>
+            <!--	<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="id" ag-data-url="/views/ieconfig/ieconfigUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>-->
+            	<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/sys/ieconfig/deleteById"><i class="layui-icon layui-icon-delete"></i></div>
+					<!--	<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="新增" ag-data-url="/views/ieconfig/queryTabName.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="modelId" ag-data-url="/views/knowledge/knowledgeUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-pk="id" ag-data-url="/sys/dknowledge/delknowledge"><i class="layui-icon layui-icon-delete"></i></div>-->
+					</div>
+
+				</div>
+
+			</div>
+
+			<div style="display:none" class="ag-table-header" ag-data-index="0">
+
+			    [
+			      [
+			        {
+			        	"type": "radio",
+			        	"fixed": "left"
+			        },{
+			          "field": "id",
+			          "title": "选项id"
+			        },{
+			          "field": "tabname",
+			          "title": "ie配置选项"
+			        }, {
+			          "field": "label",
+			          "title": "标签选项"
+			        }, {
+			          "field": "value",
+			          "title": "标签值"
+			        }, {
+			          "field": "http",
+			          "title": "网址站点"
+			        }, {
+			          "field": "radionselectnum",
+			          "title": "单选框选中标识"
+			        }
+
+
+			      ]
+			    ]
+
+			</div>
+			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+			</table>
+
+			<div class="pagging ag-area-page">
+			</div>
+
+		</div>
+
+		<script>
+
+		</script>
+	</body>
+</html>
