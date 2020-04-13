@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>layui</title>
+		<title>无纸化集中业务管理系统</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,11 +17,11 @@
 				<div class="param-left">
 
 					<div class="layui-inline ">
-					  <label class="layui-form-label">存储项：</label>
-					  <div class="layui-input-block">
-					    <select name="saveKey" ag-sel-name="saveDesc"  ag-select-default-val ="true" ag-verify="required">
-					    </select>
-					  </div>
+						<label class="layui-form-label">存储项：</label>
+						<div class="layui-input-block">
+							<select name="saveKey" ag-sel-name="saveDesc" ag-select-default-val="true">
+							</select>
+						</div>
 					</div>
 				</div>
 
@@ -31,19 +31,17 @@
 			<!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
 			<div class="btns-right">
 
-				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
-					 ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-url="/cfg/settings/cfgWoSave/queryPage">
-						<i class="layui-icon layui-icon-search "></i>
-						<span class="btn-span-middle">查询</span>
-					</button>
+				<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0"
+				 ag-data-ctx="cfgmgr" ag-data-url="/cfg/settings/cfgWoSave/queryPage">
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">查询</span>
+				</button>
 
-										<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+				<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
-						<i class="layui-icon layui-icon-search "></i>
-						<span class="btn-span-middle">重置</span>
-					</button>
-				</div>
+					<i class="layui-icon layui-icon-search "></i>
+					<span class="btn-span-middle">重置</span>
+				</button>
 
 
 			</div>
@@ -64,7 +62,7 @@
 						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
 						 ag-win-height="600" ag-win-title="二级存储修改" ag-data-pk="id" ag-data-url="/views/cfgWoSave/cfgWoSaveUpdate.html"><i
 							 class="layui-icon layui-icon-edit"></i></div>
-						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-ctx="cfgmgr"  ag-data-pk="id" ag-data-url="/cfg/settings/cfgWoSaves/del"><i
+						<div class="ag-btn-del layui-inline" lay-event ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-pk="id" ag-data-url="/cfg/settings/cfgWoSaves/del"><i
 							 class="layui-icon layui-icon-delete"></i></div>
 					</div>
 
@@ -75,56 +73,56 @@
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
 				[
-					[{
-						"type": "radio",
-						"fixed": "left"
-					}, {
-						"field": "id",
-						"title": "主键",
-						"hide": true,
-						"fixed": "left"
-					},  {
-						"field": "tenantId",
-						"width": 120,
-						"title": "租户ID"
-					}, {
-						"field": "tenantName",
-						"width": 120,
-						"title": "租户名称"
-					},{
-						"field": "ftpCode",
-						"width": 120,
-						"title": "ftp编码",
-						"hide":true
-					}, {
-						"field": "ftpName",
-						"width": 120,
-						"title": "ftp名称"
-					}, {
-						"field": "saveKey",
-						"width": 120,
-						"title": "存储项"
-					}, {
-						"field": "saveName",
-						"width": 120,
-						"title": "存储项描述"
-					}, {
-						"field": "rootDir",
-						"width": 120,
-						"title": "主目录"
-					}, {
-						"field": "opNo",
-						"width": 120,
-						"title": "操作工号"
-					}, {
-						"field": "opName",
-						"width": 120,
-						"title": "操作姓名"
-					}, {
-						"field": "opTime",
-						"width": 120,
-						"title": "操作时间"
-					}]
+				[{
+				"type": "radio",
+				"fixed": "left"
+				}, {
+				"field": "id",
+				"title": "主键",
+				"hide": true,
+				"fixed": "left"
+				}, {
+				"field": "tenantId",
+				"width": 120,
+				"title": "租户ID"
+				}, {
+				"field": "tenantName",
+				"width": 120,
+				"title": "租户名称"
+				},{
+				"field": "ftpCode",
+				"width": 120,
+				"title": "ftp编码",
+				"hide":true
+				}, {
+				"field": "ftpName",
+				"width": 120,
+				"title": "ftp名称"
+				}, {
+				"field": "saveKey",
+				"width": 120,
+				"title": "存储项"
+				}, {
+				"field": "saveName",
+				"width": 120,
+				"title": "存储项描述"
+				}, {
+				"field": "rootDir",
+				"width": 120,
+				"title": "主目录"
+				}, {
+				"field": "opNo",
+				"width": 120,
+				"title": "操作工号"
+				}, {
+				"field": "opName",
+				"width": 120,
+				"title": "操作姓名"
+				}, {
+				"field": "opTime",
+				"width": 120,
+				"title": "操作时间"
+				}]
 				]
 
 			</div>
@@ -133,7 +131,7 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>

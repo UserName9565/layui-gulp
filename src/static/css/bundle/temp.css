@@ -628,12 +628,13 @@ body {
   	border: none;
   	border-radius: 3px;
   	height: 155px;
-  	margin: 0 5px 5px 0;
+  	margin: 5px;
   	padding: 10px 0px 5px 0px ;
 	border: 1px solid #e9e9e9;
   	float: left;
-  	width: calc( 50% - 10px );
+  	width: calc( 50% - 14px );
 	max-width: 250px;
+	min-width: 165px;
 	position: relative;
   	text-align: center;
   }
@@ -998,13 +999,38 @@ body {
    * 拖拽组件 end 2020年2月21日17:03:58 姜永
    */
   
+  .ag-area-page  .layui-table-page {
+	  
+	  border-top: #e6e6e6 1px solid !important;
+	  height: 30px !important;
+	  z-index: 555;
+  }
   
-  input[readonly=readonly].layui-input{
+  .layui-input-block>input[readonly=readonly].layui-input{
   	
   	background-color: #f2f2f2 !important;
   	color: #d2d2d2!important;
   	cursor: not-allowed!important;
   }
+	
+  
+  .layui-inline{
+  	
+  	*display:inline;
+  	zoom: 1;
+  	width:300px;
+  }
+  
+  .layui-side-scroll {
+	  
+	  overflow: scroll;
+	  
+	  overflow-x: hidden;
+  }
+  
   /*******ztree 样式bug修改*********/
   .ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+  
+  
+  
   

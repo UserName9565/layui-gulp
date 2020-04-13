@@ -19,27 +19,28 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="text" name="groupId" lay-verify="title" autocomplete="off" placeholder="组织机构" class="layui-input">
+							<input type="hidden" name="groupId"  autocomplete="off"  class="layui-input">
+							<input type="text" name="groupName" ag-tree-title="渠道选取"  autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+							
 						</div>
 					</div>
 				</div>
 
 
 			</form>
- 			<div class="btns-right">
+			<div class="btns-right">
 
-				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/appModelFile/queryCAppModelFileListPages">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/appModelFile/queryCAppModelFileListPages">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
 
-										<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
-				</div>
 
 
 			</div>
@@ -55,63 +56,69 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
- 		    <div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="新增" ag-data-url="/views/modelMgr/appModel/appModelAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
- 			  <div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/appModel/AppModelUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
- 			  <div class="ag-btn-delele layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
-		    <!-- 申请-->
-        <div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-ok"></i></div>
-		    <!-- 作废-->
-        <div class="ag-btn-abolish layui-inline" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-close"></i></div>
+						<div class="ag-btn-add layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600"
+						 ag-win-title="新增" title="新增" ag-data-url="/views/modelMgr/appModel/appModelAdd.html"><i class="layui-icon layui-icon-add-1"></i></div>
+						<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="修改" title="修改" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/appModel/AppModelUpdate.html"><i
+							 class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-delele layui-inline"  title="删除" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-delete"></i></div>
+						<!-- 申请-->
+						<div class="ag-btn-apply layui-inline" title="申请" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-ok"></i></div>
+						<!-- 作废-->
+						<div class="ag-btn-abolish layui-inline" title="作废" lay-event ag-data-index="0" ag-data-pk="modelfileId" ag-data-ctx="cfgmgr"
+						 ag-data-url="/cfg/modelment/del"><i class="layui-icon layui-icon-close"></i></div>
 
-          </div>
+					</div>
 				</div>
 			</div>
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
-			    [
-			      [
-			        {
-			          "type": "radio",
-			          "fixed": "left"
-			        }, {
-			          "field": "modelfileId",
-			          "title": "模板文件编码",
-			          "sort": true,
-			          "fixed": "left",
-                "hide": false
-			        }, {
-			          "field": "modelfileName",
-			          "title": "模板文件名称",
-			          "sort": true,
-			          "fixed": "left"
-			        }, {
-			          "field": "groupName",
-			          "title": "组织机构"
-			        }, {
-			          "field": "opTime",
-			          "title": "操作时间"
-			        }, {
-			          "field": "loginNo",
-			          "title": "操作工号"
-			        }, {
-			          "field": "typeName",
-			          "title": "模板类型"
-			        }, {
-			          "field": "opCode",
-			          "title": "操作代码"
-			        }, {
-			          "field": "modelVersion",
-			          "title": "版本号"
-			        }, {
-			          "field": "modelSelect",
-			          "title": "可选协议"
-			        }, {
-			          "field": "validValue",
-			          "title": "状态描述"
-			        }
+				[
+				[
+				{
+				"type": "radio",
+				"fixed": "left"
+				}, {
+				"field": "modelfileId",
+				"title": "模板文件编码",
+				"sort": true,
+				"fixed": "left",
+				"hide": false
+				}, {
+				"field": "modelfileName",
+				"title": "模板文件名称",
+				"sort": true,
+				"fixed": "left"
+				}, {
+				"field": "groupName",
+				"title": "组织机构"
+				}, {
+				"field": "opTime",
+				"title": "操作时间"
+				}, {
+				"field": "loginNo",
+				"title": "操作工号"
+				}, {
+				"field": "typeName",
+				"title": "模板类型"
+				}, {
+				"field": "opCode",
+				"title": "操作代码"
+				}, {
+				"field": "modelVersion",
+				"title": "版本号"
+				}, {
+				"field": "modelSelect",
+				"title": "可选协议"
+				}, {
+				"field": "validValue",
+				"title": "状态描述"
+				}
 
-			      ]
-			    ]
+				]
+				]
 
 			</div>
 			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
@@ -119,7 +126,7 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>
@@ -128,92 +135,117 @@
 	</body>
 </html>
 
-		<script>
-  //删除
-       $('.ag-btn-delele').click(function(e){
-             var index = $(this).attr("ag-data-index");
-             var tableId = $("table[ag-data-index="+index+"]").attr("id");
-             var checkStatus = table.checkStatus(tableId);
-             var data = checkStatus.data;  //获取选中行数据
-            console.log(data);
-            if(data.length == 0){
+<script>
+	//删除
+	$('.ag-btn-delele').click(function(e) {
+		var index = $(this).attr("ag-data-index");
+		var tableId = $("table[ag-data-index=" + index + "]").attr("id");
+		var checkStatus = table.checkStatus(tableId);
+		var data = checkStatus.data; //获取选中行数据
+		console.log(data);
+		if (data.length == 0) {
 
-              util.warning('请选择一条数据库记录!');
-              return ;
-            }
-             var pkCol = $(this).attr("ag-data-pk");
-             var pkVal = data[0][pkCol];
-             var validFlag=data[0]['validFlag'];
-             if((validFlag.indexOf("Y")>=0)){
-                 					util.warning("此工单状态不可删除");
-                 					 return false;
-             	}
-              var url = ctx +"/cfgmgr/cfg/appModelFile/deleteAjax";
-              modelAjax(url,pkVal,validFlag);
-      });
-      //发布
-    $('.ag-btn-apply').click(function(e){
-             var index = $(this).attr("ag-data-index");
-             var tableId = $("table[ag-data-index="+index+"]").attr("id");
-             var checkStatus = table.checkStatus(tableId);
-             var data = checkStatus.data;  //获取选中行数据
+			util.warning('请选择一条数据库记录!');
+			return;
+		}
+		var pkCol = $(this).attr("ag-data-pk");
+		var pkVal = data[0][pkCol];
+		var validFlag = data[0]['validFlag'];
+		if ((validFlag.indexOf("Y") >= 0)) {
+			util.warning("此工单状态不可删除");
+			return false;
+		}
+		
+		var opts = {};
+		
+		opts.modelfileId = pkVal;
+		
+		opts.validFlag = validFlag;
+		
+		opts.url =  ctx + "/cfgmgr/cfg/appModelFile/deleteAjax";
+		
+		util.showDialog("您确定要删除选中记录么?", 3, executeFunc, opts);
+		
+	});
+	
+	
+	function executeFunc(opts){
+		
+		util.ajaxJson("处理中....",opts.url,opts,function(data){
+			
+			var result = data.result;
+			
+			var desc = data.desc;
+			
+			if (result == 0) {
+			
+				util.success(desc);
+				
+				$(".ag-btn-query").click();
+			}
+			
+		},undefined,true);
+		
+	}
+	//发布
+	$('.ag-btn-apply').click(function(e) {
+		var index = $(this).attr("ag-data-index");
+		var tableId = $("table[ag-data-index=" + index + "]").attr("id");
+		var checkStatus = table.checkStatus(tableId);
+		var data = checkStatus.data; //获取选中行数据
 
-            if(data.length == 0){
-              util.warning('请选择一条数据库记录!');
-              return ;
-            }
-             var pkCol = $(this).attr("ag-data-pk");
-             var pkVal = data[0][pkCol];
-             var validFlag=data[0]['validFlag'];
-             alert(validFlag);
-             if((validFlag.indexOf("Y")>=0)){
-                 					util.warning("此状态不可发布");
-                 					 return false;
-             	}
-              var url = ctx +"/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
-              modelAjax(url,pkVal,"Y");
-      });
- //取销发布
-    $('.ag-btn-abolish').click(function(e){
-             var index = $(this).attr("ag-data-index");
-             var tableId = $("table[ag-data-index="+index+"]").attr("id");
-             var checkStatus = table.checkStatus(tableId);
-             var data = checkStatus.data;  //获取选中行数据
+		if (data.length == 0) {
+			util.warning('请选择一条数据库记录!');
+			return;
+		}
+		var pkCol = $(this).attr("ag-data-pk");
+		var pkVal = data[0][pkCol];
+		var validFlag = data[0]['validFlag'];
+		if ((validFlag.indexOf("Y") >= 0)) {
+			util.warning("此状态不可发布");
+			return false;
+		}
+		
+		var opts = {};
+		
+		opts.modelfileId = pkVal;
+		
+		opts.validFlag = "Y";
+		
+		opts.url =  ctx + "/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
+		
+		util.showDialog("您确定要提交申请么?", 3, executeFunc, opts);
+	});
+	//取销发布
+	$('.ag-btn-abolish').click(function(e) {
+		var index = $(this).attr("ag-data-index");
+		var tableId = $("table[ag-data-index=" + index + "]").attr("id");
+		var checkStatus = table.checkStatus(tableId);
+		var data = checkStatus.data; //获取选中行数据
 
-            if(data.length == 0){
+		if (data.length == 0) {
 
-              util.warning('请选择一条数据库记录!');
-              return ;
-            }
-             var pkCol = $(this).attr("ag-data-pk");
-             var pkVal = data[0][pkCol];
-             var validFlag=data[0]['validFlag'];
-              if((validFlag.indexOf("C")>=0)){
-                 					util.warning("此工单状态不可取消发布");
-                 				 return false;
-             	}
-              var url = ctx +"/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
-              modelAjax(url,pkVal,"C");
-      });
-      function modelAjax(url,id,validFlag){
-       var param={"modelfileId":id,"validFlag":validFlag};
-       $.ajax({
-             type:"POST",
-             url:url,
-             data:JSON.stringify(param),
-             contentType:"application/json",
-             xhrFields: {
-                 withCredentials: false //跨域session保持
-               },
-             async: true ,
-             dataType:"json",
-             success:function(data){
-             var result = data.result;
-             var desc = data.desc;
-             if(result == 0){
-               util.success(desc);
-             }
-             }
-           });
-      }
-		</script>
+			util.warning('请选择一条数据库记录!');
+			return;
+		}
+		var pkCol = $(this).attr("ag-data-pk");
+		var pkVal = data[0][pkCol];
+		var validFlag = data[0]['validFlag'];
+		if ((validFlag.indexOf("C") >= 0)) {
+			util.warning("此工单状态不可取消发布");
+			return false;
+		}
+		
+		var opts = {};
+		
+		opts.modelfileId = pkVal;
+		
+		opts.validFlag = "C";
+		
+		opts.url =  ctx + "/cfgmgr/cfg/appModelFile/updateValidFlagAjax";
+		
+		util.showDialog("您确定要作废申请么?", 3, executeFunc, opts);
+	});
+
+	
+</script>

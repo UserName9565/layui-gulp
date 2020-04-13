@@ -57,7 +57,6 @@ layui.define(['jquery','form' ],function(exports){
       var li = $('<li class="dd-item" ></div>');
       var closeBtn = '<i class="layui-icon layui-icon-delete " style="font-size: 30px; color:red ;float:right;margin-top:0px;"></i> ';
       var div;
-      console.log($(".ag-map-middle"));
       if($(".ag-map-middle").length > 0){
         div=$('<div class="dd-handle"><span>'+arr[i].sourceCode+"-"+arr[i].sourceCodeName+'||'+arr[i].targetCode+"-"+arr[i].targetCodeName+'</span>'+closeBtn+'</div>');
       }

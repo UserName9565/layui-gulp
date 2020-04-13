@@ -103,6 +103,16 @@ util = {
 		parentObj.layuimini.changeTab(tabId);
 
 	},
+	
+	removeTab:function(){
+		
+		var parentObj = util.getMainWin();
+		
+		var tabId = parentObj.$(".layui-tab-title li.layui-this").attr('lay-id');
+		
+		parentObj.layuimini.delTab(tabId);
+		
+	},
 
 	getMainWin: function(obj) {
 
@@ -110,7 +120,7 @@ util = {
 
 
 		if (parentObj.$("#top_tabs_box").length > 0) {
-			
+
 			return parentObj;
 		}
 
@@ -168,7 +178,9 @@ util = {
 
 			//url  = url +"?_agileauthtoken="+$.getAndSaveToken();
 		}
-
+		
+		$("object.hideObject").hide();
+		
 		var layIndex = layer.open({
 			type: 2,
 			area: [w + 'px', h + 'px'],
@@ -193,7 +205,9 @@ util = {
 			min: function() {
 
 			},
-			restore: function() {
+			end: function() {
+				
+				$("object.hideObject").show();
 
 				//var body = layer.getChildFrame('body', layIndex);
 
@@ -230,6 +244,9 @@ util = {
 		var winH = $(window).height() == 0 ? $(document).height() : $(window).height();
 
 		var off = [(winH / 2 - 72) + 'px', (winW / 2 - 181) + 'px'];
+		
+		$("object.hideObject").hide();
+		
 		if (type == 2) {
 			layer.alert(retMsg, {
 				offset: off,
@@ -237,17 +254,19 @@ util = {
 				icon: 1,
 				closeBtn: 0
 			}, function(index) {
+				
+				$("object.hideObject").show();
 
 				layer.close(index);
 				if (opts != undefined && opts.closeParent == 1) {
 					util.closeWin();
 				}
 
-				if (util.isNull(callBack)) {
+				if (util.isNull(callBack) || callBack == "no") {
 
 					return;
 				}
-
+				
 				if ($.isFunction(callBack)) {
 
 					callBack.call(this);
@@ -267,10 +286,12 @@ util = {
 				icon: 0,
 				closeBtn: 0
 			}, function(index) {
+				
+				$("object.hideObject").show();
 
 				layer.close(index);
 
-				if (util.isNull(callBack)) {
+				if (util.isNull(callBack) || callBack == "no") {
 
 					return;
 				}
@@ -294,10 +315,12 @@ util = {
 				icon: 2,
 				closeBtn: 0
 			}, function(index) {
-
+				
+				$("object.hideObject").show();
+				
 				layer.close(index);
 
-				if (util.isNull(callBack)) {
+				if (util.isNull(callBack) || callBack == "no") {
 
 					return;
 				}
@@ -321,10 +344,12 @@ util = {
 				closeBtn: 0,
 				title: ['\u63d0\u793a\u4fe1\u606f', true],
 				yes: function(index) {
-
+					
+					$("object.hideObject").show();
+					
 					layer.close(index);
 
-					if (util.isNull(callBack)) {
+				   if (util.isNull(callBack) || callBack == "no") {
 
 						return;
 					}
@@ -347,8 +372,16 @@ util = {
 					}
 				}
 			}, function(index) {
+				
+				
+				$("object.hideObject").show();
+				
 				layer.close(index);
-
+				
+				if (util.isNull(callBack) || callBack == "no") {
+				
+					return;
+				}
 
 				if (callBack && callBack.split(";").length > 1) {
 
@@ -358,6 +391,9 @@ util = {
 				}
 
 			}, function(index) {
+				
+				$("object.hideObject").show();
+				
 				layer.close(index);
 
 			});
@@ -418,7 +454,7 @@ util = {
 	/*
 	 ** randomWord 产生任意长度随机字母数字组合
 	 ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
-	 ** 
+	 **
 	 */
 
 	randomWord: function(randomFlag, min, max) {
@@ -441,7 +477,7 @@ util = {
 	},
 	/**
 	 * 时间计算差
-	 * 
+	 *
 	 * @param {Object} timesData
 	 */
 	timeDiff: function(timesData) {
@@ -529,7 +565,7 @@ util = {
 			type: "POST",
 			url: url,
 			data: JSON.stringify(param),
-			contentType: "application/json",
+			contentType: "application/json;charset=UTF-8",
 			beforeSend: function(req) {
 
 				req.setRequestHeader("agileauthtoken", util.getToken());
@@ -557,8 +593,10 @@ util = {
 
 			},
 			error: function() {
-
+				
 				util.disLoad();
+				
+				util.error("系统异常!");
 			}
 		});
 
@@ -611,6 +649,8 @@ util = {
 			error: function(data) {
 
 				util.disLoad();
+				
+				util.error("系统异常!");
 
 				if ($.isFunction(errorFunc)) {
 
@@ -633,36 +673,43 @@ util = {
 	 */
 	getRealityOrderHeight: function(obj) {
 
-		return parseInt($(obj).css("margin-top").replace("px", "")) +
+
+		var height = parseInt($(obj).css("margin-top").replace("px", "")) +
 			parseInt($(obj).css("margin-bottom").replace("px", "")) +
 			parseInt($(obj).css("padding-top").replace("px", "")) +
-			parseInt($(obj).css("padding-bottom").replace("px", "")) +
-			parseInt($(obj).css("border-top-width").replace("px", "")) +
-			parseInt($(obj).css("border-bottom-width").replace("px", ""))
+			parseInt($(obj).css("padding-bottom").replace("px", ""));
+
+		var top = parseInt($(obj).css("border-top-width").replace("px", ""));
+
+		var bottom = parseInt($(obj).css("border-bottom-width").replace("px", ""));
+
+		return height + (isNaN(top) ? 0 : top) + (isNaN(bottom) ? 0 : bottom);
+
 
 	},
 
-	addToken: function() {
+	addToken: function(value) {
 
-		var obj = util.getMainWin();
+		// var obj = util.getMainWin();
 
-		var auth = $("input[type=hidden][name=agileauthtoken]", obj.$("#top_tabs_box"));
+		// var auth = $("input[type=hidden][name=agileauthtoken]", obj.$("#top_tabs_box"));
 
-		if (auth.length == 0) {
+		// if (auth.length == 0) {
 
-			obj.$("#top_tabs_box").append("<input type='hidden' name='agileauthtoken' value='' />");
-		}
-		obj.$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val($.cookie('JSESSIONID_token'));
+		// 	obj.$("#top_tabs_box").append("<input type='hidden' name='agileauthtoken' value='' />");
+		// }
+		// obj.$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val(util.getToken());
 
-
+		util.setSession("agileauthtoken", value);
 	},
 
 	getToken: function() {
-		
-		
-		return util.getMainWin().$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val();
 
-		//return $.cookie('JSESSIONID_token');
+
+		//return util.getMainWin().$("#top_tabs_box").find("input[type=hidden][name=agileauthtoken]").val();
+
+		return util.getAndSaveToken();
+		//return util.getToken();
 	},
 	/**
 	 * 小于10的数字前加0
@@ -676,127 +723,216 @@ util = {
 		return newnum
 	},
 
-	/**
-	 * 处理加减月时，当日大于28时，将新的日在新的月份中合理化
-	 * @param {Object} newyear
-	 * @param {Object} newmonth
-	 * @param {Object} newday
-	 */
-	adjustNewDay: function(newyear, newmonth, newday) {
 
-		var monthbs = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1] // 定义月份的大小
+	setSession: function(key, val) {
+		sessionStorage.setItem(key, val);
+	},
+	getSessoin: function(key) {
+		return sessionStorage.getItem(key);
+	},
+	delSession: function(key) {
 
-		var newAdjustedDay = newday;
-		if (monthbs[newmonth - 1] < 1 && newday > 28) { // 将新的日在新的月份中合理化
-			if (newmonth != 2) { // 不是二月时
-				newAdjustedDay = 30
-			} else {
-				if ((newyear % 4 == 0) && (newyear % 100 != 0 || newyear % 400 == 0)) { // 二月时判断是否为闰年
-					newAdjustedDay = 29
-				} else {
-					newAdjustedDay = 28
+		sessionStorage.removeItem(key);
+	},
+	getAndSaveToken: function() {
+		var token;
+		var searchStr = location.search;
+		if (!util.isNull(searchStr)) {
+			searchStr = searchStr.substr(1);
+			var arr = searchStr.split("&");
+			for (var i = 0; i < arr.length; i++) {
+				var arr2 = arr[i].split("=");
+				if (arr2[0] == "agileauthtoken") {
+					token = arr2[1];
+					util.setSession("agileauthtoken", token);
+					break;
 				}
 			}
 		}
-		return newAdjustedDay;
-	},
-	/**
-	 * 获取当月份最大天数
-	 * @param {Object} newyear
-	 * @param {Object} month
-	 */
-	getMonthMaxDays: function(newyear, month) {
 
-		var monthbs = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1] // 定义月份的大小
-		var newmonthdays = 31;
-		if (monthbs[month - 1] < 1) {
-			if (month != 2) {
-				newmonthdays = 30
-			} else {
-				if ((newyear % 4 == 0) && (newyear % 100 != 0 || newyear % 400 == 0)) { // 二月时判断是否为闰年
-					newmonthdays = 29
-				} else {
-					newmonthdays = 28
-				}
-			}
+		if (util.isNull(token)) {
+			token = util.getSessoin("agileauthtoken");
 		}
-		return newmonthdays;
+
+		return token;
 	},
 	/**
-	 * 用来计算增减天数的递归
-	 * @param {Object} year
-	 * @param {Object} month
-	 * @param {Object} day
-	 * @param {Object} delayTime
+	 * 判断ie版本
+	 * 
 	 */
-	recursionDays: function(year, month, day, delayTime) {
-		var newyear = year;
-		var newmonth = month;
-		var newday = day + delayTime;
-		var newmonthdays = util.getMonthMaxDays(year, month);
-		if (newday <= newmonthdays) {
-			newmonth = util.formatSmallNum(newmonth)
-			newday = util.formatSmallNum(newday)
-			return newyear + "" + newmonth + "" + newday
+	IEVersion: function() {
+
+		var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+		var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+		var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+		var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+		if (isIE) {
+			var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+			reIE.test(userAgent);
+			var fIEVersion = parseFloat(RegExp["$1"]);
+			if (fIEVersion == 7) {
+				return 7;
+			} else if (fIEVersion == 8) {
+				return 8;
+			} else if (fIEVersion == 9) {
+				return 9;
+			} else if (fIEVersion == 10) {
+				return 10;
+			} else {
+				return 6; //IE版本<=7
+			}
+		} else if (isEdge) {
+			return -1; //edge
+		} else if (isIE11) {
+			return 11; //IE11  
 		} else {
-			newmonthdays = util.getMonthMaxDays(year, month); // 目标月最大天数
-			newmonth = month + 1;
-			newdelay = newday - newmonthdays;
-			newday = 0;
-			if (newmonth > 12) {
-				newyear = newyear + 1;
-				newmonth = newmonth - 12;
-			}
-			return util.recursionDays(newyear, newmonth, newday, newdelay)
+			return -1; //不是ie浏览器
+		}
+
+	},
+
+	addTodayDate: function(interval, number, d) {
+
+		return util.getTime(undefined, util.dateAdd(interval, number, d || new Date()));
+	},
+
+	dateAdd: function(interval, number, date) {
+		switch (interval) {
+			case "y":
+				{
+					//年
+					date.setFullYear(date.getFullYear() + number);
+					return date;
+					break;
+				}
+			case "q":
+				{
+					//季度
+					date.setMonth(date.getMonth() + number * 3);
+					return date;
+					break;
+				}
+			case "M":
+				{
+					//月份
+					date.setMonth(date.getMonth() + number);
+					return date;
+					break;
+				}
+			case "w":
+				{
+
+					//周
+					date.setDate(date.getDate() + number * 7);
+					return date;
+					break;
+				}
+			case "d":
+				{
+
+					//日
+					date.setDate(date.getDate() + number);
+					return date;
+					break;
+				}
+			case "h":
+				{
+					//小时
+					date.setHours(date.getHours() + number);
+					return date;
+					break;
+				}
+			case "m":
+				{
+
+					//分钟
+					date.setMinutes(date.getMinutes() + number);
+					return date;
+					break;
+				}
+			case "s":
+				{
+
+					//秒
+					date.setSeconds(date.getSeconds() + number);
+					return date;
+					break;
+				}
+			default:
+				{
+					//日
+					date.setDate(d.getDate() + number);
+					return date;
+					break;
+				}
 		}
 	},
-	addTodayTime: function(offset, fmt) {
-
-		return util.addTime(new Date().toString(), offset, fmt);
-	},
-	addTime: function(date, delay, fmt) {
-
-		date = new Date(date);
-
-		var year = date.getFullYear(); // 获取年
-
-		var month = date.getMonth(); // 获取月
-
-		var day = date.getDay(); // 获取日
-
-		var newdate;
-
-		if (delay.endWith("M")) { // 处理月份加
-			delayTime = parseInt(delay.substring(0, delay.length - 1)) // 获取要加的月数
-			var newyear = year
-			var newmonth = month + delayTime;
-			var newday = day;
-			if (newmonth > 12) { // 月份加后大于12
-				var newyear = newyear + 1;
-				var newmonth = newmonth - 12;
-			}
-			newday = util.adjustNewDay(newyear, newmonth, newday);
-			newmonth = util.formatSmallNum(newmonth);
-			newday = util.formatSmallNum(newday);
-			newdate = newyear + "" + newmonth + "" + newday; // 组装新日期
-		}
-		if (delay.endWith("D")) { // 处理天数加
-			delayTime = parseInt(delay.substring(0, delay.length - 1)) // 获取要加的天数
-			newdate = util.recursionDays(year, month, day, delayTime); // 通过递归方式计算delayTime天后的日期
-		}
-
-		if (delay.endWith("Y")) { // 处理年数加
-
-			delayTime = parseInt(delay.substring(0, delay.length - 1)) // 获取要加的天数
-
-			newyear = year + delayTime;
-
-			newdate = newyear + "" + newmonth + "" + newday; // 组装新日期
-		}
-
-		return new Date(newdate).format(fmt);
+	//获取随机数
+	generateMixed : function() {
+	var chars = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
+			'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ];
+	var res = "";
+	for (var i = 0; i < 7; i++) {
+		var id = Math.ceil(Math.random() * 35);
+		res += chars[id];
 	}
+	return res;
+	},/**
+	 * 获取毫秒数
+	 */
+	getMSecond:function(){
+		
+		return new Date().getTime();
+		
+	},
+	
+	hasClass:function(elem, c){
+		
+		function classReg(className) {
+			return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+		}
+		return classReg(c).test(elem.className);
+	
+	},
+  encode64:function (input) {  
+  	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv"  
+              + "wxyz0123456789+/" + "=";
+      var output = "";  
+      var chr1, chr2, chr3 = "";  
+      var enc1, enc2, enc3, enc4 = "";  
+      var i = 0;  
+      do {  
+              chr1 = input.charCodeAt(i++);  
+              chr2 = input.charCodeAt(i++);  
+              chr3 = input.charCodeAt(i++);  
+              enc1 = chr1 >> 2;  
+              enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);  
+              enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);  
+              enc4 = chr3 & 63;  
+              if (isNaN(chr2)) {  
+                  enc3 = enc4 = 64;  
+              } else if (isNaN(chr3)) {  
+                  enc4 = 64;  
+              }  
+              output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2)  
+                      + keyStr.charAt(enc3) + keyStr.charAt(enc4);  
+              chr1 = chr2 = chr3 = "";  
+              enc1 = enc2 = enc3 = enc4 = "";  
+       } while (i < input.length);  
+       return output;  
+  }
+}
 
+String.prototype.endWith = function(str) {
 
+	var reg = new RegExp(str + "$");
 
+	return reg.test(this);
+}
+String.prototype.startWith = function(str) {
+
+	var reg = new RegExp("^" + str);
+
+	return reg.test(this);
 }

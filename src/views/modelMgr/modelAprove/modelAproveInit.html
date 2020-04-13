@@ -19,28 +19,32 @@
 					<div class="layui-inline ">
 						<label class="layui-form-label">组织机构：</label>
 						<div class="layui-input-block">
-							<input type="text" name="groupId" lay-verify="title" autocomplete="off" placeholder="组织机构" class="layui-input">
-						</div>
+ 						 <input type="hidden" name="groupId"  autocomplete="off"  class="layui-input">
+ 						 <input type="text" name="groupName" ag-tree-title="渠道选取"  readonly="readonly" autocomplete="off" placeholder="渠道" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+ 						 
+						
+						
+
+            </div>
 					</div>
 				</div>
 
 
 			</form>
- 			<div class="btns-right">
+			<div class="btns-right">
 
-				<div class="layui-inline">
-					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0" ag-data-ctx = "cfgmgr" ag-data-url="/cfg/modelFile/queryCApplyListPages">
+					<button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn"
+					 ag-data-index="0" ag-data-ctx="cfgmgr" ag-data-url="/cfg/modelFile/queryCApplyListPages">
 						<i class="layui-icon layui-icon-search "></i>
 						<span class="btn-span-middle">查询</span>
 					</button>
 
-										<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset" >
+					<button class="ag-btn-reset layui-btn layui-btn-sm layui-btn-blue" ag-data-index="0" type="reset">
 
-						<i class="layui-icon layui-icon-search "></i>
+						<i class="layui-icon layui-icon-refresh "></i>
 						<span class="btn-span-middle">重置</span>
 					</button>
-				</div>
- 
+
 
 			</div>
 
@@ -55,51 +59,53 @@
 
 				<div class="layui-table-tool">
 					<div class="layui-table-tool-temp">
- 					<div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html"><i class="layui-icon layui-icon-edit"></i></div>
+						<div class="ag-btn-apply layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800"
+						 ag-win-height="600" ag-win-title="调阅审批" title="调阅审批" ag-data-pk="modelfileId" ag-data-url="/views/modelMgr/modelAprove/modelAprove.html" ><i
+							 class="layui-icon layui-icon-edit"></i></div>
 
-          </div>
+					</div>
 				</div>
 			</div>
 			<div style="display:none" class="ag-table-header" ag-data-index="0">
 
-			    [
-			      [
-			        {
-			          "type": "radio",
-			          "fixed": "left"
-			        }, {
-			          "field": "modelfileId",
-			          "title": "模板文件编码",
-			          "sort": true,
-			          "fixed": "left",
-                "hide": true
-			        }, {
-			          "field": "modelfileName",
-			          "title": "模板文件名称",
-			          "sort": true,
-			          "fixed": "left"
-			        }, {
-			          "field": "groupName",
-			          "title": "组织机构"
-			        }, {
-			          "field": "opTimeString",
-			          "title": "操作时间"
-			        }, {
-			          "field": "loginNo",
-			          "title": "操作工号"
-			        }, {
-			          "field": "typeName",
-			          "title": "模板类型"
-			        }, {
-			          "field": "opCode",
-			          "title": "操作代码"
-			        }, {
-			          "field": "validValue",
-			          "title": "状态描述"
-			        }
+				[
+				[
+				{
+				"type": "radio",
+				"fixed": "left"
+				}, {
+				"field": "modelfileId",
+				"title": "模板文件编码",
+				"sort": true,
+				"fixed": "left",
+				"hide": true
+				}, {
+				"field": "modelfileName",
+				"title": "模板文件名称",
+				"sort": true,
+				"fixed": "left"
+				}, {
+				"field": "groupName",
+				"title": "组织机构"
+				}, {
+				"field": "opTimeString",
+				"title": "操作时间"
+				}, {
+				"field": "loginNo",
+				"title": "操作工号"
+				}, {
+				"field": "typeName",
+				"title": "模板类型"
+				}, {
+				"field": "opCode",
+				"title": "操作代码"
+				}, {
+				"field": "validValue",
+				"title": "状态描述"
+				}
 
-			      ]
-			    ]
+				]
+				]
 
 			</div>
 			<table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
@@ -107,12 +113,49 @@
 			</table>
 
 			<div class="pagging ag-area-page">
-				   
+
 			</div>
 
 		</div>
 
 		<script>
+
+      $('.ag-btn-apply').click(function(e) {
+      	var index = $(this).attr("ag-data-index");
+      	var tableId = $("table[ag-data-index=" + index + "]").attr("id");
+      	var checkStatus = table.checkStatus(tableId);
+      	var data = checkStatus.data; //获取选中行数据
+       	if (data.length == 0) {
+      		util.warning('请选择一条数据库记录!');
+      		return;
+      	}
+      	var pkCol = $(this).attr("ag-data-pk");
+      	var pkVal = data[0][pkCol];
+      	var validFlag = data[0]['validFlag'];
+		
+       	if (validFlag != 'C') {
+      		util.warning("此工单已经处理！");
+      		return ;
+      	}
+        var agCtx = util.getAgCtx(this);
+		     var url = $(this).attr("ag-data-url");
+
+         if (url.indexOf("?") == -1) {
+        	url = url + "?" + pkCol + "=" + pkVal;
+        } else {
+        	url = url + "&" + pkCol + "=" + pkVal;
+        }
+        var opts = {
+        	"winId": winId
+        }
+
+        var winId = $(this).attr("ag-win-id");
+        var winW = $(this).attr("ag-win-width");
+        var winH = $(this).attr("ag-win-height");
+        var title = $(this).attr("ag-win-title");
+
+        util.openWin(url, title, winW, winH, opts);
+      });
 
 		</script>
 	</body>

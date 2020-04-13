@@ -2,11 +2,18 @@
 
 window.rootPath = (function (src) {
     src = document.scripts[document.scripts.length - 1].src;
-    return src.substring(0, src.lastIndexOf("/") + 1);
+   
+    var astr = ''
+    if(src.indexOf('modules')!=-1){
+        astr = src.lastIndexOf('lay/')+3
+    }else{
+        astr = src.lastIndexOf('/')
+    }
+    return src.substring(0, astr);
 })();
-
+ 
 layui.config({
-    base: rootPath + "modules/",
+    base: rootPath + "/modules/",
     version: true
 }).extend({
     layuimini: "layuimini/layuimini", // layuimini扩展
@@ -20,7 +27,8 @@ layui.config({
     layarea: 'layarea/layarea', //  省市县区三级联动下拉选择器
     dtree: 'dtree/dist/dtree', //树形结构
 	checkForm:'checkForm/checkForm',  //表单校验
-    mapChooser:'mapChooser/mapChooser'    //映射选择
+    mapChooser:'mapChooser/mapChooser'    ,//映射选择
+	schedu:'schedu/schedu'    //映射选择
 });
 
 // layui.config({

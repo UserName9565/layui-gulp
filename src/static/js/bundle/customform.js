@@ -15,7 +15,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		layer = layui.layer,
 		$ = layui.$;
 	table = layui.table;
-	
+
 	checkForm = layui.checkForm;
 	laydate = layui.laydate;
 	mapChooser = layui.mapChooser;
@@ -51,19 +51,29 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function getFormJson(form) {
 
 		var paramJson = {};
-		var arr = $(form).find("input[type!=checkbox]");
+		var arr = $(form).find("input[type!=checkbox][name],textarea[name]");
 
 		for (var i = 0; i < arr.length; i++) {
 			paramJson[arr[i].name] = $(arr[i]).val();
 		}
 
-		var arr2 = $(form).find("select");
+		var arr2 = $(form).find("select[name]");
 		for (var i = 0; i < arr2.length; i++) {
 
 			paramJson[arr2[i].name] = $(arr2[i]).val();
-			var nameKey = $(arr2[i]).attr("ag-sel-name");
-			var text = $(arr2[i]).find("option:selected").text();
-			paramJson[nameKey] = text;
+			
+			
+			
+			if(!util.isNull(paramJson[arr2[i].name])){
+				
+				var nameKey = $(arr2[i]).attr("ag-sel-name");
+				
+				var text = $(arr2[i]).find("option:selected").text();
+				
+				paramJson[nameKey] = text;
+			}
+			
+		
 		}
 
 		//复选框
@@ -137,18 +147,21 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		$(".ag-btn-del").on("click", del);
 
 		$(".ag-btn-reset").on("click",resetForm);
+
+		$(".ag-data-tree").on("click",initAgZtree);
+
 	};
-	
+
 	function resetForm(){
-		
+
 			var index = $(this).attr("ag-data-index");
 			var form = $(".ag-form[ag-data-index=" + index + "]");
-			
+
 			$.each(form.find("[name]"),function(i ,item){
-					
+
 					$(item).val("");
 			});
-		
+
 	}
 
 	/**
@@ -252,19 +265,24 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 					for (var z = 0; z < colModel[i][k].btns.length; z++) {
 
+
 						var item = colModel[i][k].btns[z];
+
 
 						var realUrl = decorateTpl(item.url);
 
+
+
 						var lsnrStr = getHrefLsnr(item.openType);
 
-						var aFunc = lsnrStr + "('" + realUrl + "','" + item.openTitle + "',"+item.width+","+item.height+")";
+
+
+						var aFunc = lsnrStr + "(\"" + realUrl + "\",\"" + item.openTitle + "\","+item.width+","+item.height+")";
 
 						var a = "<a href='javascript:void(0)'  style='padding:0px 5px' class=' layui-table-link " + item.className +
-							"' onclick=" + aFunc + ">" + (item.btnVal ? item.btnVal : "操作") + "</a>";
+							"' onclick='" + aFunc + " '>" + (item.btnVal ? item.btnVal : "操作") + "</a>";
 
 						appendAHtml += a;
-
 
 
 					}
@@ -304,11 +322,13 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			$("#" + id).remove();
 		}
 
-		var scr = $("<script type='text/html' id='" + id + "'></script>");
 
-		scr.append(a);
+		var scr = $("<script type='text/html' id='" + id + "'>"+a+"</script>");
 
 		scr.appendTo($(document.body));
+
+
+
 	}
 
 	/**
@@ -318,9 +338,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	 */
 	function decorateTpl(inUrl, model) {
 
-		var url = inUrl.replace("&amp;", "&");
 
+
+		var reg = new RegExp("&amp;","g");
+		var url = inUrl.replace(reg, "&");
 		var realUrl = url;
+
+
+
 
 		if (url.indexOf("?") != -1) {
 
@@ -333,6 +358,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			var paramStr = tempArr[1];
 
 			var paramArr = paramStr.split("&");
+
+
+
 
 			for (var k = 0; k < paramArr.length; k++) {
 
@@ -364,13 +392,25 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 					continue;
 
 				}
-				var arr = pair[1].match(/@(\S*)@/g);
 
+				var arr = pair[1].match(/@(\S*)@/g);
+				
+				 arr = arr == null ? [] :arr;
+				 
+				var arr1 = pair[1].match(/#(\S*)#/g);
+				
+				arr1 = arr1 == null ? [] :arr1;
+				
+				for( var i = 0 ; i < arr1.length ; i++){
+					
+					arr.push(arr1[i]);
+				}
+				
 				if (arr != null) {
 
-					for (var kk in arr) {
+					for (var i = 0 ;  i < arr.length ; i++){
 
-						pair[1] = pair[1].replace(arr[kk], "{{d." + arr[kk].substring(1, arr[kk].length - 1) + "}}");
+						pair[1] = pair[1].replace(arr[i], "{{d." + arr[i].substring(1, arr[i].length - 1) + "}}");
 					}
 
 					realParam += pair[0] + "=" + pair[1] + "&";
@@ -381,12 +421,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				realParam += paramArr[k] + "&";
 
+
 			}
 
 			realUrl = urlNoParam + "?" + realParam;
 		}
-		
+
 		realUrl = realUrl.replace("@ctx@",ctx);
+
 
 		return realUrl;
 
@@ -402,9 +444,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		var index = $(this).attr("ag-data-index");
 		var form = $(".ag-form[ag-data-index=" + index + "]");
 		var url = $(this).attr("ag-data-url");
-		
+
+		var checkRet = checkForm.validateForm(form);
+		if (!checkRet) {
+			return false;
+		}
+
 		initPage(index);
-		
+
 		var param = getFormJson($(".ag-form[ag-data-index=" + index + "]"));
 		var agCtx = util.getAgCtx(this);
 		url = ctx + "/" + agCtx + url;
@@ -414,31 +461,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			var colsStr = $(".ag-table-header[ag-data-index=" + index + "]").html();
 
 			var cols = decorateData(colsStr);
+
 			
-			var allWidth = 0;
-			
-			for(var k in cols[0]){
-				
-				if(!util.isNull(cols[0][k].width) ){
-					
-					allWidth += parseInt(cols[0][k].width);
-					
-					continue;
-				}
-				
-				allWidth += 120;
-				
-				
-			}
-			
-			var gdtWidth = $(document.body).width()  < allWidth ? 18 : 0 ;
-			
-			
-			
+
+
 			//执行一个 table 实例
 			table.render({
 				elem: $(".ag-table[ag-data-index=" + index + "]"),
-				height: $(".ag-table").height()-35 - gdtWidth,
+				height: $(".ag-table[ag-data-index=" + index + "]").height()-35 ,
 				data: page.data, //数据接口
 				title: '用户表',
 				page: false, //开启分页
@@ -446,7 +476,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				limit:$.parseJSON(param.page).pageSize,
 				cols: cols
 			});
-			
+
 			buildPage(page, index);
 
 		}, function(req) {
@@ -461,8 +491,23 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function initPage(idx) {
 
 
+
+		if ($(".ag-form[ag-data-index=" + idx + "] > input[name=page]").length == 0  ){
+
+			var input = $("<input type='hidden' name='page' value=''>");
+
+			$(".ag-form[ag-data-index=" + idx + "]").append(input);
+
+		}
+
+		if(util.isNull($(".ag-form[ag-data-index=" + idx + "] > input[name=page]").val())){
+
+			$(".ag-form[ag-data-index=" + idx + "] > input[name=page]").val('{"pageNo":"1","pageSize":"20"}');
+
+		}
+
 		var pager = $(".ag-table[ag-data-index=" + idx + "] ").siblings(".ag-area-page");
-		
+
 
 		if (pager.length == 0) {
 
@@ -474,20 +519,11 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			return;
 
 		}
-		
+
 		pager.empty();
-		
-		var pageInput = $(".ag-form[ag-data-index=" + idx + "] > input[name=page]");
-		
-		if (pageInput.length == 0) {
-			
-			var input = $("<input type='hidden' name='page' value=''>");
-			
-			$(".ag-form[ag-data-index=" + idx + "]").append(input);
-			
-			$(input).val('{"pageNo":"1","pageSize":"20"}');
-		}
-		
+
+
+
 		var pageSize  = $.parseJSON($(".ag-form[ag-data-index=" + idx + "] > input[name=page]").val()).pageSize;
 
 		var pageDiv = $('<div class="layui-table-page"></div>');
@@ -524,9 +560,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		pageDiv.append(box);
 
 		pager.append(pageDiv);
-		
+
 		pager.find(".page-select").val(pageSize);
-		
+
 
 		/**
 		 *  上一页、下一页、页码点击事件绑定
@@ -539,14 +575,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			}
 
 			var dataPage = $(this).attr("data-page");
-			
-			
+
+
 			var pageInput = $(".ag-form[ag-data-index=" + idx + "] > input[name=page]");
-			
+
 			var json  =  $.parseJSON(pageInput.val());
-			
+
 			json.pageNo = dataPage;
-			
+
 			pageInput.val(JSON.stringify(json));
 
 			$(".ag-btn-query").trigger("click");
@@ -583,26 +619,28 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				return;
 			}
-			
+
 			var pageInput = $(".ag-form[ag-data-index=" + idx + "] > input[name=page]");
-			
+
 			var json  =  $.parseJSON(pageInput.val());
-			
+
 			json.pageNo = input.val();
-			
+
 			pageInput.val(JSON.stringify(json));
 
 			$(".ag-btn-query").trigger("click");
 
 		}).delegate(".layui-laypage-limits select", "change", function() {
-			
+
 			var pageInput = $(".ag-form[ag-data-index=" + idx + "] > input[name=page]");
-			
+
 			var json  =  $.parseJSON(pageInput.val());
-			
+
 			json.pageSize =  $(this).val();
-			
+
 			pageInput.val(JSON.stringify(json));
+
+      $(".ag-btn-query").trigger("click");
 
 		});
 
@@ -619,7 +657,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			return;
 		}
-		
+
 		if (data == undefined) {
 
 			data = {};
@@ -802,47 +840,47 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		var agCtx = util.getAgCtx(this);
 
 		var url = ctx + "/" + agCtx + $(this).attr("ag-data-url");
+		
 		var param = getFormJson(form);
-		
+
 		var that = this;
-		
-		
+
 		util.ajaxJson("保存中,请稍后....",url,param,function(data){
-			
+
 				var result = data.result;
 				var desc = data.desc;
-			
+
 				if (result == 0) {
 					util.success(desc);
-			
+
 					var queryBtn = parent.layui.$(".ag-btn-query");
 					if (queryBtn.length > 0) {
 						$(queryBtn).click();
 						//util.closeWin();
 					}
-			
+
 					var func = $(that).attr("ag-back-func");
-			
+
 					if (!util.isNull(func)) {
-						
+
 						if(func.indexOf(".") != -1){
-							
+
 							eval(func);
-							
+
 							return ;
 						}
-						
+
 						window[func](data);
 					}
-			
-			
+
+
 				} else {
 					util.error(desc);
 				}
-			
-			
-			
-			
+
+
+
+
 		});
 
 
@@ -912,7 +950,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				if (!util.isNull(func)) {
 
-					eval(func);
+					if(func.indexOf(".") != -1){
+
+						eval(func);
+
+						return ;
+					}
+
+					window[func](data);
 				}
 			} else {
 				util.error(desc);
@@ -924,6 +969,20 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function createFile() {
 
 		var formFile = new Object();
+
+		formFile.config = {
+
+			"ag-file-multiple": "true",
+			"ag-file-delete": "true",
+			"ag-file-add": "true",
+			"ag-file-down": "true",
+			"ag-file-max": 99,
+			"ag-file-iframe-down-url":"/sys/settings/file/download",
+			"ag-file-iframe-del-url" : "/sys/settings/file/delFile",
+			"ag-file-iframe-add-url":"/sys/settings/file/upload",
+			"ag-file-iframe-name":"downloadHidenFr",
+			"ag-data-ctx":"sysmgr"
+		}
 
 		formFile.loadForm = function(obj) {
 
@@ -944,6 +1003,20 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		formFile.bindLsnr = function() {
 
 			var that = this;
+
+			var width = that.form.width();
+
+			that.form.find(".ag-file").width(parseInt(width /305) * 305 - 120 );
+
+			window.onresize = function(){
+
+					var width = that.form.width();
+
+					var num = parseInt(width /305);
+
+					that.form.find(".ag-file").width( num* 305 - 120 -(num == 1 ? 5 : 0));
+
+			}
 
 			that.form.delegate(".ag-file .ag-file-header .ag-file-header-button", "click", function() {
 				$(this).siblings(".ag-file-header-file").trigger("click");
@@ -1020,14 +1093,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						if (util.isNull(saveName)) {
 
-							showDialog("未上传,不能下载！", 0);
+							util.showDialog("未上传,不能下载！", 0);
 
 							return;
 						}
 
 						var url = f.data("ag-file-iframe-down-url");
 
-						url = ctx + "/" + util.getAgCtx(null) + url;
+						url = ctx + "/" + util.getAgCtx(f) + url;
 
 						_listHrefDownloadFile(url + "?saveName=" + saveName + "&fileId=" + saveName);
 
@@ -1056,7 +1129,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						var url = f.data("ag-file-iframe-del-url");
 
-						url = ctx + "/" + util.getAgCtx(null) + url;
+						url = ctx + "/" + util.getAgCtx(f) + url;
 
 						util.ajaxJson("删除中,请稍后...", url, {
 							"fileId": saveName
@@ -1104,14 +1177,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				return;
 			}
 
-			var defaultOpt = {
-				"ag-file-multiple": "true",
-				"ag-file-delete": "true",
-				"ag-file-add": "true",
-				"ag-file-down": "true",
-				"ag-file-max": 99
-			}
-
+			var defaultOpt = $.extend({},that.config);
 
 			$.each(fileDiv, function(i, f) {
 
@@ -1123,6 +1189,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 						f.attr(key, defaultOpt[key]);
 					}
+
+					f.data(key,f.attr(key));
 
 				}
 
@@ -1142,20 +1210,12 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				f.append(item);
 
 				/*********插入下载配置*********/
-				if ($("[name=downloadHidenFr]").length == 0) {
+				if ($("[name="+f.data("ag-file-iframe-name")+"]").length == 0) {
 
-					var iframe = $("<iframe name='downloadHidenFr' class='layui-hide'></iframe>");
+					var iframe = $("<iframe name='"+f.data("ag-file-iframe-name")+"' class='layui-hide'></iframe>");
 
 					f.append(iframe);
 				}
-
-				f.data("ag-file-iframe-name", "downloadHidenFr");
-
-				f.data("ag-file-iframe-down-url", "/sys/settings/file/download");
-
-				f.data("ag-file-iframe-del-url", "/sys/settings/file/delFile");
-
-				f.data("ag-file-iframe-add-url", "/sys/settings/file/upload");
 
 			});
 
@@ -1214,7 +1274,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				if (data.result != 0) {
 
-					error(layFilter, data.desc);
+					error(layFilter, data.desc.length > 50 ? "上传失败!":data.desc);
 
 					return;
 				}
@@ -1293,17 +1353,24 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			var data = {};
 
-			if (obj.__proto__.constructor && obj.__proto__.constructor.name == "File") {
-				
+			if (obj instanceof File) {
+
 				data.fileType = file_types[obj.type] ? file_types[obj.type] : "default";
 
 				data.fileName = obj.name;
 
-				data.fileSize = Math.ceil(obj.size / 1000);
+				data.fileSize = Math.ceil(obj.size / 1024);
 
 				data.file = obj;
 
 				data.opTime = util.getTime();
+
+				if(data.fileSize/1024 > 20){
+
+					util.error("最大上传文件大小20M!");
+
+					return ;
+				}
 
 			} else {
 
@@ -1311,7 +1378,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 				data.fileType = file_types[obj.fileType] ? file_types[obj.fileType] : "default";
 
-				data.fileSize = Math.ceil(data.fileSize / 1000);
+				data.fileSize = Math.ceil(data.fileSize / 1024);
 			}
 
 			/**
@@ -1431,6 +1498,15 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			var condiCnt = 0;
 			var dataUrl = $(agForm).attr("ag-data-url");
 
+			$.each($(agForm).find("[ag-select-func]"),function(i,item){
+
+				form.on("select("+$(item).attr("lay-filter")+")",function(data){
+
+					window[$(item).attr("ag-select-func")].call(item,data);
+				});
+
+			});
+
 			if (!util.isNull(dataUrl)) {
 
 				for (var name in param) {
@@ -1446,9 +1522,9 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				var formParam = getFormJson($(agForm));
 				//加载数据并补充初始化表单
 				var url = ctx + "/" + util.getAgCtx($(agForm)) + dataUrl;
-				
+
 				util.ajaxJson("",url,formParam,function(data){
-					
+
 						/**
 						 * 复选框
 						 *
@@ -1457,7 +1533,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 						if (chkBoxDivArr.length > 0) {
 							var chkStr = "";
 							$(chkBoxDivArr).each(function(idx, chkboxDiv) {
-					
+
 								var key = $(chkboxDiv).attr("ag-chkbox-name");
 								var dataArr = data[key + "ChkBox"];
 								$(dataArr).each(function(idxData, chkData) {
@@ -1469,92 +1545,105 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 										'" name="' + key + '" lay-skin="primary" title="' + chkData.optName + '" ' + checked + '>'
 									chkStr = chkStr + record;
 								});
-					
+
 								$(chkboxDiv).html(chkStr);
 								form.render('checkbox');
-					
-					
+
+
 							});
-					
-					
-					
+
+
+
 						}
-						
-						
+
+
 						/**
 						 * 附件
 						 */
 						if (formFile.form.find(".ag-file").length > 0) {
-						
+
 							var key = formFile.form.find(".ag-file").eq(0).attr("ag-file-key");
-						
+
 							if (!util.isNull(data[key]) && data[key].length > 0) {
-						
+
 								$.each(data[key], function(ind, file) {
-						
+
 									formFile.addIfile(file, formFile.form.find(".ag-file").eq(0));
 								});
 							}
-						
-						
+
+
 						}
-					
-					
+
+
 						for (var name in data) {
-					
+
 							var val = data[name];
 							if (!util.isNull(val)) {
-								$(agForm).find("input[name=" + name + "]").val(val);
+								$(agForm).find("input[name=" + name + "],textarea[name="+name+"]").val(val);
 							}
-					
-							if (name.endsWith("Opt")) {
-					
+
+							if (name.endWith("Opt")) {
+
 								var optArr = data[name];
+
+								optArr = util.isNull(optArr) ? [] : optArr;
+
 								var selectStr = "";
-					
+
 								var selObj = $("select[name=" + name.substr(0, name.length - 3) + "]");
-					
+
 								if (selObj.attr("ag-select-default-val") == "true") {
-					
+
 									selectStr += "<option value=''>-请选择-</option>"
 								}
-					
-								for (var i = 0; i < optArr.length; i++) {
-									var selectedStr = optArr[i].selected;
-									if (util.isNull(selectedStr)) {
-										selectedStr = "";
-									}
-					
-									var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
-										"</option>";
-									selectStr = selectStr + optBean;
-								}
-					
-					
-					
-					
+                if(optArr!=null){
+                    for (var i = 0; i < optArr.length; i++) {
+                      var selectedStr = optArr[i].selected;
+                      if (util.isNull(selectedStr)) {
+                        selectedStr = "";
+                      }
+
+                      var optBean = "<option value='" + optArr[i].optCode + "' " + selectedStr + ">" + optArr[i].optName +
+                        "</option>";
+                      selectStr = selectStr + optBean;
+                    }
+                }
+
+
+
 								$(selObj).html(selectStr);
 								form.render('select');
 							}
-					
+
+							if(name.endWith("Tree")){
+
+								var treeObj = $("[name=" + name.substr(0, name.length - 4) + "]");
+
+
+								treeObj.data("ag-tree-data",data[name]);
+
+
+							}
+
 						}
-					
+
 						//自定义插件入口
 						var pluginName = $(agForm).attr("ag-plugin-name");
-					
+
 						if (!util.isNull(pluginName)) {
 							//init参数根据需要在扩展
 							customPlugins[pluginName].init(data);
 						}
-					
-					
-					
-					
+
+
+
+
 				}) ;
-				
-				
-				
-				
+
+
+
+
 				};
 
 
@@ -1572,12 +1661,50 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 	function renderForm() {
 		var agDateArr = $(".ag-date");
 		$(agDateArr).each(function(idx, input) {
-			laydate.render({
+
+
+			var opt = {
 				elem: input,
 				type: $(input).attr("ag-date-format")
-			});
+			}
+
+
+
+			console.log(opt);
+
+			laydate.render(opt);
 		});
+
 	}
+
+	function initFormHeight(){
+
+		//目前没有唯一标识判断 先根据查询按钮判断是不是查询页面
+		//如果是查询页面则返回.
+		if($(".ag-btn-query").length > 0 ){
+
+			return;
+		}
+
+
+		$(".ag-form").css("overflow-y","auto");
+
+		var ie = util.IEVersion();
+
+		if(!isNaN(ie) && ie > 0  && ie < 9){
+
+			$(".ag-form").css("height",$(window).height() - 140 +"px");
+
+			return ;
+		}
+
+		$(".ag-form").css("height","calc( 100vh - 140px)");
+
+
+
+
+	}
+
 
 
 
@@ -1606,12 +1733,11 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 		}
 
+
+
 		sibHeight += util.getRealityOrderHeight(agTable.parent());
 
-
-		agTable.parent().attr("style", "");
-
-		agTable.parent().css('height', 'calc( 100vh - ' + sibHeight + 'px)');
+		var parentDiffHeight  = sibHeight;
 
 		//获取容器兄弟节点高度
 		$.each(agTable.siblings(":visible").not("script").not("iframe").not(".layui-form.layui-border-box.layui-table-view"),
@@ -1620,10 +1746,51 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				sibHeight += ($(t).outerHeight() + util.getMarginHeight($(t)));
 			});
 
+
+		var ie = util.IEVersion();
+
+
+		agTable.parent().attr("style", "");
+
+
+		if(!isNaN(ie) && ie > 0  && ie < 9){
+
+			agTable.parent().css('height',  $(window).height() - parentDiffHeight +"px");
+
+			agTable.css('height', $(window).height() - sibHeight +"px");
+
+			return ;
+		}
+
+		agTable.parent().css('height', 'calc( 100vh - ' + parentDiffHeight + 'px)');
+
 		agTable.css('height', 'calc( 100vh - ' + sibHeight + 'px)');
 	}
 
 
+	function initAgZtree(){
+
+		var id = $(this).attr("id");
+
+		if(util.isNull(id)){
+
+			id = util.getMSecond();
+
+			$(this).attr("id",id);
+		}
+
+		var title = $(this).attr("ag-tree-title");
+
+		if(util.isNull(title)){
+
+			util.error("请设置ag-tree-title属性");
+
+			return ;
+		}
+
+		util.openWin("/views/ztree/ztreeInit.html?id="+id,title,800,600);
+
+	}
 
 
 
@@ -1634,6 +1801,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		initForm();
 
 		initListHeight();
+
+		initFormHeight();
 
 	});
 
@@ -1654,20 +1823,29 @@ function _listHrefDownloadFile(url) {
 
 function _doRealDownLoad(url) {
 
+	if ($("[name=downloadHidenFr1").length == 0) {
+
+		var iframe = $("<iframe name='downloadHidenFr1' class='layui-hide'></iframe>");
+
+		iframe.appendTo('body');
+	}
+
 	var action = url;
 	var form = $("<form></form>").attr("action", action).attr("method", "post");
-	form[0].target = "downloadHidenFr";
+	form[0].target = "downloadHidenFr1";
 	form.appendTo('body').submit().remove();
+
+
 
 }
 
 
 function _listHrefWindow(url, title,width,height) {
-	
+
 	width =  width || 1000;
-	
+
 	height = height ||1000;
-	
+
 	util.openWin(util.decode(url), title, width, height);
 }
 

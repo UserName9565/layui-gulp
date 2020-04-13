@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  @@include('url-config.html')
+  <link rel="stylesheet" href="/static/layui/lay/modules/dtree/dtree.css?v=1.0.0" type="text/css">
+  <link rel="stylesheet" href="/static/layui/lay/modules/dtree/font/dtreefont.css?v=1.0.0" type="text/css">
+</head>
+<body class="bg-info">
+<div class="layui-card layui-card-margin ">
+  <form class="ag-form layui-form" ag-data-index="0" ag-data-url="/sys/media-product-cfg/list">
+    <div class="param-left">
+      <div class="layui-inline ">
+        <label class="layui-form-label">组织机构：</label>
+        <div class="layui-input-block">
+          <!--<input  type="text" id="orgCode" name="orgCode" lay-verify="" autocomplete="off" class="layui-input">-->
+          <input type="hidden" id="groupId" name="groupId"  autocomplete="off"  class="layui-input">
+          <input type="text" name="groupName" ag-tree-title="组织机构选取"   autocomplete="off" placeholder="组织机构" class="layui-input ag-data-tree"   ag-tree-parent-key="parentGroupId"  ag-tree-key="groupId"   ag-tree-name="groupName" ag-tree-url="/sys/login/loadGroupTree" ag-tree-type="radio">
+        </div>
+      </div>
+      <div class="layui-inline ">
+        <label class="layui-form-label">推荐业务：</label>
+        <div class="layui-input-block">
+          <select id="productType" name="productType" ag-sel-name="productId">
+          </select>
+        </div>
+      </div>
+      <div class="layui-inline ">
+        <label class="layui-form-label">展示方式：</label>
+        <div class="layui-input-block">
+          <select id="viewType" name="viewType">
+            <option value="">请选择展示方式</option>
+            <option value="1" selected="selected">一宫</option>
+            <option value="4">四宫</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-inline ">
+        <label class="layui-form-label">是否发布：</label>
+        <div class="layui-input-block">
+          <select id="releaseFlag" name="releaseFlag">
+            <option value="">请选择...</option>
+            <option value="0">未发布</option>
+            <option value="1">已发布</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!--xiacj 说明:注意按钮工具栏不要放到form表单中,查询ajax请求和出发form表单提交,导致url方式变化,导致ajax请求状态为canceld-->
+  <div class="btns-right">
+    <div class="layui-inline" style="width: 100%;">
+      <button class="ag-btn-query layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="queryBtn" ag-data-index="0"  ag-data-url="/sys/media-list/query-media-page">
+        <i class="layui-icon layui-icon-search "></i>
+        <span class="btn-span-middle">查询</span>
+      </button>
+      <button class="layui-btn layui-btn-sm" ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="管理"  ag-data-url="/views/marketing/marketManage.html" onclick="manage();">
+        <i class="layui-icon layui-icon-set-fill"></i>
+        <span class="btn-span-middle">管理</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class=" layui-card  layui-card-list" style="height: calc( 100vh - 105px);">
+
+<!--  <div class="layui-border-box ">-->
+
+<!--    <div class="layui-table-tool">-->
+<!--      <div class="layui-table-tool-temp">-->
+<!--        <div class="layui-inline"><a onclick="alert('点击了发布的按钮')">发布</a></div>-->
+<!--        <div class="layui-inline"><a onclick="alert('点击了发布的按钮')">撤销</a></div>-->
+<!--      </div>-->
+
+<!--    </div>-->
+
+<!--  </div>-->
+
+  <div style="display:none" class="ag-table-header" ag-data-index="0">
+
+    [
+    [
+    {
+    "field": "mediaId",
+    "title": "主键",
+    "hide": true,
+    "fixed": "left"
+    },{
+    "field": "productName",
+    "title": "产品类型",
+    "sort": true,
+    "fixed": "left"
+    }, {
+    "className":"productType",
+    "field": "productType",
+    "title": "产品类型",
+    "hide": true
+    }, {
+    "field": "groupName",
+    "title": "归属地域"
+    }, {
+    "field": "viewDesc",
+    "title": "展示类型"
+    }, {
+    "field": "releaseFlag",
+    "title": "是否发布"
+    },{
+    "title": "操作",
+    "fixed": "right",
+    "btns": [
+    {
+    "className": "release_CLASS",
+    "openTitle":"确认发布吗？",
+    "btnVal":"发布",
+    "url": "@ctx@/sysmgr/sys/media-list/release?productType=@productType@&viewType=@viewType@&groupId=@groupId@",
+    "openType": "0"
+    },
+    {
+    "className": "",
+    "openTitle":"确认撤销吗？",
+    "btnVal":"撤销",
+    "url": "@ctx@/sysmgr/sys/media-list/undo?productType=@productType@&viewType=@viewType@&groupId=@groupId@",
+    "openType": "0"
+    },
+    {
+    "className": "",
+    "openTitle":"预览",
+    "btnVal":"预览",
+    "url": "/views/marketing/marketView.html?productType=@productType@&viewType=@viewType@&groupId=@groupId@",
+    "openType": "1"
+    }]
+    }
+    ]
+    ]
+  </div>
+  <table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+  </table>
+
+  <div class="pagging ag-area-page">
+
+  </div>
+
+</div>
+
+<script>
+
+  var pageIndex = 0;
+  function manage() {
+    var releaseFlag = document.getElementById("releaseFlag").value;
+    var orgCode = document.getElementById("groupId").value;
+    var viewType = document.getElementById("viewType").value;
+    var productType = document.getElementById("productType").value;
+    if(util.isNull(orgCode)){
+       util.showDialog("请选择组织机构",3);
+       return false;
+    }
+    if(util.isNull(viewType)){
+      util.showDialog("请选择展示方式",3);
+      return false;
+    }
+    if(util.isNull(productType)){
+      util.showDialog("请选择推荐业务",3);
+      return false;
+    }
+    var page = {"pageNo":"1","pageSize":"20"};
+    _listHrefTab('/views/marketing/markettManage.html?releaseFlag='+releaseFlag+"&groupId="+orgCode+"&viewType="+viewType+"&page="+page+"&productType="+productType,"管理");
+    // pageIndex = layer.open({
+    //   type: 2,
+    //   title: '管理界面',
+    //   closeBtn: 1, //不显示关闭按钮
+    //   anim: 2,
+    //   area: ['1024px', '600px'],
+    //   shadeClose: true, //开启遮罩关闭
+    //   content: 'markettManage.html?releaseFlag='+releaseFlag+"&orgCode="+orgCode+"&viewType="+viewType+"&page="+page
+    // });
+
+  }
+
+  function closePage() {
+    layer.close(pageIndex);
+  }
+
+  function _listHrefDownloadFile(url,openTitle) {
+    util.showDialog(openTitle, 3, "ret=doRelease('" + url + "')");
+  }
+
+  function doRelease(targetUrl) {
+    $.ajax({
+      type: "POST",
+      url: targetUrl,
+      contentType: "application/json;charset=UTF-8",
+      xhrFields: {
+        withCredentials: false //跨域session保持
+      },
+      async: true,
+      dataType: "json",
+      success: function(data) {
+        if(data){
+          util.showDialog("操作成功",3);
+          $(".ag-btn-query").click();
+        }else{
+          util.showDialog("操作失败",3);
+        }
+      },
+      error: function(e) {
+        alert("请求失败"+e);
+      }
+    });
+  }
+
+  function _listHrefTab(url, title) {
+    util.addTab(url, title);
+  }
+
+</script>
+</body>
+</html>

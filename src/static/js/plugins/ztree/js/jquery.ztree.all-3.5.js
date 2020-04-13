@@ -924,7 +924,7 @@
 				contentType: setting.async.contentType,
 				type: setting.async.type,
 				url: tools.apply(setting.async.url, [setting.treeId, node], setting.async.url),
-				data: tmpParam,
+				data: setting.async.contentType.indexOf('application/json') > -1 ? JSON.stringify(tmpParam) : tmpParam,
 				dataType: setting.async.dataType,
 				success: function(msg) {
 					if (_tmpV != data.getRoot(setting)._ver) {

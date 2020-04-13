@@ -40,7 +40,6 @@
           <input type="hidden" id="modelfileId" />
           <input type="hidden" id="typeId" />
           <input type="hidden" id="groupId" />
-							<div class="layui-inline ">
 
                 <div class="layui-inline ">
                 				<label class="layui-form-label">模板类型：</label>
@@ -51,13 +50,13 @@
                 <div class="layui-inline ">
                 	<label class="layui-form-label">模板名称：</label>
                 	<div class="layui-input-block">
-                		<input type="text"  id="modelfileName" name="modelfileName" ag-verify="required" autocomplete="off" placeholder="模板名称" class="layui-input">
+                		<input type="text"  id="modelfileName" name="modelfileName" readonly="readonly" ag-verify="required" autocomplete="off" placeholder="模板名称" class="layui-input">
                 	</div>
                 </div>
               <div class="layui-inline " id="opCodeTR">
                 	<label class="layui-form-label">操作代码：</label>
                 	<div class="layui-input-block">
-                		<input type="text" id="opCode" name="opCode" ag-verify="required" autocomplete="off" placeholder="操作代码" class="layui-input">
+                		<input type="text" id="opCode" name="opCode" ag-verify="required" readonly="readonly" autocomplete="off" placeholder="操作代码" class="layui-input">
                 	</div>
                 </div>
         <div class="layui-inline " id="opCodeTR">
@@ -75,20 +74,20 @@
 					</form>
 				</div>
 				<div class="layui-card-footer">
-          <button class="layui-btn layui-btn-sm layui-btn-blue "    onclick="addField();">
+						<button class="layui-btn layui-btn-sm layui-btn-blue "    onclick="addField();">
 							<i class="layui-icon layui-icon-search "></i>
 							<span class="btn-span-middle">添加区域</span>
 						</button>
-						<button class="layui-btn layui-btn-sm layui-btn-blue "    onclick="update()">
+						<button class="layui-btn layui-btn-sm layui-btn-blue "    onclick="updateInit()">
 							<i class="layui-icon layui-icon-search "></i>
 							<span class="btn-span-middle">修改</span>
 						</button>
-						<button class="ag-btn-cancel layui-btn layui-btn-sm layui-btn-blue">
+						<button class=" layui-btn layui-btn-sm layui-btn-blue" onclick ="util.removeTab()">
 							<i class="layui-icon layui-icon-search "></i>
 							<span class="btn-span-middle">取消</span>
 						</button>
 				</div>
-        <div id="show_HWPostil1" style="height: 200px;" >
+        <div id="show_HWPostil1" style="position: absolute;top:150px;bottom: 70px;left:0;right:0px;z-index:-9999999" >
         <script language=javascript src="/static/js/ocx/LoadAip.js"></script>
         </div>
 
@@ -103,6 +102,8 @@
 			var form = layui.form;
 
 			form.render();
+			
+			$("object").addClass("hideObject");
 
 		});
 </script>
@@ -159,7 +160,9 @@ function NotifyLineAction(lPage,lStartPos,lEndPos){
     var lEndX = ((lEndPos<<16)>>16) & 0x0000ffff;
     argObj = {"page":lPage,"StartX":lStartX,"StartY":lStartY,"EndX":lEndX,"EndY":lEndY};
     var url= "/views/modelMgr/modelFile/fieldSelect.html";
-    openwin("", url);
+	
+	
+    util.openWin(url,"选择元素",800,600,"");
 }
 function openwin(winName,url){
     if(winName==""){
@@ -174,7 +177,7 @@ function openwin(winName,url){
     return ret;
 }
 function updateInit(){
- util.showDialog("您确定要修改么?",3,update,opts);
+ util.showDialog("您确定要修改么?",3,update);
 }
 function update(opts){
 
@@ -204,7 +207,7 @@ function update(opts){
        var url = ctx+"/cfgmgr/cfg/modelFile/updateModelFile";
        var messages = HWPostil1.HttpPost(url);
          if(messages == 'success'){
-          util.showDialog("修改成功！",1,function(){ util.closeWin();});
+          util.showDialog("修改成功！",1,function(){ util.removeTab();});
         }else{
           util.error("文件保存失败！");
         }

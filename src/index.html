@@ -8,11 +8,14 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta name="full-screen" content="yes">
     <meta name="x5-fullscreen" content="true">
     <meta name="keywords" content="">
-    <meta name="description" content=""> @@include('url-config.html')
+    <meta name="description" content=""> 
+	
+	@@include('url-config.html')
     <!-- <link rel="stylesheet" href="/static/css/bundle/index.css?v=201809131551"> -->
     <style id="layuimini-bg-color">
     </style>
@@ -112,7 +115,7 @@
             var  element = layui.element,
                 layer = layui.layer;
 				
-				util.addToken();
+				
                 // var mmm = menu(JSON.parse(localStorage.getItem("menus")))
                 //     layuimini.init(mmm,true)
                 var obj = {
@@ -122,13 +125,15 @@
             
                 publicFun.ajax(obj,success)
                 function success(data){
+					
                     //data.functions
                     if(data.result=="-1"){
-                        window.location = '/views/login-1.html';
+                     
                     }else{
 						
-						console.log(data.functions);
-                        var mmm = menu(data.functions)
+                      
+                        var mmm = menu(data.functions);
+                       
                          layuimini.init(mmm,true);
 						 
 						 
@@ -140,7 +145,7 @@
            
             $('.login-out').on("click", function () {
                 layer.msg('退出登录成功', function () {
-                    $.cookie("JSESSIONID_token","")
+                    util.addToken();
                     window.location = '/views/login-1.html';
                 });
             });
@@ -156,7 +161,7 @@
                         var cvTag = false;
                     }
                     if(cvTag){//判断是否是第一层
-                        obj1.title = "["+o.functionCode+"]"+o.functionName;;
+                        obj1.title = o.functionName;;
                         obj1.href = rootD+o.modelName+o.jspUrl
                         obj1.icon = o.icon
                         obj1.target = "_self"
@@ -174,13 +179,13 @@
                     var obj1 = {};
                     var myId = o.functionCode;
                     if(o.parentCode==id){//找到是父亲的儿子数据
-                        obj1.title = "["+o.functionCode+"]"+o.functionName;;
+                        obj1.title = o.functionName;;
 						
 						obj1.href = o.jspUrl;
 						
 						if(!util.isNull(o.moduleName)){
 							
-							 obj1.href = ctx+"/"+o.moduleName+o.jspUrl+"?agileauthtoken="+ $.cookie('JSESSIONID_token');
+							 obj1.href = ctx+"/"+o.moduleName+o.jspUrl+"?agileauthtoken="+ util.getToken();
 							 
 						}
 						 

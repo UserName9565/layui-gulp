@@ -40,6 +40,8 @@
         emptyClass      : 'dd-empty',
 		deleteClass		: 'dd-del',
 		itemKey			:'',
+		itemName		:'',
+		aliasName		:'',
         expandBtnHTML   : '<button data-action="expand" type="button">Expand</button>',
         collapseBtnHTML : '<button data-action="collapse" type="button">Collapse</button>',
         group           : 0,
@@ -504,7 +506,7 @@
 					li.attr("data-"+that.options.dataJsonKey,JSON.stringify(item));
 					li.attr("data-"+that.options.itemKey.toLowerCase(),item[that.options.itemKey]);
 					
-					var div = $('<div class="dd-handle">'+item[that.options.itemName]+'</div>');
+					var div = $('<div class="dd-handle">'+(util.isNull(item[that.options.aliasName]) ? item[that.options.itemName] : item[that.options.aliasName])+'</div>');
 					
 					li.append(div);
 					
