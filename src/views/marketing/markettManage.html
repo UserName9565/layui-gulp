@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>精准营销-素材管理</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="/static/layui/css/layui.css" />
+  <link rel="stylesheet" href="/static/css/bundle/temp.css" />
+  @@include('url-config.html')
+</head>
+<body class="bg-info">
+<input id="viewType" type="hidden" name="viewType" />
+<input id="productType" type="hidden" name="productType" />
+<input id="groupId" type="hidden" name="groupId" />
+<div class=" layui-card  layui-card-list" style="height: calc( 100vh - 105px);">
+  <div class="layui-border-box ">
+    <div class="layui-table-tool">
+      <div class="layui-table-tool-temp">
+        <div class="layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="新增"  onclick="toSave();"><i class="layui-icon layui-icon-add-1"></i></div>
+        <div class="ag-btn-update layui-inline" lay-event ag-data-index="0" ag-win-id="0" ag-win-width="800" ag-win-height="600" ag-win-title="修改" ag-data-pk="mediaId" ag-data-url="/views/marketing/mediaUpdate.html"><i class="layui-icon layui-icon-edit"></i></div>
+        <div class="ag-btn-delete layui-inline" id="ag-btn-delete" lay-event ag-data-index="0" ag-data-pk="mediaId"  ag-data-url="/sys/media-list/manage-delete"><i class="layui-icon layui-icon-delete"></i></div>
+      </div>
+    </div>
+  </div>
+  <div style="display:none" class="ag-table-header" ag-data-index="0">
+    [
+    [
+    {
+    "type": "checkbox",
+    "fixed": "left"
+    },{
+    "field": "mediaId",
+    "title": "主键",
+    "hide": true,
+    "fixed": "left"
+    },{
+    "field": "productType",
+    "title": "播放序号",
+    "sort": true,
+    "fixed": "left"
+    }, {
+    "field": "mediaName",
+    "title": "资源名称"
+    }, {
+    "field": "fileName",
+    "title": "文件路径"
+    }, {
+    "field": "loginNo",
+    "title": "链接地址"
+    },{
+    "title": "操作",
+    "fixed": "right",
+    "btns": [{
+      "className": "",
+      "openTitle":"预览",
+      "btnVal":"预览",
+      "url": "/views/marketing/marketView.html",
+      "openType": "2"
+    }]
+    }
+    ]
+    ]
+  </div>
+  <table class="ag-table layui-hide" id="demo" lay-filter="test" ag-data-index="0">
+
+  </table>
+
+  <div class="pagging ag-area-page">
+
+  </div>
+
+</div>
+
+<script type="text/html" id="barDemo">
+  <a  lay-event="showImage" onclick="showImage('{{d.mediaId}}')">预览</a>
+</script>
+
+<script>
+  $(function () {
+    var param = util.getUrlParam();
+    var groupId = param.groupId;
+    var productType = param.productType;
+    var viewType = param.viewType;
+    $("#productType").val(productType);
+    $("#groupId").val(groupId);
+    $("#viewType").val(viewType);
+    initPage();
+    $(".ag-btn-delete").on("click", deleteItem);
+  });
+
+  /**
+   *  初始化界面列表数据
+   */
+  function initPage(){
+    layui.use('table', function(){
+      var table = layui.table;
+      //第一个实例npm
+      table.render({
+        elem: '#demo'
+        ,height: 312
+        ,method: 'POST'
+        ,url: ctx+"/sysmgr/sys/media-list/manage"
+        ,where:{"productType": $("#productType").val(),"groupId": $("#groupId").val(),"viewType":$("#viewType").val()}
+        ,page: true //开启分页
+        ,contentType: "application/json;charset=UTF-8"
+        ,cols: [
+          [
+            {
+              "type": "checkbox",
+              "fixed": "left"
+            },{
+            "field": "mediaId",
+            "title": "主键",
+            "hide": true,
+            "fixed": "left"
+          },{
+            "field": "mediaNo",
+            "title": "播放序号",
+            "sort": true,
+            "fixed": "left"
+          }, {
+            "field": "mediaName",
+            "title": "资源名称"
+          }, {
+            "field": "fileName",
+            "title": "文件路径"
+          }, {
+            "field": "fileName",
+            "title": "链接地址"
+          },{
+            "title": "操作",
+            "fixed": "right",
+            "toolbar":"#barDemo"
+            // "btns": [
+            //   {
+            //     "className": "",
+            //     "openTitle":"预览",
+            //     "btnVal":"预览",
+            //     "url": "/views/marketing/marketView.html",
+            //     "openType": "2"
+            //   }]
+          }
+          ]
+        ]
+      });
+
+      table.on('toolbar(test)', function(obj){
+        if(obj.event === 'showImage'){
+          showImage(obj);
+        }
+      });
+
+    });
+  }
+
+  /**
+   * 打开保存界面
+   **/
+  var pageIndex  = 0;
+  function toSave() {
+    var productType = $("#productType").val();
+    var groupId = $("#groupId").val();
+    var viewType = $("#viewType").val();
+    var params = "productType="+productType+"&groupId="+groupId+"&viewType="+viewType
+    var index = $(this).attr("ag-data-index");
+    var url = "/views/marketing/mediaAdd.html?"+params;
+    var winId = 0;
+    var winW = 800;
+    var winH = 600;
+    var title = "新增";
+    var opts = {
+      "winId": winId
+    };
+    var agCtx = util.getAgCtx(this);
+
+    //url = apiConfig[agCtx + "_web"] + url;
+
+    pageIndex  = util.openWin(url, title, winW, winH, opts);
+  }
+
+  function closePage() {
+    layer.close(pageIndex);
+  }
+
+  /**
+   * 保存方法
+   */
+  function save(){
+    var mediaNo = $("#mediaNo").val();
+    var saveName = $(".ag-file-item-li").eq(0).data("ag-file-name-savename");
+    alert(saveName);
+    var mediaName = $("#mediaName").val();
+    var url = ctx+"/sysmgr/sys/media-list/manageAdd";
+    util.ajaxJson("保存中，请稍候···",url,{"mediaNo":mediaNo,"saveName":saveName,"mediaName":mediaName},function(data){
+      if(data.result != "0"){
+        util.error("保存失败!");
+      }else{
+        util.success("保存成功!");
+      }
+    });
+  }
+
+  function addInit() {
+    alert("本页面的添加界面初始化");
+    var index = $(this).attr("ag-data-index");
+    var url = $(this).attr("ag-data-url");
+    var winId = $(this).attr("ag-win-id");
+    var winW = $(this).attr("ag-win-width");
+    var winH = $(this).attr("ag-win-height");
+    var title = $(this).attr("ag-win-title");
+
+    var opts = {
+      "winId": winId
+    }
+
+    var agCtx = util.getAgCtx(this);
+
+    //url = apiConfig[agCtx + "_web"] + url;
+
+    util.openWin(url, title, winW, winH, opts);
+
+  };
+
+  function deleteItem() {
+    alert("本页面的删除方法");
+    var index = $(this).attr("ag-data-index");
+    var tableId = $("table[ag-data-index=" + index + "]").attr("id");
+    var checkStatus = table.checkStatus(tableId);
+    var data = checkStatus.data; //获取选中行数据
+    if (data.length == 0) {
+
+      util.warning('请选择一条数据库记录!');
+      return;
+    }
+
+    var pkCol = $(this).attr("ag-data-pk");
+    if (util.isNull(pkCol)) {
+      pkCol = "id";
+    }
+
+    var pkVal = data[0][pkCol];
+    var opts = {
+      "index": index
+    };
+
+    util.showDialog("您确定要删除选中记录么?", 3, doDel, opts);
+    // initPage();
+  }
+
+  function doDel(opts) {
+
+    var index = opts.index;
+    var tableId = $("table[ag-data-index=" + index + "]").attr("id");
+    alert("tableId=="+tableId);
+    var checkStatus = table.checkStatus(tableId);
+    var data = checkStatus.data; //获取选中行数据
+
+    var btn = $(".ag-btn-delete[ag-data-index=" + index + "]")
+    var pkCol = $(".ag-btn-delete").attr("ag-data-pk");
+    if (util.isNull(pkCol)) {
+      pkCol = "id";
+    }
+
+    var pkVal = data[0][pkCol];
+
+    var param = {};
+    param[pkCol] = pkVal;
+
+    var url = ctx + "/" + util.getAgCtx(btn) + "/sys/media-list/manage-delete";
+
+
+    util.ajaxJson("删除中,请稍候!", url, param, function (data) {
+
+      var result = data.result;
+      var desc = data.desc;
+
+      if (result == 0) {
+        util.success(desc);
+        initPage();
+      } else {
+        util.error(desc);
+      }
+
+    });
+  }
+
+  function showImage(obj) {
+    util.openWin("/views/marketing/media-image-show.html?params="+obj,"预览",8000,600)
+  }
+
+
+
+</script>
+</body>
+</html>
