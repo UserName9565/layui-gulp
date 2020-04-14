@@ -36,17 +36,15 @@
 <script src="/static/layui/layui.js?v=1.0.0"></script>
 <script src="/static/js/plugins/jquery.cookie.js?v=1.0.0"></script>
 <script>
-    var ht = location.pathname;
-
-    if(ht.indexOf("/login-1.html")==-1){
-        var token = $.cookie('JSESSIONID_token');
-
-
-        if(!token){
-
-            location.href = "/views/login-1.html"
-        }
-    }
+ var ht = location.pathname;
+ 
+ if(ht.indexOf("/login-1.html")==-1){
+ 
+     if(!util.getToken()){
+ 	
+         location.href = "/views/login-1.html"
+     }
+ }
 </script>
 <script src="/static/js/api.config.js"></script>
 <script src="/static/js/bundle/common.js?v=1.0.0"></script>
