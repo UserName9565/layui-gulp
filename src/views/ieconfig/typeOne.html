@@ -33,14 +33,12 @@
 <script src="/static/layui/layui.js?v=1.0.0"></script>
 <script src="/static/js/plugins/jquery.cookie.js?v=1.0.0"></script>
 <script>
-    var ht = location.pathname;
+  var ht = location.pathname;
 
     if(ht.indexOf("/login-1.html")==-1){
-        var token = $.cookie('JSESSIONID_token');
 
-
-        if(!token){
-
+        if(!util.getToken()){
+			
             location.href = "/views/login-1.html"
         }
     }
