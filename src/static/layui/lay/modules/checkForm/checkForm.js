@@ -56,6 +56,7 @@ layui.define(['jquery', 'form'], function(exports) {
 				number5: function(value) {
 					if (!value || isNaN(value) || parseInt(value) > 4 || parseInt(value) < 0) return '请填写不小于0,小于5数字'
 				},
+				numberChar:[/^[0-9a-zA-Z]*$/g,'只是输入数字与字母'],
 				number100: function(value) {
 
 					var patrn = /^(0|[1-9]\d?|100)$/;
