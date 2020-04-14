@@ -1059,7 +1059,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			this.bindLsnr();
 
 		}
-
+		
+		
 
 
 		formFile.bindLsnr = function() {
@@ -1080,10 +1081,10 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			}
 
-			that.form.delegate(".ag-file .ag-file-header .ag-file-header-button", "click", function() {
-				$(this).siblings(".ag-file-header-file").trigger("click");
+			// that.form.delegate(".ag-file .ag-file-header .ag-file-header-button", "click", function() {
+			// 	$(this).siblings(".ag-file-header-file").trigger("click");
 
-			});
+			// });
 			/**
 			 *  附件添加事件
 			 */
@@ -1102,22 +1103,38 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 					util.showDialog("最大添加附件数量:" + maxNum + ",无法继续添加!", 0);
 
 				} else {
-
-					$.each(inputFile[0].files, function(i, file) {
-
-						that.addIfile(file, inputFile.parent().parent());
-
-					});
+					
+					var IEVersion = util.IEVersion();
+					
+					if(IEVersion == 7 || IEVersion == 8 ){
+						
+						that.addFileIE(inputFile,inputFile.parent().parent());
+						
+						
+					}else{
+						
+						$.each(inputFile[0].files, function(i, file) {
+							
+							that.addIfile(file, inputFile.parent().parent());
+						
+						});
+						
+						
+						inputFile.after(inputFile.clone().val(""));
+						
+						
+						inputFile.remove();
+						
+					}
+					
+					
 
 				}
 
 
 
 
-				inputFile.after(inputFile.clone().val(""));
-
-
-				inputFile.remove();
+				
 
 
 			});
@@ -1163,8 +1180,8 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 						var url = f.data("ag-file-iframe-down-url");
 
 						url = ctx + "/" + util.getAgCtx(f) + url;
-
-						_listHrefDownloadFile(url + "?saveName=" + saveName + "&fileId=" + saveName);
+						
+						_listHrefDownloadFile({"ag-data-url":url + "?saveName=" + saveName + "&fileId=" + saveName});
 
 					});
 
@@ -1192,24 +1209,30 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 						var url = f.data("ag-file-iframe-del-url");
 
 						url = ctx + "/" + util.getAgCtx(f) + url;
+						
+						util.showDialog("您确定要删除选中附件么?", 3, function(){
+							
+							util.ajaxJson("删除中,请稍后...", url, {
+								"fileId": saveName
+							}, function(data) {
+							
+								if (data.result == "0") {
+							
+									fileThat.parents(".ag-file-item-li:first").remove();
+							
+									util.showDialog("删除成功!", 2);
+							
+									return;
+								}
+							
+								util.showDialog("删除失败!", 0);
+							
+							
+							});
+							
+						}, {});
 
-						util.ajaxJson("删除中,请稍后...", url, {
-							"fileId": saveName
-						}, function(data) {
-
-							if (data.result == "0") {
-
-								fileThat.parents(".ag-file-item-li:first").remove();
-
-								util.showDialog("删除成功!", 2);
-
-								return;
-							}
-
-							util.showDialog("删除失败!", 0);
-
-
-						});
+						
 
 					});
 
@@ -1299,7 +1322,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			var multiple = f.attr("ag-file-multiple");
 
-			var headerInput = $("<input class='ag-file-header-file' type='file' " + (multiple == "true" ? "multiple" : "") +
+			var headerInput = $("<input class='ag-file-header-file' name='file' type='file' " + (multiple == "true" ? "multiple" : "") +
 				" />");
 
 			headerDiv.append(headerTextDiv);
@@ -1329,19 +1352,19 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 
 			var url = that.form.find(".ag-file").eq(0).data("ag-file-iframe-add-url");
 
-			url = ctx + "/" + util.getAgCtx(null) + url;
+			url = ctx + "/" + util.getAgCtx(that.form.find(".ag-file").eq(0)) + url;
 
 			util.ajaxFile("上传中,请稍后...", url, form, function(data) {
-
+				
 
 				if (data.result != 0) {
 
-					error(layFilter, data.desc.length > 50 ? "上传失败!":data.desc);
+					that.error(layFilter, data.desc.length > 50 ? "上传失败!":data.desc);
 
 					return;
 				}
 
-				succ(layFilter, data);
+				that.succ(layFilter, data);
 
 			}, function(data) {
 
@@ -1361,7 +1384,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				}
 
 
-				error(layFilter, msg);
+				that.error(layFilter, msg);
 
 			}, function(myXhr) {
 
@@ -1380,19 +1403,14 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				return myXhr;
 			});
 
-			function succ(layFilter, data) {
 
-				layui.element.progress(layFilter, "100%");
-				$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
-					data.desc);
-				$("[lay-filter=" + layFilter + "]", that.form).children().width("100%").text(
-					'上传成功!').css({
-					"text-align": "center",
-					"color": "white"
-				});
-			}
+			
 
-			function error(layFilter, msg) {
+		}
+		
+		formFile.error = function error(layFilter, msg) {
+			
+				var that = this;
 
 				$("[lay-filter=" + layFilter + "]", that.form).children().removeClass("layui-bg-green").addClass("layui-bg-red")
 					.width("100%").text(
@@ -1400,11 +1418,84 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 				$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
 					"");
 
-			}
-
+		} 
+		formFile.succ = function (layFilter, data) {
+				
+				var that = this;
+				
+				layui.element.progress(layFilter, "100%");
+				
+				$("[lay-filter=" + layFilter + "]", that.form).parents(".ag-file-item-li:first").data("ag-file-name-savename",
+					data.desc);
+				$("[lay-filter=" + layFilter + "]", that.form).children().width("100%").text(
+					'上传成功!').css({
+					"text-align": "center",
+					"color": "white"
+				});
+				
 		}
 
-
+		formFile.addFileIE = function(obj,f){
+			
+			var that = this;
+			
+			var moduleName = that.form.find(".ag-file").eq(0).attr("ag-file-module");
+			
+			var url = that.form.find(".ag-file").eq(0).data("ag-file-iframe-add-url");
+			
+			var iframeName = that.form.find(".ag-file").eq(0).data("ag-file-iframe-name"); 
+			
+			url = ctx + "/" + util.getAgCtx(that.form.find(".ag-file").eq(0)) + url+"IE";
+			
+			$("form[form_"+iframeName+"]").remove();
+			
+			var form = $('<form method="post" style="display:none;"    name="form_'+iframeName+'" enctype="multipart/form-data" />');
+				
+			obj.after(obj.clone().val(""));
+			
+			obj.appendTo(form);
+			
+			form.append($("<input type='hidden' name='moduleName' value='"+moduleName+"'/>"));
+			
+			form.append($("<input type='hidden' name='agileauthtoken' value='"+util.getToken()+"'/>"));
+			
+			$(document.body).append(form);
+			
+			form.ajaxSubmit({
+				async:false,
+				type:"post",
+				url:url,
+				dataType:"text/html",
+				success:function(data){
+					
+					data = $.parseJSON(util.decode(data));
+					
+					var body  =data.body;
+					
+					body.fileType = file_types[body.fileType] ? file_types[body.fileType] : "default";
+					
+					body.fileSize = Math.ceil(body.fileSize / 1024);
+					
+					var layFilter = that.appendFileItemTpl(body, f);
+					
+					that.succ(layFilter, body);
+					
+				},
+				error:function(xhr, status, error,form){
+					
+					util.error("上传失败!");
+					
+					
+				}
+				
+			});
+			
+			
+			
+		
+			
+			
+		}
 		/**
 		 *  插入附件 obj 可能是file对象 也可能是查询返回的bean
 		 * @param {Object} obj
@@ -1471,22 +1562,26 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 		formFile.appendFileItemTpl = function(data, f) {
 
 			var that = this;
+			
 
-			var li = $("<li  class='ag-file-item-li'></li>");
+			var li = $('<li  class="ag-file-item-li"></li>');
 
 			li.data("ag-file-name-filename", data.fileName);
 			li.data("ag-file-name-savename", data.saveName);
 			li.data("ag-file-name-optime", data.opTime);
 			li.data("ag-file-name-filesize", data.fileSize);
 
-			var thumb = $("<div class='ag-file-item-li-thumb'></div>");
+			var thumb = $('<div class="ag-file-item-li-thumb"></div>');
+			
+			var span = $('<span class="ag-file-item-li-thumb-icon ag-form-type-'+data.fileType+'"></span>');
 
-			var a = $("<a href='#' title='点击下载：" + data.fileName + "'><span class='ag-file-item-li-thumb-icon ag-form-type-" +
-				data.fileType + "'></span></a>");
-
+			var a = $('<a href="#" title="点击下载：' + data.fileName + '"></a>');
+			
+			a.append(span);
+			
 			var random = util.randomWord(false, 32);
 
-			var progress = $('<div class="layui-progress layui-hide  layui-progress-big	" lay-filter="' + random +
+			var progress = $('<div class="layui-progress   layui-progress-big	" lay-filter="' + random +
 				'" lay-showPercent="true">  <div class="layui-progress-bar text-white" lay-percent="0%"><span class="layui-progress-text">0%</span></div></div>'
 			);
 
@@ -1508,11 +1603,11 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			var timeDd = $("<dd class='ag-file-item-li-date'><time >" + util.timeDiff(data.opTime) + "</time></dd>");
 
 			dt.append(span);
-
+			
 
 			if (f.attr("ag-file-delete") == "true") {
-
-				dt.append(deleteDiv);
+				
+				dl.append(deleteDiv);
 			}
 
 			dt.append(downA);
@@ -1522,14 +1617,19 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			dl.append(timeDd);
 
 			thumb.append(a);
+			
+			
 
 			thumb.append(progress);
 
 			li.append(thumb);
 
 			li.append(dl);
+			
+		
 
 			that.form.find(".ag-file-item").append(li);
+			
 
 			return random;
 

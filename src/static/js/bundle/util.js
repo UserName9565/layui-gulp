@@ -492,10 +492,10 @@ util = {
 		var dateEnd = new Date(); //获取当前时间
 
 		var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
-
+		
 		if (dateDiff < 0) {
 
-			return "未知";
+			return "刚刚上传";
 		}
 
 		var dayDiff = parseInt(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
