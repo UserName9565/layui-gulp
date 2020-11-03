@@ -1457,7 +1457,7 @@ layui.use(['element', 'form', 'table', 'checkForm', 'laydate', 'mapChooser'], fu
 			
 			form.append($("<input type='hidden' name='moduleName' value='"+moduleName+"'/>"));
 			
-			form.append($("<input type='hidden' name='agileauthtoken' value='"+util.getToken()+"'/>"));
+			form.append($("<input type='hidden' name='agileauthtoken' value='"+util.getLogin("token")+"'/>"));
 			
 			$(document.body).append(form);
 			

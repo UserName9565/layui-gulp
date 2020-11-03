@@ -20,13 +20,13 @@
     <script src="/static/js/libs/json2.js?v=1.0.0"></script>
 <![endif]-->
 <!-- <script src="/static/js/plugins/jquery-form.js?v=1.0.0"></script> -->
-<script src="/static/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/layui/layui.js?v=1.0.0"></script>
 <script src="/static/js/plugins/jquery.cookie.js?v=1.0.0"></script>
 <script src="/static/js/api.config.js"></script> 
 <script src="/static/js/plugins/jquery-form.js"></script> 
 
-<script src="/static/js/bundle/common.js?v=1.0.0"></script>
+<!-- <script src="/static/js/bundle/common.js?v=1.0.0"></script> -->
 <script src="/static/js/bundle/util.js?v=1.0.0"></script>
 <script src="/static/js/bundle/customform.js?v=1.0.0"></script>
 <script src="/static/js/bundle/url.js?v=1.0.0"></script>
@@ -34,13 +34,13 @@
 <script>
     var ht = location.pathname;
 
-    if(ht.indexOf("/login-1.html")==-1){
+    // if(ht.indexOf("/login-1.html")==-1){
 
-        if(!util.getToken()){
+    //     if(!util.getLogin("token")){
 			
-            location.href = "/views/login-1.html"
-        }
-    }
+    //         location.href = "/views/login-1.html"
+    //     }
+    // }
 	
 	
 </script>

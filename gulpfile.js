@@ -53,8 +53,8 @@ if(env!='build'){
   pathed = "/static"//开发环境根路径
   pathed2 = "/views"
 }else{
-  pathed = "/bhps/static"//打包环境下根路径
-  pathed2 = "/bhps/views"//打包环境下根路径
+  pathed = "/static"//打包环境下根路径
+  pathed2 = "/views"//打包环境下根路径
 }
 function respath(dir) {
   return path.join(__dirname, './', dir)

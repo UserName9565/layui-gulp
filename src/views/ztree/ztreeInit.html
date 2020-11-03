@@ -88,7 +88,7 @@
 						url: "",
 						dataType: "JSON",
 						autoParam: [],
-						headers :{"agileauthtoken":util.getToken()},
+						headers :{"agileauthtoken":util.getLogin("token")},
 						type: "post",
 						
 						dataFilter:function filter(treeId, parentNode, childNodes) {

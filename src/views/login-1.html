@@ -104,6 +104,8 @@
 
         // 进行登录操作
         form.on('submit(login)', function (request) {
+            window.location = '../index.html';
+            return false;
             request = request.field;
             request.selfIp = ''
             var code=$("#captchaCode").val();
@@ -123,41 +125,27 @@
                 layer.msg("验码码错误!", 0);
                 return false;
                }
-
-             //$("#loginNoStr").val(util.encode64(request.loginNoStr));
-             //$("#loginPasswd").val(util.encode64(request.loginPasswd));
+ 
              request.loginNoStr=util.encode64(request.loginNoStr);
              request.loginPasswd=util.encode64(request.loginPasswd);
-             // var xhr = new XMLHttpRequest();
-            //     xhr.open("Post", url.token, true);
-            //     xhr.setRequestHeader("x-tiken", "custom");
-            //     xhr.send();
-            //     console.log(xhr)
-                // return false;
+            
             var obj = {
-                url:url.token,
+                // url:url.token,
                 data:request
             }
 
             publicFun.ajax(obj,success);
             function success(data){
+                util.addToken(data.token);
+                if(data.result==0){
+                    window.location = '../index.html';
 
-                // modelInit(data.data);
-                // localStorage.setItem("menus",JSON.stringify(data.functions))
-                // $.cookie("JSESSIONID_token", data.token, {
-                //   path: '/'
-                // })
-
-				   util.addToken(data.token);
-           if(data.result==0){
-               window.location = '../index.html';
-
-           }else{
-            layer.msg('用户名或密码错误!', function () {
-                 getCaptcha();
-                 return false;
-             });
-           }
+                }else{
+                    layer.msg('用户名或密码错误!', function () {
+                        getCaptcha();
+                        return false;
+                    });
+                }
 
                 // return false;
                // window.location = '../index.html';
@@ -174,11 +162,11 @@
 		
 		$("#captchaCode").val("");
 		
-		getCaptcha();
+		// getCaptcha();
 		
 	});
 function getCaptcha() {
-  var url = ctx+"/sysmgr/sys/login/auth/captcha";
+//   var url = ctx+"/sysmgr/sys/login/auth/captcha";
   
   util.ajaxJson("",url,{},function(data){
 	  

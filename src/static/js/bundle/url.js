@@ -20,7 +20,7 @@ if (!console) {
 
 var httpUrl = window.location.protocol + "//" + window.location.host;
 
-var agCtx= util.getAgCtx(null);
+var agCtx= ""//util.getAgCtx(null);
 
 
 var url = {

@@ -16,7 +16,13 @@ layui.config({
     base: rootPath + "/modules/",
     version: true
 }).extend({
-    layuimini: "layuimini/layuimini", // layuimini扩展
+    // layuimini: "layuimini/layuimini", // layuimini扩展
+    miniAdmin: "layuimini/miniAdmin", // layuimini后台扩展
+    miniMenu: "layuimini/miniMenu", // layuimini菜单扩展
+    miniTab: "layuimini/miniTab", // layuimini tab扩展
+    miniTheme: "layuimini/miniTheme", // layuimini 主题扩展
+    miniTongji: "layuimini/miniTongji", // layuimini 统计扩展
+
     step: 'step-lay/step', // 分步表单扩展
     treetable: 'treetable-lay/treetable', //table树形扩展
     tableSelect: 'tableSelect/tableSelect', // table选择扩展
